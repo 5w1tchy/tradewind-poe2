@@ -13,6 +13,8 @@ export interface TradeListing {
   /** Item name + base as listed (for mismatch spotting). */
   itemName: string
   online: boolean
+  /** Units available at this price (bulk-exchange offers only). */
+  stock?: number
 }
 
 export interface SearchOutcome {

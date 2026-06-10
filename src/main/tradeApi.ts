@@ -21,6 +21,11 @@ const FETCH_SEED: RateRule[] = [
   { max: 12, windowSec: 4 },
   { max: 16, windowSec: 12 }
 ]
+const EXCHANGE_SEED: RateRule[] = [
+  { max: 5, windowSec: 15 },
+  { max: 10, windowSec: 90 },
+  { max: 30, windowSec: 300 }
+]
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -131,6 +136,24 @@ interface RawSearchResponse {
   inexact?: boolean
 }
 
+interface RawExchangeResponse {
+  id: string
+  result: Record<
+    string,
+    {
+      id: string
+      listing: {
+        indexed: string
+        account: { name: string; online: unknown }
+        offers: Array<{
+          exchange: { currency: string; amount: number }
+          item: { currency: string; amount: number; stock: number }
+        }>
+      }
+    }
+  >
+}
+
 interface RawFetchResponse {
   result: Array<{
     id: string
@@ -147,7 +170,8 @@ export class TradeApiClient {
   private queue = new RequestQueue()
   private limiters = {
     search: new RateLimiter(SEARCH_SEED),
-    fetch: new RateLimiter(FETCH_SEED)
+    fetch: new RateLimiter(FETCH_SEED),
+    exchange: new RateLimiter(EXCHANGE_SEED)
   }
 
   /** Run a search and fetch the first `count` listings (one fetch call, ≤10). */
@@ -204,7 +228,57 @@ export class TradeApiClient {
     }
   }
 
-  private request<T>(kind: 'search' | 'fetch', url: string, init: RequestInit): Promise<T> {
+  /** Price a stackable on the bulk exchange: cheapest offers asking exalted. */
+  async exchange(league: string, wantId: string): Promise<SearchOutcome> {
+    const leaguePath = encodeURIComponent(league)
+    const res = await this.request<RawExchangeResponse>(
+      'exchange',
+      `${API_BASE}/exchange/poe2/${leaguePath}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: { status: { option: 'online' }, have: ['exalted'], want: [wantId] },
+          sort: { have: 'asc' },
+          engine: 'new'
+        })
+      }
+    )
+
+    const listings: TradeListing[] = []
+    for (const entry of Object.values(res.result)) {
+      const offer = entry.listing.offers[0]
+      if (!offer) continue
+      listings.push({
+        id: entry.id,
+        price: {
+          amount: offer.exchange.amount / offer.item.amount,
+          currency: offer.exchange.currency,
+          type: 'exchange'
+        },
+        accountName: entry.listing.account?.name ?? '?',
+        indexed: entry.listing.indexed,
+        itemName: wantId,
+        online: Boolean(entry.listing.account?.online),
+        stock: offer.item.stock
+      })
+    }
+    listings.sort((a, b) => (a.price?.amount ?? 0) - (b.price?.amount ?? 0))
+
+    return {
+      searchId: res.id,
+      total: listings.length,
+      inexact: listings.length >= 20,
+      listings: listings.slice(0, 10),
+      webUrl: `https://www.pathofexile.com/trade2/exchange/poe2/${leaguePath}/${res.id}`
+    }
+  }
+
+  private request<T>(
+    kind: 'search' | 'fetch' | 'exchange',
+    url: string,
+    init: RequestInit
+  ): Promise<T> {
     return this.queue.enqueue(async () => {
       const limiter = this.limiters[kind]
       const headers = { ...(init.headers as Record<string, string>), 'User-Agent': USER_AGENT }

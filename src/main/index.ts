@@ -22,6 +22,10 @@ interface LeaguesPayload {
   result: Array<{ id: string; realm: string; text: string }>
 }
 
+interface StaticPayload {
+  result: Array<{ id: string; entries?: Array<{ id: string; text: string }> }>
+}
+
 app.whenReady().then(() => {
   const config = loadConfig()
   const devAnyWindow = config.devAnyWindow || process.env['TRADEWIND_ANY_WINDOW'] === '1'
@@ -39,6 +43,19 @@ app.whenReady().then(() => {
       console.log(`[data] stats db ready (${payload.result.length} categories)`)
     })
     .catch((err) => console.error('[data] stats db failed to load:', err))
+
+  // Exact item text -> bulk-exchange id ("Idol of the Martyr" -> "idol-of-the-martyr").
+  let exchangeIds: Record<string, string> = {}
+  void cachedFetchJson<StaticPayload>('static', 'https://www.pathofexile.com/api/trade2/data/static')
+    .then((payload) => {
+      for (const group of payload.result) {
+        for (const entry of group.entries ?? []) {
+          if (entry.id && entry.id !== 'sep' && entry.text) exchangeIds[entry.text] = entry.id
+        }
+      }
+      console.log(`[data] exchange ids ready (${Object.keys(exchangeIds).length} items)`)
+    })
+    .catch((err) => console.error('[data] static data failed to load:', err))
 
   let leagues: string[] = []
   let league = config.league
@@ -92,7 +109,10 @@ app.whenReady().then(() => {
         let prepared: PreparedQuery | null = null
         if (text && statsDb) {
           try {
-            prepared = prepareQuery(parseItem(text), statsDb, { spread: config.spread })
+            prepared = prepareQuery(parseItem(text), statsDb, {
+              spread: config.spread,
+              exchangeIds
+            })
           } catch (err) {
             console.error('[item] failed to prepare query:', err)
           }
@@ -132,6 +152,7 @@ app.whenReady().then(() => {
   })
 
   ipcMain.handle('tw:search', (_event, prepared: PreparedQuery) => {
+    if (prepared.exchangeId) return tradeClient.exchange(league, prepared.exchangeId)
     return tradeClient.searchWithListings(league, buildSearchBody(prepared))
   })
 

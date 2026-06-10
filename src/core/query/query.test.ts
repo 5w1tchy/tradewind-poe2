@@ -177,6 +177,21 @@ describe('prepareQuery', () => {
     expect(q.gemLevel).toMatchObject({ min: 19, max: 19, enabled: true })
   })
 
+  it('currency with a bulk-exchange id prefers the exchange', () => {
+    const item = parseItem(
+      readFileSync(
+        join(fixturesDir, '10-stackable-currency--greater-orb-of-augmentation-a4de8d25.txt'),
+        'utf8'
+      )
+    )
+    const q = prepareQuery(item, db, {
+      exchangeIds: { 'Greater Orb of Augmentation': 'greater-orb-of-augmentation' }
+    })
+
+    expect(q.exchangeId).toBe('greater-orb-of-augmentation')
+    expect(q.type).toBeNull()
+  })
+
   it('stackable currency: exact type only', () => {
     const q = prepareFixture('10-stackable-currency--greater-orb-of-augmentation-a4de8d25.txt')
 

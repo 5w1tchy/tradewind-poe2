@@ -50,8 +50,11 @@ watch(
     // gems, currency, white bases) — those defaults are reliable. A rare with
     // every mod pre-checked rarely has market matches; arm Search instead.
     if (prepared.value) {
-      if (prepared.value.name || prepared.value.type) void runSearch()
-      else dirty.value = true
+      if (prepared.value.name || prepared.value.type || prepared.value.exchangeId) {
+        void runSearch()
+      } else {
+        dirty.value = true
+      }
     }
   },
   { immediate: true }
@@ -317,6 +320,7 @@ function age(iso: string): string {
           <span class="price">
             {{ l.price ? `${l.price.amount} ${l.price.currency}` : '—' }}
           </span>
+          <span v-if="l.stock !== undefined" class="stock">×{{ l.stock }}</span>
           <span class="seller">{{ l.accountName }}</span>
           <span class="age">{{ age(l.indexed) }}</span>
         </div>
@@ -574,6 +578,11 @@ function age(iso: string): string {
   color: #e8c878;
   min-width: 90px;
   font-weight: bold;
+}
+
+.stock {
+  color: #6f6c66;
+  flex-shrink: 0;
 }
 
 .seller {

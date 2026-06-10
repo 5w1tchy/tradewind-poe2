@@ -122,6 +122,12 @@ export interface PreparedQuery {
   name: string | null
   /** Exact-type search (uniques, currency, gems, normal items). */
   type: string | null
+  /**
+   * Bulk-exchange id (e.g. "idol-of-the-martyr"). When set, the price check
+   * queries /api/trade2/exchange instead of item search — stackable currency
+   * trades there, not in item listings.
+   */
+  exchangeId: string | null
   /** Item-class category restriction; label is the human name ("Boots"). */
   categoryFilter: { value: string; label: string; enabled: boolean } | null
   rarityOption: string | null

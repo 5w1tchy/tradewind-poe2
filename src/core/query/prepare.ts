@@ -13,6 +13,8 @@ import type {
 export interface PrepareOptions {
   /** Fractional spread below the roll for stat mins (0.1 = "at least 90% of my roll"). */
   spread?: number
+  /** Bulk-exchange ids keyed by exact item text (from /api/trade2/data/static). */
+  exchangeIds?: Record<string, string>
 }
 
 const DEFAULT_SPREAD = 0.1
@@ -213,6 +215,7 @@ export function prepareQuery(
     displayName: item.name ?? item.baseType,
     name: null,
     type: null,
+    exchangeId: null,
     categoryFilter: null,
     rarityOption: null,
     baseTypeFilter: null,
@@ -227,6 +230,12 @@ export function prepareQuery(
   }
 
   if (isCurrency) {
+    // Stackable currency trades on the bulk exchange when it has an id there.
+    const exchangeId = options.exchangeIds?.[item.baseType]
+    if (exchangeId) {
+      prepared.exchangeId = exchangeId
+      return prepared
+    }
     // "Uncut Skill Gem (Level 19)" -> type + exact gem level filter.
     const uncut = item.baseType.match(/^(.+) \(Level (\d+)\)$/)
     if (uncut) {
