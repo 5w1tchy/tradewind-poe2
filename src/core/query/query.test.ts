@@ -28,7 +28,7 @@ describe('prepareQuery', () => {
   it('rare gloves: category + checked explicits with spread mins', () => {
     const q = prepareFixture('01-gloves--rapture-caress-8cdf3ae5.txt')
 
-    expect(q.category).toBe('armour.gloves')
+    expect(q.categoryFilter).toEqual({ value: 'armour.gloves', label: 'Gloves', enabled: true })
     expect(q.rarityOption).toBe('nonunique')
     expect(q.name).toBeNull()
     expect(q.type).toBeNull()
@@ -141,14 +141,14 @@ describe('prepareQuery', () => {
     expect(q.name).toBe('Mageblood')
     expect(q.type).toBe('Utility Belt')
     expect(q.rarityOption).toBe('unique')
-    expect(q.category).toBeNull()
+    expect(q.categoryFilter).toBeNull()
     expect(q.stats.every((s) => !s.enabled)).toBe(true)
   })
 
   it('waystone: exact tier pre-checked, explicits checked', () => {
     const q = prepareFixture('14-waystones--painful-waystone-tier-15-of-erosion-d59c5af4.txt')
 
-    expect(q.category).toBe('map.waystone')
+    expect(q.categoryFilter).toMatchObject({ value: 'map.waystone', enabled: true })
     expect(q.mapTier).toMatchObject({ min: 15, max: 15, enabled: true })
     expect(q.stats.some((s) => s.enabled)).toBe(true)
   })
@@ -181,7 +181,7 @@ describe('prepareQuery', () => {
   it('magic charm (no trade category): stats-only search', () => {
     const q = prepareFixture('20-charms--sunny-thawing-charm-of-the-copious-58a4ca81.txt')
 
-    expect(q.category).toBeNull()
+    expect(q.categoryFilter).toBeNull()
     expect(q.rarityOption).toBe('nonunique')
     expect(q.stats.filter((s) => s.enabled).length).toBeGreaterThan(0)
   })

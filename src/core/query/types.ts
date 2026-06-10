@@ -122,7 +122,8 @@ export interface PreparedQuery {
   name: string | null
   /** Exact-type search (uniques, currency, gems, normal items). */
   type: string | null
-  category: string | null
+  /** Item-class category restriction; label is the human name ("Boots"). */
+  categoryFilter: { value: string; label: string; enabled: boolean } | null
   rarityOption: string | null
   /** Optional exact-base restriction for rares ("Amethyst Ring" vs any ring). */
   baseTypeFilter: { value: string; enabled: boolean } | null

@@ -208,7 +208,7 @@ export function prepareQuery(
     displayName: item.name ?? item.baseType,
     name: null,
     type: null,
-    category: null,
+    categoryFilter: null,
     rarityOption: null,
     baseTypeFilter: null,
     ilvl: null,
@@ -249,7 +249,9 @@ export function prepareQuery(
     prepared.type = item.baseType
     prepared.rarityOption = 'unique'
   } else if (isEquipment) {
-    prepared.category = category
+    if (category !== null) {
+      prepared.categoryFilter = { value: category, label: item.itemClass, enabled: true }
+    }
     prepared.rarityOption = 'nonunique'
     // Normal-rarity names carry no affixes, so the exact base is searchable
     // (fragments, keys, white bases).

@@ -106,14 +106,35 @@ interface ToggleRow {
   model: { enabled: boolean }
   /** Present when the row has editable min/max bounds. */
   range?: PreparedRange
+  /** Extra behavior after the checkbox flips (e.g. base/category see-saw). */
+  onToggle?: () => void
 }
 
 const propertyRows = computed<ToggleRow[]>(() => {
   const q = prepared.value
   if (!q) return []
   const rows: ToggleRow[] = []
-  if (q.baseTypeFilter) {
-    rows.push({ label: `Base: ${q.baseTypeFilter.value}`, model: q.baseTypeFilter })
+  // Base and category are two scopes for the same search — exactly one stays
+  // on: checking one unchecks the other, unchecking one re-checks the other.
+  const base = q.baseTypeFilter
+  const cat = q.categoryFilter
+  if (base) {
+    rows.push({
+      label: `Base: ${base.value}`,
+      model: base,
+      onToggle: () => {
+        if (cat) cat.enabled = !base.enabled
+      }
+    })
+  }
+  if (cat) {
+    rows.push({
+      label: `Category: ${cat.label}`,
+      model: cat,
+      onToggle: () => {
+        if (base) base.enabled = !cat.enabled
+      }
+    })
   }
   const add = (name: string, r: PreparedRange | null): void => {
     if (r) rows.push({ label: name, model: r, range: r })
@@ -204,7 +225,11 @@ function age(iso: string): string {
       </div>
       <div class="filters">
         <label v-for="row in propertyRows" :key="row.label" class="filter-row">
-          <input v-model="row.model.enabled" type="checkbox" @change="markDirty" />
+          <input
+            v-model="row.model.enabled"
+            type="checkbox"
+            @change="row.onToggle?.(), markDirty()"
+          />
           <span class="property">{{ row.label }}</span>
           <span v-if="row.range" class="val">{{ row.range.value }}</span>
           <span v-if="row.range" class="bounds">

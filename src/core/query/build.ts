@@ -32,7 +32,7 @@ export function buildSearchBody(q: PreparedQuery): TradeSearchRequest {
   const filters: TradeQueryFilters = {}
 
   const typeFilters: NonNullable<TradeQueryFilters['type_filters']>['filters'] = {}
-  if (q.category) typeFilters.category = { option: q.category }
+  if (q.categoryFilter?.enabled) typeFilters.category = { option: q.categoryFilter.value }
   if (q.rarityOption) typeFilters.rarity = { option: q.rarityOption }
   const ilvl = enabledRange(q.ilvl)
   if (ilvl) typeFilters.ilvl = ilvl
