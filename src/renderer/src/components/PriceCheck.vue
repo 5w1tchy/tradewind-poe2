@@ -94,6 +94,7 @@ const propertyRows = computed<ToggleRow[]>(() => {
   }
   add('Waystone Tier', q.mapTier)
   add('Gem Level', q.gemLevel)
+  for (const row of q.equipment) add(row.label, row)
   add('Item Level', q.ilvl)
   add('Quality', q.quality, '%')
   if (q.corrupted) {
@@ -309,6 +310,7 @@ function age(iso: string): string {
 .source-rune { color: #88ccff; }
 .source-enchant { color: #b4b4ff; }
 .source-implicit { color: #a0a0a0; }
+.source-pseudo { color: #d4af6a; }
 
 .hint {
   color: #6f6c66;

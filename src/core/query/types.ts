@@ -41,6 +41,9 @@ export interface TradeQueryFilters {
       gem_level?: MinMax
     }
   }
+  equipment_filters?: {
+    filters: Partial<Record<EquipmentFilterKey, MinMax>>
+  }
 }
 
 export interface TradeSearchRequest {
@@ -58,7 +61,18 @@ export interface TradeSearchRequest {
 
 /** ---------- Prepared query: the UI-editable state between item and request ---------- */
 
-export type StatSource = 'explicit' | 'implicit' | 'enchant' | 'rune'
+export type StatSource = 'explicit' | 'implicit' | 'enchant' | 'rune' | 'pseudo'
+
+/** trade2 equipment_filters keys we emit. */
+export type EquipmentFilterKey =
+  | 'ar'
+  | 'ev'
+  | 'es'
+  | 'spirit'
+  | 'block'
+  | 'dps'
+  | 'pdps'
+  | 'edps'
 
 export interface PreparedStatFilter {
   statId: string
@@ -77,6 +91,12 @@ export interface PreparedRange {
   min: number | null
   max: number | null
   enabled: boolean
+}
+
+/** Derived item numbers (defences, DPS) searchable via equipment_filters. */
+export interface PreparedEquipmentFilter extends PreparedRange {
+  key: EquipmentFilterKey
+  label: string
 }
 
 export interface PreparedToggle {
@@ -101,6 +121,7 @@ export interface PreparedQuery {
   gemLevel: PreparedRange | null
   mapTier: PreparedRange | null
   corrupted: PreparedToggle | null
+  equipment: PreparedEquipmentFilter[]
   stats: PreparedStatFilter[]
   /** Mod lines with no trade stat id — excluded from the search, surfaced as warnings. */
   unmatched: string[]

@@ -36,8 +36,12 @@ describe('prepareQuery', () => {
     expect(q.ilvl).toMatchObject({ value: 83, enabled: false })
     expect(q.unmatched).toEqual([])
 
+    // six explicit lines, but the two resists fold into one pseudo total
     const enabled = q.stats.filter((s) => s.enabled)
-    expect(enabled).toHaveLength(6) // six explicit mod lines
+    expect(enabled).toHaveLength(5)
+    const pseudo = enabled.find((s) => s.source === 'pseudo')!
+    expect(pseudo.statId).toBe('pseudo.pseudo_total_elemental_resistance')
+    expect(pseudo.value).toBe(88) // 45 lightning + 43 cold
 
     const life = q.stats.find((s) => s.label.includes('maximum Life'))!
     expect(life.enabled).toBe(true)
@@ -50,12 +54,70 @@ describe('prepareQuery', () => {
     expect(rune.enabled).toBe(false)
   })
 
+  it('derives defence filters from item properties', () => {
+    const shield = prepareFixture('32-shields--eagle-span-f24731e2.txt')
+    expect(shield.equipment).toContainEqual(
+      expect.objectContaining({ key: 'ar', value: 482, min: 433, enabled: false })
+    )
+    expect(shield.equipment).toContainEqual(
+      expect.objectContaining({ key: 'block', value: 26 })
+    )
+
+    const sceptre = prepareFixture('12-sceptres--mazarine-omen-sceptre-of-the-proficient-2381aa67.txt')
+    expect(sceptre.equipment).toContainEqual(
+      expect.objectContaining({ key: 'spirit', value: 100 })
+    )
+
+    const body = prepareFixture('13-body-armours--exceptional-corsair-coat-2590bdef.txt')
+    expect(body.equipment).toContainEqual(
+      expect.objectContaining({ key: 'ev', value: 550, min: 495 })
+    )
+  })
+
+  it('derives weapon DPS from damage ranges and APS', () => {
+    const bow = prepareFixture('22-bows--infusing-obliterator-bow-of-the-skilled-b8aaca45.txt')
+    // (62+115)/2 * 1.10 = 97.35
+    expect(bow.equipment).toContainEqual(
+      expect.objectContaining({ key: 'pdps', value: 97 })
+    )
+    expect(bow.equipment).toContainEqual(expect.objectContaining({ key: 'dps', value: 97 }))
+    expect(bow.equipment.some((e) => e.key === 'edps')).toBe(false)
+  })
+
+  it('folds resists into pseudo totals (all-res counts x3), folded rows unchecked', () => {
+    const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
+
+    // 38 fire + 15 all-res x3 = 83 total elemental
+    const ele = q.stats.find((s) => s.statId === 'pseudo.pseudo_total_elemental_resistance')!
+    expect(ele.value).toBe(83)
+    expect(ele.min).toBe(74)
+    expect(ele.enabled).toBe(true)
+
+    // 13 chaos from the implicit
+    const chaos = q.stats.find((s) => s.statId === 'pseudo.pseudo_total_chaos_resistance')!
+    expect(chaos.value).toBe(13)
+
+    const fire = q.stats.find((s) => s.label.includes('Fire Resistance'))!
+    const allRes = q.stats.find((s) => s.label.includes('all Elemental Resistances'))!
+    expect(fire.enabled).toBe(false)
+    expect(allRes.enabled).toBe(false)
+  })
+
+  it('enabled equipment rows land in equipment_filters', () => {
+    const q = prepareFixture('32-shields--eagle-span-f24731e2.txt')
+    const ar = q.equipment.find((e) => e.key === 'ar')!
+    ar.enabled = true
+    const body = buildSearchBody(q)
+    expect(body.query.filters?.equipment_filters?.filters.ar).toEqual({ min: 433 })
+  })
+
   it('desecrated mod searches the explicit stat id (origin must not narrow pricing)', () => {
     const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
 
     const allRes = q.stats.find((s) => s.label.includes('all Elemental Resistances'))!
     expect(allRes.statId).toBe('explicit.stat_2901986750')
-    expect(allRes.enabled).toBe(true)
+    // folded into the pseudo total, so unchecked by default
+    expect(allRes.enabled).toBe(false)
   })
 
   it('unique: exact name+type, mods unchecked', () => {
@@ -135,9 +197,9 @@ describe('buildSearchBody', () => {
 
     const stats = body.query.stats[0]
     expect(stats.type).toBe('and')
-    expect(stats.filters).toHaveLength(6)
+    expect(stats.filters).toHaveLength(5) // 4 explicits + folded resist pseudo
     for (const f of stats.filters) {
-      expect(f.id).toMatch(/^[a-z]+\.stat_\d+$/)
+      expect(f.id).toMatch(/^[a-z]+\.(stat_\d+|pseudo_\w+)$/)
       expect(f.value?.min).toBeTypeOf('number')
     }
   })

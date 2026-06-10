@@ -1,7 +1,9 @@
 import type { ParsedItem, ParsedMod, ParsedStatLine } from '../parser/types'
 import type { StatsDb } from '../stats-db/statsDb'
 import { categoryForItemClass } from './categories'
+import { deriveEquipmentValues } from './derived'
 import type {
+  PreparedEquipmentFilter,
   PreparedQuery,
   PreparedRange,
   PreparedStatFilter,
@@ -80,6 +82,7 @@ function buildStatRows(
   spread: number
 ): { stats: PreparedStatFilter[]; unmatched: string[] } {
   const stats: PreparedStatFilter[] = []
+  const templates: string[] = []
   const unmatched: string[] = []
 
   for (const { line, source, prefer, enabled } of collectLines(item, statsEnabled)) {
@@ -100,8 +103,76 @@ function buildStatRows(
       max: null,
       enabled
     })
+    templates.push(line.template)
   }
+
+  foldResistancePseudos(stats, templates, statsEnabled, spread)
   return { stats, unmatched }
+}
+
+// Weight of one mod line toward summed resistance pseudo stats. The trade
+// site computes "+#% total Elemental Resistance" as fire+cold+lightning,
+// so an all-res mod counts three times.
+const ELE_RES_PATTERNS: Array<[RegExp, number]> = [
+  [/^\+#% to (?:Fire|Cold|Lightning) Resistance$/, 1],
+  [/^\+#% to (?:Fire|Cold|Lightning) and (?:Fire|Cold|Lightning) Resistances$/, 2],
+  [/^\+#% to all Elemental Resistances$/, 3]
+]
+const CHAOS_RES_PATTERN = /^\+#% to Chaos Resistance$/
+
+/**
+ * Fold individual resist lines into summed pseudo filters: 35% fire + 25%
+ * cold prices like any combination totalling 60%. The folded lines stay in
+ * the list (unchecked) for exact-mod searches. `templates` runs parallel to
+ * `stats` (the parser's '#'-normalized line texts).
+ */
+function foldResistancePseudos(
+  stats: PreparedStatFilter[],
+  templates: string[],
+  statsEnabled: boolean,
+  spread: number
+): void {
+  let ele = 0
+  let chaos = 0
+  for (const [i, stat] of stats.entries()) {
+    // Runes/enchants are swappable — they'd skew totals vs. listings.
+    if (stat.value === null || (stat.source !== 'explicit' && stat.source !== 'implicit')) continue
+    const template = templates[i]
+    for (const [pattern, weight] of ELE_RES_PATTERNS) {
+      if (pattern.test(template)) {
+        ele += stat.value * weight
+        stat.enabled = false
+      }
+    }
+    if (CHAOS_RES_PATTERN.test(template)) {
+      chaos += stat.value
+      stat.enabled = false
+    }
+  }
+
+  const pseudo = (statId: string, label: string, value: number): PreparedStatFilter => ({
+    statId,
+    label,
+    source: 'pseudo',
+    value,
+    min: minWithSpread(value, spread),
+    max: null,
+    enabled: statsEnabled
+  })
+  if (ele > 0) {
+    stats.push(
+      pseudo(
+        'pseudo.pseudo_total_elemental_resistance',
+        `+${ele}% total Elemental Resistance`,
+        ele
+      )
+    )
+  }
+  if (chaos > 0) {
+    stats.push(
+      pseudo('pseudo.pseudo_total_chaos_resistance', `+${chaos}% total to Chaos Resistance`, chaos)
+    )
+  }
 }
 
 function range(value: number, opts: Partial<PreparedRange> = {}): PreparedRange {
@@ -142,6 +213,7 @@ export function prepareQuery(
     gemLevel: null,
     mapTier: null,
     corrupted: null,
+    equipment: [],
     stats: [],
     unmatched: []
   }
@@ -188,6 +260,15 @@ export function prepareQuery(
       prepared.mapTier = range(item.waystoneTier, { max: item.waystoneTier, enabled: true })
     }
     if (!item.unidentified) prepared.corrupted = { value: item.corrupted, enabled: true }
+
+    prepared.equipment = deriveEquipmentValues(item).map(
+      (d): PreparedEquipmentFilter => ({
+        ...d,
+        min: minWithSpread(d.value, spread),
+        max: null,
+        enabled: false
+      })
+    )
 
     const { stats, unmatched } = buildStatRows(item, db, !isUnique, spread)
     prepared.stats = stats
