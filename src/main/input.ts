@@ -8,22 +8,8 @@ const keybd_event = user32.func(
 
 const VK_CONTROL = 0x11
 const VK_MENU = 0x12
-const VK_RETURN = 0x0d
-const VK_A = 0x41
 const VK_C = 0x43
-const VK_V = 0x56
 const KEYEVENTF_KEYUP = 0x0002
-
-function tapKey(vk: number): void {
-  keybd_event(vk, 0, 0, 0)
-  keybd_event(vk, 0, KEYEVENTF_KEYUP, 0)
-}
-
-function tapWithCtrl(vk: number): void {
-  keybd_event(VK_CONTROL, 0, 0, 0)
-  tapKey(vk)
-  keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0)
-}
 
 /**
  * Synthesize Ctrl+Alt+C into the focused window (PoE2's "advanced copy" —
@@ -32,14 +18,11 @@ function tapWithCtrl(vk: number): void {
 export function sendCopyAdvanced(): void {
   keybd_event(VK_CONTROL, 0, 0, 0)
   keybd_event(VK_MENU, 0, 0, 0)
-  tapKey(VK_C)
+  keybd_event(VK_C, 0, 0, 0)
+  keybd_event(VK_C, 0, KEYEVENTF_KEYUP, 0)
   keybd_event(VK_MENU, 0, KEYEVENTF_KEYUP, 0)
   keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0)
 }
-
-export const sendEnter = (): void => tapKey(VK_RETURN)
-export const sendSelectAll = (): void => tapWithCtrl(VK_A)
-export const sendPaste = (): void => tapWithCtrl(VK_V)
 
 export interface InputHandlers {
   onPriceCheck(): void
