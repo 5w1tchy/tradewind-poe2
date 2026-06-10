@@ -114,6 +114,15 @@ describe('prepareQuery', () => {
     expect(body.query.filters?.equipment_filters?.filters.ar).toEqual({ min: 520 })
   })
 
+  it('relic mods match sanctum stat ids, not regular explicits', () => {
+    const q = prepareFixture('09-relics--swift-seal-relic-of-overflowing-094e1d88.txt')
+
+    const ms = q.stats.find((s) => s.label.includes('Movement Speed'))!
+    expect(ms.statId).toBe('sanctum.stat_1416455556')
+    const fountains = q.stats.find((s) => s.label.includes('Sacred Water'))!
+    expect(fountains.statId).toMatch(/^sanctum\./)
+  })
+
   it('movement speed keeps its full roll as min (bracketed stat, no spread)', () => {
     const q = prepareFixture('03-boots--rune-spur-f39b212f.txt')
     const ms = q.stats.find((s) => s.label.includes('Movement Speed'))!

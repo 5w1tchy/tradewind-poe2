@@ -55,10 +55,17 @@ interface LineContext {
 const NO_SPREAD_TEMPLATES = new Set(['#% increased Movement Speed'])
 
 function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
+  // Relic mods are indexed in the sanctum stat group; texts like "#%
+  // increased Movement Speed" also exist as regular explicits, so without
+  // this preference a relic search matches zero relics.
+  const isRelic = item.itemClass === 'Relics'
+  const prefer = (mod: ParsedMod): string[] =>
+    isRelic ? ['sanctum', ...preferFor(mod)] : preferFor(mod)
+
   const out: LineContext[] = []
   for (const mod of item.implicits) {
     for (const line of mod.lines) {
-      out.push({ line, source: 'implicit', prefer: preferFor(mod), enabled: false })
+      out.push({ line, source: 'implicit', prefer: prefer(mod), enabled: false })
     }
   }
   for (const mod of [...item.explicits, ...item.enhancements]) {
@@ -67,7 +74,7 @@ function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
       out.push({
         line,
         source,
-        prefer: preferFor(mod),
+        prefer: prefer(mod),
         enabled: statsEnabled && source === 'explicit'
       })
     }
