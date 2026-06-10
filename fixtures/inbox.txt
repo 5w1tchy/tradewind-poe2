@@ -1,0 +1,1064 @@
+Item Class: Gloves
+Rarity: Rare
+Rapture Caress
+Refined Bracers
+--------
+Quality: +20% (augmented)
+Evasion Rating: 176 (augmented)
+--------
+Requires: Level 65, 67 Dex
+--------
+Sockets: S 
+--------
+Item Level: 83
+--------
+18% increased Armour, Evasion and Energy Shield (rune)
+--------
+{ Prefix Modifier "Virile" (Tier: 2) — Life }
++102(100-119) to maximum Life
+{ Prefix Modifier "Freezing" (Tier: 5) — Damage, Elemental, Cold, Attack }
+Adds 9(9-10) to 17(15-17) Cold damage to Attacks
+{ Prefix Modifier "Tempered" (Tier: 2) — Damage, Physical, Attack }
+Adds 11(10-15) to 22(18-26) Physical Damage to Attacks
+{ Suffix Modifier "of Ephij" (Tier: 1) — Elemental, Lightning, Resistance }
++45(41-45)% to Lightning Resistance
+{ Suffix Modifier "of Renown" (Tier: 1) — Attack, Speed }
+14(14-16)% increased Attack Speed
+{ Suffix Modifier "of Haast" (Tier: 1) — Elemental, Cold, Resistance }
++43(41-45)% to Cold Resistance
+
+===== 
+
+Item Class: Belts
+Rarity: Unique
+Mageblood
+Utility Belt
+--------
+Requires: Level 55
+--------
+Item Level: 80
+--------
+{ Implicit Modifier }
+20% of Flask Recovery applied Instantly
+{ Implicit Modifier — Charm }
+Has 3(1-3) Charm Slots
+--------
+{ Unique Modifier }
+Legacy of Quicksilver(Amethyst-Topaz) — Unscalable Value
+{ Unique Modifier }
+Legacy of Gold(Amethyst-Topaz) — Unscalable Value
+{ Unique Modifier }
+Legacy of Jade(Amethyst-Topaz) — Unscalable Value
+{ Unique Modifier }
+Legacy of Jade(Amethyst-Topaz) — Unscalable Value
+{ Unique Modifier }
+All Mage's Legacies have 47(25-50)% increased effect per duplicate Mage's Legacy you have
+--------
+Rivers of power coursed through their veins.
+Now, that power is yours, for good or ill.
+
+===== 
+
+Item Class: Boots
+Rarity: Rare
+Rune Spur
+Cavalry Boots
+--------
+Quality: +20% (augmented)
+Evasion Rating: 415 (augmented)
+--------
+Requires: Level 70, 93 Dex
+--------
+Sockets: S 
+--------
+Item Level: 82
+--------
+5% increased Movement Speed (rune)
+--------
+{ Prefix Modifier "Blurred" (Tier: 3) — Evasion }
++113(88-116) to Evasion Rating
+{ Prefix Modifier "Athlete's" (Tier: 1) — Life }
++127(120-149) to maximum Life
+{ Desecrated Prefix Modifier "Hellion's" (Tier: 1) — Speed }
+35% increased Movement Speed
+{ Suffix Modifier "of Diversion" (Tier: 2) — Evasion }
+Gain Deflection Rating equal to 20(18-20)% of Evasion Rating
+{ Suffix Modifier "of Haast" (Tier: 1) — Elemental, Cold, Resistance }
++44(41-45)% to Cold Resistance
+{ Suffix Modifier "of Ephij" (Tier: 1) — Elemental, Lightning, Resistance }
++43(41-45)% to Lightning Resistance
+
+===== 
+
+Item Class: Boots
+Rarity: Rare
+Rune Spur
+Cavalry Boots
+--------
+Quality: +20% (augmented)
+Evasion Rating: 415 (augmented)
+--------
+Requires: Level 70, 93 Dex
+--------
+Sockets: S 
+--------
+Item Level: 82
+--------
+5% increased Movement Speed (rune)
+--------
+{ Prefix Modifier "Blurred" (Tier: 3) — Evasion }
++113(88-116) to Evasion Rating
+{ Prefix Modifier "Athlete's" (Tier: 1) — Life }
++127(120-149) to maximum Life
+{ Desecrated Prefix Modifier "Hellion's" (Tier: 1) — Speed }
+35% increased Movement Speed
+{ Suffix Modifier "of Diversion" (Tier: 2) — Evasion }
+Gain Deflection Rating equal to 20(18-20)% of Evasion Rating
+{ Suffix Modifier "of Haast" (Tier: 1) — Elemental, Cold, Resistance }
++44(41-45)% to Cold Resistance
+{ Suffix Modifier "of Ephij" (Tier: 1) — Elemental, Lightning, Resistance }
++43(41-45)% to Lightning Resistance
+
+===== 
+
+Item Class: Rings
+Rarity: Rare
+Rift Grip
+Amethyst Ring
+--------
+Quality (Attack Modifiers): +20% (augmented)
+--------
+Requires: Level 60
+--------
+Item Level: 82
+--------
+{ Implicit Modifier — Chaos, Resistance }
++13(7-13)% to Chaos Resistance
+--------
+{ Prefix Modifier "Flaring" (Tier: 1) — Damage, Physical, Attack — 20% Increased }
+Adds 15(12-19) to 32(22-32) Physical Damage to Attacks
+{ Prefix Modifier "Electrocuting" (Tier: 1) — Damage, Elemental, Lightning, Attack — 20% Increased }
+Adds 4(1-4) to 60(60-71) Lightning damage to Attacks
+{ Prefix Modifier "Entombing" (Tier: 1) — Damage, Elemental, Cold, Attack — 20% Increased }
+Adds 22(21-24) to 35(32-37) Cold damage to Attacks
+{ Suffix Modifier "of the Sage" (Tier: 3) — Attribute }
++25(25-27) to Intelligence
+{ Desecrated Suffix Modifier "of the Rainbow" (Tier: 1) — Elemental, Fire, Cold, Lightning, Resistance }
++15(15-16)% to all Elemental Resistances
+{ Suffix Modifier "of Magma" (Tier: 2) — Elemental, Fire, Resistance }
++38(36-40)% to Fire Resistance
+
+===== 
+
+Item Class: Amulets
+Rarity: Rare
+Pandemonium Beads
+Solar Amulet
+--------
+Quality (Chaos Modifiers): +9% (augmented)
+--------
+Requires: Level 60
+--------
+Item Level: 78
+--------
+{ Enhancement }
+Allocates Zarokh's Gift — Unscalable Value
+--------
+{ Implicit Modifier }
++14(10-15) to Spirit
+--------
+{ Prefix Modifier "Shade's" (Tier: 7) — Evasion }
+11(10-14)% increased Evasion Rating
+{ Prefix Modifier "Zaffre" (Tier: 2) — Mana }
++167(165-179) to maximum Mana
+{ Prefix Modifier "Countess'" (Tier: 1) }
++47(47-50) to Spirit
+{ Suffix Modifier "of the Fletcher" (Tier: 2) }
++2 to Level of all Projectile Skills
+{ Suffix Modifier "of Variegation" (Tier: 3) — Elemental, Fire, Cold, Lightning, Resistance }
++13(12-14)% to all Elemental Resistances
+{ Desecrated Suffix Modifier "of Amanamu" (Tier: 1) — Elemental, Fire, Chaos, Resistance — 9% Increased }
++16(13-17)% to Fire and Chaos Resistances
+
+===== 
+
+Item Class: Helmets
+Rarity: Unique
+Constricting Command
+Viper Cap
+--------
+Quality: +20% (augmented)
+Evasion Rating: 253 (augmented)
+--------
+Requires: Level 38, 54 Dex
+--------
+Sockets: S 
+--------
+Item Level: 79
+--------
+18% increased Armour, Evasion and Energy Shield (rune)
+--------
+{ Unique Modifier — Life }
++119(80-120) to maximum Life
+{ Unique Modifier — Attribute }
++15(10-15) to all Attributes
+{ Unique Modifier — Life }
+9.3(8-12) Life Regeneration per second
+{ Unique Modifier }
+Require 4(4-2) fewer enemies to be Surrounded
+--------
+"Be vigilant, Nezahul! When the serpent is cornered, does it give up?
+No... It waits. Then it bites the first hand it finds. 
+The danger of numbers is all in your mind!"
+- Viper Napuatzi, instructing Royal Commander Nezahul
+
+===== 
+
+Item Class: Crossbows
+Rarity: Rare
+Onslaught Core
+Flexed Crossbow
+--------
+Quality: +20% (augmented)
+Physical Damage: 283-769 (augmented)
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.82 (augmented)
+Reload Time: 0.75 (augmented)
+--------
+Requires: Level 77, 89 Str, 89 Dex
+--------
+Sockets: S S 
+--------
+Item Level: 80
+--------
+20% increased Physical Damage (rune)
+Gain 5% of Damage as Extra Damage of all Elements (rune)
+--------
+{ Implicit Modifier }
+20(20-30)% increased Bolt Speed
+--------
+{ Prefix Modifier "Tempered" (Tier: 2) — Damage, Physical, Attack }
+Adds 42(29-44) to 74(50-75) Physical Damage
+{ Prefix Modifier "Champion's" (Tier: 4) — Damage, Physical, Attack }
+50(45-54)% increased Physical Damage
++117(98-123) to Accuracy Rating
+{ Prefix Modifier "Cruel" (Tier: 3) — Damage, Physical, Attack }
+149(135-154)% increased Physical Damage
+{ Suffix Modifier "of Renown" (Tier: 2) — Attack, Speed }
+14(14-16)% increased Attack Speed
+{ Suffix Modifier "of Valour" (Tier: 3) — Life }
+Gain 49(41-53) Life per enemy killed
+{ Crafted Suffix Modifier "of the Essence" — Attack }
++3 to Level of all Attack Skills
+
+====
+
+Item Class: Life Flasks
+Rarity: Magic
+Bubbling Ultimate Life Flask of the Endless
+--------
+Quality: +20% (augmented)
+Recovers 1104 (augmented) Life over 3 Seconds
+Consumes 10 of 75 Charges on use
+Currently has 75 Charges
+--------
+Requires: Level 60
+--------
+Item Level: 81
+--------
+{ Prefix Modifier "Bubbling" (Tier: 1) }
+30(28-30)% of Recovery applied Instantly
+{ Suffix Modifier "of the Endless" (Tier: 4) }
+40(39-46)% increased Charges gained
+--------
+Right click to drink. Can only hold charges while in belt. Refill at Wells or by killing monsters.
+
+===
+
+Item Class: Life Flasks
+Rarity: Magic
+Bubbling Ultimate Life Flask of the Endless
+--------
+Quality: +20% (augmented)
+Recovers 1104 (augmented) Life over 3 Seconds
+Consumes 10 of 75 Charges on use
+Currently has 75 Charges
+--------
+Requires: Level 60
+--------
+Item Level: 81
+--------
+{ Prefix Modifier "Bubbling" (Tier: 1) }
+30(28-30)% of Recovery applied Instantly
+{ Suffix Modifier "of the Endless" (Tier: 4) }
+40(39-46)% increased Charges gained
+--------
+Right click to drink. Can only hold charges while in belt. Refill at Wells or by killing monsters.
+
+====
+
+Item Class: Life Flasks
+Rarity: Magic
+Bubbling Ultimate Life Flask of the Endless
+--------
+Quality: +20% (augmented)
+Recovers 1104 (augmented) Life over 3 Seconds
+Consumes 10 of 75 Charges on use
+Currently has 75 Charges
+--------
+Requires: Level 60
+--------
+Item Level: 81
+--------
+{ Prefix Modifier "Bubbling" (Tier: 1) }
+30(28-30)% of Recovery applied Instantly
+{ Suffix Modifier "of the Endless" (Tier: 4) }
+40(39-46)% increased Charges gained
+--------
+Right click to drink. Can only hold charges while in belt. Refill at Wells or by killing monsters.
+
+====
+
+Item Class: Life Flasks
+Rarity: Magic
+Bubbling Ultimate Life Flask of the Endless
+--------
+Quality: +20% (augmented)
+Recovers 1104 (augmented) Life over 3 Seconds
+Consumes 10 of 75 Charges on use
+Currently has 75 Charges
+--------
+Requires: Level 60
+--------
+Item Level: 81
+--------
+{ Prefix Modifier "Bubbling" (Tier: 1) }
+30(28-30)% of Recovery applied Instantly
+{ Suffix Modifier "of the Endless" (Tier: 4) }
+40(39-46)% increased Charges gained
+--------
+Right click to drink. Can only hold charges while in belt. Refill at Wells or by killing monsters.
+
+====
+
+Item Class: Relics
+Rarity: Magic
+Swift Seal Relic of Overflowing
+--------
+Item Level: 81
+--------
+{ Prefix Modifier "Swift" (Tier: 2) }
+6(5-6)% increased Movement Speed
+{ Suffix Modifier "of Overflowing" (Tier: 2) }
+Fountains have 10(9-10)% chance to grant double Sacred Water
+--------
+Place this item on the Relic Altar at the start of the Trial of the Sekhemas
+
+====
+
+Item Class: Stackable Currency
+Rarity: Currency
+Greater Orb of Augmentation
+--------
+Stack Size: 26/30
+Minimum Modifier Level: 44
+--------
+Augments a Magic item with a new random modifier
+--------
+Right click this item then left click a magic item to apply it. Magic items can have up to two random modifiers.
+Shift click to unstack.
+
+
+====
+
+Item Class: Helmets
+Rarity: Rare
+Phoenix Horn
+Kamasan Tiara
+--------
+Energy Shield: 197 (augmented)
+--------
+Requires: Level 75, 107 Int
+--------
+Item Level: 81
+--------
+{ Prefix Modifier "Fearless" (Tier: 4) — Energy Shield }
+66(56-67)% increased Energy Shield
+{ Prefix Modifier "Sacred" (Tier: 4) — Mana, Energy Shield }
+25(21-26)% increased Energy Shield
++17(17-20) to maximum Mana
+{ Prefix Modifier "Robust" (Tier: 5) — Life }
++74(70-84) to maximum Life
+{ Suffix Modifier "of Magma" (Tier: 2) — Elemental, Fire, Resistance }
++38(36-40)% to Fire Resistance
+{ Suffix Modifier "of Bameth" (Tier: 1) — Chaos, Resistance }
++24(24-27)% to Chaos Resistance
+{ Suffix Modifier "of the Ice" (Tier: 2) — Elemental, Cold, Resistance }
++37(36-40)% to Cold Resistance
+
+====
+
+Item Class: Sceptres
+Rarity: Magic
+Mazarine Omen Sceptre of the Proficient
+--------
+Spirit: 100
+--------
+Requires: Level 84, 29 (augmented) Str, 74 (augmented) Int
+--------
+Item Level: 82
+--------
+Grants Skill: Level 19 Malice
+--------
+{ Prefix Modifier "Mazarine" (Tier: 2) — Mana }
++147(125-149) to maximum Mana
+{ Suffix Modifier "of the Proficient" (Tier: 1) }
+35% reduced Attribute Requirements
+
+====
+
+
+Item Class: Body Armours
+Rarity: Normal
+Exceptional Corsair Coat
+--------
+Quality: +22% (augmented)
+Evasion Rating: 550 (augmented)
+--------
+Requires: Level 80, 121 Dex
+--------
+Sockets: S S S 
+--------
+Item Level: 82
+--------
+{ Implicit Modifier — Speed }
+5% increased Movement Speed
+
+
+====
+
+
+Item Class: Waystones
+Rarity: Magic
+Painful Waystone (Tier 15) of Erosion
+--------
+Revives Available: 4 (augmented)
+Item Rarity: +13% (augmented)
+Monster Rarity: +25% (augmented)
+Waystone Drop Chance: +40% (augmented)
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Painful" (Tier: 1) }
+16(15-19)% increased Monster Damage
+{ Suffix Modifier "of Erosion" (Tier: 1) }
+Players are periodically Cursed with Elemental Weakness — Unscalable Value
+--------
+Can be used in a Map Device, allowing you to enter a Map. Waystones can only be used once.
+
+
+====
+
+Item Class: Pinnacle Keys
+Rarity: Currency
+Faded Crisis Fragment
+--------
+The carvings it holds are too worn to decipher.
+--------
+Can be placed in a door in The Burning Monolith.
+
+
+====
+
+Item Class: Staves
+Rarity: Unique
+The Unborn Lich
+Ravenous Staff
+--------
+Requires: Level 78, 137 (unmet) Int
+--------
+Item Level: 83
+--------
+Grants Skill: Level 18 Feast of Flesh
+Grants Skill: Level 18 His Grave Command
+--------
+{ Desecrated Prefix Modifier "" — 79% Increased }
++47(40-60) to Spirit
+8(6-10)% increased Spirit Reservation Efficiency of Skills
+{ Desecrated Prefix Modifier "Ulaman's" (Tier: 1) — Life, Damage, Caster — 79% Increased }
+5(4-5)% increased Spell Damage per 100 Maximum Life
+{ Unique Modifier }
+79(60-80)% increased Desecrated Modifier magnitudes — Unscalable Value
+{ Desecrated Suffix Modifier "of Ulaman" (Tier: 1) — Caster — 79% Increased }
+27(25-35)% chance for Spell Skills to fire 2 additional Projectiles
+--------
+In ghastly pits beneath the world,
+Kulemak grows countless new bodies,
+each more powerful than the last.
+Not all of his abominations survive.
+--------
+
+
+====
+
+Item Class: Skill Gems
+Rarity: Gem
+Permafrost Bolts
+--------
+Attack, AoE, Ammunition, Projectile, Cold, Merging
+Level: 26 (augmented)
+20 Levels from Gem (Max)
++1 Level from Corruption (augmented)
++5 Levels from Global Modifiers (augmented)
+Quality: +20% (augmented)
+Cost: 69 Mana
+--------
+Requires: Level 90, 86 Str, 86 Dex, Level 65 (gem)
+Requires: Crossbow
+--------
+Sockets: G G G G G 
+--------
+Load your Crossbow with icy bolts that fragment in flight, damaging enemies on hit and in a small cone behind their final target. The icy coating on the bolts makes them extremely potent at Freezing enemies. These fragments can Merge.
+--------
+Permafrost Bolts
+--------
+Projectile
+--------
+Cost: 0 Mana
+Attack Damage: 63%
+--------
+Converts 80% of Physical damage to Cold damage
+Pierces 5 targets
+600% more Magnitude of Chill inflicted
+600% more Freeze Buildup
+Bolts shatter on impact, dealing Damage in a 2.7 metre cone
+Fires 12 fragments per shot
+--------
+Ammunition
+--------
++1 Bolt loaded per clip
+--------
+Skills can be managed in the Skills Panel.
+--------
+Corrupted
+
+====
+
+Item Class: Jewels
+Rarity: Rare
+Dusk Shine
+Time-Lost Emerald
+--------
+Radius: Small
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Heralding" (Tier: 1) — Damage }
+Small Passive Skills in Radius also grant Herald Skills deal 2(2-4)% increased Damage
+{ Prefix Modifier "Humming" (Tier: 1) — Damage, Elemental, Lightning }
+Small Passive Skills in Radius also grant 1(1-2)% increased Lightning Damage
+{ Suffix Modifier "of Sequencing" (Tier: 1) — Attack, Speed }
+Notable Passive Skills in Radius also grant 1(1-2)% increased Attack Speed with Quarterstaves
+{ Suffix Modifier "of Quenching" (Tier: 1) — Mana }
+Small Passive Skills in Radius also grant 2(1-2)% increased Mana Recovery from Flasks
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+
+====
+
+Item Class: Jewels
+Rarity: Rare
+Dusk Shine
+Time-Lost Emerald
+--------
+Radius: Small
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Heralding" (Tier: 1) — Damage }
+Small Passive Skills in Radius also grant Herald Skills deal 2(2-4)% increased Damage
+{ Prefix Modifier "Humming" (Tier: 1) — Damage, Elemental, Lightning }
+Small Passive Skills in Radius also grant 1(1-2)% increased Lightning Damage
+{ Suffix Modifier "of Sequencing" (Tier: 1) — Attack, Speed }
+Notable Passive Skills in Radius also grant 1(1-2)% increased Attack Speed with Quarterstaves
+{ Suffix Modifier "of Quenching" (Tier: 1) — Mana }
+Small Passive Skills in Radius also grant 2(1-2)% increased Mana Recovery from Flasks
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+
+====
+
+Item Class: Charms
+Rarity: Unique
+Sanguis Heroum
+Staunching Charm
+--------
+Lasts 3 Seconds
+Consumes 30 of 40 Charges on use
+Currently has 40 Charges
+Grants Immunity to Bleeding
+--------
+Requires: Level 18
+--------
+Item Level: 80
+--------
+{ Implicit Modifier }
+Used when you start Bleeding — Unscalable Value
+--------
+{ Unique Modifier — Charm }
+Creates Consecrated Ground on use — Unscalable Value
+{ Unique Modifier }
+Gains 0.17(0.15-0.20) Charges per Second
+--------
+Wraeclast has known too few true heroes.
+It remembers those that stood in defiance.
+--------
+Used automatically when condition is met. Can only hold charges while in belt. Refill at Wells or by killing monsters.
+
+====
+
+Item Class: Charms
+Rarity: Magic
+Sunny Thawing Charm of the Copious
+--------
+Quality: +9% (augmented)
+Lasts 3,30 (augmented) Seconds
+Consumes 40 of 54 (augmented) Charges on use
+Currently has 54 Charges
+Grants Immunity to Freeze
+--------
+Requires: Level 12
+--------
+Item Level: 21
+--------
+{ Implicit Modifier }
+Used when you become Frozen — Unscalable Value
+--------
+{ Prefix Modifier "Sunny" (Tier: 6) — Charm }
+Also grants 61(44-66) Guard
+{ Suffix Modifier "of the Copious" (Tier: 5) }
+37(31-38)% increased Charges
+--------
+Used automatically when condition is met. Can only hold charges while in belt. Refill at Wells or by killing monsters.
+--------
+Corrupted
+
+====
+
+Item Class: Crossbows
+Rarity: Rare
+Spirit Core
+Gemini Crossbow
+--------
+Physical Damage: 28-112
+Fire Damage: 48-79 (fire)
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.60
+Reload Time: 1.10
+--------
+Requires: Level 78, 66 (augmented) Str, 66 (augmented) Dex
+--------
+Item Level: 80
+--------
+{ Implicit Modifier — Attack }
+Loads an additional bolt
+--------
+{ Prefix Modifier "Scorching" (Tier: 5) — Damage, Elemental, Fire, Attack }
+Adds 48(39-53) to 79(59-80) Fire Damage
+{ Suffix Modifier "of the Drought" (Tier: 2) — Mana, Physical, Attack }
+Leeches 7.01(7-7.9)% of Physical Damage as Mana
+{ Suffix Modifier "of the Talented" (Tier: 3) }
+25% reduced Attribute Requirements
+--------
+Corrupted
+
+====
+
+Item Class: Bows
+Rarity: Magic
+Infusing Obliterator Bow of the Skilled
+--------
+Physical Damage: 62-115
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.10
+--------
+Requires: Level 78, 114 (augmented) Dex
+--------
+Item Level: 81
+--------
+{ Implicit Modifier }
+50% reduced Projectile Range
+--------
+{ Prefix Modifier "Infusing" (Tier: 5) — Damage, Elemental, Fire, Cold, Lightning }
+42(36-52)% increased Elemental Damage with Attacks
+{ Suffix Modifier "of the Skilled" (Tier: 2) }
+30% reduced Attribute Requirements
+
+
+====
+
+Item Class: Uncut Skill Gems
+Rarity: Currency
+Uncut Skill Gem (Level 19)
+--------
+Creates a Skill Gem or Level an existing gem to level 19
+--------
+Right Click to engrave a Skill Gem.
+
+
+====
+
+Item Class: Tablet
+Rarity: Magic
+Teeming Abyss Tablet of Escalation
+--------
+Item Level: 81
+--------
+{ Implicit Modifier }
+Adds Abysses to a Map
+10 uses remaining
+--------
+{ Prefix Modifier "Teeming" (Tier: 1) }
+Map has 30(30-40)% increased Magic Monsters
+{ Suffix Modifier "of Escalation" (Tier: 1) }
+Abyssal Monsters have 9(8-12)% increased Effectiveness for each closed Pit, up to 100%
+--------
+Can be used in a personal Map Device to add modifiers to a Map.
+
+
+====
+
+Item Class: Jewels
+Rarity: Unique
+Against the Darkness
+Time-Lost Diamond
+--------
+Limited to: 1
+Radius: Small
+--------
+Item Level: 82
+--------
+{ Unique Modifier — Elemental, Fire, Resistance }
+Notable Passive Skills in Radius also grant +1% to Maximum Fire Resistance
+{ Unique Modifier — Elemental, Lightning, Resistance }
+Notable Passive Skills in Radius also grant +1% to Maximum Lightning Resistance
+--------
+After the fires, in the depths of the Winter of the World, all life in the Vastiri banded together. Whether serpent, hyena, human, or golem, hated enemies clasped hand to claw, built refuge, and fought side by side against the Abyssals. Thus, the Third Pact was born.
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+
+
+=====
+
+Item Class: Rings
+Rarity: Magic
+Tempered Topaz Ring of the Rainbow
+--------
+Requires: Level 54
+--------
+Item Level: 82
+--------
+{ Implicit Modifier — Elemental, Lightning, Resistance }
++25(20-30)% to Lightning Resistance
+--------
+{ Prefix Modifier "Tempered" (Tier: 2) — Damage, Physical, Attack }
+Adds 15(10-15) to 23(18-26) Physical Damage to Attacks
+{ Suffix Modifier "of the Rainbow" (Tier: 1) — Elemental, Fire, Cold, Lightning, Resistance }
++16(15-16)% to all Elemental Resistances
+
+
+====
+
+Item Class: Staves
+Rarity: Magic
+Glyphic Chiming Staff of Sortilege
+--------
+Requires: Level 78, 137 (unmet) Int
+--------
+Item Level: 80
+--------
+Grants Skill: Level 18 Sigil of Power
+--------
+{ Prefix Modifier "Glyphic" (Tier: 2) — Damage, Caster }
+197(189-208)% increased Spell Damage
+{ Suffix Modifier "of Sortilege" (Tier: 4) — Caster, Speed }
+33(32-37)% increased Cast Speed
+
+====
+
+Item Class: Staves
+Rarity: Magic
+Glyphic Chiming Staff of Sortilege
+--------
+Requires: Level 78, 137 (unmet) Int
+--------
+Item Level: 80
+--------
+Grants Skill: Level 18 Sigil of Power
+--------
+{ Prefix Modifier "Glyphic" (Tier: 2) — Damage, Caster }
+197(189-208)% increased Spell Damage
+{ Suffix Modifier "of Sortilege" (Tier: 4) — Caster, Speed }
+33(32-37)% increased Cast Speed
+
+=====
+
+Item Class: Quivers
+Rarity: Magic
+Focused Visceral Quiver of Renown
+--------
+Requires: Level 64
+--------
+Item Level: 80
+--------
+{ Implicit Modifier — Attack, Critical }
+21(20-30)% increased Critical Hit Chance for Attacks
+--------
+{ Prefix Modifier "Focused" (Tier: 7) — Attack }
++70(61-84) to Accuracy Rating
+{ Suffix Modifier "of Renown" (Tier: 1) — Attack, Speed }
+14(14-16)% increased Attack Speed
+--------
+Can only be equipped if you are wielding a Bow.
+
+
+====
+
+Item Class: Quivers
+Rarity: Magic
+Focused Visceral Quiver of Renown
+--------
+Requires: Level 64
+--------
+Item Level: 80
+--------
+{ Implicit Modifier — Attack, Critical }
+21(20-30)% increased Critical Hit Chance for Attacks
+--------
+{ Prefix Modifier "Focused" (Tier: 7) — Attack }
++70(61-84) to Accuracy Rating
+{ Suffix Modifier "of Renown" (Tier: 1) — Attack, Speed }
+14(14-16)% increased Attack Speed
+--------
+Can only be equipped if you are wielding a Bow.
+
+
+====
+
+Item Class: One Hand Maces
+Rarity: Rare
+Viper Grinder
+Crown Mace
+--------
+Physical Damage: 109-226 (augmented)
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.40
+--------
+Requires: Level 72, 149 (unmet) Str
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Cruel" (Tier: 3) — Damage, Physical, Attack }
+154(135-154)% increased Physical Damage
+{ Suffix Modifier "of the Boxer" (Tier: 4) }
+Causes 41(41-50)% increased Stun Buildup
+{ Suffix Modifier "of Osmosis" (Tier: 7) — Mana }
+Gain 5(4-5) Mana per enemy killed
+{ Suffix Modifier "of Rage" (Tier: 4) — Damage, Attack, Critical }
++16(14-16)% to Critical Damage Bonus
+
+
+====
+
+Item Class: Sceptres
+Rarity: Rare
+Agony Cry
+Rattling Sceptre
+--------
+Spirit: 111 (augmented)
+--------
+Requires: Level 84, 147 (unmet) Int
+--------
+Item Level: 80
+--------
+Grants Skill: Level 19 Skeletal Warrior Minion
+--------
+{ Prefix Modifier "Opalescent" (Tier: 5) — Mana }
++85(80-89) to maximum Mana
+{ Prefix Modifier "Advisor's" (Tier: 7) }
+11(10-14)% increased Spirit
++17(17-20) to maximum Mana
+{ Suffix Modifier "of Menace" (Tier: 6) — Critical }
+Allies in your Presence have 10(10-14)% increased Critical Hit Chance
+{ Suffix Modifier "of Kindling" (Tier: 2) — Mana }
+16(13-17)% increased Mana Regeneration Rate
+10% increased Light Radius
+{ Suffix Modifier "of the Augur" (Tier: 5) — Attribute }
++17(17-20) to Intelligence
+
+====
+
+Item Class: Foci
+Rarity: Rare
+Entropy Anthem
+Tasalian Focus
+--------
+Energy Shield: 228 (augmented)
+--------
+Requires: Level 80, 115 Int
+--------
+Item Level: 83
+--------
+{ Prefix Modifier "Incanter's" (Tier: 1) — Damage, Caster }
+79(75-89)% increased Spell Damage
+{ Prefix Modifier "Heavenly" (Tier: 2) — Mana, Energy Shield }
+36(33-38)% increased Energy Shield
++27(27-32) to maximum Mana
+{ Prefix Modifier "Scintillating" (Tier: 2) — Energy Shield }
++77(74-80) to maximum Energy Shield
+{ Suffix Modifier "of the Thunderhead" (Tier: 5) — Elemental, Lightning, Resistance }
++24(21-25)% to Lightning Resistance
+{ Suffix Modifier "of Haast" (Tier: 1) — Elemental, Cold, Resistance }
++43(41-45)% to Cold Resistance
+{ Suffix Modifier "of Magma" (Tier: 2) — Elemental, Fire, Resistance }
++40(36-40)% to Fire Resistance
+--------
+Note: ~b/o 1 divine
+
+====
+
+Item Class: Shields
+Rarity: Rare
+Eagle Span
+Tawhoan Tower Shield
+--------
+Block chance: 26%
+Armour: 482 (augmented)
+--------
+Requires: Level 80, 115 Str
+--------
+Item Level: 80
+--------
+Grants Skill: Raise Shield
+--------
+{ Prefix Modifier "Enveloped" (Tier: 3) — Armour }
++218(191-221) to Armour
+{ Prefix Modifier "Spiny" (Tier: 6) — Damage, Physical }
+5(5-7) to 8(7-10) Physical Thorns damage
+{ Crafted Prefix Modifier "Virile" (Tier: 4) — Life }
++116(100-119) to maximum Life
+{ Suffix Modifier "of the Conservator" (Tier: 1) — Physical }
+8% additional Physical Damage Reduction
+{ Suffix Modifier "of Eviction" (Tier: 4) — Chaos, Resistance }
++13(12-15)% to Chaos Resistance
+{ Suffix Modifier "of the Molten Core" (Tier: 2) — Elemental, Fire, Resistance }
++2% to Maximum Fire Resistance
+--------
+Note: ~b/o 1 divine
+
+=====
+
+Item Class: Wands
+Rarity: Magic
+Frostbound Dueling Wand of Legerdemain
+--------
+Requires: Level 78, 137 (unmet) Int
+--------
+Item Level: 80
+--------
+Grants Skill: Level 18 Spellslinger
+--------
+{ Prefix Modifier "Frostbound" (Tier: 1) — Damage, Elemental, Cold }
+Gain 29(28-30)% of Damage as Extra Cold Damage
+{ Suffix Modifier "of Legerdemain" (Tier: 3) — Caster, Speed }
+28(25-28)% increased Cast Speed
+
+====
+
+Item Class: Wands
+Rarity: Rare
+Behemoth Spell
+Dueling Wand
+--------
+Requires: Level 78, 137 (unmet) Int
+--------
+Item Level: 80
+--------
+Grants Skill: Level 18 Spellslinger
+--------
+{ Prefix Modifier "Caster's" (Tier: 7) — Mana, Damage, Caster }
+16(15-19)% increased Spell Damage
++20(17-20) to maximum Mana
+{ Suffix Modifier "of the Virtuoso" (Tier: 1) — Attribute }
++32(31-33) to Intelligence
+{ Suffix Modifier "of Nimbleness" (Tier: 6) — Caster, Speed }
+14(13-16)% increased Cast Speed
+{ Suffix Modifier "of Sparks" (Tier: 5) — Elemental, Lightning, Caster, Gem }
++1 to Level of all Lightning Spell Skills
+
+====
+
+Item Class: Helmets
+Rarity: Unique
+The Bringer of Rain
+Decorated Helm
+--------
+Armour: 1301 (augmented)
+Evasion Rating: 1176 (augmented)
+--------
+Requires: Level 52, 41 Str, 41 Dex
+--------
+Sockets: S S S S 
+--------
+Item Level: 82
+--------
++60 to maximum Life (rune)
++18% to Cold Resistance (rune)
+18% increased Mana Regeneration Rate (rune)
++100 to Stun Threshold (rune)
+--------
+{ Unique Modifier — Armour, Evasion }
+791(600-800)% increased Armour and Evasion
+{ Unique Modifier — Attack }
++296(200-300) to Accuracy Rating
+{ Unique Modifier — Critical }
+100% increased Critical Hit Chance
+{ Unique Modifier — Life }
+33.9(30-60) Life Regeneration per second
+{ Unique Modifier }
+Can't use Body Armour — Unscalable Value
+{ Unique Modifier }
+You can wield Two-Handed Axes, Maces and Swords in one hand — Unscalable Value
+{ Unique Modifier }
+This item gains bonuses from Socketed Items as though it was a Body Armour — Unscalable Value
+--------
+"What lies beneath your feet?!"
+"Sacred ground, watered with tears of blood!"
+
+
+====
+
+Item Class: Quarterstaves
+Rarity: Rare
+Behemoth Weaver
+Striking Quarterstaff
+--------
+Physical Damage: 56-117 (augmented)
+Critical Hit Chance: 10.00%
+Attacks per Second: 1.40
+--------
+Requires: Level 77, 127 Dex, 50 Int
+--------
+Item Level: 81
+--------
+{ Implicit Modifier — Attack }
+16% increased Melee Strike Range with this weapon
+--------
+{ Prefix Modifier "Glinting" (Tier: 9) — Damage, Physical, Attack }
+Adds 3(2-3) to 6(5-7) Physical Damage
+{ Suffix Modifier "of Conquest" (Tier: 5) — Life }
+Gain 27(19-28) Life per enemy killed
+{ Suffix Modifier "of the Arid" (Tier: 3) — Mana, Physical, Attack }
+Leeches 6.12(6-6.9)% of Physical Damage as Mana
+{ Suffix Modifier "of Impact" (Tier: 6) }
+13(11-13)% increased Stun Duration

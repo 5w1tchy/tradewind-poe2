@@ -1,0 +1,19 @@
+Item Class: Bows
+Rarity: Magic
+Infusing Obliterator Bow of the Skilled
+--------
+Physical Damage: 62-115
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.10
+--------
+Requires: Level 78, 114 (augmented) Dex
+--------
+Item Level: 81
+--------
+{ Implicit Modifier }
+50% reduced Projectile Range
+--------
+{ Prefix Modifier "Infusing" (Tier: 5) — Damage, Elemental, Fire, Cold, Lightning }
+42(36-52)% increased Elemental Damage with Attacks
+{ Suffix Modifier "of the Skilled" (Tier: 2) }
+30% reduced Attribute Requirements

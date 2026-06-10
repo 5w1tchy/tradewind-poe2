@@ -1,0 +1,17 @@
+Item Class: Quivers
+Rarity: Magic
+Focused Visceral Quiver of Renown
+--------
+Requires: Level 64
+--------
+Item Level: 80
+--------
+{ Implicit Modifier — Attack, Critical }
+21(20-30)% increased Critical Hit Chance for Attacks
+--------
+{ Prefix Modifier "Focused" (Tier: 7) — Attack }
++70(61-84) to Accuracy Rating
+{ Suffix Modifier "of Renown" (Tier: 1) — Attack, Speed }
+14(14-16)% increased Attack Speed
+--------
+Can only be equipped if you are wielding a Bow.

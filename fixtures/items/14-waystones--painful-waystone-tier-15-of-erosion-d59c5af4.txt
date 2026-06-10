@@ -1,0 +1,17 @@
+Item Class: Waystones
+Rarity: Magic
+Painful Waystone (Tier 15) of Erosion
+--------
+Revives Available: 4 (augmented)
+Item Rarity: +13% (augmented)
+Monster Rarity: +25% (augmented)
+Waystone Drop Chance: +40% (augmented)
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Painful" (Tier: 1) }
+16(15-19)% increased Monster Damage
+{ Suffix Modifier "of Erosion" (Tier: 1) }
+Players are periodically Cursed with Elemental Weakness — Unscalable Value
+--------
+Can be used in a Map Device, allowing you to enter a Map. Waystones can only be used once.

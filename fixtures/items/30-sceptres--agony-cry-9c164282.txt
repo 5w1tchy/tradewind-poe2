@@ -1,0 +1,25 @@
+Item Class: Sceptres
+Rarity: Rare
+Agony Cry
+Rattling Sceptre
+--------
+Spirit: 111 (augmented)
+--------
+Requires: Level 84, 147 (unmet) Int
+--------
+Item Level: 80
+--------
+Grants Skill: Level 19 Skeletal Warrior Minion
+--------
+{ Prefix Modifier "Opalescent" (Tier: 5) — Mana }
++85(80-89) to maximum Mana
+{ Prefix Modifier "Advisor's" (Tier: 7) }
+11(10-14)% increased Spirit
++17(17-20) to maximum Mana
+{ Suffix Modifier "of Menace" (Tier: 6) — Critical }
+Allies in your Presence have 10(10-14)% increased Critical Hit Chance
+{ Suffix Modifier "of Kindling" (Tier: 2) — Mana }
+16(13-17)% increased Mana Regeneration Rate
+10% increased Light Radius
+{ Suffix Modifier "of the Augur" (Tier: 5) — Attribute }
++17(17-20) to Intelligence

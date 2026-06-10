@@ -1,0 +1,19 @@
+Item Class: Jewels
+Rarity: Rare
+Dusk Shine
+Time-Lost Emerald
+--------
+Radius: Small
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Heralding" (Tier: 1) — Damage }
+Small Passive Skills in Radius also grant Herald Skills deal 2(2-4)% increased Damage
+{ Prefix Modifier "Humming" (Tier: 1) — Damage, Elemental, Lightning }
+Small Passive Skills in Radius also grant 1(1-2)% increased Lightning Damage
+{ Suffix Modifier "of Sequencing" (Tier: 1) — Attack, Speed }
+Notable Passive Skills in Radius also grant 1(1-2)% increased Attack Speed with Quarterstaves
+{ Suffix Modifier "of Quenching" (Tier: 1) — Mana }
+Small Passive Skills in Radius also grant 2(1-2)% increased Mana Recovery from Flasks
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.

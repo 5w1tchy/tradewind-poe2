@@ -1,0 +1,40 @@
+Item Class: Skill Gems
+Rarity: Gem
+Permafrost Bolts
+--------
+Attack, AoE, Ammunition, Projectile, Cold, Merging
+Level: 26 (augmented)
+20 Levels from Gem (Max)
++1 Level from Corruption (augmented)
++5 Levels from Global Modifiers (augmented)
+Quality: +20% (augmented)
+Cost: 69 Mana
+--------
+Requires: Level 90, 86 Str, 86 Dex, Level 65 (gem)
+Requires: Crossbow
+--------
+Sockets: G G G G G 
+--------
+Load your Crossbow with icy bolts that fragment in flight, damaging enemies on hit and in a small cone behind their final target. The icy coating on the bolts makes them extremely potent at Freezing enemies. These fragments can Merge.
+--------
+Permafrost Bolts
+--------
+Projectile
+--------
+Cost: 0 Mana
+Attack Damage: 63%
+--------
+Converts 80% of Physical damage to Cold damage
+Pierces 5 targets
+600% more Magnitude of Chill inflicted
+600% more Freeze Buildup
+Bolts shatter on impact, dealing Damage in a 2.7 metre cone
+Fires 12 fragments per shot
+--------
+Ammunition
+--------
++1 Bolt loaded per clip
+--------
+Skills can be managed in the Skills Panel.
+--------
+Corrupted

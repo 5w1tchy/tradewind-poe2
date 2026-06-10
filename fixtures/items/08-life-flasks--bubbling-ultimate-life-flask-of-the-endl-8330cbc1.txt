@@ -1,0 +1,19 @@
+Item Class: Life Flasks
+Rarity: Magic
+Bubbling Ultimate Life Flask of the Endless
+--------
+Quality: +20% (augmented)
+Recovers 1104 (augmented) Life over 3 Seconds
+Consumes 10 of 75 Charges on use
+Currently has 75 Charges
+--------
+Requires: Level 60
+--------
+Item Level: 81
+--------
+{ Prefix Modifier "Bubbling" (Tier: 1) }
+30(28-30)% of Recovery applied Instantly
+{ Suffix Modifier "of the Endless" (Tier: 4) }
+40(39-46)% increased Charges gained
+--------
+Right click to drink. Can only hold charges while in belt. Refill at Wells or by killing monsters.

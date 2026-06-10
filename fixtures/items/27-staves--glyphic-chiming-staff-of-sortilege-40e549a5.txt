@@ -1,0 +1,14 @@
+Item Class: Staves
+Rarity: Magic
+Glyphic Chiming Staff of Sortilege
+--------
+Requires: Level 78, 137 (unmet) Int
+--------
+Item Level: 80
+--------
+Grants Skill: Level 18 Sigil of Power
+--------
+{ Prefix Modifier "Glyphic" (Tier: 2) — Damage, Caster }
+197(189-208)% increased Spell Damage
+{ Suffix Modifier "of Sortilege" (Tier: 4) — Caster, Speed }
+33(32-37)% increased Cast Speed

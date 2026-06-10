@@ -1,0 +1,36 @@
+Item Class: Crossbows
+Rarity: Rare
+Onslaught Core
+Flexed Crossbow
+--------
+Quality: +20% (augmented)
+Physical Damage: 283-769 (augmented)
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.82 (augmented)
+Reload Time: 0.75 (augmented)
+--------
+Requires: Level 77, 89 Str, 89 Dex
+--------
+Sockets: S S 
+--------
+Item Level: 80
+--------
+20% increased Physical Damage (rune)
+Gain 5% of Damage as Extra Damage of all Elements (rune)
+--------
+{ Implicit Modifier }
+20(20-30)% increased Bolt Speed
+--------
+{ Prefix Modifier "Tempered" (Tier: 2) — Damage, Physical, Attack }
+Adds 42(29-44) to 74(50-75) Physical Damage
+{ Prefix Modifier "Champion's" (Tier: 4) — Damage, Physical, Attack }
+50(45-54)% increased Physical Damage
++117(98-123) to Accuracy Rating
+{ Prefix Modifier "Cruel" (Tier: 3) — Damage, Physical, Attack }
+149(135-154)% increased Physical Damage
+{ Suffix Modifier "of Renown" (Tier: 2) — Attack, Speed }
+14(14-16)% increased Attack Speed
+{ Suffix Modifier "of Valour" (Tier: 3) — Life }
+Gain 49(41-53) Life per enemy killed
+{ Crafted Suffix Modifier "of the Essence" — Attack }
++3 to Level of all Attack Skills

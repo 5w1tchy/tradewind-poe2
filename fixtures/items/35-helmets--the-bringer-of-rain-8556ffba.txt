@@ -1,0 +1,36 @@
+Item Class: Helmets
+Rarity: Unique
+The Bringer of Rain
+Decorated Helm
+--------
+Armour: 1301 (augmented)
+Evasion Rating: 1176 (augmented)
+--------
+Requires: Level 52, 41 Str, 41 Dex
+--------
+Sockets: S S S S 
+--------
+Item Level: 82
+--------
++60 to maximum Life (rune)
++18% to Cold Resistance (rune)
+18% increased Mana Regeneration Rate (rune)
++100 to Stun Threshold (rune)
+--------
+{ Unique Modifier — Armour, Evasion }
+791(600-800)% increased Armour and Evasion
+{ Unique Modifier — Attack }
++296(200-300) to Accuracy Rating
+{ Unique Modifier — Critical }
+100% increased Critical Hit Chance
+{ Unique Modifier — Life }
+33.9(30-60) Life Regeneration per second
+{ Unique Modifier }
+Can't use Body Armour — Unscalable Value
+{ Unique Modifier }
+You can wield Two-Handed Axes, Maces and Swords in one hand — Unscalable Value
+{ Unique Modifier }
+This item gains bonuses from Socketed Items as though it was a Body Armour — Unscalable Value
+--------
+"What lies beneath your feet?!"
+"Sacred ground, watered with tears of blood!"

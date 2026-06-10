@@ -1,0 +1,21 @@
+Item Class: One Hand Maces
+Rarity: Rare
+Viper Grinder
+Crown Mace
+--------
+Physical Damage: 109-226 (augmented)
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.40
+--------
+Requires: Level 72, 149 (unmet) Str
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Cruel" (Tier: 3) — Damage, Physical, Attack }
+154(135-154)% increased Physical Damage
+{ Suffix Modifier "of the Boxer" (Tier: 4) }
+Causes 41(41-50)% increased Stun Buildup
+{ Suffix Modifier "of Osmosis" (Tier: 7) — Mana }
+Gain 5(4-5) Mana per enemy killed
+{ Suffix Modifier "of Rage" (Tier: 4) — Damage, Attack, Critical }
++16(14-16)% to Critical Damage Bonus

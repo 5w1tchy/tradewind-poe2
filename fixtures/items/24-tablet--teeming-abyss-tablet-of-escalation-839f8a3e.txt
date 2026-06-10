@@ -1,0 +1,16 @@
+Item Class: Tablet
+Rarity: Magic
+Teeming Abyss Tablet of Escalation
+--------
+Item Level: 81
+--------
+{ Implicit Modifier }
+Adds Abysses to a Map
+10 uses remaining
+--------
+{ Prefix Modifier "Teeming" (Tier: 1) }
+Map has 30(30-40)% increased Magic Monsters
+{ Suffix Modifier "of Escalation" (Tier: 1) }
+Abyssal Monsters have 9(8-12)% increased Effectiveness for each closed Pit, up to 100%
+--------
+Can be used in a personal Map Device to add modifiers to a Map.

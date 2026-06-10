@@ -1,0 +1,4896 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`] = `
+{
+  "baseType": "Refined Bracers",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+102(100-119) to maximum Life",
+          "template": "+# to maximum Life",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 119,
+              "min": 100,
+              "value": 102,
+            },
+          ],
+        },
+      ],
+      "name": "Virile",
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Adds 9(9-10) to 17(15-17) Cold damage to Attacks",
+          "template": "Adds # to # Cold damage to Attacks",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 10,
+              "min": 9,
+              "value": 9,
+            },
+            {
+              "max": 17,
+              "min": 15,
+              "value": 17,
+            },
+          ],
+        },
+      ],
+      "name": "Freezing",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Elemental",
+        "Cold",
+        "Attack",
+      ],
+      "tier": 5,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Adds 11(10-15) to 22(18-26) Physical Damage to Attacks",
+          "template": "Adds # to # Physical Damage to Attacks",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 15,
+              "min": 10,
+              "value": 11,
+            },
+            {
+              "max": 26,
+              "min": 18,
+              "value": 22,
+            },
+          ],
+        },
+      ],
+      "name": "Tempered",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Physical",
+        "Attack",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+45(41-45)% to Lightning Resistance",
+          "template": "+#% to Lightning Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 45,
+              "min": 41,
+              "value": 45,
+            },
+          ],
+        },
+      ],
+      "name": "of Ephij",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Lightning",
+        "Resistance",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "14(14-16)% increased Attack Speed",
+          "template": "#% increased Attack Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 16,
+              "min": 14,
+              "value": 14,
+            },
+          ],
+        },
+      ],
+      "name": "of Renown",
+      "qualityIncrease": null,
+      "tags": [
+        "Attack",
+        "Speed",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+43(41-45)% to Cold Resistance",
+          "template": "+#% to Cold Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 45,
+              "min": 41,
+              "value": 43,
+            },
+          ],
+        },
+      ],
+      "name": "of Haast",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Cold",
+        "Resistance",
+      ],
+      "tier": 1,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Gloves",
+  "itemLevel": 83,
+  "name": "Rapture Caress",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +20% (augmented)",
+    },
+    {
+      "name": "Evasion Rating",
+      "raw": "Evasion Rating: 176 (augmented)",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Rare",
+  "requiredLevel": 65,
+  "requirements": "Requires: Level 65, 67 Dex",
+  "runeMods": [
+    {
+      "raw": "18% increased Armour, Evasion and Energy Shield",
+      "template": "#% increased Armour, Evasion and Energy Shield",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 18,
+        },
+      ],
+    },
+  ],
+  "sockets": 1,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
+{
+  "baseType": "Utility Belt",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Legacy of Quicksilver(Amethyst-Topaz) — Unscalable Value",
+          "template": "Legacy of Quicksilver(Amethyst-Topaz)",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Legacy of Gold(Amethyst-Topaz) — Unscalable Value",
+          "template": "Legacy of Gold(Amethyst-Topaz)",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Legacy of Jade(Amethyst-Topaz) — Unscalable Value",
+          "template": "Legacy of Jade(Amethyst-Topaz)",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Legacy of Jade(Amethyst-Topaz) — Unscalable Value",
+          "template": "Legacy of Jade(Amethyst-Topaz)",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "All Mage's Legacies have 47(25-50)% increased effect per duplicate Mage's Legacy you have",
+          "template": "All Mage's Legacies have #% increased effect per duplicate Mage's Legacy you have",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 50,
+              "min": 25,
+              "value": 47,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "20% of Flask Recovery applied Instantly",
+          "template": "#% of Flask Recovery applied Instantly",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 20,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "Has 3(1-3) Charm Slots",
+          "template": "Has # Charm Slots",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 3,
+              "min": 1,
+              "value": 3,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Charm",
+      ],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Belts",
+  "itemLevel": 80,
+  "name": "Mageblood",
+  "note": null,
+  "properties": [],
+  "quality": null,
+  "rarity": "Unique",
+  "requiredLevel": 55,
+  "requirements": "Requires: Level 55",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Rivers of power coursed through their veins.",
+      "Now, that power is yours, for good or ill.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
+{
+  "baseType": "Cavalry Boots",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+113(88-116) to Evasion Rating",
+          "template": "+# to Evasion Rating",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 116,
+              "min": 88,
+              "value": 113,
+            },
+          ],
+        },
+      ],
+      "name": "Blurred",
+      "qualityIncrease": null,
+      "tags": [
+        "Evasion",
+      ],
+      "tier": 3,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+127(120-149) to maximum Life",
+          "template": "+# to maximum Life",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 149,
+              "min": 120,
+              "value": 127,
+            },
+          ],
+        },
+      ],
+      "name": "Athlete's",
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": true,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "35% increased Movement Speed",
+          "template": "#% increased Movement Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 35,
+            },
+          ],
+        },
+      ],
+      "name": "Hellion's",
+      "qualityIncrease": null,
+      "tags": [
+        "Speed",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Gain Deflection Rating equal to 20(18-20)% of Evasion Rating",
+          "template": "Gain Deflection Rating equal to #% of Evasion Rating",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 20,
+              "min": 18,
+              "value": 20,
+            },
+          ],
+        },
+      ],
+      "name": "of Diversion",
+      "qualityIncrease": null,
+      "tags": [
+        "Evasion",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+44(41-45)% to Cold Resistance",
+          "template": "+#% to Cold Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 45,
+              "min": 41,
+              "value": 44,
+            },
+          ],
+        },
+      ],
+      "name": "of Haast",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Cold",
+        "Resistance",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+43(41-45)% to Lightning Resistance",
+          "template": "+#% to Lightning Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 45,
+              "min": 41,
+              "value": 43,
+            },
+          ],
+        },
+      ],
+      "name": "of Ephij",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Lightning",
+        "Resistance",
+      ],
+      "tier": 1,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Boots",
+  "itemLevel": 82,
+  "name": "Rune Spur",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +20% (augmented)",
+    },
+    {
+      "name": "Evasion Rating",
+      "raw": "Evasion Rating: 415 (augmented)",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Rare",
+  "requiredLevel": 70,
+  "requirements": "Requires: Level 70, 93 Dex",
+  "runeMods": [
+    {
+      "raw": "5% increased Movement Speed",
+      "template": "#% increased Movement Speed",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 5,
+        },
+      ],
+    },
+  ],
+  "sockets": 1,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
+{
+  "baseType": "Amethyst Ring",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Adds 15(12-19) to 32(22-32) Physical Damage to Attacks",
+          "template": "Adds # to # Physical Damage to Attacks",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 19,
+              "min": 12,
+              "value": 15,
+            },
+            {
+              "max": 32,
+              "min": 22,
+              "value": 32,
+            },
+          ],
+        },
+      ],
+      "name": "Flaring",
+      "qualityIncrease": 20,
+      "tags": [
+        "Damage",
+        "Physical",
+        "Attack",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Adds 4(1-4) to 60(60-71) Lightning damage to Attacks",
+          "template": "Adds # to # Lightning damage to Attacks",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 4,
+              "min": 1,
+              "value": 4,
+            },
+            {
+              "max": 71,
+              "min": 60,
+              "value": 60,
+            },
+          ],
+        },
+      ],
+      "name": "Electrocuting",
+      "qualityIncrease": 20,
+      "tags": [
+        "Damage",
+        "Elemental",
+        "Lightning",
+        "Attack",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Adds 22(21-24) to 35(32-37) Cold damage to Attacks",
+          "template": "Adds # to # Cold damage to Attacks",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 24,
+              "min": 21,
+              "value": 22,
+            },
+            {
+              "max": 37,
+              "min": 32,
+              "value": 35,
+            },
+          ],
+        },
+      ],
+      "name": "Entombing",
+      "qualityIncrease": 20,
+      "tags": [
+        "Damage",
+        "Elemental",
+        "Cold",
+        "Attack",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+25(25-27) to Intelligence",
+          "template": "+# to Intelligence",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 27,
+              "min": 25,
+              "value": 25,
+            },
+          ],
+        },
+      ],
+      "name": "of the Sage",
+      "qualityIncrease": null,
+      "tags": [
+        "Attribute",
+      ],
+      "tier": 3,
+    },
+    {
+      "crafted": false,
+      "desecrated": true,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+15(15-16)% to all Elemental Resistances",
+          "template": "+#% to all Elemental Resistances",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 16,
+              "min": 15,
+              "value": 15,
+            },
+          ],
+        },
+      ],
+      "name": "of the Rainbow",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Fire",
+        "Cold",
+        "Lightning",
+        "Resistance",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+38(36-40)% to Fire Resistance",
+          "template": "+#% to Fire Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 40,
+              "min": 36,
+              "value": 38,
+            },
+          ],
+        },
+      ],
+      "name": "of Magma",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Fire",
+        "Resistance",
+      ],
+      "tier": 2,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "+13(7-13)% to Chaos Resistance",
+          "template": "+#% to Chaos Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 13,
+              "min": 7,
+              "value": 13,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Chaos",
+        "Resistance",
+      ],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Rings",
+  "itemLevel": 82,
+  "name": "Rift Grip",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality (Attack Modifiers)",
+      "raw": "Quality (Attack Modifiers): +20% (augmented)",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Rare",
+  "requiredLevel": 60,
+  "requirements": "Requires: Level 60",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt 1`] = `
+{
+  "baseType": "Solar Amulet",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "enhancement",
+      "lines": [
+        {
+          "raw": "Allocates Zarokh's Gift — Unscalable Value",
+          "template": "Allocates Zarokh's Gift",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "11(10-14)% increased Evasion Rating",
+          "template": "#% increased Evasion Rating",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 14,
+              "min": 10,
+              "value": 11,
+            },
+          ],
+        },
+      ],
+      "name": "Shade's",
+      "qualityIncrease": null,
+      "tags": [
+        "Evasion",
+      ],
+      "tier": 7,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+167(165-179) to maximum Mana",
+          "template": "+# to maximum Mana",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 179,
+              "min": 165,
+              "value": 167,
+            },
+          ],
+        },
+      ],
+      "name": "Zaffre",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+47(47-50) to Spirit",
+          "template": "+# to Spirit",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 50,
+              "min": 47,
+              "value": 47,
+            },
+          ],
+        },
+      ],
+      "name": "Countess'",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+2 to Level of all Projectile Skills",
+          "template": "+# to Level of all Projectile Skills",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 2,
+            },
+          ],
+        },
+      ],
+      "name": "of the Fletcher",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+13(12-14)% to all Elemental Resistances",
+          "template": "+#% to all Elemental Resistances",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 14,
+              "min": 12,
+              "value": 13,
+            },
+          ],
+        },
+      ],
+      "name": "of Variegation",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Fire",
+        "Cold",
+        "Lightning",
+        "Resistance",
+      ],
+      "tier": 3,
+    },
+    {
+      "crafted": false,
+      "desecrated": true,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+16(13-17)% to Fire and Chaos Resistances",
+          "template": "+#% to Fire and Chaos Resistances",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 17,
+              "min": 13,
+              "value": 16,
+            },
+          ],
+        },
+      ],
+      "name": "of Amanamu",
+      "qualityIncrease": 9,
+      "tags": [
+        "Elemental",
+        "Fire",
+        "Chaos",
+        "Resistance",
+      ],
+      "tier": 1,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "+14(10-15) to Spirit",
+          "template": "+# to Spirit",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 15,
+              "min": 10,
+              "value": 14,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Amulets",
+  "itemLevel": 78,
+  "name": "Pandemonium Beads",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality (Chaos Modifiers)",
+      "raw": "Quality (Chaos Modifiers): +9% (augmented)",
+    },
+  ],
+  "quality": 9,
+  "rarity": "Rare",
+  "requiredLevel": 60,
+  "requirements": "Requires: Level 60",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 06-helmets--constricting-command-9054f669.txt 1`] = `
+{
+  "baseType": "Viper Cap",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "+119(80-120) to maximum Life",
+          "template": "+# to maximum Life",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 120,
+              "min": 80,
+              "value": 119,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "+15(10-15) to all Attributes",
+          "template": "+# to all Attributes",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 15,
+              "min": 10,
+              "value": 15,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Attribute",
+      ],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "9.3(8-12) Life Regeneration per second",
+          "template": "# Life Regeneration per second",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 12,
+              "min": 8,
+              "value": 9.3,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Require 4(4-2) fewer enemies to be Surrounded",
+          "template": "Require # fewer enemies to be Surrounded",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 2,
+              "min": 4,
+              "value": 4,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Helmets",
+  "itemLevel": 79,
+  "name": "Constricting Command",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +20% (augmented)",
+    },
+    {
+      "name": "Evasion Rating",
+      "raw": "Evasion Rating: 253 (augmented)",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Unique",
+  "requiredLevel": 38,
+  "requirements": "Requires: Level 38, 54 Dex",
+  "runeMods": [
+    {
+      "raw": "18% increased Armour, Evasion and Energy Shield",
+      "template": "#% increased Armour, Evasion and Energy Shield",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 18,
+        },
+      ],
+    },
+  ],
+  "sockets": 1,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      ""Be vigilant, Nezahul! When the serpent is cornered, does it give up?",
+      "No... It waits. Then it bites the first hand it finds.",
+      "The danger of numbers is all in your mind!"",
+      "- Viper Napuatzi, instructing Royal Commander Nezahul",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 1`] = `
+{
+  "baseType": "Flexed Crossbow",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Adds 42(29-44) to 74(50-75) Physical Damage",
+          "template": "Adds # to # Physical Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 44,
+              "min": 29,
+              "value": 42,
+            },
+            {
+              "max": 75,
+              "min": 50,
+              "value": 74,
+            },
+          ],
+        },
+      ],
+      "name": "Tempered",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Physical",
+        "Attack",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "50(45-54)% increased Physical Damage",
+          "template": "#% increased Physical Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 54,
+              "min": 45,
+              "value": 50,
+            },
+          ],
+        },
+        {
+          "raw": "+117(98-123) to Accuracy Rating",
+          "template": "+# to Accuracy Rating",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 123,
+              "min": 98,
+              "value": 117,
+            },
+          ],
+        },
+      ],
+      "name": "Champion's",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Physical",
+        "Attack",
+      ],
+      "tier": 4,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "149(135-154)% increased Physical Damage",
+          "template": "#% increased Physical Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 154,
+              "min": 135,
+              "value": 149,
+            },
+          ],
+        },
+      ],
+      "name": "Cruel",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Physical",
+        "Attack",
+      ],
+      "tier": 3,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "14(14-16)% increased Attack Speed",
+          "template": "#% increased Attack Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 16,
+              "min": 14,
+              "value": 14,
+            },
+          ],
+        },
+      ],
+      "name": "of Renown",
+      "qualityIncrease": null,
+      "tags": [
+        "Attack",
+        "Speed",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Gain 49(41-53) Life per enemy killed",
+          "template": "Gain # Life per enemy killed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 53,
+              "min": 41,
+              "value": 49,
+            },
+          ],
+        },
+      ],
+      "name": "of Valour",
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": 3,
+    },
+    {
+      "crafted": true,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+3 to Level of all Attack Skills",
+          "template": "+# to Level of all Attack Skills",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 3,
+            },
+          ],
+        },
+      ],
+      "name": "of the Essence",
+      "qualityIncrease": null,
+      "tags": [
+        "Attack",
+      ],
+      "tier": null,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "20(20-30)% increased Bolt Speed",
+          "template": "#% increased Bolt Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 30,
+              "min": 20,
+              "value": 20,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Crossbows",
+  "itemLevel": 80,
+  "name": "Onslaught Core",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +20% (augmented)",
+    },
+    {
+      "name": "Physical Damage",
+      "raw": "Physical Damage: 283-769 (augmented)",
+    },
+    {
+      "name": "Critical Hit Chance",
+      "raw": "Critical Hit Chance: 5.00%",
+    },
+    {
+      "name": "Attacks per Second",
+      "raw": "Attacks per Second: 1.82 (augmented)",
+    },
+    {
+      "name": "Reload Time",
+      "raw": "Reload Time: 0.75 (augmented)",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Rare",
+  "requiredLevel": 77,
+  "requirements": "Requires: Level 77, 89 Str, 89 Dex",
+  "runeMods": [
+    {
+      "raw": "20% increased Physical Damage",
+      "template": "#% increased Physical Damage",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 20,
+        },
+      ],
+    },
+    {
+      "raw": "Gain 5% of Damage as Extra Damage of all Elements",
+      "template": "Gain #% of Damage as Extra Damage of all Elements",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 5,
+        },
+      ],
+    },
+  ],
+  "sockets": 2,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 08-life-flasks--bubbling-ultimate-life-flask-of-the-endl-8330cbc1.txt 1`] = `
+{
+  "baseType": "Bubbling Ultimate Life Flask of the Endless",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "30(28-30)% of Recovery applied Instantly",
+          "template": "#% of Recovery applied Instantly",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 30,
+              "min": 28,
+              "value": 30,
+            },
+          ],
+        },
+      ],
+      "name": "Bubbling",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "40(39-46)% increased Charges gained",
+          "template": "#% increased Charges gained",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 46,
+              "min": 39,
+              "value": 40,
+            },
+          ],
+        },
+      ],
+      "name": "of the Endless",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 4,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Life Flasks",
+  "itemLevel": 81,
+  "name": null,
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +20% (augmented)",
+    },
+    {
+      "name": null,
+      "raw": "Recovers 1104 (augmented) Life over 3 Seconds",
+    },
+    {
+      "name": null,
+      "raw": "Consumes 10 of 75 Charges on use",
+    },
+    {
+      "name": null,
+      "raw": "Currently has 75 Charges",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Magic",
+  "requiredLevel": 60,
+  "requirements": "Requires: Level 60",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Right click to drink. Can only hold charges while in belt. Refill at Wells or by killing monsters.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 09-relics--swift-seal-relic-of-overflowing-094e1d88.txt 1`] = `
+{
+  "baseType": "Swift Seal Relic of Overflowing",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "6(5-6)% increased Movement Speed",
+          "template": "#% increased Movement Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 6,
+              "min": 5,
+              "value": 6,
+            },
+          ],
+        },
+      ],
+      "name": "Swift",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Fountains have 10(9-10)% chance to grant double Sacred Water",
+          "template": "Fountains have #% chance to grant double Sacred Water",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 10,
+              "min": 9,
+              "value": 10,
+            },
+          ],
+        },
+      ],
+      "name": "of Overflowing",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 2,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Relics",
+  "itemLevel": 81,
+  "name": null,
+  "note": null,
+  "properties": [],
+  "quality": null,
+  "rarity": "Magic",
+  "requiredLevel": null,
+  "requirements": null,
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Place this item on the Relic Altar at the start of the Trial of the Sekhemas",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 10-stackable-currency--greater-orb-of-augmentation-a4de8d25.txt 1`] = `
+{
+  "baseType": "Greater Orb of Augmentation",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Stackable Currency",
+  "itemLevel": null,
+  "name": null,
+  "note": null,
+  "properties": [
+    {
+      "name": "Stack Size",
+      "raw": "Stack Size: 26/30",
+    },
+    {
+      "name": "Minimum Modifier Level",
+      "raw": "Minimum Modifier Level: 44",
+    },
+  ],
+  "quality": null,
+  "rarity": "Currency",
+  "requiredLevel": null,
+  "requirements": null,
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Augments a Magic item with a new random modifier",
+    ],
+    [
+      "Right click this item then left click a magic item to apply it. Magic items can have up to two random modifiers.",
+      "Shift click to unstack.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] = `
+{
+  "baseType": "Kamasan Tiara",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "66(56-67)% increased Energy Shield",
+          "template": "#% increased Energy Shield",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 67,
+              "min": 56,
+              "value": 66,
+            },
+          ],
+        },
+      ],
+      "name": "Fearless",
+      "qualityIncrease": null,
+      "tags": [
+        "Energy Shield",
+      ],
+      "tier": 4,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "25(21-26)% increased Energy Shield",
+          "template": "#% increased Energy Shield",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 26,
+              "min": 21,
+              "value": 25,
+            },
+          ],
+        },
+        {
+          "raw": "+17(17-20) to maximum Mana",
+          "template": "+# to maximum Mana",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 20,
+              "min": 17,
+              "value": 17,
+            },
+          ],
+        },
+      ],
+      "name": "Sacred",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+        "Energy Shield",
+      ],
+      "tier": 4,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+74(70-84) to maximum Life",
+          "template": "+# to maximum Life",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 84,
+              "min": 70,
+              "value": 74,
+            },
+          ],
+        },
+      ],
+      "name": "Robust",
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": 5,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+38(36-40)% to Fire Resistance",
+          "template": "+#% to Fire Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 40,
+              "min": 36,
+              "value": 38,
+            },
+          ],
+        },
+      ],
+      "name": "of Magma",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Fire",
+        "Resistance",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+24(24-27)% to Chaos Resistance",
+          "template": "+#% to Chaos Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 27,
+              "min": 24,
+              "value": 24,
+            },
+          ],
+        },
+      ],
+      "name": "of Bameth",
+      "qualityIncrease": null,
+      "tags": [
+        "Chaos",
+        "Resistance",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+37(36-40)% to Cold Resistance",
+          "template": "+#% to Cold Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 40,
+              "min": 36,
+              "value": 37,
+            },
+          ],
+        },
+      ],
+      "name": "of the Ice",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Cold",
+        "Resistance",
+      ],
+      "tier": 2,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Helmets",
+  "itemLevel": 81,
+  "name": "Phoenix Horn",
+  "note": null,
+  "properties": [
+    {
+      "name": "Energy Shield",
+      "raw": "Energy Shield: 197 (augmented)",
+    },
+  ],
+  "quality": null,
+  "rarity": "Rare",
+  "requiredLevel": 75,
+  "requirements": "Requires: Level 75, 107 Int",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 12-sceptres--mazarine-omen-sceptre-of-the-proficient-2381aa67.txt 1`] = `
+{
+  "baseType": "Mazarine Omen Sceptre of the Proficient",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+147(125-149) to maximum Mana",
+          "template": "+# to maximum Mana",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 149,
+              "min": 125,
+              "value": 147,
+            },
+          ],
+        },
+      ],
+      "name": "Mazarine",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "35% reduced Attribute Requirements",
+          "template": "#% reduced Attribute Requirements",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 35,
+            },
+          ],
+        },
+      ],
+      "name": "of the Proficient",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 1,
+    },
+  ],
+  "grantedSkills": [
+    "Level 19 Malice",
+  ],
+  "implicits": [],
+  "itemClass": "Sceptres",
+  "itemLevel": 82,
+  "name": null,
+  "note": null,
+  "properties": [
+    {
+      "name": "Spirit",
+      "raw": "Spirit: 100",
+    },
+  ],
+  "quality": null,
+  "rarity": "Magic",
+  "requiredLevel": 84,
+  "requirements": "Requires: Level 84, 29 (augmented) Str, 74 (augmented) Int",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 13-body-armours--exceptional-corsair-coat-2590bdef.txt 1`] = `
+{
+  "baseType": "Exceptional Corsair Coat",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "5% increased Movement Speed",
+          "template": "#% increased Movement Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 5,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Speed",
+      ],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Body Armours",
+  "itemLevel": 82,
+  "name": null,
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +22% (augmented)",
+    },
+    {
+      "name": "Evasion Rating",
+      "raw": "Evasion Rating: 550 (augmented)",
+    },
+  ],
+  "quality": 22,
+  "rarity": "Normal",
+  "requiredLevel": 80,
+  "requirements": "Requires: Level 80, 121 Dex",
+  "runeMods": [],
+  "sockets": 3,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 14-waystones--painful-waystone-tier-15-of-erosion-d59c5af4.txt 1`] = `
+{
+  "baseType": "Painful Waystone (Tier 15) of Erosion",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "16(15-19)% increased Monster Damage",
+          "template": "#% increased Monster Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 19,
+              "min": 15,
+              "value": 16,
+            },
+          ],
+        },
+      ],
+      "name": "Painful",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Players are periodically Cursed with Elemental Weakness — Unscalable Value",
+          "template": "Players are periodically Cursed with Elemental Weakness",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": "of Erosion",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 1,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Waystones",
+  "itemLevel": 80,
+  "name": null,
+  "note": null,
+  "properties": [
+    {
+      "name": "Revives Available",
+      "raw": "Revives Available: 4 (augmented)",
+    },
+    {
+      "name": "Item Rarity",
+      "raw": "Item Rarity: +13% (augmented)",
+    },
+    {
+      "name": "Monster Rarity",
+      "raw": "Monster Rarity: +25% (augmented)",
+    },
+    {
+      "name": "Waystone Drop Chance",
+      "raw": "Waystone Drop Chance: +40% (augmented)",
+    },
+  ],
+  "quality": null,
+  "rarity": "Magic",
+  "requiredLevel": null,
+  "requirements": null,
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Can be used in a Map Device, allowing you to enter a Map. Waystones can only be used once.",
+    ],
+  ],
+  "waystoneTier": 15,
+}
+`;
+
+exports[`parseItem on every fixture > 15-pinnacle-keys--faded-crisis-fragment-39997872.txt 1`] = `
+{
+  "baseType": "Faded Crisis Fragment",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Pinnacle Keys",
+  "itemLevel": null,
+  "name": null,
+  "note": null,
+  "properties": [],
+  "quality": null,
+  "rarity": "Currency",
+  "requiredLevel": null,
+  "requirements": null,
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "The carvings it holds are too worn to decipher.",
+    ],
+    [
+      "Can be placed in a door in The Burning Monolith.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 16-staves--the-unborn-lich-767adbc8.txt 1`] = `
+{
+  "baseType": "Ravenous Staff",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": true,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+47(40-60) to Spirit",
+          "template": "+# to Spirit",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 60,
+              "min": 40,
+              "value": 47,
+            },
+          ],
+        },
+        {
+          "raw": "8(6-10)% increased Spirit Reservation Efficiency of Skills",
+          "template": "#% increased Spirit Reservation Efficiency of Skills",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 10,
+              "min": 6,
+              "value": 8,
+            },
+          ],
+        },
+      ],
+      "name": "",
+      "qualityIncrease": 79,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": true,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "5(4-5)% increased Spell Damage per 100 Maximum Life",
+          "template": "#% increased Spell Damage per # Maximum Life",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 5,
+              "min": 4,
+              "value": 5,
+            },
+            {
+              "value": 100,
+            },
+          ],
+        },
+      ],
+      "name": "Ulaman's",
+      "qualityIncrease": 79,
+      "tags": [
+        "Life",
+        "Damage",
+        "Caster",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "79(60-80)% increased Desecrated Modifier magnitudes — Unscalable Value",
+          "template": "#% increased Desecrated Modifier magnitudes",
+          "unscalable": true,
+          "values": [
+            {
+              "max": 80,
+              "min": 60,
+              "value": 79,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": true,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "27(25-35)% chance for Spell Skills to fire 2 additional Projectiles",
+          "template": "#% chance for Spell Skills to fire # additional Projectiles",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 35,
+              "min": 25,
+              "value": 27,
+            },
+            {
+              "value": 2,
+            },
+          ],
+        },
+      ],
+      "name": "of Ulaman",
+      "qualityIncrease": 79,
+      "tags": [
+        "Caster",
+      ],
+      "tier": 1,
+    },
+  ],
+  "grantedSkills": [
+    "Level 18 Feast of Flesh",
+    "Level 18 His Grave Command",
+  ],
+  "implicits": [],
+  "itemClass": "Staves",
+  "itemLevel": 83,
+  "name": "The Unborn Lich",
+  "note": null,
+  "properties": [],
+  "quality": null,
+  "rarity": "Unique",
+  "requiredLevel": 78,
+  "requirements": "Requires: Level 78, 137 (unmet) Int",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "In ghastly pits beneath the world,",
+      "Kulemak grows countless new bodies,",
+      "each more powerful than the last.",
+      "Not all of his abominations survive.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 17-skill-gems--permafrost-bolts-0f10022c.txt 1`] = `
+{
+  "baseType": "Permafrost Bolts",
+  "corrupted": true,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Skill Gems",
+  "itemLevel": null,
+  "name": null,
+  "note": null,
+  "properties": [
+    {
+      "name": null,
+      "raw": "Attack, AoE, Ammunition, Projectile, Cold, Merging",
+    },
+    {
+      "name": "Level",
+      "raw": "Level: 26 (augmented)",
+    },
+    {
+      "name": null,
+      "raw": "20 Levels from Gem (Max)",
+    },
+    {
+      "name": null,
+      "raw": "+1 Level from Corruption (augmented)",
+    },
+    {
+      "name": null,
+      "raw": "+5 Levels from Global Modifiers (augmented)",
+    },
+    {
+      "name": "Quality",
+      "raw": "Quality: +20% (augmented)",
+    },
+    {
+      "name": "Cost",
+      "raw": "Cost: 69 Mana",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Gem",
+  "requiredLevel": 90,
+  "requirements": "Requires: Level 90, 86 Str, 86 Dex, Level 65 (gem); Requires: Crossbow",
+  "runeMods": [],
+  "sockets": 5,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Load your Crossbow with icy bolts that fragment in flight, damaging enemies on hit and in a small cone behind their final target. The icy coating on the bolts makes them extremely potent at Freezing enemies. These fragments can Merge.",
+    ],
+    [
+      "Permafrost Bolts",
+    ],
+    [
+      "Projectile",
+    ],
+    [
+      "Cost: 0 Mana",
+      "Attack Damage: 63%",
+    ],
+    [
+      "Converts 80% of Physical damage to Cold damage",
+      "Pierces 5 targets",
+      "600% more Magnitude of Chill inflicted",
+      "600% more Freeze Buildup",
+      "Bolts shatter on impact, dealing Damage in a 2.7 metre cone",
+      "Fires 12 fragments per shot",
+    ],
+    [
+      "Ammunition",
+    ],
+    [
+      "+1 Bolt loaded per clip",
+    ],
+    [
+      "Skills can be managed in the Skills Panel.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 18-jewels--dusk-shine-cb55974a.txt 1`] = `
+{
+  "baseType": "Time-Lost Emerald",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Small Passive Skills in Radius also grant Herald Skills deal 2(2-4)% increased Damage",
+          "template": "Small Passive Skills in Radius also grant Herald Skills deal #% increased Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 4,
+              "min": 2,
+              "value": 2,
+            },
+          ],
+        },
+      ],
+      "name": "Heralding",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Small Passive Skills in Radius also grant 1(1-2)% increased Lightning Damage",
+          "template": "Small Passive Skills in Radius also grant #% increased Lightning Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 2,
+              "min": 1,
+              "value": 1,
+            },
+          ],
+        },
+      ],
+      "name": "Humming",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Elemental",
+        "Lightning",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Notable Passive Skills in Radius also grant 1(1-2)% increased Attack Speed with Quarterstaves",
+          "template": "Notable Passive Skills in Radius also grant #% increased Attack Speed with Quarterstaves",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 2,
+              "min": 1,
+              "value": 1,
+            },
+          ],
+        },
+      ],
+      "name": "of Sequencing",
+      "qualityIncrease": null,
+      "tags": [
+        "Attack",
+        "Speed",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Small Passive Skills in Radius also grant 2(1-2)% increased Mana Recovery from Flasks",
+          "template": "Small Passive Skills in Radius also grant #% increased Mana Recovery from Flasks",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 2,
+              "min": 1,
+              "value": 2,
+            },
+          ],
+        },
+      ],
+      "name": "of Quenching",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+      ],
+      "tier": 1,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Jewels",
+  "itemLevel": 80,
+  "name": "Dusk Shine",
+  "note": null,
+  "properties": [
+    {
+      "name": "Radius",
+      "raw": "Radius: Small",
+    },
+  ],
+  "quality": null,
+  "rarity": "Rare",
+  "requiredLevel": null,
+  "requirements": null,
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 19-charms--sanguis-heroum-a68061d7.txt 1`] = `
+{
+  "baseType": "Staunching Charm",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Creates Consecrated Ground on use — Unscalable Value",
+          "template": "Creates Consecrated Ground on use",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Charm",
+      ],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Gains 0.17(0.15-0.20) Charges per Second",
+          "template": "Gains # Charges per Second",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 0.2,
+              "min": 0.15,
+              "value": 0.17,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "Used when you start Bleeding — Unscalable Value",
+          "template": "Used when you start Bleeding",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Charms",
+  "itemLevel": 80,
+  "name": "Sanguis Heroum",
+  "note": null,
+  "properties": [
+    {
+      "name": null,
+      "raw": "Lasts 3 Seconds",
+    },
+    {
+      "name": null,
+      "raw": "Consumes 30 of 40 Charges on use",
+    },
+    {
+      "name": null,
+      "raw": "Currently has 40 Charges",
+    },
+    {
+      "name": null,
+      "raw": "Grants Immunity to Bleeding",
+    },
+  ],
+  "quality": null,
+  "rarity": "Unique",
+  "requiredLevel": 18,
+  "requirements": "Requires: Level 18",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Wraeclast has known too few true heroes.",
+      "It remembers those that stood in defiance.",
+    ],
+    [
+      "Used automatically when condition is met. Can only hold charges while in belt. Refill at Wells or by killing monsters.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 20-charms--sunny-thawing-charm-of-the-copious-58a4ca81.txt 1`] = `
+{
+  "baseType": "Sunny Thawing Charm of the Copious",
+  "corrupted": true,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Also grants 61(44-66) Guard",
+          "template": "Also grants # Guard",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 66,
+              "min": 44,
+              "value": 61,
+            },
+          ],
+        },
+      ],
+      "name": "Sunny",
+      "qualityIncrease": null,
+      "tags": [
+        "Charm",
+      ],
+      "tier": 6,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "37(31-38)% increased Charges",
+          "template": "#% increased Charges",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 38,
+              "min": 31,
+              "value": 37,
+            },
+          ],
+        },
+      ],
+      "name": "of the Copious",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 5,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "Used when you become Frozen — Unscalable Value",
+          "template": "Used when you become Frozen",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Charms",
+  "itemLevel": 21,
+  "name": null,
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +9% (augmented)",
+    },
+    {
+      "name": null,
+      "raw": "Lasts 3,30 (augmented) Seconds",
+    },
+    {
+      "name": null,
+      "raw": "Consumes 40 of 54 (augmented) Charges on use",
+    },
+    {
+      "name": null,
+      "raw": "Currently has 54 Charges",
+    },
+    {
+      "name": null,
+      "raw": "Grants Immunity to Freeze",
+    },
+  ],
+  "quality": 9,
+  "rarity": "Magic",
+  "requiredLevel": 12,
+  "requirements": "Requires: Level 12",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Used automatically when condition is met. Can only hold charges while in belt. Refill at Wells or by killing monsters.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 21-crossbows--spirit-core-9efeb666.txt 1`] = `
+{
+  "baseType": "Gemini Crossbow",
+  "corrupted": true,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Adds 48(39-53) to 79(59-80) Fire Damage",
+          "template": "Adds # to # Fire Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 53,
+              "min": 39,
+              "value": 48,
+            },
+            {
+              "max": 80,
+              "min": 59,
+              "value": 79,
+            },
+          ],
+        },
+      ],
+      "name": "Scorching",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Elemental",
+        "Fire",
+        "Attack",
+      ],
+      "tier": 5,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Leeches 7.01(7-7.9)% of Physical Damage as Mana",
+          "template": "Leeches #% of Physical Damage as Mana",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 7.9,
+              "min": 7,
+              "value": 7.01,
+            },
+          ],
+        },
+      ],
+      "name": "of the Drought",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+        "Physical",
+        "Attack",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "25% reduced Attribute Requirements",
+          "template": "#% reduced Attribute Requirements",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 25,
+            },
+          ],
+        },
+      ],
+      "name": "of the Talented",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 3,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "Loads an additional bolt",
+          "template": "Loads an additional bolt",
+          "unscalable": false,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Attack",
+      ],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Crossbows",
+  "itemLevel": 80,
+  "name": "Spirit Core",
+  "note": null,
+  "properties": [
+    {
+      "name": "Physical Damage",
+      "raw": "Physical Damage: 28-112",
+    },
+    {
+      "name": "Fire Damage",
+      "raw": "Fire Damage: 48-79 (fire)",
+    },
+    {
+      "name": "Critical Hit Chance",
+      "raw": "Critical Hit Chance: 5.00%",
+    },
+    {
+      "name": "Attacks per Second",
+      "raw": "Attacks per Second: 1.60",
+    },
+    {
+      "name": "Reload Time",
+      "raw": "Reload Time: 1.10",
+    },
+  ],
+  "quality": null,
+  "rarity": "Rare",
+  "requiredLevel": 78,
+  "requirements": "Requires: Level 78, 66 (augmented) Str, 66 (augmented) Dex",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 22-bows--infusing-obliterator-bow-of-the-skilled-b8aaca45.txt 1`] = `
+{
+  "baseType": "Infusing Obliterator Bow of the Skilled",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "42(36-52)% increased Elemental Damage with Attacks",
+          "template": "#% increased Elemental Damage with Attacks",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 52,
+              "min": 36,
+              "value": 42,
+            },
+          ],
+        },
+      ],
+      "name": "Infusing",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Elemental",
+        "Fire",
+        "Cold",
+        "Lightning",
+      ],
+      "tier": 5,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "30% reduced Attribute Requirements",
+          "template": "#% reduced Attribute Requirements",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 30,
+            },
+          ],
+        },
+      ],
+      "name": "of the Skilled",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 2,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "50% reduced Projectile Range",
+          "template": "#% reduced Projectile Range",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 50,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Bows",
+  "itemLevel": 81,
+  "name": null,
+  "note": null,
+  "properties": [
+    {
+      "name": "Physical Damage",
+      "raw": "Physical Damage: 62-115",
+    },
+    {
+      "name": "Critical Hit Chance",
+      "raw": "Critical Hit Chance: 5.00%",
+    },
+    {
+      "name": "Attacks per Second",
+      "raw": "Attacks per Second: 1.10",
+    },
+  ],
+  "quality": null,
+  "rarity": "Magic",
+  "requiredLevel": 78,
+  "requirements": "Requires: Level 78, 114 (augmented) Dex",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 23-uncut-skill-gems--uncut-skill-gem-level-19-ecd62ed4.txt 1`] = `
+{
+  "baseType": "Uncut Skill Gem (Level 19)",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Uncut Skill Gems",
+  "itemLevel": null,
+  "name": null,
+  "note": null,
+  "properties": [],
+  "quality": null,
+  "rarity": "Currency",
+  "requiredLevel": null,
+  "requirements": null,
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Creates a Skill Gem or Level an existing gem to level 19",
+    ],
+    [
+      "Right Click to engrave a Skill Gem.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 24-tablet--teeming-abyss-tablet-of-escalation-839f8a3e.txt 1`] = `
+{
+  "baseType": "Teeming Abyss Tablet of Escalation",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Map has 30(30-40)% increased Magic Monsters",
+          "template": "Map has #% increased Magic Monsters",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 40,
+              "min": 30,
+              "value": 30,
+            },
+          ],
+        },
+      ],
+      "name": "Teeming",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Abyssal Monsters have 9(8-12)% increased Effectiveness for each closed Pit, up to 100%",
+          "template": "Abyssal Monsters have #% increased Effectiveness for each closed Pit, up to #%",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 12,
+              "min": 8,
+              "value": 9,
+            },
+            {
+              "value": 100,
+            },
+          ],
+        },
+      ],
+      "name": "of Escalation",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 1,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "Adds Abysses to a Map",
+          "template": "Adds Abysses to a Map",
+          "unscalable": false,
+          "values": [],
+        },
+        {
+          "raw": "10 uses remaining",
+          "template": "# uses remaining",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 10,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Tablet",
+  "itemLevel": 81,
+  "name": null,
+  "note": null,
+  "properties": [],
+  "quality": null,
+  "rarity": "Magic",
+  "requiredLevel": null,
+  "requirements": null,
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Can be used in a personal Map Device to add modifiers to a Map.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 25-jewels--against-the-darkness-32d65d52.txt 1`] = `
+{
+  "baseType": "Time-Lost Diamond",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Notable Passive Skills in Radius also grant +1% to Maximum Fire Resistance",
+          "template": "Notable Passive Skills in Radius also grant +#% to Maximum Fire Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 1,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Fire",
+        "Resistance",
+      ],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Notable Passive Skills in Radius also grant +1% to Maximum Lightning Resistance",
+          "template": "Notable Passive Skills in Radius also grant +#% to Maximum Lightning Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 1,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Lightning",
+        "Resistance",
+      ],
+      "tier": null,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Jewels",
+  "itemLevel": 82,
+  "name": "Against the Darkness",
+  "note": null,
+  "properties": [
+    {
+      "name": "Limited to",
+      "raw": "Limited to: 1",
+    },
+    {
+      "name": "Radius",
+      "raw": "Radius: Small",
+    },
+  ],
+  "quality": null,
+  "rarity": "Unique",
+  "requiredLevel": null,
+  "requirements": null,
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "After the fires, in the depths of the Winter of the World, all life in the Vastiri banded together. Whether serpent, hyena, human, or golem, hated enemies clasped hand to claw, built refuge, and fought side by side against the Abyssals. Thus, the Third Pact was born.",
+    ],
+    [
+      "Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 26-rings--tempered-topaz-ring-of-the-rainbow-f7fa195f.txt 1`] = `
+{
+  "baseType": "Tempered Topaz Ring of the Rainbow",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Adds 15(10-15) to 23(18-26) Physical Damage to Attacks",
+          "template": "Adds # to # Physical Damage to Attacks",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 15,
+              "min": 10,
+              "value": 15,
+            },
+            {
+              "max": 26,
+              "min": 18,
+              "value": 23,
+            },
+          ],
+        },
+      ],
+      "name": "Tempered",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Physical",
+        "Attack",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+16(15-16)% to all Elemental Resistances",
+          "template": "+#% to all Elemental Resistances",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 16,
+              "min": 15,
+              "value": 16,
+            },
+          ],
+        },
+      ],
+      "name": "of the Rainbow",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Fire",
+        "Cold",
+        "Lightning",
+        "Resistance",
+      ],
+      "tier": 1,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "+25(20-30)% to Lightning Resistance",
+          "template": "+#% to Lightning Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 30,
+              "min": 20,
+              "value": 25,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Lightning",
+        "Resistance",
+      ],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Rings",
+  "itemLevel": 82,
+  "name": null,
+  "note": null,
+  "properties": [],
+  "quality": null,
+  "rarity": "Magic",
+  "requiredLevel": 54,
+  "requirements": "Requires: Level 54",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 27-staves--glyphic-chiming-staff-of-sortilege-40e549a5.txt 1`] = `
+{
+  "baseType": "Glyphic Chiming Staff of Sortilege",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "197(189-208)% increased Spell Damage",
+          "template": "#% increased Spell Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 208,
+              "min": 189,
+              "value": 197,
+            },
+          ],
+        },
+      ],
+      "name": "Glyphic",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Caster",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "33(32-37)% increased Cast Speed",
+          "template": "#% increased Cast Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 37,
+              "min": 32,
+              "value": 33,
+            },
+          ],
+        },
+      ],
+      "name": "of Sortilege",
+      "qualityIncrease": null,
+      "tags": [
+        "Caster",
+        "Speed",
+      ],
+      "tier": 4,
+    },
+  ],
+  "grantedSkills": [
+    "Level 18 Sigil of Power",
+  ],
+  "implicits": [],
+  "itemClass": "Staves",
+  "itemLevel": 80,
+  "name": null,
+  "note": null,
+  "properties": [],
+  "quality": null,
+  "rarity": "Magic",
+  "requiredLevel": 78,
+  "requirements": "Requires: Level 78, 137 (unmet) Int",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 28-quivers--focused-visceral-quiver-of-renown-6e5eee3c.txt 1`] = `
+{
+  "baseType": "Focused Visceral Quiver of Renown",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+70(61-84) to Accuracy Rating",
+          "template": "+# to Accuracy Rating",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 84,
+              "min": 61,
+              "value": 70,
+            },
+          ],
+        },
+      ],
+      "name": "Focused",
+      "qualityIncrease": null,
+      "tags": [
+        "Attack",
+      ],
+      "tier": 7,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "14(14-16)% increased Attack Speed",
+          "template": "#% increased Attack Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 16,
+              "min": 14,
+              "value": 14,
+            },
+          ],
+        },
+      ],
+      "name": "of Renown",
+      "qualityIncrease": null,
+      "tags": [
+        "Attack",
+        "Speed",
+      ],
+      "tier": 1,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "21(20-30)% increased Critical Hit Chance for Attacks",
+          "template": "#% increased Critical Hit Chance for Attacks",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 30,
+              "min": 20,
+              "value": 21,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Attack",
+        "Critical",
+      ],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Quivers",
+  "itemLevel": 80,
+  "name": null,
+  "note": null,
+  "properties": [],
+  "quality": null,
+  "rarity": "Magic",
+  "requiredLevel": 64,
+  "requirements": "Requires: Level 64",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Can only be equipped if you are wielding a Bow.",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 29-one-hand-maces--viper-grinder-2eaa445c.txt 1`] = `
+{
+  "baseType": "Crown Mace",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "154(135-154)% increased Physical Damage",
+          "template": "#% increased Physical Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 154,
+              "min": 135,
+              "value": 154,
+            },
+          ],
+        },
+      ],
+      "name": "Cruel",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Physical",
+        "Attack",
+      ],
+      "tier": 3,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Causes 41(41-50)% increased Stun Buildup",
+          "template": "Causes #% increased Stun Buildup",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 50,
+              "min": 41,
+              "value": 41,
+            },
+          ],
+        },
+      ],
+      "name": "of the Boxer",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 4,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Gain 5(4-5) Mana per enemy killed",
+          "template": "Gain # Mana per enemy killed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 5,
+              "min": 4,
+              "value": 5,
+            },
+          ],
+        },
+      ],
+      "name": "of Osmosis",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+      ],
+      "tier": 7,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+16(14-16)% to Critical Damage Bonus",
+          "template": "+#% to Critical Damage Bonus",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 16,
+              "min": 14,
+              "value": 16,
+            },
+          ],
+        },
+      ],
+      "name": "of Rage",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Attack",
+        "Critical",
+      ],
+      "tier": 4,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "One Hand Maces",
+  "itemLevel": 80,
+  "name": "Viper Grinder",
+  "note": null,
+  "properties": [
+    {
+      "name": "Physical Damage",
+      "raw": "Physical Damage: 109-226 (augmented)",
+    },
+    {
+      "name": "Critical Hit Chance",
+      "raw": "Critical Hit Chance: 5.00%",
+    },
+    {
+      "name": "Attacks per Second",
+      "raw": "Attacks per Second: 1.40",
+    },
+  ],
+  "quality": null,
+  "rarity": "Rare",
+  "requiredLevel": 72,
+  "requirements": "Requires: Level 72, 149 (unmet) Str",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 30-sceptres--agony-cry-9c164282.txt 1`] = `
+{
+  "baseType": "Rattling Sceptre",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+85(80-89) to maximum Mana",
+          "template": "+# to maximum Mana",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 89,
+              "min": 80,
+              "value": 85,
+            },
+          ],
+        },
+      ],
+      "name": "Opalescent",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+      ],
+      "tier": 5,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "11(10-14)% increased Spirit",
+          "template": "#% increased Spirit",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 14,
+              "min": 10,
+              "value": 11,
+            },
+          ],
+        },
+        {
+          "raw": "+17(17-20) to maximum Mana",
+          "template": "+# to maximum Mana",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 20,
+              "min": 17,
+              "value": 17,
+            },
+          ],
+        },
+      ],
+      "name": "Advisor's",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 7,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Allies in your Presence have 10(10-14)% increased Critical Hit Chance",
+          "template": "Allies in your Presence have #% increased Critical Hit Chance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 14,
+              "min": 10,
+              "value": 10,
+            },
+          ],
+        },
+      ],
+      "name": "of Menace",
+      "qualityIncrease": null,
+      "tags": [
+        "Critical",
+      ],
+      "tier": 6,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "16(13-17)% increased Mana Regeneration Rate",
+          "template": "#% increased Mana Regeneration Rate",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 17,
+              "min": 13,
+              "value": 16,
+            },
+          ],
+        },
+        {
+          "raw": "10% increased Light Radius",
+          "template": "#% increased Light Radius",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 10,
+            },
+          ],
+        },
+      ],
+      "name": "of Kindling",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+17(17-20) to Intelligence",
+          "template": "+# to Intelligence",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 20,
+              "min": 17,
+              "value": 17,
+            },
+          ],
+        },
+      ],
+      "name": "of the Augur",
+      "qualityIncrease": null,
+      "tags": [
+        "Attribute",
+      ],
+      "tier": 5,
+    },
+  ],
+  "grantedSkills": [
+    "Level 19 Skeletal Warrior Minion",
+  ],
+  "implicits": [],
+  "itemClass": "Sceptres",
+  "itemLevel": 80,
+  "name": "Agony Cry",
+  "note": null,
+  "properties": [
+    {
+      "name": "Spirit",
+      "raw": "Spirit: 111 (augmented)",
+    },
+  ],
+  "quality": null,
+  "rarity": "Rare",
+  "requiredLevel": 84,
+  "requirements": "Requires: Level 84, 147 (unmet) Int",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] = `
+{
+  "baseType": "Tasalian Focus",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "79(75-89)% increased Spell Damage",
+          "template": "#% increased Spell Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 89,
+              "min": 75,
+              "value": 79,
+            },
+          ],
+        },
+      ],
+      "name": "Incanter's",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Caster",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "36(33-38)% increased Energy Shield",
+          "template": "#% increased Energy Shield",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 38,
+              "min": 33,
+              "value": 36,
+            },
+          ],
+        },
+        {
+          "raw": "+27(27-32) to maximum Mana",
+          "template": "+# to maximum Mana",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 32,
+              "min": 27,
+              "value": 27,
+            },
+          ],
+        },
+      ],
+      "name": "Heavenly",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+        "Energy Shield",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+77(74-80) to maximum Energy Shield",
+          "template": "+# to maximum Energy Shield",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 80,
+              "min": 74,
+              "value": 77,
+            },
+          ],
+        },
+      ],
+      "name": "Scintillating",
+      "qualityIncrease": null,
+      "tags": [
+        "Energy Shield",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+24(21-25)% to Lightning Resistance",
+          "template": "+#% to Lightning Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 25,
+              "min": 21,
+              "value": 24,
+            },
+          ],
+        },
+      ],
+      "name": "of the Thunderhead",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Lightning",
+        "Resistance",
+      ],
+      "tier": 5,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+43(41-45)% to Cold Resistance",
+          "template": "+#% to Cold Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 45,
+              "min": 41,
+              "value": 43,
+            },
+          ],
+        },
+      ],
+      "name": "of Haast",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Cold",
+        "Resistance",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+40(36-40)% to Fire Resistance",
+          "template": "+#% to Fire Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 40,
+              "min": 36,
+              "value": 40,
+            },
+          ],
+        },
+      ],
+      "name": "of Magma",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Fire",
+        "Resistance",
+      ],
+      "tier": 2,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Foci",
+  "itemLevel": 83,
+  "name": "Entropy Anthem",
+  "note": "~b/o 1 divine",
+  "properties": [
+    {
+      "name": "Energy Shield",
+      "raw": "Energy Shield: 228 (augmented)",
+    },
+  ],
+  "quality": null,
+  "rarity": "Rare",
+  "requiredLevel": 80,
+  "requirements": "Requires: Level 80, 115 Int",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = `
+{
+  "baseType": "Tawhoan Tower Shield",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+218(191-221) to Armour",
+          "template": "+# to Armour",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 221,
+              "min": 191,
+              "value": 218,
+            },
+          ],
+        },
+      ],
+      "name": "Enveloped",
+      "qualityIncrease": null,
+      "tags": [
+        "Armour",
+      ],
+      "tier": 3,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "5(5-7) to 8(7-10) Physical Thorns damage",
+          "template": "# to # Physical Thorns damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 7,
+              "min": 5,
+              "value": 5,
+            },
+            {
+              "max": 10,
+              "min": 7,
+              "value": 8,
+            },
+          ],
+        },
+      ],
+      "name": "Spiny",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Physical",
+      ],
+      "tier": 6,
+    },
+    {
+      "crafted": true,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+116(100-119) to maximum Life",
+          "template": "+# to maximum Life",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 119,
+              "min": 100,
+              "value": 116,
+            },
+          ],
+        },
+      ],
+      "name": "Virile",
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": 4,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "8% additional Physical Damage Reduction",
+          "template": "#% additional Physical Damage Reduction",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 8,
+            },
+          ],
+        },
+      ],
+      "name": "of the Conservator",
+      "qualityIncrease": null,
+      "tags": [
+        "Physical",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+13(12-15)% to Chaos Resistance",
+          "template": "+#% to Chaos Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 15,
+              "min": 12,
+              "value": 13,
+            },
+          ],
+        },
+      ],
+      "name": "of Eviction",
+      "qualityIncrease": null,
+      "tags": [
+        "Chaos",
+        "Resistance",
+      ],
+      "tier": 4,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+2% to Maximum Fire Resistance",
+          "template": "+#% to Maximum Fire Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 2,
+            },
+          ],
+        },
+      ],
+      "name": "of the Molten Core",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Fire",
+        "Resistance",
+      ],
+      "tier": 2,
+    },
+  ],
+  "grantedSkills": [
+    "Raise Shield",
+  ],
+  "implicits": [],
+  "itemClass": "Shields",
+  "itemLevel": 80,
+  "name": "Eagle Span",
+  "note": "~b/o 1 divine",
+  "properties": [
+    {
+      "name": "Block chance",
+      "raw": "Block chance: 26%",
+    },
+    {
+      "name": "Armour",
+      "raw": "Armour: 482 (augmented)",
+    },
+  ],
+  "quality": null,
+  "rarity": "Rare",
+  "requiredLevel": 80,
+  "requirements": "Requires: Level 80, 115 Str",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 33-wands--frostbound-dueling-wand-of-legerdemain-b5bd1c2d.txt 1`] = `
+{
+  "baseType": "Frostbound Dueling Wand of Legerdemain",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Gain 29(28-30)% of Damage as Extra Cold Damage",
+          "template": "Gain #% of Damage as Extra Cold Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 30,
+              "min": 28,
+              "value": 29,
+            },
+          ],
+        },
+      ],
+      "name": "Frostbound",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Elemental",
+        "Cold",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "28(25-28)% increased Cast Speed",
+          "template": "#% increased Cast Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 28,
+              "min": 25,
+              "value": 28,
+            },
+          ],
+        },
+      ],
+      "name": "of Legerdemain",
+      "qualityIncrease": null,
+      "tags": [
+        "Caster",
+        "Speed",
+      ],
+      "tier": 3,
+    },
+  ],
+  "grantedSkills": [
+    "Level 18 Spellslinger",
+  ],
+  "implicits": [],
+  "itemClass": "Wands",
+  "itemLevel": 80,
+  "name": null,
+  "note": null,
+  "properties": [],
+  "quality": null,
+  "rarity": "Magic",
+  "requiredLevel": 78,
+  "requirements": "Requires: Level 78, 137 (unmet) Int",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 34-wands--behemoth-spell-dbe6504d.txt 1`] = `
+{
+  "baseType": "Dueling Wand",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "16(15-19)% increased Spell Damage",
+          "template": "#% increased Spell Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 19,
+              "min": 15,
+              "value": 16,
+            },
+          ],
+        },
+        {
+          "raw": "+20(17-20) to maximum Mana",
+          "template": "+# to maximum Mana",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 20,
+              "min": 17,
+              "value": 20,
+            },
+          ],
+        },
+      ],
+      "name": "Caster's",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+        "Damage",
+        "Caster",
+      ],
+      "tier": 7,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+32(31-33) to Intelligence",
+          "template": "+# to Intelligence",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 33,
+              "min": 31,
+              "value": 32,
+            },
+          ],
+        },
+      ],
+      "name": "of the Virtuoso",
+      "qualityIncrease": null,
+      "tags": [
+        "Attribute",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "14(13-16)% increased Cast Speed",
+          "template": "#% increased Cast Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 16,
+              "min": 13,
+              "value": 14,
+            },
+          ],
+        },
+      ],
+      "name": "of Nimbleness",
+      "qualityIncrease": null,
+      "tags": [
+        "Caster",
+        "Speed",
+      ],
+      "tier": 6,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+1 to Level of all Lightning Spell Skills",
+          "template": "+# to Level of all Lightning Spell Skills",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 1,
+            },
+          ],
+        },
+      ],
+      "name": "of Sparks",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Lightning",
+        "Caster",
+        "Gem",
+      ],
+      "tier": 5,
+    },
+  ],
+  "grantedSkills": [
+    "Level 18 Spellslinger",
+  ],
+  "implicits": [],
+  "itemClass": "Wands",
+  "itemLevel": 80,
+  "name": "Behemoth Spell",
+  "note": null,
+  "properties": [],
+  "quality": null,
+  "rarity": "Rare",
+  "requiredLevel": 78,
+  "requirements": "Requires: Level 78, 137 (unmet) Int",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.txt 1`] = `
+{
+  "baseType": "Decorated Helm",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "791(600-800)% increased Armour and Evasion",
+          "template": "#% increased Armour and Evasion",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 800,
+              "min": 600,
+              "value": 791,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Armour",
+        "Evasion",
+      ],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "+296(200-300) to Accuracy Rating",
+          "template": "+# to Accuracy Rating",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 300,
+              "min": 200,
+              "value": 296,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Attack",
+      ],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "100% increased Critical Hit Chance",
+          "template": "#% increased Critical Hit Chance",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 100,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Critical",
+      ],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "33.9(30-60) Life Regeneration per second",
+          "template": "# Life Regeneration per second",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 60,
+              "min": 30,
+              "value": 33.9,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Can't use Body Armour — Unscalable Value",
+          "template": "Can't use Body Armour",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "You can wield Two-Handed Axes, Maces and Swords in one hand — Unscalable Value",
+          "template": "You can wield Two-Handed Axes, Maces and Swords in one hand",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "This item gains bonuses from Socketed Items as though it was a Body Armour — Unscalable Value",
+          "template": "This item gains bonuses from Socketed Items as though it was a Body Armour",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Helmets",
+  "itemLevel": 82,
+  "name": "The Bringer of Rain",
+  "note": null,
+  "properties": [
+    {
+      "name": "Armour",
+      "raw": "Armour: 1301 (augmented)",
+    },
+    {
+      "name": "Evasion Rating",
+      "raw": "Evasion Rating: 1176 (augmented)",
+    },
+  ],
+  "quality": null,
+  "rarity": "Unique",
+  "requiredLevel": 52,
+  "requirements": "Requires: Level 52, 41 Str, 41 Dex",
+  "runeMods": [
+    {
+      "raw": "+60 to maximum Life",
+      "template": "+# to maximum Life",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 60,
+        },
+      ],
+    },
+    {
+      "raw": "+18% to Cold Resistance",
+      "template": "+#% to Cold Resistance",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 18,
+        },
+      ],
+    },
+    {
+      "raw": "18% increased Mana Regeneration Rate",
+      "template": "#% increased Mana Regeneration Rate",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 18,
+        },
+      ],
+    },
+    {
+      "raw": "+100 to Stun Threshold",
+      "template": "+# to Stun Threshold",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 100,
+        },
+      ],
+    },
+  ],
+  "sockets": 4,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      ""What lies beneath your feet?!"",
+      ""Sacred ground, watered with tears of blood!"",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a.txt 1`] = `
+{
+  "baseType": "Striking Quarterstaff",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Adds 3(2-3) to 6(5-7) Physical Damage",
+          "template": "Adds # to # Physical Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 3,
+              "min": 2,
+              "value": 3,
+            },
+            {
+              "max": 7,
+              "min": 5,
+              "value": 6,
+            },
+          ],
+        },
+      ],
+      "name": "Glinting",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Physical",
+        "Attack",
+      ],
+      "tier": 9,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Gain 27(19-28) Life per enemy killed",
+          "template": "Gain # Life per enemy killed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 28,
+              "min": 19,
+              "value": 27,
+            },
+          ],
+        },
+      ],
+      "name": "of Conquest",
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": 5,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Leeches 6.12(6-6.9)% of Physical Damage as Mana",
+          "template": "Leeches #% of Physical Damage as Mana",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 6.9,
+              "min": 6,
+              "value": 6.12,
+            },
+          ],
+        },
+      ],
+      "name": "of the Arid",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+        "Physical",
+        "Attack",
+      ],
+      "tier": 3,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "13(11-13)% increased Stun Duration",
+          "template": "#% increased Stun Duration",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 13,
+              "min": 11,
+              "value": 13,
+            },
+          ],
+        },
+      ],
+      "name": "of Impact",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 6,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "16% increased Melee Strike Range with this weapon",
+          "template": "#% increased Melee Strike Range with this weapon",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 16,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Attack",
+      ],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Quarterstaves",
+  "itemLevel": 81,
+  "name": "Behemoth Weaver",
+  "note": null,
+  "properties": [
+    {
+      "name": "Physical Damage",
+      "raw": "Physical Damage: 56-117 (augmented)",
+    },
+    {
+      "name": "Critical Hit Chance",
+      "raw": "Critical Hit Chance: 10.00%",
+    },
+    {
+      "name": "Attacks per Second",
+      "raw": "Attacks per Second: 1.40",
+    },
+  ],
+  "quality": null,
+  "rarity": "Rare",
+  "requiredLevel": 77,
+  "requirements": "Requires: Level 77, 127 Dex, 50 Int",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;

@@ -1,0 +1,28 @@
+Item Class: Boots
+Rarity: Rare
+Rune Spur
+Cavalry Boots
+--------
+Quality: +20% (augmented)
+Evasion Rating: 415 (augmented)
+--------
+Requires: Level 70, 93 Dex
+--------
+Sockets: S 
+--------
+Item Level: 82
+--------
+5% increased Movement Speed (rune)
+--------
+{ Prefix Modifier "Blurred" (Tier: 3) — Evasion }
++113(88-116) to Evasion Rating
+{ Prefix Modifier "Athlete's" (Tier: 1) — Life }
++127(120-149) to maximum Life
+{ Desecrated Prefix Modifier "Hellion's" (Tier: 1) — Speed }
+35% increased Movement Speed
+{ Suffix Modifier "of Diversion" (Tier: 2) — Evasion }
+Gain Deflection Rating equal to 20(18-20)% of Evasion Rating
+{ Suffix Modifier "of Haast" (Tier: 1) — Elemental, Cold, Resistance }
++44(41-45)% to Cold Resistance
+{ Suffix Modifier "of Ephij" (Tier: 1) — Elemental, Lightning, Resistance }
++43(41-45)% to Lightning Resistance

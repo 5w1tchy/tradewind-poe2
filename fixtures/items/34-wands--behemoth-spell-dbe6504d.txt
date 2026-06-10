@@ -1,0 +1,20 @@
+Item Class: Wands
+Rarity: Rare
+Behemoth Spell
+Dueling Wand
+--------
+Requires: Level 78, 137 (unmet) Int
+--------
+Item Level: 80
+--------
+Grants Skill: Level 18 Spellslinger
+--------
+{ Prefix Modifier "Caster's" (Tier: 7) — Mana, Damage, Caster }
+16(15-19)% increased Spell Damage
++20(17-20) to maximum Mana
+{ Suffix Modifier "of the Virtuoso" (Tier: 1) — Attribute }
++32(31-33) to Intelligence
+{ Suffix Modifier "of Nimbleness" (Tier: 6) — Caster, Speed }
+14(13-16)% increased Cast Speed
+{ Suffix Modifier "of Sparks" (Tier: 5) — Elemental, Lightning, Caster, Gem }
++1 to Level of all Lightning Spell Skills

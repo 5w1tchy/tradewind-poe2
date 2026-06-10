@@ -1,0 +1,27 @@
+Item Class: Staves
+Rarity: Unique
+The Unborn Lich
+Ravenous Staff
+--------
+Requires: Level 78, 137 (unmet) Int
+--------
+Item Level: 83
+--------
+Grants Skill: Level 18 Feast of Flesh
+Grants Skill: Level 18 His Grave Command
+--------
+{ Desecrated Prefix Modifier "" — 79% Increased }
++47(40-60) to Spirit
+8(6-10)% increased Spirit Reservation Efficiency of Skills
+{ Desecrated Prefix Modifier "Ulaman's" (Tier: 1) — Life, Damage, Caster — 79% Increased }
+5(4-5)% increased Spell Damage per 100 Maximum Life
+{ Unique Modifier }
+79(60-80)% increased Desecrated Modifier magnitudes — Unscalable Value
+{ Desecrated Suffix Modifier "of Ulaman" (Tier: 1) — Caster — 79% Increased }
+27(25-35)% chance for Spell Skills to fire 2 additional Projectiles
+--------
+In ghastly pits beneath the world,
+Kulemak grows countless new bodies,
+each more powerful than the last.
+Not all of his abominations survive.
+--------

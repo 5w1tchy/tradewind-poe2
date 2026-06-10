@@ -1,0 +1,26 @@
+Item Class: Foci
+Rarity: Rare
+Entropy Anthem
+Tasalian Focus
+--------
+Energy Shield: 228 (augmented)
+--------
+Requires: Level 80, 115 Int
+--------
+Item Level: 83
+--------
+{ Prefix Modifier "Incanter's" (Tier: 1) — Damage, Caster }
+79(75-89)% increased Spell Damage
+{ Prefix Modifier "Heavenly" (Tier: 2) — Mana, Energy Shield }
+36(33-38)% increased Energy Shield
++27(27-32) to maximum Mana
+{ Prefix Modifier "Scintillating" (Tier: 2) — Energy Shield }
++77(74-80) to maximum Energy Shield
+{ Suffix Modifier "of the Thunderhead" (Tier: 5) — Elemental, Lightning, Resistance }
++24(21-25)% to Lightning Resistance
+{ Suffix Modifier "of Haast" (Tier: 1) — Elemental, Cold, Resistance }
++43(41-45)% to Cold Resistance
+{ Suffix Modifier "of Magma" (Tier: 2) — Elemental, Fire, Resistance }
++40(36-40)% to Fire Resistance
+--------
+Note: ~b/o 1 divine

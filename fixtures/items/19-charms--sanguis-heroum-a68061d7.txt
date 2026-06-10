@@ -1,0 +1,26 @@
+Item Class: Charms
+Rarity: Unique
+Sanguis Heroum
+Staunching Charm
+--------
+Lasts 3 Seconds
+Consumes 30 of 40 Charges on use
+Currently has 40 Charges
+Grants Immunity to Bleeding
+--------
+Requires: Level 18
+--------
+Item Level: 80
+--------
+{ Implicit Modifier }
+Used when you start Bleeding — Unscalable Value
+--------
+{ Unique Modifier — Charm }
+Creates Consecrated Ground on use — Unscalable Value
+{ Unique Modifier }
+Gains 0.17(0.15-0.20) Charges per Second
+--------
+Wraeclast has known too few true heroes.
+It remembers those that stood in defiance.
+--------
+Used automatically when condition is met. Can only hold charges while in belt. Refill at Wells or by killing monsters.

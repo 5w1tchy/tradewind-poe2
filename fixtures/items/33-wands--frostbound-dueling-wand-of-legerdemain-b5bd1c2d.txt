@@ -1,0 +1,14 @@
+Item Class: Wands
+Rarity: Magic
+Frostbound Dueling Wand of Legerdemain
+--------
+Requires: Level 78, 137 (unmet) Int
+--------
+Item Level: 80
+--------
+Grants Skill: Level 18 Spellslinger
+--------
+{ Prefix Modifier "Frostbound" (Tier: 1) — Damage, Elemental, Cold }
+Gain 29(28-30)% of Damage as Extra Cold Damage
+{ Suffix Modifier "of Legerdemain" (Tier: 3) — Caster, Speed }
+28(25-28)% increased Cast Speed

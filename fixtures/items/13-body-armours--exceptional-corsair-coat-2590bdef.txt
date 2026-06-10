@@ -1,0 +1,15 @@
+Item Class: Body Armours
+Rarity: Normal
+Exceptional Corsair Coat
+--------
+Quality: +22% (augmented)
+Evasion Rating: 550 (augmented)
+--------
+Requires: Level 80, 121 Dex
+--------
+Sockets: S S S 
+--------
+Item Level: 82
+--------
+{ Implicit Modifier — Speed }
+5% increased Movement Speed

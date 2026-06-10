@@ -1,0 +1,26 @@
+Item Class: Crossbows
+Rarity: Rare
+Spirit Core
+Gemini Crossbow
+--------
+Physical Damage: 28-112
+Fire Damage: 48-79 (fire)
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.60
+Reload Time: 1.10
+--------
+Requires: Level 78, 66 (augmented) Str, 66 (augmented) Dex
+--------
+Item Level: 80
+--------
+{ Implicit Modifier — Attack }
+Loads an additional bolt
+--------
+{ Prefix Modifier "Scorching" (Tier: 5) — Damage, Elemental, Fire, Attack }
+Adds 48(39-53) to 79(59-80) Fire Damage
+{ Suffix Modifier "of the Drought" (Tier: 2) — Mana, Physical, Attack }
+Leeches 7.01(7-7.9)% of Physical Damage as Mana
+{ Suffix Modifier "of the Talented" (Tier: 3) }
+25% reduced Attribute Requirements
+--------
+Corrupted

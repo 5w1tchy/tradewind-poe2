@@ -1,0 +1,16 @@
+Item Class: Sceptres
+Rarity: Magic
+Mazarine Omen Sceptre of the Proficient
+--------
+Spirit: 100
+--------
+Requires: Level 84, 29 (augmented) Str, 74 (augmented) Int
+--------
+Item Level: 82
+--------
+Grants Skill: Level 19 Malice
+--------
+{ Prefix Modifier "Mazarine" (Tier: 2) — Mana }
++147(125-149) to maximum Mana
+{ Suffix Modifier "of the Proficient" (Tier: 1) }
+35% reduced Attribute Requirements

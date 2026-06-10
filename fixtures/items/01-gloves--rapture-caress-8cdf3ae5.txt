@@ -1,0 +1,28 @@
+Item Class: Gloves
+Rarity: Rare
+Rapture Caress
+Refined Bracers
+--------
+Quality: +20% (augmented)
+Evasion Rating: 176 (augmented)
+--------
+Requires: Level 65, 67 Dex
+--------
+Sockets: S 
+--------
+Item Level: 83
+--------
+18% increased Armour, Evasion and Energy Shield (rune)
+--------
+{ Prefix Modifier "Virile" (Tier: 2) — Life }
++102(100-119) to maximum Life
+{ Prefix Modifier "Freezing" (Tier: 5) — Damage, Elemental, Cold, Attack }
+Adds 9(9-10) to 17(15-17) Cold damage to Attacks
+{ Prefix Modifier "Tempered" (Tier: 2) — Damage, Physical, Attack }
+Adds 11(10-15) to 22(18-26) Physical Damage to Attacks
+{ Suffix Modifier "of Ephij" (Tier: 1) — Elemental, Lightning, Resistance }
++45(41-45)% to Lightning Resistance
+{ Suffix Modifier "of Renown" (Tier: 1) — Attack, Speed }
+14(14-16)% increased Attack Speed
+{ Suffix Modifier "of Haast" (Tier: 1) — Elemental, Cold, Resistance }
++43(41-45)% to Cold Resistance

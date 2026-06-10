@@ -1,0 +1,25 @@
+Item Class: Charms
+Rarity: Magic
+Sunny Thawing Charm of the Copious
+--------
+Quality: +9% (augmented)
+Lasts 3,30 (augmented) Seconds
+Consumes 40 of 54 (augmented) Charges on use
+Currently has 54 Charges
+Grants Immunity to Freeze
+--------
+Requires: Level 12
+--------
+Item Level: 21
+--------
+{ Implicit Modifier }
+Used when you become Frozen — Unscalable Value
+--------
+{ Prefix Modifier "Sunny" (Tier: 6) — Charm }
+Also grants 61(44-66) Guard
+{ Suffix Modifier "of the Copious" (Tier: 5) }
+37(31-38)% increased Charges
+--------
+Used automatically when condition is met. Can only hold charges while in belt. Refill at Wells or by killing monsters.
+--------
+Corrupted

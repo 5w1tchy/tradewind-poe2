@@ -1,0 +1,29 @@
+Item Class: Amulets
+Rarity: Rare
+Pandemonium Beads
+Solar Amulet
+--------
+Quality (Chaos Modifiers): +9% (augmented)
+--------
+Requires: Level 60
+--------
+Item Level: 78
+--------
+{ Enhancement }
+Allocates Zarokh's Gift — Unscalable Value
+--------
+{ Implicit Modifier }
++14(10-15) to Spirit
+--------
+{ Prefix Modifier "Shade's" (Tier: 7) — Evasion }
+11(10-14)% increased Evasion Rating
+{ Prefix Modifier "Zaffre" (Tier: 2) — Mana }
++167(165-179) to maximum Mana
+{ Prefix Modifier "Countess'" (Tier: 1) }
++47(47-50) to Spirit
+{ Suffix Modifier "of the Fletcher" (Tier: 2) }
++2 to Level of all Projectile Skills
+{ Suffix Modifier "of Variegation" (Tier: 3) — Elemental, Fire, Cold, Lightning, Resistance }
++13(12-14)% to all Elemental Resistances
+{ Desecrated Suffix Modifier "of Amanamu" (Tier: 1) — Elemental, Fire, Chaos, Resistance — 9% Increased }
++16(13-17)% to Fire and Chaos Resistances

@@ -1,0 +1,15 @@
+Item Class: Rings
+Rarity: Magic
+Tempered Topaz Ring of the Rainbow
+--------
+Requires: Level 54
+--------
+Item Level: 82
+--------
+{ Implicit Modifier — Elemental, Lightning, Resistance }
++25(20-30)% to Lightning Resistance
+--------
+{ Prefix Modifier "Tempered" (Tier: 2) — Damage, Physical, Attack }
+Adds 15(10-15) to 23(18-26) Physical Damage to Attacks
+{ Suffix Modifier "of the Rainbow" (Tier: 1) — Elemental, Fire, Cold, Lightning, Resistance }
++16(15-16)% to all Elemental Resistances

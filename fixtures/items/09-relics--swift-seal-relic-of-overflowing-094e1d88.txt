@@ -1,0 +1,12 @@
+Item Class: Relics
+Rarity: Magic
+Swift Seal Relic of Overflowing
+--------
+Item Level: 81
+--------
+{ Prefix Modifier "Swift" (Tier: 2) }
+6(5-6)% increased Movement Speed
+{ Suffix Modifier "of Overflowing" (Tier: 2) }
+Fountains have 10(9-10)% chance to grant double Sacred Water
+--------
+Place this item on the Relic Altar at the start of the Trial of the Sekhemas

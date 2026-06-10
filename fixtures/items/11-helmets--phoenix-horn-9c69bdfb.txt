@@ -1,0 +1,24 @@
+Item Class: Helmets
+Rarity: Rare
+Phoenix Horn
+Kamasan Tiara
+--------
+Energy Shield: 197 (augmented)
+--------
+Requires: Level 75, 107 Int
+--------
+Item Level: 81
+--------
+{ Prefix Modifier "Fearless" (Tier: 4) — Energy Shield }
+66(56-67)% increased Energy Shield
+{ Prefix Modifier "Sacred" (Tier: 4) — Mana, Energy Shield }
+25(21-26)% increased Energy Shield
++17(17-20) to maximum Mana
+{ Prefix Modifier "Robust" (Tier: 5) — Life }
++74(70-84) to maximum Life
+{ Suffix Modifier "of Magma" (Tier: 2) — Elemental, Fire, Resistance }
++38(36-40)% to Fire Resistance
+{ Suffix Modifier "of Bameth" (Tier: 1) — Chaos, Resistance }
++24(24-27)% to Chaos Resistance
+{ Suffix Modifier "of the Ice" (Tier: 2) — Elemental, Cold, Resistance }
++37(36-40)% to Cold Resistance

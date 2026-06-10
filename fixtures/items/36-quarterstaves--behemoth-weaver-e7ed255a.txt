@@ -1,0 +1,24 @@
+Item Class: Quarterstaves
+Rarity: Rare
+Behemoth Weaver
+Striking Quarterstaff
+--------
+Physical Damage: 56-117 (augmented)
+Critical Hit Chance: 10.00%
+Attacks per Second: 1.40
+--------
+Requires: Level 77, 127 Dex, 50 Int
+--------
+Item Level: 81
+--------
+{ Implicit Modifier — Attack }
+16% increased Melee Strike Range with this weapon
+--------
+{ Prefix Modifier "Glinting" (Tier: 9) — Damage, Physical, Attack }
+Adds 3(2-3) to 6(5-7) Physical Damage
+{ Suffix Modifier "of Conquest" (Tier: 5) — Life }
+Gain 27(19-28) Life per enemy killed
+{ Suffix Modifier "of the Arid" (Tier: 3) — Mana, Physical, Attack }
+Leeches 6.12(6-6.9)% of Physical Damage as Mana
+{ Suffix Modifier "of Impact" (Tier: 6) }
+13(11-13)% increased Stun Duration

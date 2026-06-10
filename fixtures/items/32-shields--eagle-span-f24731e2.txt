@@ -1,0 +1,28 @@
+Item Class: Shields
+Rarity: Rare
+Eagle Span
+Tawhoan Tower Shield
+--------
+Block chance: 26%
+Armour: 482 (augmented)
+--------
+Requires: Level 80, 115 Str
+--------
+Item Level: 80
+--------
+Grants Skill: Raise Shield
+--------
+{ Prefix Modifier "Enveloped" (Tier: 3) — Armour }
++218(191-221) to Armour
+{ Prefix Modifier "Spiny" (Tier: 6) — Damage, Physical }
+5(5-7) to 8(7-10) Physical Thorns damage
+{ Crafted Prefix Modifier "Virile" (Tier: 4) — Life }
++116(100-119) to maximum Life
+{ Suffix Modifier "of the Conservator" (Tier: 1) — Physical }
+8% additional Physical Damage Reduction
+{ Suffix Modifier "of Eviction" (Tier: 4) — Chaos, Resistance }
++13(12-15)% to Chaos Resistance
+{ Suffix Modifier "of the Molten Core" (Tier: 2) — Elemental, Fire, Resistance }
++2% to Maximum Fire Resistance
+--------
+Note: ~b/o 1 divine
