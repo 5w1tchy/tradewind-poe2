@@ -7,11 +7,26 @@ export interface Config {
   gameWindowTitle: string
   /** Treat any foreground window as the game — desktop testing without PoE2 running. */
   devAnyWindow: boolean
+  /** Trade league id; '' = auto (first league from the API). */
+  league: string
+  /** Fractional spread below each roll for pre-checked stat mins. */
+  spread: number
 }
 
 const defaults: Config = {
   gameWindowTitle: 'Path of Exile 2',
-  devAnyWindow: false
+  devAnyWindow: false,
+  league: '',
+  spread: 0.1
+}
+
+export function saveConfig(config: Config): void {
+  const file = join(app.getPath('userData'), 'config.json')
+  try {
+    writeFileSync(file, JSON.stringify(config, null, 2))
+  } catch (err) {
+    console.error('[config] failed to save:', err)
+  }
 }
 
 export function loadConfig(): Config {

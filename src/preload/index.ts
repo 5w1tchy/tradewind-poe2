@@ -1,16 +1,22 @@
 import { contextBridge, ipcRenderer } from 'electron'
+import type { ItemPayload, TradewindApi } from '../shared/ipc'
 
-export interface ItemPayload {
-  text: string | null
-  x: number
-  y: number
-}
-
-contextBridge.exposeInMainWorld('tradewind', {
-  onItem(cb: (payload: ItemPayload) => void): void {
+const api: TradewindApi = {
+  onItem(cb) {
     ipcRenderer.on('tw:item', (_event, payload: ItemPayload) => cb(payload))
   },
-  onHide(cb: () => void): void {
+  onHide(cb) {
     ipcRenderer.on('tw:hide', () => cb())
+  },
+  search(prepared) {
+    return ipcRenderer.invoke('tw:search', prepared)
+  },
+  setLeague(league) {
+    return ipcRenderer.invoke('tw:set-league', league)
+  },
+  setInteractive(interactive) {
+    ipcRenderer.send('tw:interactive', interactive)
   }
-})
+}
+
+contextBridge.exposeInMainWorld('tradewind', api)

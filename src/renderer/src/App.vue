@@ -1,41 +1,67 @@
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
+import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import type { ItemPayload } from '../../shared/ipc'
+import PriceCheck from './components/PriceCheck.vue'
 
 const visible = ref(false)
-const text = ref<string | null>(null)
+const payload = ref<ItemPayload | null>(null)
 const pos = ref({ x: 0, y: 0 })
 const popup = ref<HTMLElement | null>(null)
 
-window.tradewind.onItem(async (payload) => {
-  text.value = payload.text
-  pos.value = { x: payload.x, y: payload.y }
-  visible.value = true
+let anchor = { x: 0, y: 0 }
 
-  // Re-clamp once rendered so the popup never spills off the overlay edges.
-  await nextTick()
+/** Keep the popup on-screen at its current size, anchored near the cursor. */
+function clamp(): void {
   const el = popup.value
   if (!el) return
   const pad = 12
   pos.value = {
-    x: Math.max(pad, Math.min(payload.x, window.innerWidth - el.offsetWidth - pad)),
-    y: Math.max(pad, Math.min(payload.y, window.innerHeight - el.offsetHeight - pad))
+    x: Math.max(pad, Math.min(anchor.x, window.innerWidth - el.offsetWidth - pad)),
+    y: Math.max(pad, Math.min(anchor.y, window.innerHeight - el.offsetHeight - pad))
   }
+}
+
+// Listings arriving make the popup grow after open — re-clamp on every resize.
+const resizer = new ResizeObserver(() => clamp())
+watch(popup, (el, prev) => {
+  if (prev) resizer.unobserve(prev)
+  if (el) resizer.observe(el)
+})
+onBeforeUnmount(() => resizer.disconnect())
+
+window.tradewind.onItem(async (p) => {
+  payload.value = p
+  anchor = { x: p.x, y: p.y }
+  pos.value = anchor
+  visible.value = true
+  await nextTick()
+  clamp()
 })
 
 window.tradewind.onHide(() => {
   visible.value = false
+  window.tradewind.setInteractive(false)
 })
+
+function onEnter(): void {
+  window.tradewind.setInteractive(true)
+}
+
+function onLeave(): void {
+  window.tradewind.setInteractive(false)
+}
 </script>
 
 <template>
   <div
-    v-if="visible"
+    v-if="visible && payload"
     ref="popup"
     class="popup"
     :style="{ left: pos.x + 'px', top: pos.y + 'px' }"
+    @mouseenter="onEnter"
+    @mouseleave="onLeave"
   >
-    <pre v-if="text">{{ text }}</pre>
-    <div v-else class="no-item">No item under cursor</div>
+    <PriceCheck :payload="payload" />
   </div>
 </template>
 
@@ -50,10 +76,10 @@ body {
 
 .popup {
   position: fixed;
-  max-width: 480px;
-  max-height: 70vh;
+  max-width: 520px;
+  max-height: 80vh;
   overflow: hidden;
-  background: rgba(16, 16, 20, 0.92);
+  background: rgba(16, 16, 20, 0.94);
   border: 1px solid rgba(175, 96, 37, 0.55);
   border-radius: 6px;
   padding: 10px 14px;
@@ -62,15 +88,5 @@ body {
     12px/1.45 Consolas,
     monospace;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
-}
-
-.popup pre {
-  margin: 0;
-  white-space: pre-wrap;
-}
-
-.no-item {
-  color: #8a8782;
-  font-style: italic;
 }
 </style>

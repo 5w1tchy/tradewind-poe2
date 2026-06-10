@@ -11,5 +11,11 @@
     "jsx": "preserve",
     "lib": ["ES2022", "DOM", "DOM.Iterable"]
   },
-  "include": ["src/renderer/src/**/*", "src/renderer/src/**/*.vue"]
+  "include": [
+    "src/renderer/src/**/*",
+    "src/renderer/src/**/*.vue",
+    "src/core/**/*",
+    "src/shared/**/*"
+  ],
+  "exclude": ["src/core/**/*.test.ts"]
 }
