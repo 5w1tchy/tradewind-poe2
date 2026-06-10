@@ -48,6 +48,10 @@ interface LineContext {
   enabled: boolean
 }
 
+// Stats that roll in fixed brackets — searching below your bracket is never
+// what you mean, so the min stays at 100% of the roll.
+const NO_SPREAD_TEMPLATES = new Set(['#% increased Movement Speed'])
+
 function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
   const out: LineContext[] = []
   for (const mod of item.implicits) {
@@ -94,12 +98,13 @@ function buildStatRows(
     }
     let value = representativeValue(line)
     if (value !== null && best.negated) value = -value
+    const lineSpread = NO_SPREAD_TEMPLATES.has(line.template) ? 0 : spread
     stats.push({
       statId: best.id,
       label: line.raw,
       source,
       value,
-      min: value !== null ? minWithSpread(value, spread) : null,
+      min: value !== null ? minWithSpread(value, lineSpread) : null,
       max: null,
       enabled
     })

@@ -114,6 +114,13 @@ describe('prepareQuery', () => {
     expect(body.query.filters?.equipment_filters?.filters.ar).toEqual({ min: 520 })
   })
 
+  it('movement speed keeps its full roll as min (bracketed stat, no spread)', () => {
+    const q = prepareFixture('03-boots--rune-spur-f39b212f.txt')
+    const ms = q.stats.find((s) => s.label.includes('Movement Speed'))!
+    expect(ms.value).toBe(35)
+    expect(ms.min).toBe(35)
+  })
+
   it('rare base type is an opt-in exact filter', () => {
     const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
     expect(q.baseTypeFilter).toEqual({ value: 'Amethyst Ring', enabled: false })
