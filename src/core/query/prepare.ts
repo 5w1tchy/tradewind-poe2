@@ -296,7 +296,9 @@ export function prepareQuery(
     prepared.equipment = deriveEquipmentValues(item).map(
       (d): PreparedEquipmentFilter => ({
         ...d,
-        min: minWithSpread(d.value, spread),
+        // Socket counts are small integers — "at least this many" wants the
+        // exact count, not 90% of it.
+        min: d.key === 'rune_sockets' ? d.value : minWithSpread(d.value, spread),
         max: null,
         enabled: false
       })

@@ -70,6 +70,10 @@ export function deriveEquipmentValues(item: ParsedItem): DerivedValue[] {
     out.push({ key: 'block', label: 'Block %', value: blockValue })
   }
 
+  if (item.sockets !== null && item.sockets > 0) {
+    out.push({ key: 'rune_sockets', label: 'Sockets', value: item.sockets })
+  }
+
   let phys = 0
   let ele = 0
   let chaos = 0

@@ -73,6 +73,7 @@ export type EquipmentFilterKey =
   | 'dps'
   | 'pdps'
   | 'edps'
+  | 'rune_sockets'
 
 export interface PreparedStatFilter {
   statId: string

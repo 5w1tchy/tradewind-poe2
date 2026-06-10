@@ -74,6 +74,10 @@ describe('prepareQuery', () => {
     expect(body.equipment).toContainEqual(
       expect.objectContaining({ key: 'ev', label: 'Evasion', value: 550, min: 495 })
     )
+    // "Sockets: S S S" — exact count as min, no spread
+    expect(body.equipment).toContainEqual(
+      expect.objectContaining({ key: 'rune_sockets', value: 3, min: 3, enabled: false })
+    )
   })
 
   it('derives weapon DPS from damage ranges and APS, phys normalized to Q20', () => {
