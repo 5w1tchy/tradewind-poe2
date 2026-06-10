@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import type { PreparedQuery, PreparedRange, PreparedStatFilter } from '../../../core/query/types'
+import type { PreparedQuery, PreparedRange } from '../../../core/query/types'
 import type { SearchOutcome } from '../../../core/trade/types'
 import type { ItemPayload } from '../../../shared/ipc'
 
@@ -75,38 +75,65 @@ function pickLeague(id: string): void {
   markDirty()
 }
 
+interface Bounded {
+  min: number | null
+  max: number | null
+  enabled: boolean
+}
+
 interface ToggleRow {
   label: string
   model: { enabled: boolean }
+  /** Present when the row has editable min/max bounds. */
+  range?: Bounded
 }
 
 const propertyRows = computed<ToggleRow[]>(() => {
   const q = prepared.value
   if (!q) return []
   const rows: ToggleRow[] = []
-  const add = (name: string, r: PreparedRange | null, unit = ''): void => {
-    if (!r) return
-    const label =
-      r.max !== null && r.max === r.min
-        ? `${name} = ${r.value}${unit}`
-        : `${name} ≥ ${r.min ?? r.value}${unit}`
-    rows.push({ label, model: r })
+  if (q.baseTypeFilter) {
+    rows.push({ label: `Base: ${q.baseTypeFilter.value}`, model: q.baseTypeFilter })
+  }
+  const add = (name: string, r: PreparedRange | null): void => {
+    if (r) rows.push({ label: name, model: r, range: r })
   }
   add('Waystone Tier', q.mapTier)
   add('Gem Level', q.gemLevel)
   for (const row of q.equipment) add(row.label, row)
   add('Item Level', q.ilvl)
-  add('Quality', q.quality, '%')
+  add('Quality %', q.quality)
   if (q.corrupted) {
     rows.push({ label: q.corrupted.value ? 'Corrupted' : 'Not Corrupted', model: q.corrupted })
   }
   return rows
 })
 
-function statHint(stat: PreparedStatFilter): string {
-  if (stat.min === null && stat.max === null) return ''
-  if (stat.max !== null && stat.max === stat.min) return `= ${stat.min}`
-  return `≥ ${stat.min}`
+const baseLabel = computed(() => {
+  const q = prepared.value
+  if (!q) return null
+  if (q.type && q.type !== q.displayName) return q.type
+  return null
+})
+
+/** Typing a bound checks the row; clearing both bounds unchecks it. */
+function setBound(range: Bounded, key: 'min' | 'max', event: Event): void {
+  const raw = (event.target as HTMLInputElement).value
+  const num = raw === '' ? null : Number(raw)
+  range[key] = num !== null && Number.isFinite(num) ? num : null
+  range.enabled = range.min !== null || range.max !== null
+  markDirty()
+}
+
+/**
+ * The overlay window is non-focusable until an input is clicked, so typing
+ * works without ordinary clicks ever stealing focus from the game. Focus the
+ * input again once the window can actually hold it.
+ */
+function armFocus(event: MouseEvent): void {
+  window.tradewind.requestFocus()
+  const el = event.currentTarget as HTMLInputElement
+  window.setTimeout(() => el.focus(), 80)
 }
 
 function openOnTradeSite(): void {
@@ -128,6 +155,7 @@ function age(iso: string): string {
         <span class="name" :class="'rarity-' + (prepared?.rarity ?? 'Unknown').toLowerCase()">
           {{ prepared?.displayName ?? 'Item' }}
         </span>
+        <span v-if="baseLabel" class="base">{{ baseLabel }}</span>
         <span class="item-class">{{ prepared?.itemClass }}</span>
       </div>
       <div class="league">
@@ -145,11 +173,50 @@ function age(iso: string): string {
         <label v-for="row in propertyRows" :key="row.label" class="filter-row">
           <input v-model="row.model.enabled" type="checkbox" @change="markDirty" />
           <span class="property">{{ row.label }}</span>
+          <span v-if="row.range" class="bounds">
+            <input
+              class="num"
+              type="number"
+              placeholder="min"
+              :value="row.range.min ?? ''"
+              @mousedown="armFocus"
+              @input="setBound(row.range, 'min', $event)"
+              @keydown.enter="runSearch()"
+            />
+            <input
+              class="num"
+              type="number"
+              placeholder="max"
+              :value="row.range.max ?? ''"
+              @mousedown="armFocus"
+              @input="setBound(row.range, 'max', $event)"
+              @keydown.enter="runSearch()"
+            />
+          </span>
         </label>
         <label v-for="stat in prepared.stats" :key="stat.statId + stat.label" class="filter-row">
           <input v-model="stat.enabled" type="checkbox" @change="markDirty" />
           <span class="stat" :class="'source-' + stat.source">{{ stat.label }}</span>
-          <span class="hint">{{ statHint(stat) }}</span>
+          <span class="bounds">
+            <input
+              class="num"
+              type="number"
+              placeholder="min"
+              :value="stat.min ?? ''"
+              @mousedown="armFocus"
+              @input="setBound(stat, 'min', $event)"
+              @keydown.enter="runSearch()"
+            />
+            <input
+              class="num"
+              type="number"
+              placeholder="max"
+              :value="stat.max ?? ''"
+              @mousedown="armFocus"
+              @input="setBound(stat, 'max', $event)"
+              @keydown.enter="runSearch()"
+            />
+          </span>
         </label>
         <div v-for="line in prepared.unmatched" :key="line" class="filter-row unmatched">
           <span class="badge">?</span>
@@ -239,6 +306,12 @@ function age(iso: string): string {
   font-size: 11px;
 }
 
+.base {
+  color: #b8b6b0;
+  margin-left: 8px;
+  font-size: 11px;
+}
+
 .league {
   position: relative;
 }
@@ -312,10 +385,47 @@ function age(iso: string): string {
 .source-implicit { color: #a0a0a0; }
 .source-pseudo { color: #d4af6a; }
 
-.hint {
-  color: #6f6c66;
+.stat,
+.property {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bounds {
   margin-left: auto;
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
   padding-left: 8px;
+}
+
+.num {
+  width: 48px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  color: #d6d3cd;
+  font: inherit;
+  font-size: 11px;
+  padding: 1px 4px;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.num::-webkit-outer-spin-button,
+.num::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.num:focus {
+  outline: none;
+  border-color: rgba(175, 96, 37, 0.7);
+}
+
+.num::placeholder {
+  color: #55524d;
 }
 
 .unmatched {

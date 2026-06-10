@@ -17,6 +17,9 @@ const api: TradewindApi = {
   setInteractive(interactive) {
     ipcRenderer.send('tw:interactive', interactive)
   },
+  requestFocus() {
+    ipcRenderer.send('tw:focus-input')
+  },
   openUrl(url) {
     ipcRenderer.send('tw:open-url', url)
   }

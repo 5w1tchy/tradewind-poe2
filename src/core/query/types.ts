@@ -116,6 +116,8 @@ export interface PreparedQuery {
   type: string | null
   category: string | null
   rarityOption: string | null
+  /** Optional exact-base restriction for rares ("Amethyst Ring" vs any ring). */
+  baseTypeFilter: { value: string; enabled: boolean } | null
   ilvl: PreparedRange | null
   quality: PreparedRange | null
   gemLevel: PreparedRange | null

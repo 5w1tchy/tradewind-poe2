@@ -208,6 +208,7 @@ export function prepareQuery(
     type: null,
     category: null,
     rarityOption: null,
+    baseTypeFilter: null,
     ilvl: null,
     quality: null,
     gemLevel: null,
@@ -251,6 +252,12 @@ export function prepareQuery(
     // Normal-rarity names carry no affixes, so the exact base is searchable
     // (fragments, keys, white bases).
     if (item.rarity === 'Normal') prepared.type = item.baseType
+    // Rares show the clean base on the second name line — offer it as an
+    // opt-in restriction (exact base vs whole category). Magic names embed
+    // affixes, so theirs isn't usable until we have an items DB.
+    if (item.rarity === 'Rare' && item.name) {
+      prepared.baseTypeFilter = { value: item.baseType, enabled: false }
+    }
   }
 
   if (isEquipment) {

@@ -111,6 +111,18 @@ describe('prepareQuery', () => {
     expect(body.query.filters?.equipment_filters?.filters.ar).toEqual({ min: 433 })
   })
 
+  it('rare base type is an opt-in exact filter', () => {
+    const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
+    expect(q.baseTypeFilter).toEqual({ value: 'Amethyst Ring', enabled: false })
+
+    let body = buildSearchBody(q)
+    expect(body.query.type).toBeUndefined()
+
+    q.baseTypeFilter!.enabled = true
+    body = buildSearchBody(q)
+    expect(body.query.type).toBe('Amethyst Ring')
+  })
+
   it('desecrated mod searches the explicit stat id (origin must not narrow pricing)', () => {
     const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
 

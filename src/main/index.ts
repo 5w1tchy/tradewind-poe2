@@ -58,9 +58,15 @@ app.whenReady().then(() => {
     overlay.setIgnoreMouseEvents(!interactive, { forward: true })
   }
 
+  const releaseFocus = (): void => {
+    if (overlay.isFocused()) overlay.blur()
+    overlay.setFocusable(false)
+  }
+
   const hidePopup = (): void => {
     overlay.webContents.send('tw:hide')
     setInteractive(false)
+    releaseFocus()
     input.cancelMouseLeave()
   }
 
@@ -133,7 +139,17 @@ app.whenReady().then(() => {
     setInteractive(interactive)
     // The popup owns the cursor while hovered — pause the wander-away auto-hide.
     if (interactive) input.cancelMouseLeave()
-    else input.watchMouseLeave()
+    else {
+      releaseFocus()
+      input.watchMouseLeave()
+    }
+  })
+
+  // Filter inputs need real keyboard focus; the window is non-focusable the
+  // rest of the time so clicks never steal focus from the game.
+  ipcMain.on('tw:focus-input', () => {
+    overlay.setFocusable(true)
+    overlay.focus()
   })
 
   tracker.start()

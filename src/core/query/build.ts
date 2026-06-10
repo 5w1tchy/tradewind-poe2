@@ -67,6 +67,7 @@ export function buildSearchBody(q: PreparedQuery): TradeSearchRequest {
   }
   if (q.name) body.query.name = q.name
   if (q.type) body.query.type = q.type
+  else if (q.baseTypeFilter?.enabled) body.query.type = q.baseTypeFilter.value
   if (Object.keys(filters).length > 0) body.query.filters = filters
 
   return body

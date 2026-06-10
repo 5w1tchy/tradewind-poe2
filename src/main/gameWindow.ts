@@ -27,14 +27,16 @@ export interface GameState {
 
 /**
  * Polls the foreground window and emits 'state' whenever the game's
- * focus or window rect changes. Never matches windows of our own process
- * (overlay, devtools), so devAnyWindow mode can't latch onto ourselves.
+ * focus or window rect changes. Windows of our own process (overlay,
+ * devtools) keep the previous state: the overlay taking keyboard focus
+ * for filter inputs must not count as "game lost".
  */
 export class GameWindowTracker extends EventEmitter {
   isGameActive = false
 
   private timer: ReturnType<typeof setInterval> | null = null
   private lastKey = ''
+  private lastState: GameState = { active: false, bounds: null }
 
   constructor(
     private readonly windowTitle: string,
@@ -64,6 +66,13 @@ export class GameWindowTracker extends EventEmitter {
   }
 
   private read(): GameState {
+    const state = this.readForeground()
+    if (state === 'self') return this.lastState
+    this.lastState = state
+    return state
+  }
+
+  private readForeground(): GameState | 'self' {
     const inactive: GameState = { active: false, bounds: null }
 
     const hwnd = GetForegroundWindow()
@@ -71,7 +80,7 @@ export class GameWindowTracker extends EventEmitter {
 
     const pidBuf = Buffer.alloc(4)
     GetWindowThreadProcessId(hwnd, pidBuf)
-    if (pidBuf.readUInt32LE(0) === process.pid) return inactive
+    if (pidBuf.readUInt32LE(0) === process.pid) return 'self'
 
     const titleBuf = Buffer.alloc(1024)
     const len = GetWindowTextW(hwnd, titleBuf, 511)

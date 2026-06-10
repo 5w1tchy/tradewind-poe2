@@ -22,6 +22,8 @@ export interface TradewindApi {
   setLeague(league: string): Promise<void>
   /** Popup hover state: true makes the overlay clickable. */
   setInteractive(interactive: boolean): void
+  /** Grab keyboard focus for a filter input (released when the popup hides). */
+  requestFocus(): void
   /** Open a pathofexile.com URL in the default browser. */
   openUrl(url: string): void
 }
