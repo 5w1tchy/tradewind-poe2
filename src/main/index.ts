@@ -1,4 +1,4 @@
-import { app, ipcMain, screen } from 'electron'
+import { app, ipcMain, screen, shell } from 'electron'
 import { parseItem } from '../core/parser/parse'
 import { buildSearchBody, prepareQuery } from '../core/query'
 import type { PreparedQuery } from '../core/query/types'
@@ -121,6 +121,12 @@ app.whenReady().then(() => {
     league = id
     config.league = id
     saveConfig(config)
+  })
+
+  ipcMain.on('tw:open-url', (_event, url: string) => {
+    if (typeof url === 'string' && url.startsWith('https://www.pathofexile.com/')) {
+      void shell.openExternal(url)
+    }
   })
 
   ipcMain.on('tw:interactive', (_event, interactive: boolean) => {

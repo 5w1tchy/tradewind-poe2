@@ -96,6 +96,10 @@ function statHint(stat: PreparedStatFilter): string {
   return `≥ ${stat.min}`
 }
 
+function openOnTradeSite(): void {
+  if (outcome.value) window.tradewind.openUrl(outcome.value.webUrl)
+}
+
 function age(iso: string): string {
   const mins = Math.max(0, (Date.now() - Date.parse(iso)) / 60000)
   if (mins < 60) return `${Math.round(mins)}m`
@@ -152,6 +156,9 @@ function age(iso: string): string {
             {{ outcome.listings.length }}
           </span>
         </template>
+        <button v-if="outcome && !searching" class="web-btn" @click="openOnTradeSite">
+          trade site ↗
+        </button>
       </div>
 
       <div v-if="outcome && outcome.listings.length > 0" class="listings">
@@ -299,10 +306,31 @@ function age(iso: string): string {
 }
 
 .status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   min-height: 14px;
   color: #8a8782;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding-top: 6px;
+}
+
+.web-btn {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  color: #d6d3cd;
+  font: inherit;
+  font-size: 11px;
+  padding: 2px 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.web-btn:hover {
+  border-color: rgba(175, 96, 37, 0.7);
+  color: #e8c878;
 }
 
 .busy { color: #c0a040; }

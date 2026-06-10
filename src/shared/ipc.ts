@@ -22,4 +22,6 @@ export interface TradewindApi {
   setLeague(league: string): Promise<void>
   /** Popup hover state: true makes the overlay clickable. */
   setInteractive(interactive: boolean): void
+  /** Open a pathofexile.com URL in the default browser. */
+  openUrl(url: string): void
 }

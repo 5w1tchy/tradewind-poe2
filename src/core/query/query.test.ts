@@ -50,6 +50,14 @@ describe('prepareQuery', () => {
     expect(rune.enabled).toBe(false)
   })
 
+  it('desecrated mod searches the explicit stat id (origin must not narrow pricing)', () => {
+    const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
+
+    const allRes = q.stats.find((s) => s.label.includes('all Elemental Resistances'))!
+    expect(allRes.statId).toBe('explicit.stat_2901986750')
+    expect(allRes.enabled).toBe(true)
+  })
+
   it('unique: exact name+type, mods unchecked', () => {
     const q = prepareFixture('02-belts--mageblood-e7e9e4df.txt')
 

@@ -16,6 +16,9 @@ const api: TradewindApi = {
   },
   setInteractive(interactive) {
     ipcRenderer.send('tw:interactive', interactive)
+  },
+  openUrl(url) {
+    ipcRenderer.send('tw:open-url', url)
   }
 }
 

@@ -15,10 +15,13 @@ export interface PrepareOptions {
 
 const DEFAULT_SPREAD = 0.1
 
-/** Same context preference used by the matcher coverage test. */
 function preferFor(mod: ParsedMod): string[] {
   if (mod.generation === 'implicit') return ['implicit', 'explicit']
-  if (mod.desecrated) return ['desecrated', 'explicit']
+  // A desecrated mod is still the same stat for pricing — search the explicit
+  // id so listings with the regular suffix count as comparables. desecrated.*
+  // only matches listings where the mod is desecrated too; keep it as a
+  // fallback for desecrated-exclusive mods.
+  if (mod.desecrated) return ['explicit', 'desecrated']
   if (mod.crafted) return ['crafted', 'explicit']
   if (mod.generation === 'enhancement') return ['enchant', 'sanctum', 'explicit', 'skill']
   return ['explicit']
