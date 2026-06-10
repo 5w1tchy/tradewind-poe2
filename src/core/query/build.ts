@@ -60,7 +60,7 @@ export function buildSearchBody(q: PreparedQuery): TradeSearchRequest {
 
   const body: TradeSearchRequest = {
     query: {
-      status: { option: 'online' },
+      status: { option: q.status },
       stats: [{ type: 'and', filters: statFilters }]
     },
     sort: { price: 'asc' }

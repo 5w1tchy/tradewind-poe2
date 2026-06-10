@@ -54,10 +54,11 @@ describe('prepareQuery', () => {
     expect(rune.enabled).toBe(false)
   })
 
-  it('derives defence filters from item properties', () => {
+  it('derives defence filters from item properties, normalized to 20% quality', () => {
+    // 0-quality shield, flat armour mods only: 482 * 120/100 = 578
     const shield = prepareFixture('32-shields--eagle-span-f24731e2.txt')
     expect(shield.equipment).toContainEqual(
-      expect.objectContaining({ key: 'ar', value: 482, min: 433, enabled: false })
+      expect.objectContaining({ key: 'ar', label: 'Armour (Q20)', value: 578, min: 520 })
     )
     expect(shield.equipment).toContainEqual(
       expect.objectContaining({ key: 'block', value: 26 })
@@ -68,19 +69,21 @@ describe('prepareQuery', () => {
       expect.objectContaining({ key: 'spirit', value: 100 })
     )
 
+    // 22% quality is above 20 — value stays as shown on the card
     const body = prepareFixture('13-body-armours--exceptional-corsair-coat-2590bdef.txt')
     expect(body.equipment).toContainEqual(
-      expect.objectContaining({ key: 'ev', value: 550, min: 495 })
+      expect.objectContaining({ key: 'ev', label: 'Evasion', value: 550, min: 495 })
     )
   })
 
-  it('derives weapon DPS from damage ranges and APS', () => {
+  it('derives weapon DPS from damage ranges and APS, phys normalized to Q20', () => {
     const bow = prepareFixture('22-bows--infusing-obliterator-bow-of-the-skilled-b8aaca45.txt')
-    // (62+115)/2 * 1.10 = 97.35
+    // (62+115)/2 = 88.5 avg phys, 0 quality, no increased-phys mod:
+    // 88.5 * 120/100 * 1.10 aps = 116.8
     expect(bow.equipment).toContainEqual(
-      expect.objectContaining({ key: 'pdps', value: 97 })
+      expect.objectContaining({ key: 'pdps', label: 'Phys DPS (Q20)', value: 117 })
     )
-    expect(bow.equipment).toContainEqual(expect.objectContaining({ key: 'dps', value: 97 }))
+    expect(bow.equipment).toContainEqual(expect.objectContaining({ key: 'dps', value: 117 }))
     expect(bow.equipment.some((e) => e.key === 'edps')).toBe(false)
   })
 
@@ -108,7 +111,7 @@ describe('prepareQuery', () => {
     const ar = q.equipment.find((e) => e.key === 'ar')!
     ar.enabled = true
     const body = buildSearchBody(q)
-    expect(body.query.filters?.equipment_filters?.filters.ar).toEqual({ min: 433 })
+    expect(body.query.filters?.equipment_filters?.filters.ar).toEqual({ min: 520 })
   })
 
   it('rare base type is an opt-in exact filter', () => {
@@ -197,7 +200,7 @@ describe('buildSearchBody', () => {
     const body = buildSearchBody(q)
 
     expect(body.sort).toEqual({ price: 'asc' })
-    expect(body.query.status).toEqual({ option: 'online' })
+    expect(body.query.status).toEqual({ option: 'securable' }) // instant buyout default
     expect(body.query.name).toBeUndefined()
     expect(body.query.filters?.type_filters?.filters).toEqual({
       category: { option: 'armour.gloves' },

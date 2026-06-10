@@ -203,6 +203,8 @@ export function prepareQuery(
   const prepared: PreparedQuery = {
     itemClass: item.itemClass,
     rarity: item.rarity,
+    // PoE2's instant buyout is the trade reality — default to it.
+    status: 'securable',
     displayName: item.name ?? item.baseType,
     name: null,
     type: null,

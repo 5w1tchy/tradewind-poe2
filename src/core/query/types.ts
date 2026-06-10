@@ -104,10 +104,18 @@ export interface PreparedToggle {
   enabled: boolean
 }
 
+/**
+ * Listing-status options (verified live 2026-06-10): securable = Instant
+ * Buyout, available = Instant Buyout and In Person, online = In Person
+ * (Online), any = Any.
+ */
+export type ListingStatus = 'securable' | 'available' | 'online' | 'any'
+
 /** Plain-JSON (IPC-safe) editable search state for one price check. */
 export interface PreparedQuery {
   itemClass: string
   rarity: string
+  status: ListingStatus
   /** Popup header line. */
   displayName: string
   /** Exact-name search (uniques). */
