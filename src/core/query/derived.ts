@@ -1,4 +1,4 @@
-import type { ParsedItem, ParsedStatLine } from '../parser/types'
+import type { ParsedItem } from '../parser/types'
 import type { EquipmentFilterKey } from './types'
 
 export interface DerivedValue {
@@ -27,52 +27,17 @@ function rangeAverage(raw: string): number {
   return sum
 }
 
-function allStatLines(item: ParsedItem): ParsedStatLine[] {
-  const lines: ParsedStatLine[] = []
-  for (const mod of [...item.implicits, ...item.explicits, ...item.enhancements]) {
-    lines.push(...mod.lines)
-  }
-  lines.push(...item.runeMods, ...item.enchantMods)
-  return lines
-}
-
-type IncKey = 'ar' | 'ev' | 'es' | 'phys'
-
-const INC_TOKENS: Record<string, IncKey> = {
-  Armour: 'ar',
-  Evasion: 'ev',
-  'Evasion Rating': 'ev',
-  'Energy Shield': 'es',
-  'Physical Damage': 'phys'
-}
-
-/**
- * Sum the item's local "#% increased <defence/damage>" lines (incl. hybrid
- * lists and runes — they're all in the card value). Needed to undo quality
- * correctly: quality is additive with increased%, not multiplicative.
- */
-function increasedTotals(item: ParsedItem): Record<IncKey, number> {
-  const totals: Record<IncKey, number> = { ar: 0, ev: 0, es: 0, phys: 0 }
-  for (const line of allStatLines(item)) {
-    const m = line.template.match(/^#% increased (.+)$/)
-    if (!m || line.values.length === 0) continue
-    for (const token of m[1].split(/,\s*|\s+and\s+/)) {
-      const key = INC_TOKENS[token.trim()]
-      if (key) totals[key] += line.values[0].value
-    }
-  }
-  return totals
-}
-
 /**
  * The trade site indexes defences and physical damage normalized to 20%
- * quality; card values reflect current quality. card = base*(100+q+inc)/100,
- * so the Q20 value is card*(120+inc)/(100+q+inc). Above 20q stays as-is.
+ * quality; card values reflect current quality. In PoE2 quality is a
+ * standalone multiplier on top of increased% mods (verified empirically:
+ * 222 base, +97% +18% mods, 20q -> 222 * 2.15 * 1.2 = 573), so the Q20
+ * value is simply card * 120/(100+q). Above 20q stays as-is.
  */
-function q20(value: number, quality: number | null, inc: number): number {
+function q20(value: number, quality: number | null): number {
   const q = quality ?? 0
   if (q >= 20) return value
-  return (value * (120 + inc)) / (100 + q + inc)
+  return (value * 120) / (100 + q)
 }
 
 /**
@@ -83,14 +48,13 @@ function q20(value: number, quality: number | null, inc: number): number {
  */
 export function deriveEquipmentValues(item: ParsedItem): DerivedValue[] {
   const out: DerivedValue[] = []
-  const inc = increasedTotals(item)
 
   for (const spec of DEFENCE_PROPS) {
     const prop = item.properties.find((p) => p.name === spec.name)
     if (!prop) continue
     const raw = firstNumber(prop.raw)
     if (raw === null || raw <= 0) continue
-    const value = Math.round(q20(raw, item.quality, inc[spec.key]))
+    const value = Math.round(q20(raw, item.quality))
     const label = value !== raw ? `${spec.label} (Q20)` : spec.label
     out.push({ key: spec.key, label, value })
   }
@@ -125,7 +89,7 @@ export function deriveEquipmentValues(item: ParsedItem): DerivedValue[] {
 
   if (aps !== null && phys + ele + chaos > 0) {
     // Standard quality boosts physical damage only.
-    const physQ20 = q20(phys, item.quality, inc.phys)
+    const physQ20 = q20(phys, item.quality)
     const normalized = physQ20 !== phys
     if (phys > 0) {
       out.push({
