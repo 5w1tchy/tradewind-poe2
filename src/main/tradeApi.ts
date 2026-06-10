@@ -26,6 +26,16 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+/** Longest pre-throttle pause we hide from the user; beyond this we fail fast. */
+const MAX_SILENT_WAIT_MS = 10_000
+
+export class RateLimitedError extends Error {
+  constructor(readonly waitSeconds: number) {
+    super(`Rate limited by GGG — try again in ~${waitSeconds}s`)
+    this.name = 'RateLimitedError'
+  }
+}
+
 /**
  * Sliding-window pre-throttle for one rate-limit policy. Counts our own
  * request timestamps against each rule (keeping one request in reserve so a
@@ -54,6 +64,11 @@ class RateLimiter {
         }
       }
       if (until <= now) break
+      // Long penalties (league-start 429s run minutes) must surface in the
+      // popup, not leave it on "searching…" while blocking the whole queue.
+      if (until - now > MAX_SILENT_WAIT_MS) {
+        throw new RateLimitedError(Math.ceil((until - now) / 1000))
+      }
       await sleep(until - now + 100)
     }
     this.sent.push(Date.now())
@@ -199,11 +214,15 @@ export class TradeApiClient {
         const res = await fetch(url, { ...init, headers })
         limiter.updateFromHeaders(res.headers)
 
-        if (res.status === 429 && attempt === 0) {
+        if (res.status === 429) {
           const retryAfter = Number(res.headers.get('retry-after') ?? '10')
-          console.warn(`[trade] 429 on ${kind}, retrying after ${retryAfter}s`)
           limiter.blockFor(retryAfter)
-          continue
+          if (attempt === 0 && retryAfter * 1000 <= MAX_SILENT_WAIT_MS) {
+            console.warn(`[trade] 429 on ${kind}, retrying after ${retryAfter}s`)
+            continue
+          }
+          console.warn(`[trade] 429 on ${kind}, penalty ${retryAfter}s — surfacing`)
+          throw new RateLimitedError(retryAfter)
         }
         if (!res.ok) {
           const text = await res.text().catch(() => '')

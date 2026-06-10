@@ -43,7 +43,11 @@ async function runSearch(): Promise<void> {
   } catch (err) {
     if (token !== searchToken) return
     outcome.value = null
-    error.value = err instanceof Error ? err.message : String(err)
+    // Strip Electron's IPC wrapper ("Error invoking remote method 'tw:search': ...").
+    error.value = (err instanceof Error ? err.message : String(err)).replace(
+      /^Error invoking remote method '[^']+': (?:\w*Error: )?/,
+      ''
+    )
   } finally {
     if (token === searchToken) searching.value = false
   }
