@@ -11,6 +11,7 @@ import { createOverlayWindow } from './overlay'
 import { GameWindowTracker, type GameState } from './gameWindow'
 import { InputManager } from './input'
 import { grabItemText } from './itemGrab'
+import { sendChatCommand } from './chatCommand'
 import { TradeApiClient } from './tradeApi'
 
 if (!app.requestSingleInstanceLock()) {
@@ -106,6 +107,17 @@ app.whenReady().then(() => {
           y: cursor.y - overlayBounds.y
         } satisfies ItemPayload)
         input.watchMouseLeave()
+      } finally {
+        busy = false
+      }
+    },
+    async onHideout() {
+      // Skip when the popup holds keyboard focus — F5 there would land in
+      // our own inputs, not the game chat.
+      if (busy || !tracker.isGameActive || overlay.isFocused()) return
+      busy = true
+      try {
+        await sendChatCommand('/hideout')
       } finally {
         busy = false
       }
