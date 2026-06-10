@@ -12,8 +12,9 @@ const outcome = ref<SearchOutcome | null>(null)
 const searching = ref(false)
 const error = ref<string | null>(null)
 const leagueOpen = ref(false)
+/** Filters changed since the last search — results on screen are stale. */
+const dirty = ref(false)
 let searchToken = 0
-let debounce: ReturnType<typeof setTimeout> | undefined
 
 watch(
   () => props.payload,
@@ -33,6 +34,7 @@ async function runSearch(): Promise<void> {
   if (!prepared.value) return
   const token = ++searchToken
   searching.value = true
+  dirty.value = false
   error.value = null
   try {
     const result = await window.tradewind.search(
@@ -53,10 +55,9 @@ async function runSearch(): Promise<void> {
   }
 }
 
-/** Re-search shortly after the last filter click so rapid toggles batch up. */
-function queueSearch(): void {
-  clearTimeout(debounce)
-  debounce = setTimeout(() => void runSearch(), 350)
+/** Edits never auto-search (rate-limit budget is precious) — they arm the Search button. */
+function markDirty(): void {
+  dirty.value = true
 }
 
 function pickLeague(id: string): void {
@@ -64,7 +65,7 @@ function pickLeague(id: string): void {
   if (id === league.value) return
   league.value = id
   void window.tradewind.setLeague(id)
-  void runSearch()
+  markDirty()
 }
 
 interface ToggleRow {
@@ -134,11 +135,11 @@ function age(iso: string): string {
     <template v-if="prepared">
       <div class="filters">
         <label v-for="row in propertyRows" :key="row.label" class="filter-row">
-          <input v-model="row.model.enabled" type="checkbox" @change="queueSearch" />
+          <input v-model="row.model.enabled" type="checkbox" @change="markDirty" />
           <span class="property">{{ row.label }}</span>
         </label>
         <label v-for="stat in prepared.stats" :key="stat.statId + stat.label" class="filter-row">
-          <input v-model="stat.enabled" type="checkbox" @change="queueSearch" />
+          <input v-model="stat.enabled" type="checkbox" @change="markDirty" />
           <span class="stat" :class="'source-' + stat.source">{{ stat.label }}</span>
           <span class="hint">{{ statHint(stat) }}</span>
         </label>
@@ -151,6 +152,7 @@ function age(iso: string): string {
       <div class="status">
         <span v-if="searching" class="busy">searching…</span>
         <span v-else-if="error" class="error">{{ error }}</span>
+        <span v-else-if="dirty" class="none">filters changed</span>
         <template v-else-if="outcome">
           <span v-if="outcome.total === 0" class="none">
             No listings match — try unchecking filters
@@ -160,9 +162,19 @@ function age(iso: string): string {
             {{ outcome.listings.length }}
           </span>
         </template>
-        <button v-if="outcome && !searching" class="web-btn" @click="openOnTradeSite">
-          trade site ↗
-        </button>
+        <span class="actions">
+          <button
+            v-if="!searching"
+            class="web-btn search-btn"
+            :class="{ armed: dirty }"
+            @click="runSearch"
+          >
+            Search
+          </button>
+          <button v-if="outcome && !searching" class="web-btn" @click="openOnTradeSite">
+            trade site ↗
+          </button>
+        </span>
       </div>
 
       <div v-if="outcome && outcome.listings.length > 0" class="listings">
@@ -319,8 +331,14 @@ function age(iso: string): string {
   padding-top: 6px;
 }
 
-.web-btn {
+.actions {
   margin-left: auto;
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.web-btn {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 3px;
@@ -335,6 +353,12 @@ function age(iso: string): string {
 .web-btn:hover {
   border-color: rgba(175, 96, 37, 0.7);
   color: #e8c878;
+}
+
+.search-btn.armed {
+  border-color: rgba(175, 96, 37, 0.9);
+  color: #e8c878;
+  background: rgba(175, 96, 37, 0.18);
 }
 
 .busy { color: #c0a040; }
