@@ -146,6 +146,13 @@ describe('prepareQuery', () => {
     expect(body.query.type).toBe('Amethyst Ring')
   })
 
+  it('essence-crafted mod searches the explicit stat id', () => {
+    // Eagle Span's "+116 to maximum Life" is a Crafted (essence) prefix.
+    const q = prepareFixture('32-shields--eagle-span-f24731e2.txt')
+    const life = q.stats.find((s) => s.label.includes('maximum Life'))!
+    expect(life.statId).toBe('explicit.stat_3299347043')
+  })
+
   it('desecrated mod searches the explicit stat id (origin must not narrow pricing)', () => {
     const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
 

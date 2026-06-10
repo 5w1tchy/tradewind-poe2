@@ -21,12 +21,13 @@ const DEFAULT_SPREAD = 0.1
 
 function preferFor(mod: ParsedMod): string[] {
   if (mod.generation === 'implicit') return ['implicit', 'explicit']
-  // A desecrated mod is still the same stat for pricing — search the explicit
-  // id so listings with the regular suffix count as comparables. desecrated.*
-  // only matches listings where the mod is desecrated too; keep it as a
-  // fallback for desecrated-exclusive mods.
+  // Desecrated/essence-crafted mods are still the same stat for pricing —
+  // search the explicit id so listings with the regular mod count as
+  // comparables. The origin-specific groups (desecrated.*, crafted.*) only
+  // match listings sharing that origin; keep them as fallbacks for mods that
+  // exist nowhere else.
   if (mod.desecrated) return ['explicit', 'desecrated']
-  if (mod.crafted) return ['crafted', 'explicit']
+  if (mod.crafted) return ['explicit', 'crafted']
   if (mod.generation === 'enhancement') return ['enchant', 'sanctum', 'explicit', 'skill']
   return ['explicit']
 }
