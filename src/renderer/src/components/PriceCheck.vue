@@ -24,8 +24,15 @@ watch(
     league.value = p.league
     outcome.value = null
     error.value = null
+    dirty.value = false
     leagueOpen.value = false
-    if (prepared.value) void runSearch()
+    // Auto-search only when the query pins the item by name/type (uniques,
+    // gems, currency, white bases) — those defaults are reliable. A rare with
+    // every mod pre-checked rarely has market matches; arm Search instead.
+    if (prepared.value) {
+      if (prepared.value.name || prepared.value.type) void runSearch()
+      else dirty.value = true
+    }
   },
   { immediate: true }
 )
@@ -152,6 +159,7 @@ function age(iso: string): string {
       <div class="status">
         <span v-if="searching" class="busy">searching…</span>
         <span v-else-if="error" class="error">{{ error }}</span>
+        <span v-else-if="dirty && !outcome" class="none">pick filters, then Search</span>
         <span v-else-if="dirty" class="none">filters changed</span>
         <template v-else-if="outcome">
           <span v-if="outcome.total === 0" class="none">
