@@ -105,7 +105,7 @@ interface ToggleRow {
   label: string
   model: { enabled: boolean }
   /** Present when the row has editable min/max bounds. */
-  range?: Bounded
+  range?: PreparedRange
 }
 
 const propertyRows = computed<ToggleRow[]>(() => {
@@ -206,6 +206,7 @@ function age(iso: string): string {
         <label v-for="row in propertyRows" :key="row.label" class="filter-row">
           <input v-model="row.model.enabled" type="checkbox" @change="markDirty" />
           <span class="property">{{ row.label }}</span>
+          <span v-if="row.range" class="val">{{ row.range.value }}</span>
           <span v-if="row.range" class="bounds">
             <input
               class="num"
@@ -423,6 +424,11 @@ function age(iso: string): string {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.val {
+  color: #e8c878;
+  flex-shrink: 0;
 }
 
 .bounds {
