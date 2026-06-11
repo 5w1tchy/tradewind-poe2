@@ -347,8 +347,14 @@ function age(iso: string): string {
           v-for="l in outcome.listings"
           :key="l.id"
           class="listing"
-          :class="{ unpriceable: l.unpriceable }"
-          :title="l.unpriceable ? 'currency not in the estimate' : undefined"
+          :class="{ unpriceable: l.unpriceable, lowball: l.lowball }"
+          :title="
+            l.lowball
+              ? 'far below the going rate — likely bait, not in the estimate'
+              : l.unpriceable
+                ? 'currency not in the estimate'
+                : undefined
+          "
         >
           <span class="price">
             {{ l.price ? `${l.price.amount} ${l.price.currency}` : '—' }}
@@ -659,6 +665,9 @@ function age(iso: string): string {
 .listing:nth-child(odd) { background: rgba(255, 255, 255, 0.03); }
 
 .listing.unpriceable { opacity: 0.45; }
+
+.listing.lowball { opacity: 0.45; }
+.listing.lowball .price { text-decoration: line-through; }
 
 .price {
   color: #e8c878;

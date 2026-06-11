@@ -19,6 +19,8 @@ export interface TradeListing {
   stock?: number
   /** Currency has no exalted rate — listing shown but outside the estimate. */
   unpriceable?: boolean
+  /** Priced under the lowball cutoff — likely bait, outside the estimate. */
+  lowball?: boolean
 }
 
 export interface SearchOutcome {

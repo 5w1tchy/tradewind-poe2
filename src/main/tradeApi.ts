@@ -281,11 +281,13 @@ export class TradeApiClient {
     }
     listings.sort((a, b) => inExalted(a) - inExalted(b))
 
+    // The whole book goes back — slicing to the 10 cheapest would hand the
+    // estimator exactly the price-fixing bait wall and nothing else.
     return {
       searchId: res.id,
       total: listings.length,
       inexact: listings.length >= 20,
-      listings: listings.slice(0, 10),
+      listings,
       webUrl: `https://www.pathofexile.com/trade2/exchange/poe2/${leaguePath}/${res.id}`
     }
   }

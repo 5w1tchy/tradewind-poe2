@@ -184,10 +184,16 @@ app.whenReady().then(() => {
       .filter((p): p is NonNullable<typeof p> => p !== null)
     outcome.estimate = estimatePrice(prices, rateTable, outcome.total)
     for (const listing of outcome.listings) {
-      if (listing.price && rateTable[listing.price.currency] === undefined) {
+      if (!listing.price) continue
+      const rate = rateTable[listing.price.currency]
+      if (rate === undefined) {
         listing.unpriceable = true
+      } else if (outcome.estimate && listing.price.amount * rate < outcome.estimate.cutoffExalted) {
+        listing.lowball = true
       }
     }
+    // Bait sinks below the credible offers (stable sort keeps price order).
+    outcome.listings.sort((a, b) => Number(a.lowball ?? false) - Number(b.lowball ?? false))
     return outcome
   })
 

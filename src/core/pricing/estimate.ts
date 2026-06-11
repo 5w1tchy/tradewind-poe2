@@ -63,6 +63,7 @@ export function estimatePrice(
     total,
     excludedCurrency,
     excludedLowball: normalized.length - survivors.length,
+    cutoffExalted: cutoff,
     divineRate: rates['divine'] ?? null
   }
 }

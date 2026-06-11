@@ -21,6 +21,7 @@ describe('estimatePrice', () => {
   it('trims lowballs below half the median', () => {
     const est = estimatePrice(ex([1, 1, 10, 11, 12, 13, 14]), RATES, 50)!
     expect(est.excludedLowball).toBe(2)
+    expect(est.cutoffExalted).toBe(5.5) // half the pre-trim median of 11
     expect(est.lowExalted).toBe(10)
     expect(est.highExalted).toBe(12)
     expect(est.confidence).toBe('high')
@@ -96,7 +97,8 @@ describe('formatting', () => {
       sampleSize: 8,
       total: 100,
       excludedCurrency: 0,
-      excludedLowball: 0
+      excludedLowball: 0,
+      cutoffExalted: 0
     }
     expect(
       formatEstimateRange({ ...base, lowExalted: 5, highExalted: 8, divineRate: 300 })

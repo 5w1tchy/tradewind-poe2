@@ -17,6 +17,8 @@ export interface PriceEstimate {
   excludedCurrency: number
   /** Fetched listings trimmed as lowball bait below half the median. */
   excludedLowball: number
+  /** The lowball threshold used, in exalted — listings under it are bait. */
+  cutoffExalted: number
   /** Exalted per divine at estimate time; null when the live rate is unknown. */
   divineRate: number | null
 }
