@@ -80,6 +80,8 @@ export interface PreparedStatFilter {
   /** Clipboard line, shown in the filter list. */
   label: string
   source: StatSource
+  /** Mod tier from advanced copy (PoE2: T1 is best). Null for pseudo/rune/enchant rows. */
+  tier: number | null
   /** Representative roll — average when the line has several numbers. */
   value: number | null
   min: number | null

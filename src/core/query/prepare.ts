@@ -49,6 +49,7 @@ interface LineContext {
   source: StatSource
   prefer: string[]
   enabled: boolean
+  tier: number | null
 }
 
 // Stats that roll in fixed brackets — searching below your bracket is never
@@ -76,7 +77,7 @@ function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
   const out: LineContext[] = []
   for (const mod of item.implicits) {
     for (const line of mod.lines) {
-      out.push({ line, source: 'implicit', prefer: prefer(mod), enabled: false })
+      out.push({ line, source: 'implicit', prefer: prefer(mod), enabled: false, tier: mod.tier })
     }
   }
   for (const mod of [...item.explicits, ...item.enhancements]) {
@@ -86,15 +87,28 @@ function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
         line,
         source,
         prefer: prefer(mod),
-        enabled: statsEnabled && source === 'explicit'
+        enabled: statsEnabled && source === 'explicit',
+        tier: mod.tier
       })
     }
   }
   for (const line of item.runeMods) {
-    out.push({ line, source: 'rune', prefer: ['rune', 'enchant', 'explicit'], enabled: false })
+    out.push({
+      line,
+      source: 'rune',
+      prefer: ['rune', 'enchant', 'explicit'],
+      enabled: false,
+      tier: null
+    })
   }
   for (const line of item.enchantMods) {
-    out.push({ line, source: 'enchant', prefer: ['enchant', 'explicit'], enabled: false })
+    out.push({
+      line,
+      source: 'enchant',
+      prefer: ['enchant', 'explicit'],
+      enabled: false,
+      tier: null
+    })
   }
   return out
 }
@@ -109,7 +123,7 @@ function buildStatRows(
   const templates: string[] = []
   const unmatched: string[] = []
 
-  for (const { line, source, prefer, enabled } of collectLines(item, statsEnabled)) {
+  for (const { line, source, prefer, enabled, tier } of collectLines(item, statsEnabled)) {
     const candidates = db.match(line, { preferCategories: prefer })
     const best = candidates[0]
     if (!best) {
@@ -123,6 +137,7 @@ function buildStatRows(
       statId: best.id,
       label: line.raw,
       source,
+      tier,
       value,
       min: value !== null ? minWithSpread(value, lineSpread) : null,
       max: null,
@@ -179,6 +194,7 @@ function foldResistancePseudos(
     statId,
     label,
     source: 'pseudo',
+    tier: null,
     value,
     min: minWithSpread(value, spread),
     max: null,

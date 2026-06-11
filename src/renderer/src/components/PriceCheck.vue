@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { formatEstimateRange } from '../../../core/pricing'
 import type { ListingStatus, PreparedQuery, PreparedRange } from '../../../core/query/types'
 import type { SearchOutcome } from '../../../core/trade/types'
 import type { ItemPayload } from '../../../shared/ipc'
@@ -184,6 +185,19 @@ function openOnTradeSite(): void {
   if (outcome.value) window.tradewind.openUrl(outcome.value.webUrl)
 }
 
+const estimateDetail = computed(() => {
+  const est = outcome.value?.estimate
+  if (!est) return ''
+  const parts = [
+    `${est.confidence} confidence`,
+    `${est.sampleSize} of ${est.total}${outcome.value?.inexact ? '+' : ''}`
+  ]
+  if (est.excludedLowball > 0) {
+    parts.push(`${est.excludedLowball} lowball${est.excludedLowball > 1 ? 's' : ''} skipped`)
+  }
+  return parts.join(' · ')
+})
+
 function age(iso: string): string {
   const mins = Math.max(0, (Date.now() - Date.parse(iso)) / 60000)
   if (mins < 60) return `${Math.round(mins)}m`
@@ -258,6 +272,13 @@ function age(iso: string): string {
         </label>
         <label v-for="stat in prepared.stats" :key="stat.statId + stat.label" class="filter-row">
           <input v-model="stat.enabled" type="checkbox" @change="markDirty" />
+          <span
+            v-if="stat.tier !== null"
+            class="tier"
+            :class="{ top: stat.tier === 1, good: stat.tier === 2 }"
+          >
+            T{{ stat.tier }}
+          </span>
           <span class="stat" :class="'source-' + stat.source">{{ stat.label }}</span>
           <span class="bounds">
             <input
@@ -284,6 +305,12 @@ function age(iso: string): string {
           <span class="badge">?</span>
           <span>{{ line }}</span>
         </div>
+      </div>
+
+      <div v-if="outcome?.estimate && !searching" class="estimate" :class="{ stale: dirty }">
+        <span class="est-range">≈ {{ formatEstimateRange(outcome.estimate) }}</span>
+        <span class="est-conf" :class="'conf-' + outcome.estimate.confidence">●</span>
+        <span class="est-detail">{{ estimateDetail }}</span>
       </div>
 
       <div class="status">
@@ -316,7 +343,13 @@ function age(iso: string): string {
       </div>
 
       <div v-if="outcome && outcome.listings.length > 0" class="listings">
-        <div v-for="l in outcome.listings" :key="l.id" class="listing">
+        <div
+          v-for="l in outcome.listings"
+          :key="l.id"
+          class="listing"
+          :class="{ unpriceable: l.unpriceable }"
+          :title="l.unpriceable ? 'currency not in the estimate' : undefined"
+        >
           <span class="price">
             {{ l.price ? `${l.price.amount} ${l.price.currency}` : '—' }}
           </span>
@@ -513,6 +546,57 @@ function age(iso: string): string {
   flex-shrink: 0;
 }
 
+.estimate {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 6px;
+}
+
+.est-range {
+  color: #e8c878;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.est-conf {
+  font-size: 9px;
+}
+
+.conf-high { color: #7bc97b; }
+.conf-medium { color: #c0a040; }
+.conf-low { color: #d05050; }
+
+.est-detail {
+  color: #8a8782;
+  font-size: 11px;
+}
+
+/* Filters edited since this estimate was computed. */
+.estimate.stale { opacity: 0.45; }
+
+.tier {
+  flex-shrink: 0;
+  color: #8a8782;
+  font-size: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 3px;
+  padding: 0 3px;
+  line-height: 13px;
+}
+
+/* PoE2: T1 is the top tier. */
+.tier.top {
+  color: #e8c878;
+  border-color: rgba(232, 200, 120, 0.6);
+}
+
+.tier.good {
+  color: #c9b37b;
+  border-color: rgba(201, 179, 123, 0.4);
+}
+
 .status {
   display: flex;
   align-items: center;
@@ -573,6 +657,8 @@ function age(iso: string): string {
 }
 
 .listing:nth-child(odd) { background: rgba(255, 255, 255, 0.03); }
+
+.listing.unpriceable { opacity: 0.45; }
 
 .price {
   color: #e8c878;

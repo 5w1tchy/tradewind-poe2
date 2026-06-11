@@ -48,6 +48,10 @@ describe('prepareQuery', () => {
     expect(life.value).toBe(102)
     expect(life.min).toBe(91) // floor(102 * 0.9)
     expect(life.max).toBeNull()
+    expect(life.tier).toBe(2)
+
+    // pseudo fold rows have no single tier
+    expect(pseudo.tier).toBeNull()
 
     // rune line present but unchecked
     const rune = q.stats.find((s) => s.source === 'rune')!
