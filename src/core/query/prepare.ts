@@ -1,5 +1,6 @@
 import type { ParsedItem, ParsedMod, ParsedStatLine } from '../parser/types'
 import type { StatsDb } from '../stats-db/statsDb'
+import { extractBaseType } from './baseType'
 import { categoryForItemClass } from './categories'
 import { deriveEquipmentValues } from './derived'
 import type {
@@ -15,6 +16,9 @@ export interface PrepareOptions {
   spread?: number
   /** Bulk-exchange ids keyed by exact item text (from /api/trade2/data/static). */
   exchangeIds?: Record<string, string>
+  /** Known base type names (from /api/trade2/data/items) for extracting the
+   *  true base out of decorated white/magic names. */
+  baseTypes?: string[]
 }
 
 const DEFAULT_SPREAD = 0.1
@@ -301,14 +305,29 @@ export function prepareQuery(
       prepared.categoryFilter = { value: category, label: item.itemClass, enabled: true }
     }
     prepared.rarityOption = 'nonunique'
-    // Normal-rarity names carry no affixes, so the exact base is searchable
-    // (fragments, keys, white bases).
-    if (item.rarity === 'Normal') prepared.type = item.baseType
+    // White items ARE their base, but the name can carry display prefixes
+    // ("Exceptional Stalking Spear") the API rejects — extract the real base
+    // and search it, with Category as the opt-out scope (see-saw, as rares).
+    if (item.rarity === 'Normal') {
+      const base = extractBaseType(item.baseType, options.baseTypes ?? [])
+      if (base) {
+        prepared.baseTypeFilter = { value: base, enabled: true }
+        if (prepared.categoryFilter) prepared.categoryFilter.enabled = false
+      } else {
+        // No items DB yet (offline first run) — exact-name search as before.
+        prepared.type = item.baseType
+      }
+    }
     // Rares show the clean base on the second name line — offer it as an
-    // opt-in restriction (exact base vs whole category). Magic names embed
-    // affixes, so theirs isn't usable until we have an items DB.
+    // opt-in restriction (exact base vs whole category).
     if (item.rarity === 'Rare' && item.name) {
       prepared.baseTypeFilter = { value: item.baseType, enabled: false }
+    }
+    // Magic names sandwich the base in affix words — recover it from the
+    // items DB so the base restriction is at least offerable.
+    if (item.rarity === 'Magic') {
+      const base = extractBaseType(item.baseType, options.baseTypes ?? [])
+      if (base) prepared.baseTypeFilter = { value: base, enabled: false }
     }
   }
 

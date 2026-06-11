@@ -1,3 +1,4 @@
+import type { RateTable } from '../core/pricing'
 import type { TradeSearchRequest } from '../core/query/types'
 import type { SearchOutcome, TradeListing } from '../core/trade/types'
 import { USER_AGENT } from './dataCache'
@@ -228,8 +229,18 @@ export class TradeApiClient {
     }
   }
 
-  /** Price a stackable on the bulk exchange: cheapest offers asking exalted. */
-  async exchange(league: string, wantId: string): Promise<SearchOutcome> {
+  /**
+   * Price a stackable on the bulk exchange. Asks for offers in every
+   * currency with a known rate — high-value books (omens, some essences)
+   * are denominated in divine, and an exalted-only query reads junk asks.
+   */
+  async exchange(
+    league: string,
+    wantId: string,
+    opts: { have?: string[]; rates?: RateTable } = {}
+  ): Promise<SearchOutcome> {
+    const rates = opts.rates ?? { exalted: 1 }
+    const have = opts.have ?? Object.keys(rates)
     const leaguePath = encodeURIComponent(league)
     const res = await this.request<RawExchangeResponse>(
       'exchange',
@@ -238,7 +249,7 @@ export class TradeApiClient {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          query: { status: { option: 'online' }, have: ['exalted'], want: [wantId] },
+          query: { status: { option: 'online' }, have, want: [wantId] },
           sort: { have: 'asc' },
           engine: 'new'
         })
@@ -247,23 +258,28 @@ export class TradeApiClient {
 
     const listings: TradeListing[] = []
     for (const entry of Object.values(res.result)) {
-      const offer = entry.listing.offers[0]
-      if (!offer) continue
-      listings.push({
-        id: entry.id,
-        price: {
-          amount: offer.exchange.amount / offer.item.amount,
-          currency: offer.exchange.currency,
-          type: 'exchange'
-        },
-        accountName: entry.listing.account?.name ?? '?',
-        indexed: entry.listing.indexed,
-        itemName: wantId,
-        online: Boolean(entry.listing.account?.online),
-        stock: offer.item.stock
-      })
+      // One listing can quote several have-currencies — each ask is its own row.
+      for (const offer of entry.listing.offers) {
+        listings.push({
+          id: `${entry.id}:${offer.exchange.currency}`,
+          price: {
+            amount: offer.exchange.amount / offer.item.amount,
+            currency: offer.exchange.currency,
+            type: 'exchange'
+          },
+          accountName: entry.listing.account?.name ?? '?',
+          indexed: entry.listing.indexed,
+          itemName: wantId,
+          online: Boolean(entry.listing.account?.online),
+          stock: offer.item.stock
+        })
+      }
     }
-    listings.sort((a, b) => (a.price?.amount ?? 0) - (b.price?.amount ?? 0))
+    const inExalted = (l: TradeListing): number => {
+      const rate = l.price ? rates[l.price.currency] : undefined
+      return rate === undefined ? Number.POSITIVE_INFINITY : l.price!.amount * rate
+    }
+    listings.sort((a, b) => inExalted(a) - inExalted(b))
 
     return {
       searchId: res.id,

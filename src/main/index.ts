@@ -28,6 +28,10 @@ interface StaticPayload {
   result: Array<{ id: string; entries?: Array<{ id: string; text: string }> }>
 }
 
+interface ItemsPayload {
+  result: Array<{ id: string; entries?: Array<{ type?: string }> }>
+}
+
 app.whenReady().then(() => {
   const config = loadConfig()
   const devAnyWindow = config.devAnyWindow || process.env['TRADEWIND_ANY_WINDOW'] === '1'
@@ -59,6 +63,21 @@ app.whenReady().then(() => {
       console.log(`[data] exchange ids ready (${Object.keys(exchangeIds).length} items)`)
     })
     .catch((err) => console.error('[data] static data failed to load:', err))
+
+  // Base names for extracting the true base from decorated white/magic names.
+  let baseTypes: string[] = []
+  void cachedFetchJson<ItemsPayload>('items', 'https://www.pathofexile.com/api/trade2/data/items')
+    .then((payload) => {
+      const seen = new Set<string>()
+      for (const group of payload.result) {
+        for (const entry of group.entries ?? []) {
+          if (entry.type) seen.add(entry.type)
+        }
+      }
+      baseTypes = [...seen]
+      console.log(`[data] base types ready (${baseTypes.length})`)
+    })
+    .catch((err) => console.error('[data] items data failed to load:', err))
 
   let leagues: string[] = []
   let league = config.league
@@ -114,7 +133,8 @@ app.whenReady().then(() => {
           try {
             prepared = prepareQuery(parseItem(text), statsDb, {
               spread: config.spread,
-              exchangeIds
+              exchangeIds,
+              baseTypes
             })
           } catch (err) {
             console.error('[item] failed to prepare query:', err)
@@ -155,13 +175,13 @@ app.whenReady().then(() => {
   })
 
   ipcMain.handle('tw:search', async (_event, prepared: PreparedQuery) => {
+    const rateTable = await rates.get(league)
     const outcome = prepared.exchangeId
-      ? await tradeClient.exchange(league, prepared.exchangeId)
+      ? await tradeClient.exchange(league, prepared.exchangeId, { rates: rateTable })
       : await tradeClient.searchWithListings(league, buildSearchBody(prepared))
     const prices = outcome.listings
       .map((l) => l.price)
       .filter((p): p is NonNullable<typeof p> => p !== null)
-    const rateTable = await rates.get(league)
     outcome.estimate = estimatePrice(prices, rateTable, outcome.total)
     for (const listing of outcome.listings) {
       if (listing.price && rateTable[listing.price.currency] === undefined) {

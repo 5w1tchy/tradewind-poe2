@@ -4,6 +4,7 @@ import { beforeAll, describe, expect, it } from 'vitest'
 import { parseItem } from '../parser/parse'
 import { StatsDb } from '../stats-db/statsDb'
 import type { StatsPayload } from '../stats-db/types'
+import { extractBaseType } from './baseType'
 import { buildSearchBody } from './build'
 import { prepareQuery } from './prepare'
 import type { PreparedQuery } from './types'
@@ -23,6 +24,25 @@ beforeAll(() => {
 function prepareFixture(file: string): PreparedQuery {
   return prepareQuery(parseItem(readFileSync(join(fixturesDir, file), 'utf8')), db)
 }
+
+describe('extractBaseType', () => {
+  const bases = ['Stalking Spear', 'Spear', 'Thawing Charm', 'Spearfield']
+
+  it('prefers the longest whole-word match', () => {
+    expect(extractBaseType('Exceptional Stalking Spear', bases)).toBe('Stalking Spear')
+    expect(extractBaseType('Sunny Thawing Charm of the Copious', bases)).toBe('Thawing Charm')
+  })
+
+  it('matches whole words only, including exact names', () => {
+    expect(extractBaseType('Spearfield', bases)).toBe('Spearfield')
+    expect(extractBaseType('Whisperfield', bases)).toBeNull()
+  })
+
+  it('null when nothing matches', () => {
+    expect(extractBaseType('Totally Unknown Thing', bases)).toBeNull()
+    expect(extractBaseType('Stalking Spear', [])).toBeNull()
+  })
+})
 
 describe('prepareQuery', () => {
   it('rare gloves: category + checked explicits with spread mins', () => {
@@ -143,6 +163,29 @@ describe('prepareQuery', () => {
     const lvl = q.stats.find((s) => s.label.includes('to Level of all Projectile Skills'))!
     expect(lvl.value).toBe(2)
     expect(lvl.min).toBe(2)
+  })
+
+  it('white item with display prefix: base extracted, on by default, see-saws with category', () => {
+    const text = [
+      'Item Class: Spears',
+      'Rarity: Normal',
+      'Exceptional Stalking Spear',
+      '--------',
+      'Item Level: 83'
+    ].join('\n')
+    const q = prepareQuery(parseItem(text), db, { baseTypes: ['Stalking Spear', 'Spear'] })
+    expect(q.baseTypeFilter).toEqual({ value: 'Stalking Spear', enabled: true })
+    expect(q.categoryFilter?.enabled).toBe(false)
+    expect(q.type).toBeNull()
+    expect(buildSearchBody(q).query.type).toBe('Stalking Spear')
+  })
+
+  it('magic item: base recovered from the items DB as an opt-in filter', () => {
+    const item = parseItem(
+      readFileSync(join(fixturesDir, '20-charms--sunny-thawing-charm-of-the-copious-58a4ca81.txt'), 'utf8')
+    )
+    const q = prepareQuery(item, db, { baseTypes: ['Thawing Charm', 'Charm'] })
+    expect(q.baseTypeFilter).toEqual({ value: 'Thawing Charm', enabled: false })
   })
 
   it('rare base type is an opt-in exact filter', () => {
