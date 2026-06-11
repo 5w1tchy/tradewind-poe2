@@ -7,6 +7,7 @@ import type { StatsPayload } from '../core/stats-db/types'
 import type { ItemPayload } from '../shared/ipc'
 import { loadConfig, saveConfig } from './config'
 import { parseHotkey } from './hotkey'
+import { NativeKeyHook } from './keyhook'
 import { cachedFetchJson } from './dataCache'
 import { createOverlayWindow } from './overlay'
 import { GameWindowTracker, type GameState } from './gameWindow'
@@ -158,10 +159,14 @@ app.whenReady().then(() => {
     }
   }
 
-  // Hotkeys are claimed (and thereby swallowed — no leaking "D" stepping the
-  // character sideways in WASD mode) only while PoE2 is focused, so the rest
-  // of the desktop keeps its shortcuts. If another tool already owns a key,
-  // fall back to observing it via uiohook: works, but the keypress leaks.
+  // Hotkeys are captured only while PoE2 is focused, so the rest of the
+  // desktop keeps its shortcuts. Three tiers, best first:
+  //  1. Native WH_KEYBOARD_LL addon — blocks in the hook itself, so the key
+  //     never reaches the message queue *or* the key-state table the game
+  //     polls for WASD movement (the leak globalShortcut can't plug).
+  //  2. globalShortcut (RegisterHotKey) — swallows the message, but the key
+  //     state still updates and a "D" hotkey steps the character.
+  //  3. uiohook observe-only — fires the handler, keypress leaks entirely.
   const priceCheckKey =
     parseHotkey(config.priceCheckHotkey) ?? parseHotkey('Ctrl+D')!
   const hideoutKey = parseHotkey(config.hideoutHotkey) ?? parseHotkey('F5')!
@@ -169,10 +174,25 @@ app.whenReady().then(() => {
     `[input] hotkeys: price check ${priceCheckKey.accelerator}, hideout ${hideoutKey.accelerator}`
   )
 
+  const keyhook = NativeKeyHook.load()
+  const nativeHooked =
+    keyhook?.start(
+      { priceCheck: priceCheckKey, hideout: hideoutKey },
+      { onPriceCheck: () => void priceCheck(), onHideout: () => void goHideout() }
+    ) ?? false
+  if (nativeHooked) {
+    input.setObserved({ priceCheck: false, hideout: false })
+    console.log('[input] native key suppression active (WH_KEYBOARD_LL)')
+  }
+
   let hotkeysClaimed = false
   const claimHotkeys = (): void => {
     if (hotkeysClaimed) return
     hotkeysClaimed = true
+    if (nativeHooked) {
+      keyhook!.setEnabled(true)
+      return
+    }
     const pc = globalShortcut.register(priceCheckKey.accelerator, () => void priceCheck())
     const ho = globalShortcut.register(hideoutKey.accelerator, () => void goHideout())
     input.setObserved({ priceCheck: !pc, hideout: !ho })
@@ -185,6 +205,10 @@ app.whenReady().then(() => {
   const releaseHotkeys = (): void => {
     if (!hotkeysClaimed) return
     hotkeysClaimed = false
+    if (nativeHooked) {
+      keyhook!.setEnabled(false)
+      return
+    }
     globalShortcut.unregisterAll()
     input.setObserved({ priceCheck: true, hideout: true })
   }
@@ -353,6 +377,7 @@ app.whenReady().then(() => {
 
   app.on('will-quit', () => {
     globalShortcut.unregisterAll()
+    keyhook?.stop()
     input.stop()
     tracker.stop()
   })

@@ -8,6 +8,8 @@ export interface ParsedHotkey {
   accelerator: string
   /** uiohook keycode for the observe-only fallback. */
   keycode: number
+  /** Windows virtual-key code for the native low-level hook. */
+  vk: number
 }
 
 /**
@@ -38,8 +40,11 @@ export function parseHotkey(spec: string): ParsedHotkey | null {
   const keycode = (UiohookKey as Record<string, number>)[key]
   if (keycode === undefined) return null
 
+  // Letters/digits are their char code; F-keys start at VK_F1 = 0x70.
+  const vk = key.length === 1 ? key.charCodeAt(0) : 0x6f + Number(key.slice(1))
+
   const accelerator = [out.ctrl && 'Control', out.alt && 'Alt', out.shift && 'Shift', key]
     .filter(Boolean)
     .join('+')
-  return { ...out, accelerator, keycode }
+  return { ...out, accelerator, keycode, vk }
 }
