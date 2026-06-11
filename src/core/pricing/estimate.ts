@@ -30,15 +30,9 @@ function confidenceFor(sampleSize: number, low: number, high: number): Confidenc
   return 'low'
 }
 
-/**
- * Cross-check against an independent aggregate price. Strong divergence
- * means the book we read is probably manipulated or mis-keyed — keep our
- * range (it reflects real listings) but stop claiming confidence.
- */
-export function applyAnchor(estimate: PriceEstimate, anchorExalted: number): void {
-  estimate.anchorExalted = anchorExalted
-  if (anchorDiverges(estimate)) estimate.confidence = 'low'
-}
+/** Anchor window: offers outside [0.4x, 2.5x] of the aggregate are noise. */
+const ANCHOR_WINDOW_LOW = 0.4
+const ANCHOR_WINDOW_HIGH = 2.5
 
 /** True when the anchor sits far outside our range's midpoint. */
 export function anchorDiverges(estimate: PriceEstimate): boolean {
@@ -46,20 +40,26 @@ export function anchorDiverges(estimate: PriceEstimate): boolean {
   const mid = (estimate.lowExalted + estimate.highExalted) / 2
   if (mid <= 0) return false
   const ratio = estimate.anchorExalted / mid
-  return ratio > 2.5 || ratio < 0.4
+  return ratio > ANCHOR_WINDOW_HIGH || ratio < ANCHOR_WINDOW_LOW
 }
 
 /**
  * Estimate from the fetched listings (the cheapest the search returned).
  * The range reads "you'd pay between the cheapest credible listing and the
- * going rate": lowballs below half the median are trimmed first, then
- * low = cheapest survivor, high = median of survivors. Null when no listing
- * has a price in a known currency.
+ * going rate": low = cheapest credible offer, high = median of the credible.
+ *
+ * "Credible" depends on what we know. With an independent aggregate price
+ * (poe2scout), the book is read through its window — ask books float bait
+ * floors AND delusion ceilings around the real cluster, and the window
+ * finds that cluster. Without one (or when the whole book sits outside the
+ * window), lowballs below half the median are trimmed and divergence from
+ * the anchor caps confidence at low. Null when nothing is priceable.
  */
 export function estimatePrice(
   prices: PriceInput[],
   rates: RateTable,
-  total: number
+  total: number,
+  anchorExalted?: number
 ): PriceEstimate | null {
   const normalized: number[] = []
   let excludedCurrency = 0
@@ -72,20 +72,36 @@ export function estimatePrice(
   if (normalized.length === 0) return null
 
   normalized.sort((a, b) => a - b)
-  const cutoff = median(normalized) * LOWBALL_FRACTION
-  const survivors = normalized.filter((v) => v >= cutoff)
+
+  let cutoff = median(normalized) * LOWBALL_FRACTION
+  let survivors = normalized.filter((v) => v >= cutoff)
+  if (anchorExalted !== undefined) {
+    const windowLow = anchorExalted * ANCHOR_WINDOW_LOW
+    const inWindow = normalized.filter(
+      (v) => v >= windowLow && v <= anchorExalted * ANCHOR_WINDOW_HIGH
+    )
+    if (inWindow.length >= 3) {
+      cutoff = windowLow
+      survivors = inWindow
+    }
+  }
 
   const low = survivors[0]
   const high = median(survivors)
-  return {
+  const estimate: PriceEstimate = {
     lowExalted: low,
     highExalted: high,
     confidence: confidenceFor(survivors.length, low, high),
     sampleSize: survivors.length,
     total,
     excludedCurrency,
-    excludedLowball: normalized.length - survivors.length,
+    excludedLowball: normalized.filter((v) => v < cutoff).length,
     cutoffExalted: cutoff,
     divineRate: rates['divine'] ?? null
   }
+  if (anchorExalted !== undefined) {
+    estimate.anchorExalted = anchorExalted
+    if (anchorDiverges(estimate)) estimate.confidence = 'low'
+  }
+  return estimate
 }

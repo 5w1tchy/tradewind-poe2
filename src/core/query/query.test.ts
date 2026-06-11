@@ -215,6 +215,25 @@ describe('prepareQuery', () => {
     expect(speed.statId).toBe('explicit.stat_681332047') // global
   })
 
+  it('unidentified unique: decorated name line resolves to the real base', () => {
+    const text = [
+      'Item Class: Helmets',
+      'Rarity: Unique',
+      'Exceptional Fierce Greathelm',
+      '--------',
+      'Quality: +21% (augmented)',
+      'Armour: 315 (augmented)',
+      '--------',
+      'Item Level: 82',
+      '--------',
+      'Unidentified'
+    ].join('\n')
+    const q = prepareQuery(parseItem(text), db, { baseTypes: ['Fierce Greathelm'] })
+    expect(q.name).toBeNull()
+    expect(q.type).toBe('Fierce Greathelm')
+    expect(q.rarityOption).toBe('unique')
+  })
+
   it('rare base type is an opt-in exact filter', () => {
     const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
     expect(q.baseTypeFilter).toEqual({ value: 'Amethyst Ring', enabled: false })

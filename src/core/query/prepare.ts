@@ -320,7 +320,10 @@ export function prepareQuery(
 
   if (isUnique) {
     prepared.name = item.name
-    prepared.type = item.baseType
+    // Unidentified uniques show one decorated name line ("Exceptional
+    // Fierce Greathelm") — recover the real base; identified base lines
+    // pass through the extraction unchanged.
+    prepared.type = extractBaseType(item.baseType, options.baseTypes ?? []) ?? item.baseType
     prepared.rarityOption = 'unique'
   } else if (isEquipment) {
     if (category !== null) {

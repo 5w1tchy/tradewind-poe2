@@ -14,7 +14,7 @@ import { grabItemText } from './itemGrab'
 import { sendChatCommand } from './chatCommand'
 import { TradeApiClient } from './tradeApi'
 import { RatesProvider } from './rates'
-import { applyAnchor, estimatePrice, type RateTable } from '../core/pricing'
+import { estimatePrice, type RateTable } from '../core/pricing'
 import type { SearchOutcome, TradeListing } from '../core/trade/types'
 import { ScoutAnchorProvider } from './scoutAnchor'
 
@@ -206,13 +206,23 @@ app.whenReady().then(() => {
       have: ['exalted'],
       rates: rateTable
     })
-    const exEst = estimatePrice(listingPrices(exaltedBook.listings), rateTable, exaltedBook.total)
+    const exEst = estimatePrice(
+      listingPrices(exaltedBook.listings),
+      rateTable,
+      exaltedBook.total,
+      anchor
+    )
     // A dozen independent sellers agreeing is a market, not a bait wall —
     // only a thin or scattered exalted book earns the wide second call.
     let outcome = exaltedBook
     if (!(exEst?.confidence === 'high' && exEst.sampleSize >= 12)) {
       const wideBook = await tradeClient.exchange(league, exchangeId, { rates: rateTable })
-      const wideEst = estimatePrice(listingPrices(wideBook.listings), rateTable, wideBook.total)
+      const wideEst = estimatePrice(
+        listingPrices(wideBook.listings),
+        rateTable,
+        wideBook.total,
+        anchor
+      )
       if (anchor !== undefined && exEst && wideEst) {
         // Both books are suspect — let the independent aggregate referee:
         // a thin-but-real exalted book beats a deep divine troll wall.
@@ -250,8 +260,12 @@ app.whenReady().then(() => {
           )
           throw err
         })
-    outcome.estimate = estimatePrice(listingPrices(outcome.listings), rateTable, outcome.total)
-    if (outcome.estimate && anchor !== undefined) applyAnchor(outcome.estimate, anchor)
+    outcome.estimate = estimatePrice(
+      listingPrices(outcome.listings),
+      rateTable,
+      outcome.total,
+      anchor
+    )
     for (const listing of outcome.listings) {
       if (!listing.price) continue
       const rate = rateTable[listing.price.currency]

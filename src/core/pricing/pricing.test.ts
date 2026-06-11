@@ -1,11 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import {
-  anchorDiverges,
-  applyAnchor,
-  estimatePrice,
-  formatEstimateRange,
-  formatExalted
-} from './index'
+import { anchorDiverges, estimatePrice, formatEstimateRange, formatExalted } from './index'
 import type { RateTable } from './types'
 
 const RATES: RateTable = { exalted: 1, divine: 300, chaos: 6 }
@@ -100,21 +94,37 @@ describe('estimatePrice', () => {
   })
 })
 
-describe('applyAnchor', () => {
+describe('estimatePrice with anchor', () => {
+  it('reads the book through the anchor window, skipping the bait floor', () => {
+    // Live Sovereign Alloy book 2026-06-11: bait floor 1-10 ex, real cluster
+    // 20-35 ex, scout aggregate 37 ex. Half-median trimming alone anchors to
+    // the bait; the window finds the cluster.
+    const book = [
+      1, 1, 1, 1, 2, 2, 4, 5, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10, 10, 10, 10, 10, 14, 15, 15, 15, 16,
+      19, 20, 20, 20, 20, 20, 20, 23, 24, 25, 25, 25, 26, 27, 29, 30, 30, 30, 31, 33, 35
+    ]
+    const est = estimatePrice(ex(book), RATES, 100, 37)!
+    expect(est.lowExalted).toBe(15) // window floor = 0.4 x 37
+    expect(est.highExalted).toBeGreaterThanOrEqual(20)
+    expect(est.highExalted).toBeLessThanOrEqual(30)
+    expect(anchorDiverges(est)).toBe(false)
+    expect(est.confidence).not.toBe('low')
+  })
+
+  it('empty window: book estimate stands but confidence drops to low', () => {
+    // Idol of Alira: every ask 10-20 ex, aggregate 2.6 ex — nothing credible.
+    const est = estimatePrice(ex([10, 10, 10, 12, 15, 20]), RATES, 86, 2.6)!
+    expect(est.anchorExalted).toBe(2.6)
+    expect(est.lowExalted).toBe(10)
+    expect(est.confidence).toBe('low')
+    expect(anchorDiverges(est)).toBe(true)
+  })
+
   it('agreeing anchor attaches without touching confidence', () => {
-    const est = estimatePrice(ex([5, 5, 6, 6, 7, 8, 9, 10]), RATES, 100)!
-    applyAnchor(est, 7)
+    const est = estimatePrice(ex([5, 5, 6, 6, 7, 8, 9, 10]), RATES, 100, 7)!
     expect(est.anchorExalted).toBe(7)
     expect(est.confidence).toBe('high')
     expect(anchorDiverges(est)).toBe(false)
-  })
-
-  it('divergent anchor drops confidence to low', () => {
-    // Bait wall won: book says 10-25 ex, aggregate says ~500 ex.
-    const est = estimatePrice(ex([10, 20, 20, 25, 30]), RATES, 60)!
-    applyAnchor(est, 500)
-    expect(est.confidence).toBe('low')
-    expect(anchorDiverges(est)).toBe(true)
   })
 })
 

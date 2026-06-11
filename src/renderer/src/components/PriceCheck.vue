@@ -32,6 +32,31 @@ function pickSale(id: ListingStatus): void {
   prepared.value.status = id
   markDirty()
 }
+
+const rarityOpen = ref(false)
+
+const RARITY_OPTIONS: Array<[string, string]> = [
+  ['nonunique', 'Any Non-Unique'],
+  ['normal', 'Normal'],
+  ['magic', 'Magic'],
+  ['rare', 'Rare']
+]
+
+const rarityLabel = computed(
+  () => RARITY_OPTIONS.find(([id]) => id === prepared.value?.rarityOption)?.[1] ?? 'Any'
+)
+
+/** Shown for equipment searches so a base can be checked across rarities. */
+const rarityEditable = computed(
+  () => prepared.value?.rarityOption != null && prepared.value.rarityOption !== 'unique'
+)
+
+function pickRarity(id: string): void {
+  rarityOpen.value = false
+  if (!prepared.value || prepared.value.rarityOption === id) return
+  prepared.value.rarityOption = id
+  markDirty()
+}
 /** Filters changed since the last search — results on screen are stale. */
 const dirty = ref(false)
 let searchToken = 0
@@ -47,6 +72,7 @@ watch(
     dirty.value = false
     leagueOpen.value = false
     saleOpen.value = false
+    rarityOpen.value = false
     // Auto-search only when the query pins the item by name/type (uniques,
     // gems, currency, white bases) — those defaults are reliable. A rare with
     // every mod pre-checked rarely has market matches; arm Search instead.
@@ -239,6 +265,21 @@ function age(iso: string): string {
             </li>
           </ul>
         </div>
+        <template v-if="rarityEditable">
+          <span class="property rarity-label">Rarity:</span>
+          <div class="league">
+            <button class="league-btn" @click="rarityOpen = !rarityOpen">
+              {{ rarityLabel }} ▾
+            </button>
+            <ul v-if="rarityOpen" class="league-list">
+              <li v-for="[id, label] in RARITY_OPTIONS" :key="id">
+                <button :class="{ active: id === prepared.rarityOption }" @click="pickRarity(id)">
+                  {{ label }}
+                </button>
+              </li>
+            </ul>
+          </div>
+        </template>
       </div>
       <div class="filters">
         <label v-for="row in propertyRows" :key="row.label" class="filter-row">
@@ -308,16 +349,22 @@ function age(iso: string): string {
       </div>
 
       <div v-if="outcome?.estimate && !searching" class="estimate" :class="{ stale: dirty }">
-        <span class="est-range">≈ {{ formatEstimateRange(outcome.estimate) }}</span>
-        <span class="est-conf" :class="'conf-' + outcome.estimate.confidence">●</span>
-        <span class="est-detail">{{ estimateDetail }}</span>
-        <span
-          v-if="anchorDiverges(outcome.estimate)"
-          class="est-anchor"
-          title="independent aggregate price (poe2scout) disagrees with these listings"
-        >
-          ref ~{{ formatExalted(outcome.estimate.anchorExalted!, outcome.estimate.divineRate) }}
-        </span>
+        <template v-if="anchorDiverges(outcome.estimate)">
+          <!-- Every ask is far from the going rate — the rate is the honest headline. -->
+          <span class="est-range">
+            ≈ {{ formatExalted(outcome.estimate.anchorExalted!, outcome.estimate.divineRate) }}
+          </span>
+          <span class="est-market" title="aggregate market rate (poe2scout)">market rate</span>
+          <span class="est-conf" :class="'conf-' + outcome.estimate.confidence">●</span>
+          <span class="est-detail">
+            asks here {{ formatEstimateRange(outcome.estimate) }} · {{ estimateDetail }}
+          </span>
+        </template>
+        <template v-else>
+          <span class="est-range">≈ {{ formatEstimateRange(outcome.estimate) }}</span>
+          <span class="est-conf" :class="'conf-' + outcome.estimate.confidence">●</span>
+          <span class="est-detail">{{ estimateDetail }}</span>
+        </template>
       </div>
 
       <div class="status">
@@ -589,12 +636,16 @@ function age(iso: string): string {
 /* Filters edited since this estimate was computed. */
 .estimate.stale { opacity: 0.45; }
 
-.est-anchor {
+.est-market {
   color: #d08a3c;
-  font-size: 11px;
+  font-size: 10px;
   border: 1px solid rgba(208, 138, 60, 0.4);
   border-radius: 3px;
   padding: 0 4px;
+}
+
+.rarity-label {
+  margin-left: 10px;
 }
 
 .tier {
