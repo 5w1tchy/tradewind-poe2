@@ -21,4 +21,6 @@ export interface PriceEstimate {
   cutoffExalted: number
   /** Exalted per divine at estimate time; null when the live rate is unknown. */
   divineRate: number | null
+  /** Independent aggregate price (poe2scout), in exalted, when one exists. */
+  anchorExalted?: number
 }

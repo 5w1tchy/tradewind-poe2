@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { estimatePrice, formatEstimateRange, formatExalted } from './index'
+import {
+  anchorDiverges,
+  applyAnchor,
+  estimatePrice,
+  formatEstimateRange,
+  formatExalted
+} from './index'
 import type { RateTable } from './types'
 
 const RATES: RateTable = { exalted: 1, divine: 300, chaos: 6 }
@@ -91,6 +97,24 @@ describe('estimatePrice', () => {
     const est = estimatePrice(ex([5, 6, 7]), { exalted: 1 }, 9)!
     expect(est.divineRate).toBeNull()
     expect(est.highExalted).toBe(6)
+  })
+})
+
+describe('applyAnchor', () => {
+  it('agreeing anchor attaches without touching confidence', () => {
+    const est = estimatePrice(ex([5, 5, 6, 6, 7, 8, 9, 10]), RATES, 100)!
+    applyAnchor(est, 7)
+    expect(est.anchorExalted).toBe(7)
+    expect(est.confidence).toBe('high')
+    expect(anchorDiverges(est)).toBe(false)
+  })
+
+  it('divergent anchor drops confidence to low', () => {
+    // Bait wall won: book says 10-25 ex, aggregate says ~500 ex.
+    const est = estimatePrice(ex([10, 20, 20, 25, 30]), RATES, 60)!
+    applyAnchor(est, 500)
+    expect(est.confidence).toBe('low')
+    expect(anchorDiverges(est)).toBe(true)
   })
 })
 

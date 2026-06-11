@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { formatEstimateRange } from '../../../core/pricing'
+import { anchorDiverges, formatEstimateRange, formatExalted } from '../../../core/pricing'
 import type { ListingStatus, PreparedQuery, PreparedRange } from '../../../core/query/types'
 import type { SearchOutcome } from '../../../core/trade/types'
 import type { ItemPayload } from '../../../shared/ipc'
@@ -311,6 +311,13 @@ function age(iso: string): string {
         <span class="est-range">≈ {{ formatEstimateRange(outcome.estimate) }}</span>
         <span class="est-conf" :class="'conf-' + outcome.estimate.confidence">●</span>
         <span class="est-detail">{{ estimateDetail }}</span>
+        <span
+          v-if="anchorDiverges(outcome.estimate)"
+          class="est-anchor"
+          title="independent aggregate price (poe2scout) disagrees with these listings"
+        >
+          ref ~{{ formatExalted(outcome.estimate.anchorExalted!, outcome.estimate.divineRate) }}
+        </span>
       </div>
 
       <div class="status">
@@ -581,6 +588,14 @@ function age(iso: string): string {
 
 /* Filters edited since this estimate was computed. */
 .estimate.stale { opacity: 0.45; }
+
+.est-anchor {
+  color: #d08a3c;
+  font-size: 11px;
+  border: 1px solid rgba(208, 138, 60, 0.4);
+  border-radius: 3px;
+  padding: 0 4px;
+}
 
 .tier {
   flex-shrink: 0;

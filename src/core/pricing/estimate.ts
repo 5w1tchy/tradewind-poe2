@@ -31,6 +31,25 @@ function confidenceFor(sampleSize: number, low: number, high: number): Confidenc
 }
 
 /**
+ * Cross-check against an independent aggregate price. Strong divergence
+ * means the book we read is probably manipulated or mis-keyed — keep our
+ * range (it reflects real listings) but stop claiming confidence.
+ */
+export function applyAnchor(estimate: PriceEstimate, anchorExalted: number): void {
+  estimate.anchorExalted = anchorExalted
+  if (anchorDiverges(estimate)) estimate.confidence = 'low'
+}
+
+/** True when the anchor sits far outside our range's midpoint. */
+export function anchorDiverges(estimate: PriceEstimate): boolean {
+  if (estimate.anchorExalted === undefined) return false
+  const mid = (estimate.lowExalted + estimate.highExalted) / 2
+  if (mid <= 0) return false
+  const ratio = estimate.anchorExalted / mid
+  return ratio > 2.5 || ratio < 0.4
+}
+
+/**
  * Estimate from the fetched listings (the cheapest the search returned).
  * The range reads "you'd pay between the cheapest credible listing and the
  * going rate": lowballs below half the median are trimmed first, then

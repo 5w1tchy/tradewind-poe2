@@ -165,6 +165,13 @@ describe('prepareQuery', () => {
     expect(lvl.min).toBe(2)
   })
 
+  it('charm slots keep their full roll as min (price cliff, no spread)', () => {
+    const q = prepareFixture('02-belts--mageblood-e7e9e4df.txt')
+    const charm = q.stats.find((s) => s.label.includes('Charm Slot'))!
+    expect(charm.value).toBe(3)
+    expect(charm.min).toBe(3)
+  })
+
   it('white item with display prefix: base extracted, on by default, see-saws with category', () => {
     const text = [
       'Item Class: Spears',

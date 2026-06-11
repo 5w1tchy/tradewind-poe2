@@ -14,8 +14,9 @@ import { grabItemText } from './itemGrab'
 import { sendChatCommand } from './chatCommand'
 import { TradeApiClient } from './tradeApi'
 import { RatesProvider } from './rates'
-import { estimatePrice, type RateTable } from '../core/pricing'
+import { applyAnchor, estimatePrice, type RateTable } from '../core/pricing'
 import type { SearchOutcome, TradeListing } from '../core/trade/types'
+import { ScoutAnchorProvider } from './scoutAnchor'
 
 if (!app.requestSingleInstanceLock()) {
   app.quit()
@@ -42,6 +43,7 @@ app.whenReady().then(() => {
   const tracker = new GameWindowTracker(config.gameWindowTitle, devAnyWindow)
   const tradeClient = new TradeApiClient()
   const rates = new RatesProvider(tradeClient)
+  const scout = new ScoutAnchorProvider()
 
   // Stats DB loads in the background; price checks just show raw text until ready.
   let statsDb: StatsDb | null = null
@@ -221,6 +223,11 @@ app.whenReady().then(() => {
       ? await exchangeWithEstimate(prepared.exchangeId, rateTable)
       : await tradeClient.searchWithListings(league, buildSearchBody(prepared))
     outcome.estimate = estimatePrice(listingPrices(outcome.listings), rateTable, outcome.total)
+    if (outcome.estimate && (prepared.exchangeId || prepared.name)) {
+      // Stackables key by their text, uniques by their given name.
+      const anchor = (await scout.get(league)).get(prepared.displayName)
+      if (anchor !== undefined) applyAnchor(outcome.estimate, anchor)
+    }
     for (const listing of outcome.listings) {
       if (!listing.price) continue
       const rate = rateTable[listing.price.currency]

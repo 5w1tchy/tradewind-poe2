@@ -61,8 +61,9 @@ interface LineContext {
 const NO_SPREAD_TEMPLATES = new Set(['#% increased Movement Speed'])
 
 // Small-integer stats where each point is a price cliff: a "+3 to Level of
-// all Spell Skills" search must not loosen to +2.
-const NO_SPREAD_PATTERNS = [/^\+# to Level of /]
+// all Spell Skills" search must not loosen to +2, and 2 charm slots must
+// not loosen to 1.
+const NO_SPREAD_PATTERNS = [/^\+# to Level of /, /Charm Slot/]
 
 function spreadFor(template: string, spread: number): number {
   if (NO_SPREAD_TEMPLATES.has(template)) return 0
