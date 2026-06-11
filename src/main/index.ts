@@ -6,6 +6,7 @@ import { StatsDb } from '../core/stats-db/statsDb'
 import type { StatsPayload } from '../core/stats-db/types'
 import type { ItemPayload } from '../shared/ipc'
 import { loadConfig, saveConfig } from './config'
+import { parseHotkey } from './hotkey'
 import { cachedFetchJson } from './dataCache'
 import { createOverlayWindow } from './overlay'
 import { GameWindowTracker, type GameState } from './gameWindow'
@@ -161,16 +162,23 @@ app.whenReady().then(() => {
   // character sideways in WASD mode) only while PoE2 is focused, so the rest
   // of the desktop keeps its shortcuts. If another tool already owns a key,
   // fall back to observing it via uiohook: works, but the keypress leaks.
+  const priceCheckKey =
+    parseHotkey(config.priceCheckHotkey) ?? parseHotkey('Ctrl+D')!
+  const hideoutKey = parseHotkey(config.hideoutHotkey) ?? parseHotkey('F5')!
+  console.log(
+    `[input] hotkeys: price check ${priceCheckKey.accelerator}, hideout ${hideoutKey.accelerator}`
+  )
+
   let hotkeysClaimed = false
   const claimHotkeys = (): void => {
     if (hotkeysClaimed) return
     hotkeysClaimed = true
-    const pc = globalShortcut.register('Control+D', () => void priceCheck())
-    const ho = globalShortcut.register('F5', () => void goHideout())
+    const pc = globalShortcut.register(priceCheckKey.accelerator, () => void priceCheck())
+    const ho = globalShortcut.register(hideoutKey.accelerator, () => void goHideout())
     input.setObserved({ priceCheck: !pc, hideout: !ho })
     if (!pc || !ho) {
       console.warn(
-        `[input] could not claim ${[!pc && 'Ctrl+D', !ho && 'F5'].filter(Boolean).join(', ')} — another app holds it; keypress will leak to the game`
+        `[input] could not claim ${[!pc && priceCheckKey.accelerator, !ho && hideoutKey.accelerator].filter(Boolean).join(', ')} — another app holds it; keypress will leak to the game`
       )
     }
   }
@@ -194,17 +202,20 @@ app.whenReady().then(() => {
     }
   })
 
-  input.start({
-    onPriceCheck: () => void priceCheck(),
-    onHideout: () => void goHideout(),
-    onEscape() {
-      hidePopup()
+  input.start(
+    {
+      onPriceCheck: () => void priceCheck(),
+      onHideout: () => void goHideout(),
+      onEscape() {
+        hidePopup()
+      },
+      onMouseMovedAway() {
+        overlay.webContents.send('tw:hide')
+        setInteractive(false)
+      }
     },
-    onMouseMovedAway() {
-      overlay.webContents.send('tw:hide')
-      setInteractive(false)
-    }
-  })
+    { priceCheck: priceCheckKey, hideout: hideoutKey }
+  )
 
   const listingPrices = (listings: TradeListing[]): Array<{ amount: number; currency: string }> =>
     listings.map((l) => l.price).filter((p): p is NonNullable<typeof p> => p !== null)

@@ -11,13 +11,20 @@ export interface Config {
   league: string
   /** Fractional spread below each roll for pre-checked stat mins. */
   spread: number
+  /** Price-check hotkey ("Ctrl+D", "F6", "Ctrl+Alt+P"). WASD players: pick a
+   *  key the game ignores until native key suppression lands. */
+  priceCheckHotkey: string
+  /** Hotkey that sends the /hideout chat command. */
+  hideoutHotkey: string
 }
 
 const defaults: Config = {
   gameWindowTitle: 'Path of Exile 2',
   devAnyWindow: false,
   league: '',
-  spread: 0.1
+  spread: 0.1,
+  priceCheckHotkey: 'Ctrl+D',
+  hideoutHotkey: 'F5'
 }
 
 export function saveConfig(config: Config): void {

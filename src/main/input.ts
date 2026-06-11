@@ -1,5 +1,6 @@
 import { uIOhook, UiohookKey } from 'uiohook-napi'
 import koffi from 'koffi'
+import type { ParsedHotkey } from './hotkey'
 
 const user32 = koffi.load('user32.dll')
 const keybd_event = user32.func(
@@ -46,7 +47,10 @@ export class InputManager {
     this.observed = keys
   }
 
-  start(handlers: InputHandlers): void {
+  start(
+    handlers: InputHandlers,
+    hotkeys: { priceCheck: ParsedHotkey; hideout: ParsedHotkey }
+  ): void {
     uIOhook.on('mousemove', (e) => {
       this.lastMouse = { x: e.x, y: e.y }
       if (this.anchor) {
@@ -59,22 +63,14 @@ export class InputManager {
       }
     })
 
+    const matches = (e: { ctrlKey: boolean; altKey: boolean; shiftKey: boolean; keycode: number },
+      h: ParsedHotkey): boolean =>
+      e.ctrlKey === h.ctrl && e.altKey === h.alt && e.shiftKey === h.shift && e.keycode === h.keycode
+
     uIOhook.on('keydown', (e) => {
-      if (
-        this.observed.priceCheck &&
-        e.ctrlKey &&
-        !e.altKey &&
-        !e.shiftKey &&
-        e.keycode === UiohookKey.D
-      ) {
+      if (this.observed.priceCheck && matches(e, hotkeys.priceCheck)) {
         handlers.onPriceCheck()
-      } else if (
-        this.observed.hideout &&
-        !e.ctrlKey &&
-        !e.altKey &&
-        !e.shiftKey &&
-        e.keycode === UiohookKey.F5
-      ) {
+      } else if (this.observed.hideout && matches(e, hotkeys.hideout)) {
         handlers.onHideout()
       } else if (e.keycode === UiohookKey.Escape) {
         // Never claimed via globalShortcut — swallowing Escape would break
