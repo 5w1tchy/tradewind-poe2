@@ -364,6 +364,15 @@ function age(iso: string): string {
           <span class="est-range">≈ {{ formatEstimateRange(outcome.estimate) }}</span>
           <span class="est-conf" :class="'conf-' + outcome.estimate.confidence">●</span>
           <span class="est-detail">{{ estimateDetail }}</span>
+          <!-- Site asks and the aggregate bracket the true price from
+               opposite sides — show both, the reader triangulates. -->
+          <span
+            v-if="outcome.estimate.anchorExalted !== undefined"
+            class="est-market"
+            title="aggregate market rate (poe2scout) — real trades usually land between this and the asks"
+          >
+            ref ~{{ formatExalted(outcome.estimate.anchorExalted, outcome.estimate.divineRate) }}
+          </span>
         </template>
       </div>
 
