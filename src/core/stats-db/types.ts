@@ -24,6 +24,8 @@ export interface StatCandidate {
   /** Stat group the candidate came from (explicit, rune, desecrated, ...) */
   category: string
   text: string
+  /** Trade text carried a "(Local)" qualifier — the weapon/armour-scoped stat. */
+  local: boolean
   /** Matched via increased<->reduced swap — roll values must be negated in queries. */
   negated: boolean
 }

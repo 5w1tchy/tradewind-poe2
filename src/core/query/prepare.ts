@@ -56,6 +56,23 @@ interface LineContext {
   tier: number | null
 }
 
+/**
+ * GGG indexes a mod under its "(Local)" stat id when it modifies the item
+ * itself: everything on weapons (accuracy, attack speed, added damage), but
+ * only the defence stats on armour — glove attack speed is global. Quivers
+ * are categorized armour yet roll nothing local.
+ */
+const ARMOUR_LOCAL_RE = /Armour|Evasion|Energy Shield|Block/
+
+function lineWantsLocal(category: string | null, template: string): boolean {
+  if (!category) return false
+  if (category.startsWith('weapon')) return true
+  if (category.startsWith('armour') && category !== 'armour.quiver') {
+    return ARMOUR_LOCAL_RE.test(template)
+  }
+  return false
+}
+
 // Stats that roll in fixed brackets — searching below your bracket is never
 // what you mean, so the min stays at 100% of the roll.
 const NO_SPREAD_TEMPLATES = new Set(['#% increased Movement Speed'])
@@ -127,9 +144,13 @@ function buildStatRows(
   const stats: PreparedStatFilter[] = []
   const templates: string[] = []
   const unmatched: string[] = []
+  const category = categoryForItemClass(item.itemClass)
 
   for (const { line, source, prefer, enabled, tier } of collectLines(item, statsEnabled)) {
-    const candidates = db.match(line, { preferCategories: prefer })
+    const candidates = db.match(line, {
+      preferCategories: prefer,
+      preferLocal: lineWantsLocal(category, line.template)
+    })
     const best = candidates[0]
     if (!best) {
       unmatched.push(line.raw)
@@ -314,10 +335,12 @@ export function prepareQuery(
       if (base) {
         prepared.baseTypeFilter = { value: base, enabled: true }
         if (prepared.categoryFilter) prepared.categoryFilter.enabled = false
-      } else {
+      } else if ((options.baseTypes ?? []).length === 0 || !prepared.categoryFilter) {
         // No items DB yet (offline first run) — exact-name search as before.
         prepared.type = item.baseType
       }
+      // With a loaded base list and no match, the name is decorated in a way
+      // we don't understand — a category search beats a guaranteed 400.
     }
     // Rares show the clean base on the second name line — offer it as an
     // opt-in restriction (exact base vs whole category).

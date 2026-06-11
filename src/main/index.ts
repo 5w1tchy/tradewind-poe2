@@ -195,7 +195,8 @@ app.whenReady().then(() => {
 
   async function exchangeWithEstimate(
     exchangeId: string,
-    rateTable: RateTable
+    rateTable: RateTable,
+    anchor: number | undefined
   ): Promise<SearchOutcome> {
     const cacheKey = `${league}:${exchangeId}`
     const cached = exchangeCache.get(cacheKey)
@@ -205,13 +206,22 @@ app.whenReady().then(() => {
       have: ['exalted'],
       rates: rateTable
     })
-    const est = estimatePrice(listingPrices(exaltedBook.listings), rateTable, exaltedBook.total)
+    const exEst = estimatePrice(listingPrices(exaltedBook.listings), rateTable, exaltedBook.total)
     // A dozen independent sellers agreeing is a market, not a bait wall —
     // only a thin or scattered exalted book earns the wide second call.
     let outcome = exaltedBook
-    if (!(est?.confidence === 'high' && est.sampleSize >= 12)) {
+    if (!(exEst?.confidence === 'high' && exEst.sampleSize >= 12)) {
       const wideBook = await tradeClient.exchange(league, exchangeId, { rates: rateTable })
-      if (wideBook.listings.length > 0) outcome = wideBook
+      const wideEst = estimatePrice(listingPrices(wideBook.listings), rateTable, wideBook.total)
+      if (anchor !== undefined && exEst && wideEst) {
+        // Both books are suspect — let the independent aggregate referee:
+        // a thin-but-real exalted book beats a deep divine troll wall.
+        const dist = (e: NonNullable<typeof exEst>): number =>
+          Math.abs(Math.log((e.lowExalted + e.highExalted) / 2 / anchor))
+        outcome = dist(exEst) <= dist(wideEst) ? exaltedBook : wideBook
+      } else if (wideBook.listings.length > 0) {
+        outcome = wideBook
+      }
     }
     exchangeCache.set(cacheKey, { outcome, at: Date.now() })
     return outcome
@@ -219,15 +229,29 @@ app.whenReady().then(() => {
 
   ipcMain.handle('tw:search', async (_event, prepared: PreparedQuery) => {
     const rateTable = await rates.get(league)
+    // Stackables key by their text, uniques by their given name.
+    const anchor =
+      prepared.exchangeId || prepared.name
+        ? (await scout.get(league)).get(prepared.displayName)
+        : undefined
     const outcome = prepared.exchangeId
-      ? await exchangeWithEstimate(prepared.exchangeId, rateTable)
-      : await tradeClient.searchWithListings(league, buildSearchBody(prepared))
+      ? await exchangeWithEstimate(prepared.exchangeId, rateTable, anchor)
+      : await tradeClient.searchWithListings(league, buildSearchBody(prepared)).catch((err) => {
+          // Which identifiers produced the failure matters more than the
+          // HTTP body ("Unknown item base type" never says which type).
+          console.error(
+            `[trade] search failed for "${prepared.displayName}"`,
+            JSON.stringify({
+              name: prepared.name,
+              type: prepared.type,
+              base: prepared.baseTypeFilter?.enabled ? prepared.baseTypeFilter.value : undefined,
+              category: prepared.categoryFilter?.enabled ? prepared.categoryFilter.value : undefined
+            })
+          )
+          throw err
+        })
     outcome.estimate = estimatePrice(listingPrices(outcome.listings), rateTable, outcome.total)
-    if (outcome.estimate && (prepared.exchangeId || prepared.name)) {
-      // Stackables key by their text, uniques by their given name.
-      const anchor = (await scout.get(league)).get(prepared.displayName)
-      if (anchor !== undefined) applyAnchor(outcome.estimate, anchor)
-    }
+    if (outcome.estimate && anchor !== undefined) applyAnchor(outcome.estimate, anchor)
     for (const listing of outcome.listings) {
       if (!listing.price) continue
       const rate = rateTable[listing.price.currency]

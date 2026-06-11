@@ -195,6 +195,26 @@ describe('prepareQuery', () => {
     expect(q.baseTypeFilter).toEqual({ value: 'Thawing Charm', enabled: false })
   })
 
+  it('weapon mods match (Local) stat ids; armour attack speed stays global', () => {
+    const spear = [
+      'Item Class: Spears',
+      'Rarity: Magic',
+      'Focused Seaglass Spear of the Mongoose',
+      '--------',
+      'Item Level: 79',
+      '--------',
+      '{ Prefix Modifier "Focused" (Tier: 7) — Attack }',
+      '+66(61-84) to Accuracy Rating'
+    ].join('\n')
+    const q = prepareQuery(parseItem(spear), db)
+    const accuracy = q.stats.find((s) => s.label.includes('Accuracy'))!
+    expect(accuracy.statId).toBe('explicit.stat_691932474') // (Local)
+
+    const gloves = prepareFixture('01-gloves--rapture-caress-8cdf3ae5.txt')
+    const speed = gloves.stats.find((s) => s.label.includes('increased Attack Speed'))!
+    expect(speed.statId).toBe('explicit.stat_681332047') // global
+  })
+
   it('rare base type is an opt-in exact filter', () => {
     const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
     expect(q.baseTypeFilter).toEqual({ value: 'Amethyst Ring', enabled: false })

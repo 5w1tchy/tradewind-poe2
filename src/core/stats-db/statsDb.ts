@@ -85,6 +85,12 @@ function candidateKeys(rawLine: string): string[] {
 export interface MatchOptions {
   /** Stat categories to rank first, in order (e.g. ['rune', 'explicit']). */
   preferCategories?: string[]
+  /**
+   * Rank "(Local)" stat variants first. GGG indexes a weapon's accuracy or
+   * attack speed under the local id, so the same clipboard text needs the
+   * local stat on weapons/armour and the global one everywhere else.
+   */
+  preferLocal?: boolean
 }
 
 export class StatsDb {
@@ -97,6 +103,7 @@ export class StatsDb {
           id: entry.id,
           category: group.id,
           text: entry.text,
+          local: / \(Local\)$/.test(entry.text),
           negated: false
         }
         this.index(normalizeStatText(entry.text), candidate)
@@ -151,9 +158,11 @@ export class StatsDb {
     }
     if (!found) return []
 
+    const wantLocal = options.preferLocal ?? false
     const rank = (c: StatCandidate): number => {
       const i = prefer.indexOf(c.category)
-      return i === -1 ? prefer.length : i
+      const categoryRank = i === -1 ? prefer.length : i
+      return categoryRank * 2 + (c.local === wantLocal ? 0 : 1)
     }
     return [...found].sort((a, b) => rank(a) - rank(b))
   }
