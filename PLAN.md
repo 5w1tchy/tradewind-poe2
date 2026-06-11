@@ -71,8 +71,9 @@ Design rules: `core/` stays pure (fast tests, no Electron); every network call g
 - **M0 — Proof of the loop.** Repo, Electron skeleton, transparent click-through overlay over PoE2, global hotkey, synthetic copy + clipboard read, raw item text shown in a popup at cursor. *Riskiest plumbing first.*
 - **M1 — Parse & match.** Item parser + live stats DB + matcher. Built against a fixtures corpus of real `Ctrl+Alt+C` samples (rares with hybrids, runed items, uniques, waystones, jewels, charms, corrupted/desecrated). Unit tests per fixture.
 - **M2 — Search.** Query builder, rate-limited API client, popup shows live listings with filter checkboxes and re-search. League selector (from `/api/trade2/data/leagues` equivalent).
-- **M3 — Price brain.** Currency normalization (live divine:exalt), outlier rejection, estimate range + confidence display, tier badges/high-tier highlighting.
-- **M4 — Ship it.** Settings UI, locked-popup mode (`Ctrl+Alt+D`), open-listing-in-browser, NSIS installer, auto-update, README/docs, first public GitHub release.
+- **M3 — Price brain.** ✅ (2026-06-11) Currency normalization (live divine:exalt), outlier rejection, estimate range + confidence display, tier badges/high-tier highlighting. Grew: poe2scout anchor cross-check, local-stat matching, base extraction for magic/white/unid-unique names, rarity selector.
+- **M3.5 — Currency truth.** CF Worker with GGG OAuth (`service:cxapi`) pulling official in-game Currency Exchange hourly digests; app reads stackable headline prices from it. Kills the site-ask/Ange bracket problem. Prereq: apply for the OAuth client early — GGG approval takes time.
+- **M4 — Ship it.** Friends-QA build first (NSIS unsigned, bundled data cache, SmartScreen note), then settings UI, locked-popup mode (`Ctrl+Alt+D`), open-listing-in-browser, auto-update, README/docs, first public GitHub release.
 - **M5 — Long game.** CF Worker endpoint + opt-in logging toggle. Dataset starts growing for the v2 ML model.
 
 ## Risks & mitigations
