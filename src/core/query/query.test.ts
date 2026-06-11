@@ -134,6 +134,13 @@ describe('prepareQuery', () => {
     expect(ms.min).toBe(35)
   })
 
+  it('+to Level of skills keeps its full roll as min (price cliff, no spread)', () => {
+    const q = prepareFixture('05-amulets--pandemonium-beads-70198ee7.txt')
+    const lvl = q.stats.find((s) => s.label.includes('to Level of all Projectile Skills'))!
+    expect(lvl.value).toBe(2)
+    expect(lvl.min).toBe(2)
+  })
+
   it('rare base type is an opt-in exact filter', () => {
     const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
     expect(q.baseTypeFilter).toEqual({ value: 'Amethyst Ring', enabled: false })

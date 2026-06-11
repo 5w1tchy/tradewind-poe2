@@ -55,6 +55,16 @@ interface LineContext {
 // what you mean, so the min stays at 100% of the roll.
 const NO_SPREAD_TEMPLATES = new Set(['#% increased Movement Speed'])
 
+// Small-integer stats where each point is a price cliff: a "+3 to Level of
+// all Spell Skills" search must not loosen to +2.
+const NO_SPREAD_PATTERNS = [/^\+# to Level of /]
+
+function spreadFor(template: string, spread: number): number {
+  if (NO_SPREAD_TEMPLATES.has(template)) return 0
+  if (NO_SPREAD_PATTERNS.some((p) => p.test(template))) return 0
+  return spread
+}
+
 function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
   // Relic mods are indexed in the sanctum stat group; texts like "#%
   // increased Movement Speed" also exist as regular explicits, so without
@@ -108,7 +118,7 @@ function buildStatRows(
     }
     let value = representativeValue(line)
     if (value !== null && best.negated) value = -value
-    const lineSpread = NO_SPREAD_TEMPLATES.has(line.template) ? 0 : spread
+    const lineSpread = spreadFor(line.template, spread)
     stats.push({
       statId: best.id,
       label: line.raw,
