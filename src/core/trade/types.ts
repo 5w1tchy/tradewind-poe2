@@ -1,3 +1,5 @@
+import type { PriceEstimate } from '../pricing/types'
+
 /** Slim, IPC-safe view of one trade listing for the popup. */
 export interface TradeListing {
   id: string
@@ -15,6 +17,8 @@ export interface TradeListing {
   online: boolean
   /** Units available at this price (bulk-exchange offers only). */
   stock?: number
+  /** Currency has no exalted rate — listing shown but outside the estimate. */
+  unpriceable?: boolean
 }
 
 export interface SearchOutcome {
@@ -25,4 +29,6 @@ export interface SearchOutcome {
   listings: TradeListing[]
   /** Open-in-browser URL for the exact search. */
   webUrl: string
+  /** Aggregated price estimate; absent until the price brain fills it in. */
+  estimate?: PriceEstimate | null
 }

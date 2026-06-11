@@ -13,6 +13,8 @@ import { InputManager } from './input'
 import { grabItemText } from './itemGrab'
 import { sendChatCommand } from './chatCommand'
 import { TradeApiClient } from './tradeApi'
+import { RatesProvider } from './rates'
+import { estimatePrice } from '../core/pricing'
 
 if (!app.requestSingleInstanceLock()) {
   app.quit()
@@ -34,6 +36,7 @@ app.whenReady().then(() => {
   const input = new InputManager()
   const tracker = new GameWindowTracker(config.gameWindowTitle, devAnyWindow)
   const tradeClient = new TradeApiClient()
+  const rates = new RatesProvider(tradeClient)
 
   // Stats DB loads in the background; price checks just show raw text until ready.
   let statsDb: StatsDb | null = null
@@ -151,9 +154,21 @@ app.whenReady().then(() => {
     }
   })
 
-  ipcMain.handle('tw:search', (_event, prepared: PreparedQuery) => {
-    if (prepared.exchangeId) return tradeClient.exchange(league, prepared.exchangeId)
-    return tradeClient.searchWithListings(league, buildSearchBody(prepared))
+  ipcMain.handle('tw:search', async (_event, prepared: PreparedQuery) => {
+    const outcome = prepared.exchangeId
+      ? await tradeClient.exchange(league, prepared.exchangeId)
+      : await tradeClient.searchWithListings(league, buildSearchBody(prepared))
+    const prices = outcome.listings
+      .map((l) => l.price)
+      .filter((p): p is NonNullable<typeof p> => p !== null)
+    const rateTable = await rates.get(league)
+    outcome.estimate = estimatePrice(prices, rateTable, outcome.total)
+    for (const listing of outcome.listings) {
+      if (listing.price && rateTable[listing.price.currency] === undefined) {
+        listing.unpriceable = true
+      }
+    }
+    return outcome
   })
 
   ipcMain.handle('tw:set-league', (_event, id: string) => {
