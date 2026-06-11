@@ -1,4 +1,4 @@
-import { median, type RateTable } from '../core/pricing'
+import { estimatePrice, type RateTable } from '../core/pricing'
 import type { TradeApiClient } from './tradeApi'
 
 const TTL_MS = 30 * 60 * 1000
@@ -46,13 +46,14 @@ export class RatesProvider {
     for (const id of RATE_CURRENCIES) {
       try {
         const outcome = await this.client.exchange(league, id)
-        // Offers arrive cheapest-first; the median of the five best resists
-        // both bait undercuts and one weird seller.
-        const cheapest = outcome.listings
-          .map((l) => l.price?.amount)
-          .filter((a): a is number => typeof a === 'number' && a > 0)
-          .slice(0, 5)
-        if (cheapest.length > 0) rates[id] = median(cheapest)
+        // Same lowball-trimmed median as item estimates — the median of the
+        // few cheapest asks gets poisoned by 1-2 ex bait on thin books
+        // (live chaos book 2026-06-12: bait 1,2 ex in front of 10-15 real).
+        const prices = outcome.listings
+          .map((l) => l.price)
+          .filter((p): p is NonNullable<typeof p> => p !== null)
+        const est = estimatePrice(prices, { exalted: 1 }, outcome.total)
+        if (est) rates[id] = est.highExalted
       } catch (err) {
         console.warn(`[rates] ${id} rate unavailable:`, err)
       }
