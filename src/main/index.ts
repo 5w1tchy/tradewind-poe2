@@ -14,7 +14,8 @@ import { grabItemText } from './itemGrab'
 import { sendChatCommand } from './chatCommand'
 import { TradeApiClient } from './tradeApi'
 import { RatesProvider } from './rates'
-import { estimatePrice } from '../core/pricing'
+import { estimatePrice, type RateTable } from '../core/pricing'
+import type { SearchOutcome, TradeListing } from '../core/trade/types'
 
 if (!app.requestSingleInstanceLock()) {
   app.quit()
@@ -174,15 +175,38 @@ app.whenReady().then(() => {
     }
   })
 
+  const listingPrices = (listings: TradeListing[]): Array<{ amount: number; currency: string }> =>
+    listings.map((l) => l.price).filter((p): p is NonNullable<typeof p> => p !== null)
+
+  /**
+   * Stackables need denomination-aware querying: GGG sorts exchange offers
+   * by raw ask amount ignoring currency and caps the response, so one
+   * mixed-currency query starves whichever book the item doesn't trade in
+   * (cheap runes vanish behind "0.5 divine" trolls; omens behind exalted
+   * bait). Ask the exalted book first — when it's deep and tight it is the
+   * market. Only a thin or scattered book earns the wide second call, where
+   * the same cap conveniently starves the junk instead.
+   */
+  async function exchangeWithEstimate(
+    exchangeId: string,
+    rateTable: RateTable
+  ): Promise<SearchOutcome> {
+    const exaltedBook = await tradeClient.exchange(league, exchangeId, {
+      have: ['exalted'],
+      rates: rateTable
+    })
+    const est = estimatePrice(listingPrices(exaltedBook.listings), rateTable, exaltedBook.total)
+    if (est?.confidence === 'high') return exaltedBook
+    const wideBook = await tradeClient.exchange(league, exchangeId, { rates: rateTable })
+    return wideBook.listings.length > 0 ? wideBook : exaltedBook
+  }
+
   ipcMain.handle('tw:search', async (_event, prepared: PreparedQuery) => {
     const rateTable = await rates.get(league)
     const outcome = prepared.exchangeId
-      ? await tradeClient.exchange(league, prepared.exchangeId, { rates: rateTable })
+      ? await exchangeWithEstimate(prepared.exchangeId, rateTable)
       : await tradeClient.searchWithListings(league, buildSearchBody(prepared))
-    const prices = outcome.listings
-      .map((l) => l.price)
-      .filter((p): p is NonNullable<typeof p> => p !== null)
-    outcome.estimate = estimatePrice(prices, rateTable, outcome.total)
+    outcome.estimate = estimatePrice(listingPrices(outcome.listings), rateTable, outcome.total)
     for (const listing of outcome.listings) {
       if (!listing.price) continue
       const rate = rateTable[listing.price.currency]
