@@ -37,6 +37,14 @@ const MOUSE_LEAVE_DISTANCE = 300
 export class InputManager {
   private anchor: { x: number; y: number } | null = null
   private lastMouse = { x: 0, y: 0 }
+  // uiohook can only observe keys, never swallow them — hotkeys claimed via
+  // globalShortcut are consumed before the game sees them, and must then be
+  // ignored here or they'd fire twice (low-level hooks still see them).
+  private observed = { priceCheck: true, hideout: true }
+
+  setObserved(keys: { priceCheck: boolean; hideout: boolean }): void {
+    this.observed = keys
+  }
 
   start(handlers: InputHandlers): void {
     uIOhook.on('mousemove', (e) => {
@@ -52,11 +60,25 @@ export class InputManager {
     })
 
     uIOhook.on('keydown', (e) => {
-      if (e.ctrlKey && !e.altKey && !e.shiftKey && e.keycode === UiohookKey.D) {
+      if (
+        this.observed.priceCheck &&
+        e.ctrlKey &&
+        !e.altKey &&
+        !e.shiftKey &&
+        e.keycode === UiohookKey.D
+      ) {
         handlers.onPriceCheck()
-      } else if (!e.ctrlKey && !e.altKey && !e.shiftKey && e.keycode === UiohookKey.F5) {
+      } else if (
+        this.observed.hideout &&
+        !e.ctrlKey &&
+        !e.altKey &&
+        !e.shiftKey &&
+        e.keycode === UiohookKey.F5
+      ) {
         handlers.onHideout()
       } else if (e.keycode === UiohookKey.Escape) {
+        // Never claimed via globalShortcut — swallowing Escape would break
+        // the game's own menus. Observe only.
         handlers.onEscape()
       }
     })

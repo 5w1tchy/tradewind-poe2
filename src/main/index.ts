@@ -1,4 +1,4 @@
-import { app, ipcMain, screen, shell } from 'electron'
+import { app, globalShortcut, ipcMain, screen, shell } from 'electron'
 import { parseItem } from '../core/parser/parse'
 import { buildSearchBody, prepareQuery } from '../core/query'
 import type { PreparedQuery } from '../core/query/types'
@@ -113,61 +113,90 @@ app.whenReady().then(() => {
     input.cancelMouseLeave()
   }
 
+  let busy = false
+  const priceCheck = async (): Promise<void> => {
+    if (busy || !tracker.isGameActive || overlay.isFocused()) return
+    busy = true
+    try {
+      const text = await grabItemText()
+      let prepared: PreparedQuery | null = null
+      if (text && statsDb) {
+        try {
+          prepared = prepareQuery(parseItem(text), statsDb, {
+            spread: config.spread,
+            exchangeIds,
+            baseTypes
+          })
+        } catch (err) {
+          console.error('[item] failed to prepare query:', err)
+        }
+      }
+      const cursor = screen.getCursorScreenPoint()
+      overlay.webContents.send('tw:item', {
+        text,
+        prepared,
+        leagues,
+        league,
+        x: cursor.x - overlayBounds.x,
+        y: cursor.y - overlayBounds.y
+      } satisfies ItemPayload)
+      input.watchMouseLeave()
+    } finally {
+      busy = false
+    }
+  }
+  const goHideout = async (): Promise<void> => {
+    // Skip when the popup holds keyboard focus — F5 there would land in
+    // our own inputs, not the game chat.
+    if (busy || !tracker.isGameActive || overlay.isFocused()) return
+    busy = true
+    try {
+      await sendChatCommand('/hideout')
+    } finally {
+      busy = false
+    }
+  }
+
+  // Hotkeys are claimed (and thereby swallowed — no leaking "D" stepping the
+  // character sideways in WASD mode) only while PoE2 is focused, so the rest
+  // of the desktop keeps its shortcuts. If another tool already owns a key,
+  // fall back to observing it via uiohook: works, but the keypress leaks.
+  let hotkeysClaimed = false
+  const claimHotkeys = (): void => {
+    if (hotkeysClaimed) return
+    hotkeysClaimed = true
+    const pc = globalShortcut.register('Control+D', () => void priceCheck())
+    const ho = globalShortcut.register('F5', () => void goHideout())
+    input.setObserved({ priceCheck: !pc, hideout: !ho })
+    if (!pc || !ho) {
+      console.warn(
+        `[input] could not claim ${[!pc && 'Ctrl+D', !ho && 'F5'].filter(Boolean).join(', ')} — another app holds it; keypress will leak to the game`
+      )
+    }
+  }
+  const releaseHotkeys = (): void => {
+    if (!hotkeysClaimed) return
+    hotkeysClaimed = false
+    globalShortcut.unregisterAll()
+    input.setObserved({ priceCheck: true, hideout: true })
+  }
+
   tracker.on('state', (state: GameState) => {
     if (state.active && state.bounds) {
       overlayBounds = screen.screenToDipRect(null, state.bounds)
       overlay.setBounds(overlayBounds)
       if (!overlay.isVisible()) overlay.showInactive()
+      claimHotkeys()
     } else {
       overlay.hide()
       hidePopup()
+      releaseHotkeys()
     }
   })
 
-  let busy = false
   input.start({
-    async onPriceCheck() {
-      if (busy || !tracker.isGameActive) return
-      busy = true
-      try {
-        const text = await grabItemText()
-        let prepared: PreparedQuery | null = null
-        if (text && statsDb) {
-          try {
-            prepared = prepareQuery(parseItem(text), statsDb, {
-              spread: config.spread,
-              exchangeIds,
-              baseTypes
-            })
-          } catch (err) {
-            console.error('[item] failed to prepare query:', err)
-          }
-        }
-        const cursor = screen.getCursorScreenPoint()
-        overlay.webContents.send('tw:item', {
-          text,
-          prepared,
-          leagues,
-          league,
-          x: cursor.x - overlayBounds.x,
-          y: cursor.y - overlayBounds.y
-        } satisfies ItemPayload)
-        input.watchMouseLeave()
-      } finally {
-        busy = false
-      }
-    },
-    async onHideout() {
-      // Skip when the popup holds keyboard focus — F5 there would land in
-      // our own inputs, not the game chat.
-      if (busy || !tracker.isGameActive || overlay.isFocused()) return
-      busy = true
-      try {
-        await sendChatCommand('/hideout')
-      } finally {
-        busy = false
-      }
-    },
+    onPriceCheck: () => void priceCheck(),
+    onHideout: () => void goHideout(),
     onEscape() {
       hidePopup()
     },
@@ -312,6 +341,7 @@ app.whenReady().then(() => {
   tracker.start()
 
   app.on('will-quit', () => {
+    globalShortcut.unregisterAll()
     input.stop()
     tracker.stop()
   })
