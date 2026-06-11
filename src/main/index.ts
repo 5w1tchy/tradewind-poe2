@@ -187,18 +187,32 @@ app.whenReady().then(() => {
    * market. Only a thin or scattered book earns the wide second call, where
    * the same cap conveniently starves the junk instead.
    */
+  // Re-checking the same stackable shouldn't burn exchange budget.
+  const exchangeCache = new Map<string, { outcome: SearchOutcome; at: number }>()
+  const EXCHANGE_CACHE_MS = 60_000
+
   async function exchangeWithEstimate(
     exchangeId: string,
     rateTable: RateTable
   ): Promise<SearchOutcome> {
+    const cacheKey = `${league}:${exchangeId}`
+    const cached = exchangeCache.get(cacheKey)
+    if (cached && Date.now() - cached.at < EXCHANGE_CACHE_MS) return cached.outcome
+
     const exaltedBook = await tradeClient.exchange(league, exchangeId, {
       have: ['exalted'],
       rates: rateTable
     })
     const est = estimatePrice(listingPrices(exaltedBook.listings), rateTable, exaltedBook.total)
-    if (est?.confidence === 'high') return exaltedBook
-    const wideBook = await tradeClient.exchange(league, exchangeId, { rates: rateTable })
-    return wideBook.listings.length > 0 ? wideBook : exaltedBook
+    // A dozen independent sellers agreeing is a market, not a bait wall —
+    // only a thin or scattered exalted book earns the wide second call.
+    let outcome = exaltedBook
+    if (!(est?.confidence === 'high' && est.sampleSize >= 12)) {
+      const wideBook = await tradeClient.exchange(league, exchangeId, { rates: rateTable })
+      if (wideBook.listings.length > 0) outcome = wideBook
+    }
+    exchangeCache.set(cacheKey, { outcome, at: Date.now() })
+    return outcome
   }
 
   ipcMain.handle('tw:search', async (_event, prepared: PreparedQuery) => {

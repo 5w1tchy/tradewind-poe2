@@ -21,8 +21,11 @@ export function toExalted(price: PriceInput, rates: RateTable): number | null {
 
 function confidenceFor(sampleSize: number, low: number, high: number): Confidence {
   // Spread is relative to the median: 0 = every comparable listing agrees.
+  // Cheap items are quantized to whole exalted, so a couple of exalted of
+  // absolute spread is "everyone agrees", whatever the ratio says.
   const spread = high > 0 ? (high - low) / high : 0
-  if (sampleSize >= 5 && spread <= 0.4) return 'high'
+  const tight = spread <= 0.4 || high - low <= 2
+  if (sampleSize >= 5 && tight) return 'high'
   if (sampleSize >= 3 && spread <= 1) return 'medium'
   return 'low'
 }

@@ -53,6 +53,22 @@ describe('estimatePrice', () => {
     expect(est.sampleSize).toBe(3)
   })
 
+  it('quantized cheap book: 1-2 ex spread is agreement, not scatter', () => {
+    // Live Greater Iron Rune book 2026-06-11: whole-exalted price steps make
+    // the relative spread huge while the market is in perfect agreement.
+    const book = [
+      ...Array(24).fill(1),
+      ...Array(28).fill(2),
+      ...Array(36).fill(3),
+      ...Array(11).fill(4),
+      5
+    ] as number[]
+    const est = estimatePrice(ex(book), RATES, 100)!
+    expect(est.lowExalted).toBe(1)
+    expect(est.highExalted).toBe(2)
+    expect(est.confidence).toBe('high')
+  })
+
   it('single listing: estimate exists but confidence is low', () => {
     const est = estimatePrice(ex([25]), RATES, 1)!
     expect(est.lowExalted).toBe(25)
