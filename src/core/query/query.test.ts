@@ -134,6 +134,39 @@ describe('prepareQuery', () => {
     expect(allRes.enabled).toBe(false)
   })
 
+  it('accumulates a stat repeated across mods into one summed filter', () => {
+    // Rarity rolls as prefix AND suffix, ES as two prefixes — the trade site
+    // indexes each stat once (summed), so the query must carry one filter.
+    const q = prepareFixture('37-helmets--blight-crown-screenshot.txt')
+
+    const rarity = q.stats.filter((s) => s.label.includes('Rarity of Items found'))
+    expect(rarity).toHaveLength(1)
+    expect(rarity[0]).toMatchObject({
+      label: '36% increased Rarity of Items found (total)',
+      value: 36,
+      min: 32, // floor(36 * 0.9)
+      tier: null,
+      enabled: true
+    })
+
+    const es = q.stats.filter(
+      (s) => s.label.includes('increased Energy Shield') && s.source === 'explicit'
+    )
+    expect(es).toHaveLength(1)
+    expect(es[0]).toMatchObject({
+      label: '130% increased Energy Shield (total)',
+      value: 130,
+      min: 117,
+      tier: null
+    })
+
+    // ...and the search body carries no duplicate stat ids.
+    const ids = buildSearchBody(q)
+      .query.stats.flatMap((g) => g.filters)
+      .map((f) => f.id)
+    expect(new Set(ids).size).toBe(ids.length)
+  })
+
   it('enabled equipment rows land in equipment_filters', () => {
     const q = prepareFixture('32-shields--eagle-span-f24731e2.txt')
     const ar = q.equipment.find((e) => e.key === 'ar')!

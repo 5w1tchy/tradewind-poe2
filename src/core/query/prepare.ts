@@ -88,6 +88,15 @@ function spreadFor(template: string, spread: number): number {
   return spread
 }
 
+/** "#% increased Energy Shield" + 130 -> "130% increased Energy Shield (total)". */
+function totalLabel(template: string, total: number): string {
+  const rounded = Math.round(total * 10) / 10
+  if (template.split('#').length === 2) {
+    return `${template.replace('#', String(rounded))} (total)`
+  }
+  return `${template} (total ${rounded})`
+}
+
 function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
   // Relic mods are indexed in the sanctum stat group; texts like "#%
   // increased Movement Speed" also exist as regular explicits, so without
@@ -144,6 +153,7 @@ function buildStatRows(
   const stats: PreparedStatFilter[] = []
   const templates: string[] = []
   const unmatched: string[] = []
+  const rowByKey = new Map<string, number>()
   const category = categoryForItemClass(item.itemClass)
 
   for (const { line, source, prefer, enabled, tier } of collectLines(item, statsEnabled)) {
@@ -159,6 +169,26 @@ function buildStatRows(
     let value = representativeValue(line)
     if (value !== null && best.negated) value = -value
     const lineSpread = spreadFor(line.template, spread)
+
+    // A stat rolling on several mods (rarity as prefix AND suffix, double ES
+    // prefixes) is indexed by the trade site once, summed — two filters on
+    // the same id would each test their min against that sum. Accumulate
+    // into one row so the min means "total at least".
+    const key = `${best.id}|${source}`
+    const existing = rowByKey.get(key)
+    if (existing !== undefined) {
+      const row = stats[existing]
+      if (value !== null) {
+        row.value = (row.value ?? 0) + value
+        row.min = minWithSpread(row.value, lineSpread)
+        row.label = totalLabel(line.template, row.value)
+        // A summed total is no single mod's roll — a tier badge would lie.
+        row.tier = null
+        row.enabled = row.enabled || enabled
+      }
+      continue
+    }
+
     stats.push({
       statId: best.id,
       label: line.raw,
@@ -170,6 +200,7 @@ function buildStatRows(
       enabled
     })
     templates.push(line.template)
+    rowByKey.set(key, stats.length - 1)
   }
 
   foldResistancePseudos(stats, templates, statsEnabled, spread)

@@ -1,0 +1,28 @@
+Item Class: Helmets
+Rarity: Rare
+Blight Crown
+Ancestral Tiara
+--------
+Quality: +20% (augmented)
+Energy Shield: 324 (augmented)
+--------
+Requires: Level 80, 115 Int
+--------
+Item Level: 81
+--------
+18% increased Armour, Evasion and Energy Shield (rune)
+--------
+{ Prefix Modifier "Incandescent" (Tier: 1) — Defences }
+96(92-100)% increased Energy Shield
+{ Prefix Modifier "Magpie's" (Tier: 1) }
+18(16-19)% increased Rarity of Items found
+{ Prefix Modifier "Glittering" (Tier: 2) — Defences }
+34(33-38)% increased Energy Shield
+{ Suffix Modifier "of the Augur" (Tier: 2) — Mana }
++27(27-32) to maximum Mana
+{ Suffix Modifier "of the Puma" (Tier: 2) — Elemental, Lightning, Resistance }
++36(36-40)% to Lightning Resistance
+{ Suffix Modifier "of the Walrus" (Tier: 5) — Elemental, Cold, Resistance }
++22(21-25)% to Cold Resistance
+{ Suffix Modifier "of Plunder" (Tier: 1) }
+18(15-18)% increased Rarity of Items found

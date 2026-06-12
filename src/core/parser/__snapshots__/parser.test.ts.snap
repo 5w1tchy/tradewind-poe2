@@ -4894,3 +4894,225 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
   "waystoneTier": null,
 }
 `;
+
+exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`] = `
+{
+  "baseType": "Ancestral Tiara",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "96(92-100)% increased Energy Shield",
+          "template": "#% increased Energy Shield",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 100,
+              "min": 92,
+              "value": 96,
+            },
+          ],
+        },
+      ],
+      "name": "Incandescent",
+      "qualityIncrease": null,
+      "tags": [
+        "Defences",
+      ],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "18(16-19)% increased Rarity of Items found",
+          "template": "#% increased Rarity of Items found",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 19,
+              "min": 16,
+              "value": 18,
+            },
+          ],
+        },
+      ],
+      "name": "Magpie's",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 1,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "34(33-38)% increased Energy Shield",
+          "template": "#% increased Energy Shield",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 38,
+              "min": 33,
+              "value": 34,
+            },
+          ],
+        },
+      ],
+      "name": "Glittering",
+      "qualityIncrease": null,
+      "tags": [
+        "Defences",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+27(27-32) to maximum Mana",
+          "template": "+# to maximum Mana",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 32,
+              "min": 27,
+              "value": 27,
+            },
+          ],
+        },
+      ],
+      "name": "of the Augur",
+      "qualityIncrease": null,
+      "tags": [
+        "Mana",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+36(36-40)% to Lightning Resistance",
+          "template": "+#% to Lightning Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 40,
+              "min": 36,
+              "value": 36,
+            },
+          ],
+        },
+      ],
+      "name": "of the Puma",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Lightning",
+        "Resistance",
+      ],
+      "tier": 2,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+22(21-25)% to Cold Resistance",
+          "template": "+#% to Cold Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 25,
+              "min": 21,
+              "value": 22,
+            },
+          ],
+        },
+      ],
+      "name": "of the Walrus",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Cold",
+        "Resistance",
+      ],
+      "tier": 5,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "18(15-18)% increased Rarity of Items found",
+          "template": "#% increased Rarity of Items found",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 18,
+              "min": 15,
+              "value": 18,
+            },
+          ],
+        },
+      ],
+      "name": "of Plunder",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 1,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Helmets",
+  "itemLevel": 81,
+  "name": "Blight Crown",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +20% (augmented)",
+    },
+    {
+      "name": "Energy Shield",
+      "raw": "Energy Shield: 324 (augmented)",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Rare",
+  "requiredLevel": 80,
+  "requirements": "Requires: Level 80, 115 Int",
+  "runeMods": [
+    {
+      "raw": "18% increased Armour, Evasion and Energy Shield",
+      "template": "#% increased Armour, Evasion and Energy Shield",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 18,
+        },
+      ],
+    },
+  ],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [],
+  "waystoneTier": null,
+}
+`;
