@@ -430,9 +430,8 @@ function age(iso: string): string {
     </template>
 
     <template v-else>
-      <pre v-if="payload.text" class="raw">{{ payload.text }}</pre>
-      <div v-else class="no-item">No item under cursor</div>
-      <div v-if="payload.text" class="no-item">stat database still loading — raw view</div>
+      <pre class="raw">{{ payload.text }}</pre>
+      <div class="no-item">stat database still loading — raw view</div>
     </template>
   </div>
 </template>

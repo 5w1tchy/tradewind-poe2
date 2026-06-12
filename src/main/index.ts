@@ -121,8 +121,12 @@ app.whenReady().then(() => {
     busy = true
     try {
       const text = await grabItemText()
+      // Nothing under the cursor — stay invisible. Most such presses are
+      // accidental (Ctrl+D mid-run); a "copy failed" hint can come later if
+      // silent failures ever become a debugging problem.
+      if (!text) return
       let prepared: PreparedQuery | null = null
-      if (text && statsDb) {
+      if (statsDb) {
         try {
           prepared = prepareQuery(parseItem(text), statsDb, {
             spread: config.spread,

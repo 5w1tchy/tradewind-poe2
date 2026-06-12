@@ -5,9 +5,10 @@ import type { SearchOutcome } from '../core/trade/types'
 export interface ItemPayload {
   x: number
   y: number
-  /** Raw clipboard text — fallback display while the stats DB loads. */
-  text: string | null
-  /** null when no item text, parsing failed, or the stats DB isn't ready yet. */
+  /** Raw clipboard text — fallback display while the stats DB loads.
+   *  An empty grab (no item under cursor) never reaches the renderer. */
+  text: string
+  /** null when parsing failed or the stats DB isn't ready yet. */
   prepared: PreparedQuery | null
   leagues: string[]
   league: string
