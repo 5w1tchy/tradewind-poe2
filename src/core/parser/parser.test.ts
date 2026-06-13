@@ -112,6 +112,34 @@ describe('targeted parsing', () => {
     expect(charges?.lines[0].values).toEqual([{ value: 0.17, min: 0.15, max: 0.2 }])
   })
 
+  it('chat-linked item: basic copy with no advanced headers', () => {
+    // A chat link copies without "{ ... }" headers, tiers, or roll ranges;
+    // each mod tags its origin inline instead. The mods must still parse.
+    const item = parseItem(load('agony-torc'))
+    expect(item.name).toBe('Agony Torc')
+    expect(item.baseType).toBe('Solar Amulet')
+    expect(item.itemLevel).toBe(81)
+    expect(item.quality).toBe(40)
+
+    expect(item.implicits).toHaveLength(1)
+    expect(item.implicits[0].generation).toBe('implicit')
+    expect(item.implicits[0].lines[0].template).toBe('+# to Spirit')
+
+    expect(item.explicits).toHaveLength(6)
+    expect(item.explicits.every((m) => m.generation === 'explicit')).toBe(true)
+    // Inline origin tags are stripped from the stat and mapped onto the mod.
+    const fractured = item.explicits[0]
+    expect(fractured.lines[0].template).toBe('+# to Spirit')
+    expect(item.explicits.find((m) => m.desecrated)?.lines[0].template).toBe(
+      '+#% to Cold and Chaos Resistances'
+    )
+    expect(item.explicits.find((m) => m.crafted)?.lines[0].template).toBe(
+      '#% increased Global Armour, Evasion and Energy Shield'
+    )
+    // The closing "Fractured Item" line is not a mod.
+    expect(item.explicits.some((m) => m.lines[0].raw.includes('Fractured'))).toBe(false)
+  })
+
   it('normal item with implicit only', () => {
     const item = parseItem(load('exceptional-corsair-coat'))
     expect(item.rarity).toBe('Normal')

@@ -5116,3 +5116,187 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
   "waystoneTier": null,
 }
 `;
+
+exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] = `
+{
+  "baseType": "Solar Amulet",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "+50 to Spirit",
+          "template": "+# to Spirit",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 50,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "42% increased Evasion Rating",
+          "template": "#% increased Evasion Rating",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 42,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "+3 to Level of all Projectile Skills",
+          "template": "+# to Level of all Projectile Skills",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 3,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "+23% to all Elemental Resistances",
+          "template": "+#% to all Elemental Resistances",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 23,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": false,
+      "desecrated": true,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "+23% to Cold and Chaos Resistances",
+          "template": "+#% to Cold and Chaos Resistances",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 23,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "crafted": true,
+      "desecrated": false,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "30% increased Global Armour, Evasion and Energy Shield",
+          "template": "#% increased Global Armour, Evasion and Energy Shield",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 30,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "crafted": false,
+      "desecrated": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "+15 to Spirit",
+          "template": "+# to Spirit",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 15,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Amulets",
+  "itemLevel": 81,
+  "name": "Agony Torc",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality (Cold Modifiers)",
+      "raw": "Quality (Cold Modifiers): +40% (augmented)",
+    },
+  ],
+  "quality": 40,
+  "rarity": "Rare",
+  "requiredLevel": 64,
+  "requirements": "Requires: Level 64",
+  "runeMods": [],
+  "sockets": null,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Fractured Item",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;

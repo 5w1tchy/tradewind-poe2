@@ -2,6 +2,9 @@ export type ModGeneration =
   | 'prefix'
   | 'suffix'
   | 'implicit'
+  // Basic (non-advanced) copy gives no prefix/suffix split — the in-game
+  // tooltip from a chat link, or a user without the advanced-copy keybind.
+  | 'explicit'
   | 'unique'
   | 'enhancement'
   | 'unknown'

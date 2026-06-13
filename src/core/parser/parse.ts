@@ -69,28 +69,59 @@ function isPropertyLine(line: string): boolean {
   return line.includes(': ') || PROPERTY_STARTS.some((p) => line.startsWith(p))
 }
 
+// Basic (non-advanced) copy has no "{ ... }" headers; each mod line instead
+// carries its origin inline, e.g. "+50 to Spirit (fractured)". A chat-linked
+// item always copies in this form even though its tooltip shows tier badges.
+const ORIGIN_TAG = /\s*\((implicit|fractured|desecrated|crafted)\)$/
+
+function parseBasicModLine(line: string): ParsedMod {
+  const tag = line.match(ORIGIN_TAG)
+  const origin = tag?.[1]
+  const body = tag ? line.slice(0, tag.index) : line
+  return {
+    // Basic copy gives no prefix/suffix split — best we can say is "explicit".
+    generation: origin === 'implicit' ? 'implicit' : 'explicit',
+    crafted: origin === 'crafted',
+    desecrated: origin === 'desecrated',
+    name: null,
+    tier: null,
+    tags: [],
+    qualityIncrease: null,
+    lines: [parseStatLine(body)]
+  }
+}
+
+/**
+ * A headerless block is a basic-copy mod block (not flavour text or a
+ * description) when no line reads as a sentence and every line looks like a
+ * stat. Property blocks are excluded so "Quality: ..." isn't mistaken for mods.
+ */
+function looksLikeStatLine(line: string): boolean {
+  if (ORIGIN_TAG.test(line)) return true
+  if (line.startsWith('"') || /[.!?]$/.test(line)) return false
+  // Almost every mod carries a number; a wordless mod is too rare to tell from
+  // prose without one, so we don't risk swallowing a description line for it.
+  return /\d/.test(line)
+}
+
+function isBasicModSection(section: string[]): boolean {
+  if (section.some(isPropertyLine)) return false
+  return section.every(looksLikeStatLine)
+}
+
 function parseModSection(section: string[]): ParsedMod[] {
   const mods: ParsedMod[] = []
-  let current: ParsedMod | null = null
+  let headered: ParsedMod | null = null
   for (const line of section) {
     if (isModHeader(line)) {
-      current = parseModHeader(line)
-      mods.push(current)
-    } else if (current) {
-      current.lines.push(parseStatLine(line))
+      headered = parseModHeader(line)
+      mods.push(headered)
+    } else if (headered) {
+      // A stat line trailing an advanced-copy header — a hybrid mod's 2nd line.
+      headered.lines.push(parseStatLine(line))
     } else {
-      // Stat line without a header (non-advanced copy fallback).
-      current = {
-        generation: 'unknown',
-        crafted: false,
-        desecrated: false,
-        name: null,
-        tier: null,
-        tags: [],
-        qualityIncrease: null,
-        lines: [parseStatLine(line)]
-      }
-      mods.push(current)
+      // No header in front: basic copy, one mod per line (no way to group).
+      mods.push(parseBasicModLine(line))
     }
   }
   return mods
@@ -136,6 +167,9 @@ export function parseItem(text: string): ParsedItem {
   }
 
   let propertiesSeen = false
+  // Only gear rolls prefix/suffix mods; gating basic-mod detection on a gear
+  // rarity keeps a gem's headerless skill-stat block out of the explicit list.
+  const gearRarity = rarity === 'Normal' || rarity === 'Magic' || rarity === 'Rare' || rarity === 'Unique'
 
   for (const section of sections.slice(1)) {
     const first = section[0]
@@ -160,7 +194,7 @@ export function parseItem(text: string): ParsedItem {
       item.enchantMods = section.map((l) => parseStatLine(l.slice(0, -' (enchant)'.length)))
     } else if (section.every((l) => l.startsWith('Grants Skill'))) {
       item.grantedSkills.push(...section.map((l) => l.slice(l.indexOf(':') + 1).trim()))
-    } else if (section.some((l) => isModHeader(l))) {
+    } else if (section.some((l) => isModHeader(l)) || (gearRarity && isBasicModSection(section))) {
       for (const mod of parseModSection(section)) {
         if (mod.generation === 'implicit') item.implicits.push(mod)
         else if (mod.generation === 'enhancement') item.enhancements.push(mod)

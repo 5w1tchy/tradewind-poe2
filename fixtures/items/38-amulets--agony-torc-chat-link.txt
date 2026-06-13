@@ -1,0 +1,21 @@
+Item Class: Amulets
+Rarity: Rare
+Agony Torc
+Solar Amulet
+--------
+Quality (Cold Modifiers): +40% (augmented)
+--------
+Requires: Level 64
+--------
+Item Level: 81
+--------
++15 to Spirit (implicit)
+--------
++50 to Spirit (fractured)
+42% increased Evasion Rating
++3 to Level of all Projectile Skills
++23% to all Elemental Resistances
++23% to Cold and Chaos Resistances (desecrated)
+30% increased Global Armour, Evasion and Energy Shield (crafted)
+--------
+Fractured Item
