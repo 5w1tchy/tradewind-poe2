@@ -12,21 +12,53 @@ const popup = ref<HTMLElement | null>(null)
 type Tab = 'price' | 'craft'
 const tab = ref<Tab>('price')
 
-let anchor = { x: 0, y: 0 }
+let cursor = { x: 0, y: 0 }
+const pad = 12
+// Open beside the cursor, never under it: a popup under the cursor would force
+// the overlay interactive immediately and freeze the game tooltip.
+const CURSOR_GAP = 20
 
-/** Keep the popup on-screen at its current size, anchored near the cursor. */
-function clamp(): void {
+/** Report the popup's rect so the main process can hit-test the cursor. */
+function reportRect(): void {
   const el = popup.value
-  if (!el) return
-  const pad = 12
-  pos.value = {
-    x: Math.max(pad, Math.min(anchor.x, window.innerWidth - el.offsetWidth - pad)),
-    y: Math.max(pad, Math.min(anchor.y, window.innerHeight - el.offsetHeight - pad))
+  if (!visible.value || !el) {
+    window.tradewind.setPopupRect(null)
+    return
   }
+  window.tradewind.setPopupRect({ x: pos.value.x, y: pos.value.y, w: el.offsetWidth, h: el.offsetHeight })
 }
 
-// Listings arriving make the popup grow after open — re-clamp on every resize.
-const resizer = new ResizeObserver(() => clamp())
+/** Initial placement: beside the cursor, flipping sides so it never covers it. */
+function place(): void {
+  const el = popup.value
+  if (!el) return
+  const w = el.offsetWidth
+  const h = el.offsetHeight
+  let x = cursor.x + CURSOR_GAP
+  if (x + w + pad > window.innerWidth) x = cursor.x - CURSOR_GAP - w
+  let y = cursor.y + CURSOR_GAP
+  if (y + h + pad > window.innerHeight) y = cursor.y - CURSOR_GAP - h
+  pos.value = {
+    x: Math.max(pad, Math.min(x, window.innerWidth - w - pad)),
+    y: Math.max(pad, Math.min(y, window.innerHeight - h - pad))
+  }
+  reportRect()
+}
+
+// Content growth (listings, switching to Craft) resizes the popup. Only pull it
+// back on-screen — never re-flip, or it would jump out from under the cursor
+// mid-interaction and trip the auto-hide.
+function reclamp(): void {
+  const el = popup.value
+  if (!el) return
+  pos.value = {
+    x: Math.max(pad, Math.min(pos.value.x, window.innerWidth - el.offsetWidth - pad)),
+    y: Math.max(pad, Math.min(pos.value.y, window.innerHeight - el.offsetHeight - pad))
+  }
+  reportRect()
+}
+
+const resizer = new ResizeObserver(() => reclamp())
 watch(popup, (el, prev) => {
   if (prev) resizer.unobserve(prev)
   if (el) resizer.observe(el)
@@ -36,25 +68,16 @@ onBeforeUnmount(() => resizer.disconnect())
 window.tradewind.onItem(async (p) => {
   payload.value = p
   tab.value = 'price'
-  anchor = { x: p.x, y: p.y }
-  pos.value = anchor
+  cursor = { x: p.x, y: p.y }
   visible.value = true
   await nextTick()
-  clamp()
+  place()
 })
 
 window.tradewind.onHide(() => {
   visible.value = false
-  window.tradewind.setInteractive(false)
+  window.tradewind.setPopupRect(null)
 })
-
-function onEnter(): void {
-  window.tradewind.setInteractive(true)
-}
-
-function onLeave(): void {
-  window.tradewind.setInteractive(false)
-}
 </script>
 
 <template>
@@ -63,8 +86,6 @@ function onLeave(): void {
     ref="popup"
     class="popup"
     :style="{ left: pos.x + 'px', top: pos.y + 'px' }"
-    @mouseenter="onEnter"
-    @mouseleave="onLeave"
   >
     <i class="corner tl" /><i class="corner tr" /><i class="corner bl" /><i class="corner br" />
 

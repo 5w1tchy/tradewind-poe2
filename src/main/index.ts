@@ -98,9 +98,17 @@ app.whenReady().then(() => {
     .catch((err) => console.error('[data] leagues failed to load:', err))
 
   let overlayBounds = { x: 0, y: 0, width: 0, height: 0 }
+  // The popup's on-screen rect (overlay-local CSS px) reported by the renderer;
+  // null when no popup is open. Doubles as the "popup visible" flag.
+  let popupRect: { x: number; y: number; w: number; h: number } | null = null
 
+  let interactiveState = false
   const setInteractive = (interactive: boolean): void => {
-    overlay.setIgnoreMouseEvents(!interactive, { forward: true })
+    if (interactive === interactiveState) return
+    interactiveState = interactive
+    // No { forward: true }: forwarding moves to the renderer starves the game of
+    // them and freezes its tooltip (see overlay.ts).
+    overlay.setIgnoreMouseEvents(!interactive)
   }
 
   const releaseFocus = (): void => {
@@ -110,9 +118,33 @@ app.whenReady().then(() => {
 
   const hidePopup = (): void => {
     overlay.webContents.send('tw:hide')
+    popupRect = null
     setInteractive(false)
     releaseFocus()
-    input.cancelMouseLeave()
+  }
+
+  // How far (DIP px) the cursor may stray past the popup edge before auto-hide.
+  const POPUP_LEAVE_MARGIN = 240
+
+  // Overlay is click-through by default so the game always receives mouse-moves
+  // (and manages its own tooltip). On each cursor move, hit-test against the
+  // popup: capture the mouse only while the cursor is over it, and auto-hide
+  // once it wanders well clear.
+  const onCursorMove = (): void => {
+    if (!popupRect) return
+    // A focused filter input keeps the popup interactive regardless of cursor.
+    if (overlay.isFocused()) {
+      setInteractive(true)
+      return
+    }
+    const cur = screen.getCursorScreenPoint()
+    const x = cur.x - overlayBounds.x
+    const y = cur.y - overlayBounds.y
+    const r = popupRect
+    const dx = x < r.x ? r.x - x : x > r.x + r.w ? x - (r.x + r.w) : 0
+    const dy = y < r.y ? r.y - y : y > r.y + r.h ? y - (r.y + r.h) : 0
+    setInteractive(dx === 0 && dy === 0)
+    if (dx > POPUP_LEAVE_MARGIN || dy > POPUP_LEAVE_MARGIN) hidePopup()
   }
 
   let busy = false
@@ -146,7 +178,8 @@ app.whenReady().then(() => {
         x: cursor.x - overlayBounds.x,
         y: cursor.y - overlayBounds.y
       } satisfies ItemPayload)
-      input.watchMouseLeave()
+      // The renderer reports its rect via tw:popup-rect once laid out; from then
+      // on onCursorMove drives interactivity and auto-hide.
     } finally {
       busy = false
     }
@@ -237,9 +270,8 @@ app.whenReady().then(() => {
       onEscape() {
         hidePopup()
       },
-      onMouseMovedAway() {
-        overlay.webContents.send('tw:hide')
-        setInteractive(false)
+      onMouseMove() {
+        onCursorMove()
       }
     },
     { priceCheck: priceCheckKey, hideout: hideoutKey }
@@ -360,15 +392,15 @@ app.whenReady().then(() => {
     }
   })
 
-  ipcMain.on('tw:interactive', (_event, interactive: boolean) => {
-    setInteractive(interactive)
-    // The popup owns the cursor while hovered — pause the wander-away auto-hide.
-    if (interactive) input.cancelMouseLeave()
-    else {
-      releaseFocus()
-      input.watchMouseLeave()
+  ipcMain.on(
+    'tw:popup-rect',
+    (_event, rect: { x: number; y: number; w: number; h: number } | null) => {
+      popupRect = rect
+      // Re-evaluate now so interactivity tracks a resized popup even if the
+      // cursor is momentarily still.
+      onCursorMove()
     }
-  })
+  )
 
   // Filter inputs need real keyboard focus; the window is non-focusable the
   // rest of the time so clicks never steal focus from the game.

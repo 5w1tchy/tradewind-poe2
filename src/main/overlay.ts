@@ -24,7 +24,11 @@ export function createOverlayWindow(): BrowserWindow {
   })
 
   win.setAlwaysOnTop(true, 'screen-saver')
-  win.setIgnoreMouseEvents(true, { forward: true })
+  // Truly click-through: no { forward: true }. Forwarding mouse-move messages to
+  // our renderer starves the game of them, freezing PoE2's own item tooltip on
+  // screen. The main process hit-tests the cursor against the popup rect and
+  // flips this off only while the cursor is actually over the popup.
+  win.setIgnoreMouseEvents(true)
   win.setMenu(null)
 
   if (process.env['ELECTRON_RENDERER_URL']) {

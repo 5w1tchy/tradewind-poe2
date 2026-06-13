@@ -12,7 +12,7 @@ export async function grabItemText(): Promise<string | null> {
   const previous = clipboard.readText()
   clipboard.clear()
 
-  sendCopyAdvanced()
+  await sendCopyAdvanced()
 
   let item: string | null = null
   const deadline = Date.now() + 600

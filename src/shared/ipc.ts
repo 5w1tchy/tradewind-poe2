@@ -21,8 +21,11 @@ export interface TradewindApi {
   /** Build the trade body from edited filters, run search + first fetch. */
   search(prepared: PreparedQuery): Promise<SearchOutcome>
   setLeague(league: string): Promise<void>
-  /** Popup hover state: true makes the overlay clickable. */
-  setInteractive(interactive: boolean): void
+  /**
+   * Report the popup's on-screen rect (overlay-local CSS px) so the main process
+   * can hit-test the cursor against it and toggle click-through; null when hidden.
+   */
+  setPopupRect(rect: { x: number; y: number; w: number; h: number } | null): void
   /** Grab keyboard focus for a filter input (released when the popup hides). */
   requestFocus(): void
   /** Open a pathofexile.com URL in the default browser. */

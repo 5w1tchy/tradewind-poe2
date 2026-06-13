@@ -137,7 +137,7 @@ const mock: TradewindApi = {
     return JSON.parse(JSON.stringify(SAMPLE_OUTCOME)) as SearchOutcome
   },
   async setLeague() {},
-  setInteractive() {},
+  setPopupRect() {},
   requestFocus() {},
   openUrl(url) {
     console.log('openUrl:', url)

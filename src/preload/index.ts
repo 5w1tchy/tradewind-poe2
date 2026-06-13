@@ -14,8 +14,8 @@ const api: TradewindApi = {
   setLeague(league) {
     return ipcRenderer.invoke('tw:set-league', league)
   },
-  setInteractive(interactive) {
-    ipcRenderer.send('tw:interactive', interactive)
+  setPopupRect(rect) {
+    ipcRenderer.send('tw:popup-rect', rect)
   },
   requestFocus() {
     ipcRenderer.send('tw:focus-input')
