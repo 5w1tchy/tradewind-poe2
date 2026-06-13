@@ -134,6 +134,23 @@ describe('prepareQuery', () => {
     expect(allRes.enabled).toBe(false)
   })
 
+  it('folds hybrid elemental+chaos mods into both pseudo totals', () => {
+    // Pandemonium Beads: +13% all-res and +16% "Fire and Chaos Resistances".
+    const q = prepareFixture('05-amulets--pandemonium-beads-70198ee7.txt')
+
+    // 13 all-res x3 + 16 fire (from the hybrid) = 55 total elemental
+    const ele = q.stats.find((s) => s.statId === 'pseudo.pseudo_total_elemental_resistance')!
+    expect(ele.value).toBe(55)
+
+    // 16 chaos (from the hybrid) feeds the chaos total too
+    const chaos = q.stats.find((s) => s.statId === 'pseudo.pseudo_total_chaos_resistance')!
+    expect(chaos.value).toBe(16)
+
+    // the hybrid row itself is folded away (unchecked)
+    const hybrid = q.stats.find((s) => s.label.includes('Fire and Chaos Resistances'))!
+    expect(hybrid.enabled).toBe(false)
+  })
+
   it('accumulates a stat repeated across mods into one summed filter', () => {
     // Rarity rolls as prefix AND suffix, ES as two prefixes — the trade site
     // indexes each stat once (summed), so the query must carry one filter.

@@ -20,3 +20,11 @@ Running list of known issues and follow-ups not yet scheduled into a milestone.
   Craft tab's essence feature (`src/core/craft/essences.ts`,
   `scripts/gen-essences.mjs`, the essence assets) so they show up alongside
   essences in the crafting helper.
+
+## Tech debt
+
+- **Migrate the renderer from Vue 3 to React.** Move the overlay UI off Vue 3
+  onto React. Core logic under `src/core` (parser, query, craft) is
+  framework-agnostic and should carry over unchanged; the work is the renderer
+  layer (`src/renderer`). Plan the migration component-by-component and keep the
+  Electron main/preload boundary intact.

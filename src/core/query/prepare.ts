@@ -216,6 +216,9 @@ const ELE_RES_PATTERNS: Array<[RegExp, number]> = [
   [/^\+#% to all Elemental Resistances$/, 3]
 ]
 const CHAOS_RES_PATTERN = /^\+#% to Chaos Resistance$/
+// Hybrid elemental+chaos mods (e.g. "+#% to Fire and Chaos Resistances") apply
+// their value to one element AND to chaos, so they feed both pseudo totals.
+const ELE_CHAOS_RES_PATTERN = /^\+#% to (?:Fire|Cold|Lightning) and Chaos Resistances$/
 
 /**
  * Fold individual resist lines into summed pseudo filters: 35% fire + 25%
@@ -242,6 +245,11 @@ function foldResistancePseudos(
       }
     }
     if (CHAOS_RES_PATTERN.test(template)) {
+      chaos += stat.value
+      stat.enabled = false
+    }
+    if (ELE_CHAOS_RES_PATTERN.test(template)) {
+      ele += stat.value
       chaos += stat.value
       stat.enabled = false
     }
