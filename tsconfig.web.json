@@ -6,6 +6,7 @@
     "moduleResolution": "bundler",
     "strict": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "noEmit": true,
     "jsx": "preserve",
@@ -19,3 +20,4 @@
   ],
   "exclude": ["src/core/**/*.test.ts"]
 }
+

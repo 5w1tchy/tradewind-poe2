@@ -4,4 +4,6 @@ dist/
 native/keyhook/build/
 *.log
 .DS_Store
+.playwright-mcp/
+scratch/
 *.tsbuildinfo

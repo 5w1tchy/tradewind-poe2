@@ -1,0 +1,1937 @@
+{
+ "generatedFrom": "https://poe2db.tw/us/Essence",
+ "essences": [
+  {
+   "id": "CurrencyLesserEssenceLife",
+   "name": "Lesser Essence of the Body",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt"
+     ],
+     "text": "+(30–39) to maximum Life"
+    },
+    {
+     "targets": [
+      "Jewellery"
+     ],
+     "text": "+(20–29) to maximum Life"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceLife.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceMana",
+   "name": "Lesser Essence of the Mind",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Belt",
+      "Boots",
+      "Gloves",
+      "Helmet",
+      "Jewellery"
+     ],
+     "text": "+(25–34) to maximum Mana"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceMana.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceDefences",
+   "name": "Lesser Essence of Enhancement",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour"
+     ],
+     "text": "(27–42)% increased Armour, Evasion and Energy Shield"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceDefences.webp"
+  },
+  {
+   "id": "CurrencyLesserEssencePhysical",
+   "name": "Lesser Essence of Abrasion",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds (4–6) to (7–11) Physical Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (5–8) to (10–15) Physical Damage"
+    }
+   ],
+   "icon": "CurrencyLesserEssencePhysical.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceFire",
+   "name": "Lesser Essence of Flames",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds (4–6) to (7–10) Fire Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (6–9) to (10–16) Fire Damage"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceFire.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceCold",
+   "name": "Lesser Essence of Ice",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds (3–5) to (6–9) Cold Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (5–8) to (9–14) Cold Damage"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceCold.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceLightning",
+   "name": "Lesser Essence of Electricity",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds 1 to (13–19) Lightning Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (1–2) to (19–27) Lightning Damage"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceLightning.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceChaos",
+   "name": "Lesser Essence of Ruin",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(4–7)% to Chaos Resistance"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceChaos.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceAttack",
+   "name": "Lesser Essence of Battle",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Martial Weapon"
+     ],
+     "text": "+(61–84) to Accuracy Rating"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceAttack.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceCaster",
+   "name": "Lesser Essence of Sorcery",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Focus",
+      "Wand"
+     ],
+     "text": "(35–44)% increased Spell Damage"
+    },
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(69–88)% increased Spell Damage"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceCaster.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceSpeed",
+   "name": "Lesser Essence of Haste",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Melee Weapon"
+     ],
+     "text": "(11–13)% increased Attack Speed"
+    },
+    {
+     "targets": [
+      "Bow",
+      "Crossbow"
+     ],
+     "text": "(8–10)% increased Attack Speed"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceSpeed.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceAttribute",
+   "name": "Lesser Essence of the Infinite",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Equipment"
+     ],
+     "text": "+(9–12) to Strength, Dexterity or Intelligence"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceAttribute.webp"
+  },
+  {
+   "id": "CurrencyEssenceLife",
+   "name": "Essence of the Body",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Belt",
+      "Body Armour",
+      "Helmet",
+      "Shield"
+     ],
+     "text": "+(85–99) to maximum Life"
+    },
+    {
+     "targets": [
+      "Amulet",
+      "Boots",
+      "Gloves",
+      "Ring"
+     ],
+     "text": "+(70–84) to maximum Life"
+    }
+   ],
+   "icon": "CurrencyEssenceLife.webp"
+  },
+  {
+   "id": "CurrencyEssenceMana",
+   "name": "Essence of the Mind",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Belt",
+      "Boots",
+      "Gloves",
+      "Helmet"
+     ],
+     "text": "+(65–79) to maximum Mana"
+    },
+    {
+     "targets": [
+      "Jewellery"
+     ],
+     "text": "+(80–89) to maximum Mana"
+    }
+   ],
+   "icon": "CurrencyEssenceMana.webp"
+  },
+  {
+   "id": "CurrencyEssenceDefences",
+   "name": "Essence of Enhancement",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour"
+     ],
+     "text": "(56–67)% increased Armour, Evasion and Energy Shield"
+    }
+   ],
+   "icon": "CurrencyEssenceDefences.webp"
+  },
+  {
+   "id": "CurrencyEssencePhysical",
+   "name": "Essence of Abrasion",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds (10–15) to (18–26) Physical Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (14–21) to (25–37) Physical Damage"
+    }
+   ],
+   "icon": "CurrencyEssencePhysical.webp"
+  },
+  {
+   "id": "CurrencyEssenceFire",
+   "name": "Essence of Flames",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds (20–24) to (32–37) Fire Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (30–37) to (45–56) Fire Damage"
+    }
+   ],
+   "icon": "CurrencyEssenceFire.webp"
+  },
+  {
+   "id": "CurrencyEssenceCold",
+   "name": "Essence of Ice",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds (17–20) to (26–32) Cold Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (25–30) to (38–46) Cold Damage"
+    }
+   ],
+   "icon": "CurrencyEssenceCold.webp"
+  },
+  {
+   "id": "CurrencyEssenceLightning",
+   "name": "Essence of Electricity",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds (1–3) to (55–60) Lightning Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (1–4) to (80–88) Lightning Damage"
+    }
+   ],
+   "icon": "CurrencyEssenceLightning.webp"
+  },
+  {
+   "id": "CurrencyEssenceChaos",
+   "name": "Essence of Ruin",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(8–11)% to Chaos Resistance"
+    }
+   ],
+   "icon": "CurrencyEssenceChaos.webp"
+  },
+  {
+   "id": "CurrencyEssenceAttack",
+   "name": "Essence of Battle",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Martial Weapon"
+     ],
+     "text": "+(124–167) to Accuracy Rating"
+    }
+   ],
+   "icon": "CurrencyEssenceAttack.webp"
+  },
+  {
+   "id": "CurrencyEssenceCaster",
+   "name": "Essence of Sorcery",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Focus",
+      "Wand"
+     ],
+     "text": "(55–64)% increased Spell Damage"
+    },
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(109–128)% increased Spell Damage"
+    }
+   ],
+   "icon": "CurrencyEssenceCaster.webp"
+  },
+  {
+   "id": "CurrencyEssenceSpeed",
+   "name": "Essence of Haste",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Melee Weapon"
+     ],
+     "text": "(17–19)% increased Attack Speed"
+    },
+    {
+     "targets": [
+      "Bow",
+      "Crossbow"
+     ],
+     "text": "(11–13)% increased Attack Speed"
+    }
+   ],
+   "icon": "CurrencyEssenceSpeed.webp"
+  },
+  {
+   "id": "CurrencyEssenceAttribute",
+   "name": "Essence of the Infinite",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Equipment"
+     ],
+     "text": "+(17–20) to Strength, Dexterity or Intelligence"
+    }
+   ],
+   "icon": "CurrencyEssenceAttribute.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceLife",
+   "name": "Greater Essence of the Body",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Belt",
+      "Body Armour",
+      "Helmet",
+      "Shield"
+     ],
+     "text": "+(100–119) to maximum Life"
+    },
+    {
+     "targets": [
+      "Amulet",
+      "Boots",
+      "Gloves"
+     ],
+     "text": "+(85–99) to maximum Life"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceLife.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceMana",
+   "name": "Greater Essence of the Mind",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Belt",
+      "Boots",
+      "Gloves",
+      "Helmet"
+     ],
+     "text": "+(80–89) to maximum Mana"
+    },
+    {
+     "targets": [
+      "Jewellery"
+     ],
+     "text": "+(90–104) to maximum Mana"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceMana.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceDefences",
+   "name": "Greater Essence of Enhancement",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour"
+     ],
+     "text": "(68–79)% increased Armour, Evasion and Energy Shield"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceDefences.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssencePhysical",
+   "name": "Greater Essence of Abrasion",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds (16–24) to (28–42) Physical Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (23–35) to (39–59) Physical Damage"
+    }
+   ],
+   "icon": "CurrencyGreaterEssencePhysical.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceFire",
+   "name": "Greater Essence of Flames",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds (35–44) to (56–71) Fire Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (56–70) to (84–107) Fire Damage"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceFire.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceCold",
+   "name": "Greater Essence of Ice",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds (31–38) to (47–59) Cold Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (46–57) to (70–88) Cold Damage"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceCold.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceLightning",
+   "name": "Greater Essence of Electricity",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Adds (1–6) to (85–107) Lightning Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Adds (1–8) to (128–162) Lightning Damage"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceLightning.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceChaos",
+   "name": "Greater Essence of Ruin",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(16–19)% to Chaos Resistance"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceChaos.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceAttack",
+   "name": "Greater Essence of Battle",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Martial Weapon",
+      "Gloves",
+      "Quiver"
+     ],
+     "text": "+(237–346) to Accuracy Rating"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceAttack.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceCaster",
+   "name": "Greater Essence of Sorcery",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Focus",
+      "Wand"
+     ],
+     "text": "(75–89)% increased Spell Damage"
+    },
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(149–188)% increased Spell Damage"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceCaster.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceSpeed",
+   "name": "Greater Essence of Haste",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Melee Weapon"
+     ],
+     "text": "(23–25)% increased Attack Speed"
+    },
+    {
+     "targets": [
+      "Bow",
+      "Crossbow"
+     ],
+     "text": "(14–16)% increased Attack Speed"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceSpeed.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceAttribute",
+   "name": "Greater Essence of the Infinite",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Equipment"
+     ],
+     "text": "+(25–27) to Strength, Dexterity or Intelligence"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceAttribute.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceLife",
+   "name": "Perfect Essence of the Body",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Body Armour"
+     ],
+     "text": "(8–10)% increased maximum Life"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceLife.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceMana",
+   "name": "Perfect Essence of the Mind",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Ring"
+     ],
+     "text": "(4–6)% increased maximum Mana"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceMana.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceDefences",
+   "name": "Perfect Essence of Enhancement",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Amulet"
+     ],
+     "text": "(20–30)% increased Global Armour, Evasion and Energy Shield"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceDefences.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssencePhysical",
+   "name": "Perfect Essence of Abrasion",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Gain (15–20)% of Damage as Extra Physical Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Gain (25–33)% of Damage as Extra Physical Damage"
+    }
+   ],
+   "icon": "CurrencyPerfectEssencePhysical.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceFire",
+   "name": "Perfect Essence of Flames",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Gain (15–20)% of Damage as Extra Fire Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Gain (25–33)% of Damage as Extra Fire Damage"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceFire.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceCold",
+   "name": "Perfect Essence of Ice",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Gain (15–20)% of Damage as Extra Cold Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Gain (25–33)% of Damage as Extra Cold Damage"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceCold.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceLightning",
+   "name": "Perfect Essence of Electricity",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "Gain (15–20)% of Damage as Extra Lightning Damage"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "Gain (25–33)% of Damage as Extra Lightning Damage"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceLightning.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceChaos",
+   "name": "Perfect Essence of Ruin",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Body Armour"
+     ],
+     "text": "(10–15)% of Physical Damage from Hits taken as Chaos Damage"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceChaos.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceAttack",
+   "name": "Perfect Essence of Battle",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "One Handed Melee Weapon",
+      "Bow"
+     ],
+     "text": "+2 to Level of all Attack Skills"
+    },
+    {
+     "targets": [
+      "Two Handed Melee Weapon",
+      "Crossbow"
+     ],
+     "text": "+3 to Level of all Attack Skills"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceAttack.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceCaster",
+   "name": "Perfect Essence of Sorcery",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Wand"
+     ],
+     "text": "+3 to Level of all Spell Skills"
+    },
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "+5 to Level of all Spell Skills"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceCaster.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceSpeed",
+   "name": "Perfect Essence of Haste",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Martial Weapon"
+     ],
+     "text": "(20–25)% chance to gain Onslaught on Killing Hits with this Weapon"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceSpeed.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceAttribute",
+   "name": "Perfect Essence of the Infinite",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Amulet"
+     ],
+     "text": "(7–10)% increased Strength, Dexterity or Intelligence"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceAttribute.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceCritical",
+   "name": "Lesser Essence of Seeking",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Martial Weapon"
+     ],
+     "text": "+(1.51–2.1)% to Critical Hit Chance"
+    },
+    {
+     "targets": [
+      "Focus",
+      "Wand"
+     ],
+     "text": "(34–39)% increased Critical Hit Chance for Spells"
+    },
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(50–59)% increased Critical Hit Chance for Spells"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceCritical.webp"
+  },
+  {
+   "id": "CurrencyEssenceCritical",
+   "name": "Essence of Seeking",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Martial Weapon"
+     ],
+     "text": "+(2.11–2.7)% to Critical Hit Chance"
+    },
+    {
+     "targets": [
+      "Focus",
+      "Wand"
+     ],
+     "text": "(40–46)% increased Critical Hit Chance for Spells"
+    },
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(60–69)% increased Critical Hit Chance for Spells"
+    }
+   ],
+   "icon": "CurrencyEssenceCritical.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceCritical",
+   "name": "Greater Essence of Seeking",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Martial Weapon"
+     ],
+     "text": "+(3.11–3.8)% to Critical Hit Chance"
+    },
+    {
+     "targets": [
+      "Focus",
+      "Wand"
+     ],
+     "text": "(47–53)% increased Critical Hit Chance for Spells"
+    },
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(70–79)% increased Critical Hit Chance for Spells"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceCritical.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceCritical",
+   "name": "Perfect Essence of Seeking",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Body Armour"
+     ],
+     "text": "Hits against you have (40–50)% reduced Critical Damage Bonus"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceCritical.webp"
+  },
+  {
+   "id": "CurrencyCorruptedEssenceHysteria",
+   "name": "Essence of Hysteria",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Helmet"
+     ],
+     "text": "+1 to Level of all Minion Skills"
+    },
+    {
+     "targets": [
+      "Body Armour"
+     ],
+     "text": "(64–97) to (98–145) Physical Thorns damage"
+    },
+    {
+     "targets": [
+      "Gloves"
+     ],
+     "text": "(25–29)% increased Critical Damage Bonus"
+    },
+    {
+     "targets": [
+      "Boots"
+     ],
+     "text": "30% increased Movement Speed"
+    },
+    {
+     "targets": [
+      "Ring"
+     ],
+     "text": "(50–59)% increased Mana Regeneration Rate"
+    },
+    {
+     "targets": [
+      "Amulet"
+     ],
+     "text": "(19–21)% of Damage taken Recouped as Life"
+    },
+    {
+     "targets": [
+      "Belt"
+     ],
+     "text": "+(254–304) to Stun Threshold"
+    },
+    {
+     "targets": [
+      "Shield"
+     ],
+     "text": "(20–24)% increased Block chance"
+    },
+    {
+     "targets": [
+      "Quiver"
+     ],
+     "text": "(43–50)% increased Damage with Bow Skills"
+    },
+    {
+     "targets": [
+      "Focus"
+     ],
+     "text": "(20–23)% increased Energy Shield Recharge Rate"
+    }
+   ],
+   "icon": "CurrencyCorruptedEssenceHysteria.webp"
+  },
+  {
+   "id": "CurrencyCorruptedEssenceDelirium",
+   "name": "Essence of Delirium",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Body Armour"
+     ],
+     "text": "Allocates a random Notable Passive Skill"
+    }
+   ],
+   "icon": "CurrencyCorruptedEssenceDelirium.webp"
+  },
+  {
+   "id": "CurrencyCorruptedEssenceHorror",
+   "name": "Essence of Horror",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Gloves",
+      "Boots"
+     ],
+     "text": "60% increased effect of Socketed Augment Items"
+    }
+   ],
+   "icon": "CurrencyCorruptedEssenceHorror.webp"
+  },
+  {
+   "id": "CurrencyCorruptedEssenceInsanity",
+   "name": "Essence of Insanity",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Belt"
+     ],
+     "text": "On Corruption, Item gains two Enchantments"
+    }
+   ],
+   "icon": "CurrencyCorruptedEssenceInsanity.webp"
+  },
+  {
+   "id": "CurrencyCorruptedEssenceAbyss",
+   "name": "Essence of the Abyss",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Equipment"
+     ],
+     "text": "Mark of the Abyssal Lord"
+    }
+   ],
+   "icon": "CurrencyCorruptedEssenceAbyss.webp"
+  },
+  {
+   "id": "CurrencyCorruptedEssenceBreach",
+   "name": "Essence of the Breach",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Jewellery"
+     ],
+     "text": "+20% to Maximum Quality"
+    }
+   ],
+   "icon": "CurrencyCorruptedEssenceBreach.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceFireResist",
+   "name": "Lesser Essence of Insulation",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(11–15)% to Fire Resistance"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceFireResist.webp"
+  },
+  {
+   "id": "CurrencyEssenceFireResist",
+   "name": "Essence of Insulation",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(21–25)% to Fire Resistance"
+    }
+   ],
+   "icon": "CurrencyEssenceFireResist.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceFireResist",
+   "name": "Greater Essence of Insulation",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(31–35)% to Fire Resistance"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceFireResist.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceFireResist",
+   "name": "Perfect Essence of Insulation",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Belt"
+     ],
+     "text": "(26–30)% of Fire Damage taken Recouped as Life"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceFireResist.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceColdResist",
+   "name": "Lesser Essence of Thawing",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(11–15)% to Cold Resistance"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceColdResist.webp"
+  },
+  {
+   "id": "CurrencyEssenceColdResist",
+   "name": "Essence of Thawing",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(21–25)% to Cold Resistance"
+    }
+   ],
+   "icon": "CurrencyEssenceColdResist.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceColdResist",
+   "name": "Greater Essence of Thawing",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(31–35)% to Cold Resistance"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceColdResist.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceColdResist",
+   "name": "Perfect Essence of Thawing",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Helmet"
+     ],
+     "text": "(26–30)% of Cold Damage taken Recouped as Life"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceColdResist.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceLightningResist",
+   "name": "Lesser Essence of Grounding",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(11–15)% to Lightning Resistance"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceLightningResist.webp"
+  },
+  {
+   "id": "CurrencyEssenceLightningResist",
+   "name": "Essence of Grounding",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(21–25)% to Lightning Resistance"
+    }
+   ],
+   "icon": "CurrencyEssenceLightningResist.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceLightningResist",
+   "name": "Greater Essence of Grounding",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Armour",
+      "Belt",
+      "Jewellery"
+     ],
+     "text": "+(31–35)% to Lightning Resistance"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceLightningResist.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceLightningResist",
+   "name": "Perfect Essence of Grounding",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Gloves"
+     ],
+     "text": "(26–30)% of Lightning Damage taken Recouped as Life"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceLightningResist.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceSpeedCaster",
+   "name": "Lesser Essence of Alacrity",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Focus",
+      "Wand"
+     ],
+     "text": "(13–16)% increased Cast Speed"
+    },
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(20–25)% increased Cast Speed"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceSpeedCaster.webp"
+  },
+  {
+   "id": "CurrencyEssenceSpeedCaster",
+   "name": "Essence of Alacrity",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Focus",
+      "Wand"
+     ],
+     "text": "(17–20)% increased Cast Speed"
+    },
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(26–31)% increased Cast Speed"
+    }
+   ],
+   "icon": "CurrencyEssenceSpeedCaster.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceSpeedCaster",
+   "name": "Greater Essence of Alacrity",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Focus",
+      "Wand"
+     ],
+     "text": "(25–28)% increased Cast Speed"
+    },
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(38–43)% increased Cast Speed"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceSpeedCaster.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceSpeedCaster",
+   "name": "Perfect Essence of Alacrity",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Focus",
+      "Wand"
+     ],
+     "text": "(18–20)% increased Mana Cost Efficiency"
+    },
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(28–32)% increased Mana Cost Efficiency"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceSpeedCaster.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceRarity",
+   "name": "Lesser Essence of Opulence",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Boots",
+      "Gloves",
+      "Helmet",
+      "Jewellery"
+     ],
+     "text": "(6–10)% increased Rarity of Items found"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceRarity.webp"
+  },
+  {
+   "id": "CurrencyEssenceRarity",
+   "name": "Essence of Opulence",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Boots",
+      "Gloves",
+      "Helmet",
+      "Jewellery"
+     ],
+     "text": "(11–14)% increased Rarity of Items found"
+    }
+   ],
+   "icon": "CurrencyEssenceRarity.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceRarity",
+   "name": "Greater Essence of Opulence",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Boots",
+      "Gloves",
+      "Helmet",
+      "Jewellery"
+     ],
+     "text": "(15–18)% increased Rarity of Items found"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceRarity.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceRarity",
+   "name": "Perfect Essence of Opulence",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Gloves"
+     ],
+     "text": "(10–15)% increased Quantity of Gold Dropped by Slain Enemies"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceRarity.webp"
+  },
+  {
+   "id": "CurrencyLesserEssenceAlly",
+   "name": "Lesser Essence of Command",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Sceptre"
+     ],
+     "text": "Allies in your Presence deal (35–44)% increased Damage"
+    }
+   ],
+   "icon": "CurrencyLesserEssenceAlly.webp"
+  },
+  {
+   "id": "CurrencyEssenceAlly",
+   "name": "Essence of Command",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Sceptre"
+     ],
+     "text": "Allies in your Presence deal (55–64)% increased Damage"
+    }
+   ],
+   "icon": "CurrencyEssenceAlly.webp"
+  },
+  {
+   "id": "CurrencyGreaterEssenceAlly",
+   "name": "Greater Essence of Command",
+   "behavior": "Upgrades a Magic item to a Rare item, adding a guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Sceptre"
+     ],
+     "text": "Allies in your Presence deal (75–89)% increased Damage"
+    }
+   ],
+   "icon": "CurrencyGreaterEssenceAlly.webp"
+  },
+  {
+   "id": "CurrencyPerfectEssenceAlly",
+   "name": "Perfect Essence of Command",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Sceptre"
+     ],
+     "text": "Aura Skills have (15–20)% increased Magnitudes"
+    }
+   ],
+   "icon": "CurrencyPerfectEssenceAlly.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy1",
+   "name": "Runic Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Ring"
+     ],
+     "text": "+(37–49) to maximum Runic Ward"
+    },
+    {
+     "targets": [
+      "Amulet"
+     ],
+     "text": "(6–10)% increased maximum Runic Ward"
+    },
+    {
+     "targets": [
+      "Belt"
+     ],
+     "text": "(15–20)% increased Runic Ward Regeneration Rate"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy1.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy2",
+   "name": "Adaptive Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "Gain (42–52)% of Damage as Extra Fire Damage while you are missing Runic Ward"
+    },
+    {
+     "targets": [
+      "Wand"
+     ],
+     "text": "Gain (21–26)% of Damage as Extra Fire Damage while you are missing Runic Ward"
+    },
+    {
+     "targets": [
+      "Sceptre"
+     ],
+     "text": "(30–50)% Surpassing Chance to gain a Puppet Master stack whenever you use a Command Skill"
+    },
+    {
+     "targets": [
+      "Gloves"
+     ],
+     "text": "(10–15)% increased Attack Speed while missing Runic Ward"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy2.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy3",
+   "name": "Protective Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Belt"
+     ],
+     "text": "Recover (32–45) Runic Ward when a Charm is used"
+    },
+    {
+     "targets": [
+      "Weapons"
+     ],
+     "text": "+(51–74) to maximum Runic Ward"
+    },
+    {
+     "targets": [
+      "Shield"
+     ],
+     "text": "Recover (10–15) Runic Ward when you Block"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy3.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy4",
+   "name": "Expansive Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Gloves"
+     ],
+     "text": "Remnants can be collected from (35–50)% further away"
+    },
+    {
+     "targets": [
+      "Body Armour"
+     ],
+     "text": "(35–50)% increased Presence Area of Effect"
+    },
+    {
+     "targets": [
+      "Helmet"
+     ],
+     "text": "(18–29)% increased Mana Cost Efficiency"
+    },
+    {
+     "targets": [
+      "Boots"
+     ],
+     "text": "Temporary Minion Skills have +(1–2) to Limit of Minions summoned"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy4.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy5",
+   "name": "Swift Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Gloves"
+     ],
+     "text": "(9–12)% increased Cast Speed"
+    },
+    {
+     "targets": [
+      "Ring"
+     ],
+     "text": "(7–9)% increased Attack Speed"
+    },
+    {
+     "targets": [
+      "Belt"
+     ],
+     "text": "Flasks gain (0.75–1) charges per Second"
+    },
+    {
+     "targets": [
+      "Shield",
+      "Focus"
+     ],
+     "text": "(30–49)% increased Totem Placement speed"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy5.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy6",
+   "name": "Cyclonic Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Body Armour"
+     ],
+     "text": "(15–30)% reduced Slowing Potency of Debuffs on You"
+    },
+    {
+     "targets": [
+      "Boots"
+     ],
+     "text": "(15–19)% increased Skill Effect Duration"
+    },
+    {
+     "targets": [
+      "Gloves"
+     ],
+     "text": "(20–25)% increased Duration of Damaging Ailments on Enemies"
+    },
+    {
+     "targets": [
+      "Helmet"
+     ],
+     "text": "(35–42)% increased Archon Buff duration"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy6.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy7",
+   "name": "Prismatic Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Gloves"
+     ],
+     "text": "Damage Penetrates (9–15)% Elemental Resistances"
+    },
+    {
+     "targets": [
+      "Martial Weapon"
+     ],
+     "text": "(20–30)% increased Magnitude of Ailments you inflict"
+    },
+    {
+     "targets": [
+      "Focus",
+      "Staff",
+      "Wand"
+     ],
+     "text": "(40–50)% increased Exposure Effect"
+    },
+    {
+     "targets": [
+      "Sceptre"
+     ],
+     "text": "Minions have (40–49)% increased Magnitude of Damaging Ailments"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy7.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy8",
+   "name": "Mystic Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Helmet"
+     ],
+     "text": "Spell Skills have (10–15)% increased Area of Effect"
+    },
+    {
+     "targets": [
+      "Gloves"
+     ],
+     "text": "(10–15)% increased Area of Effect for Attacks"
+    },
+    {
+     "targets": [
+      "Boots"
+     ],
+     "text": "+(10–15) to Spirit"
+    },
+    {
+     "targets": [
+      "Quiver"
+     ],
+     "text": "(25–35)% chance to Chain an additional time"
+    },
+    {
+     "targets": [
+      "Caster Weapon"
+     ],
+     "text": "+1 to maximum number of Elemental Infusions"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy8.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy9",
+   "name": "Sovereign Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Weapons"
+     ],
+     "text": "(20–30)% increased effect of Socketed Augment Items"
+    },
+    {
+     "targets": [
+      "Armour"
+     ],
+     "text": "(24–30)% increased Runic Ward"
+    },
+    {
+     "targets": [
+      "Jewellery",
+      "Belt"
+     ],
+     "text": "(20–30)% increased Explicit Resistance Modifier magnitudes"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy9.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy10",
+   "name": "Celestial Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Staff",
+      "Wand"
+     ],
+     "text": "+(142–188) to maximum Mana+1 to Level of all Spell Skills"
+    },
+    {
+     "targets": [
+      "Martial Weapon"
+     ],
+     "text": "+(327–427) to Accuracy Rating(5–8)% increased Attack Speed"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy10.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy11",
+   "name": "Transcendent Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(39–47)% increased Cast SpeedGain (11–16)% of Elemental Damage as Extra Cold Damage"
+    },
+    {
+     "targets": [
+      "Martial Weapon"
+     ],
+     "text": "(15–20)% increased Physical Damage+(7–10) to all Attributes"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy11.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy12",
+   "name": "The Runebinder's Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Staff"
+     ],
+     "text": "(25–50)% chance to gain Nature's Archon when your Plants Overgrow"
+    },
+    {
+     "targets": [
+      "Wand"
+     ],
+     "text": "+1 to Limit for Elemental Skills"
+    },
+    {
+     "targets": [
+      "Sceptre"
+     ],
+     "text": "+(4–5) maximum stacks of Puppet Master"
+    },
+    {
+     "targets": [
+      "Crossbow"
+     ],
+     "text": "+2 to maximum number of Summoned Ballista Totems"
+    },
+    {
+     "targets": [
+      "Bow"
+     ],
+     "text": "(40–50)% increased Effect of your Mark Skills"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy12.webp"
+  },
+  {
+   "id": "CurrencyVerisiumAlloy13",
+   "name": "The Runefather's Alloy",
+   "behavior": "Removes a random modifier and augments a Rare item with a new guaranteed modifier",
+   "mods": [
+    {
+     "targets": [
+      "Mace"
+     ],
+     "text": "(60–75)% chance for Skills to retain 40% of Glory on use"
+    },
+    {
+     "targets": [
+      "Quarterstaff"
+     ],
+     "text": "Tempest Bells are destroyed after an additional (4–5) Hits"
+    },
+    {
+     "targets": [
+      "Spear"
+     ],
+     "text": "+(8–10) to Weapon Range"
+    },
+    {
+     "targets": [
+      "Talisman"
+     ],
+     "text": "Lightning Damage from Hits also Contributes to Flammability and Ignite Magnitudes"
+    }
+   ],
+   "icon": "CurrencyVerisiumAlloy13.webp"
+  }
+ ]
+}

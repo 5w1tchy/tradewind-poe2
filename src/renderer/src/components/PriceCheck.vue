@@ -242,9 +242,9 @@ function age(iso: string): string {
         <span v-if="baseLabel" class="base">{{ baseLabel }}</span>
         <span class="item-class">{{ prepared?.itemClass }}</span>
       </div>
-      <div class="league">
-        <button class="league-btn" @click="leagueOpen = !leagueOpen">{{ league }} ▾</button>
-        <ul v-if="leagueOpen" class="league-list">
+      <div class="picker">
+        <button class="tw-btn" @click="leagueOpen = !leagueOpen">{{ league }} ▾</button>
+        <ul v-if="leagueOpen" class="tw-menu">
           <li v-for="id in payload.leagues" :key="id">
             <button :class="{ active: id === league }" @click="pickLeague(id)">{{ id }}</button>
           </li>
@@ -254,10 +254,10 @@ function age(iso: string): string {
 
     <template v-if="prepared">
       <div class="filter-row sale-row">
-        <span class="property">Listed:</span>
-        <div class="league">
-          <button class="league-btn" @click="saleOpen = !saleOpen">{{ saleLabel }} ▾</button>
-          <ul v-if="saleOpen" class="league-list">
+        <span class="tw-label">Listed</span>
+        <div class="picker">
+          <button class="tw-btn" @click="saleOpen = !saleOpen">{{ saleLabel }} ▾</button>
+          <ul v-if="saleOpen" class="tw-menu">
             <li v-for="[id, label] in SALE_OPTIONS" :key="id">
               <button :class="{ active: id === prepared.status }" @click="pickSale(id)">
                 {{ label }}
@@ -266,12 +266,10 @@ function age(iso: string): string {
           </ul>
         </div>
         <template v-if="rarityEditable">
-          <span class="property rarity-label">Rarity:</span>
-          <div class="league">
-            <button class="league-btn" @click="rarityOpen = !rarityOpen">
-              {{ rarityLabel }} ▾
-            </button>
-            <ul v-if="rarityOpen" class="league-list">
+          <span class="tw-label rarity-label">Rarity</span>
+          <div class="picker">
+            <button class="tw-btn" @click="rarityOpen = !rarityOpen">{{ rarityLabel }} ▾</button>
+            <ul v-if="rarityOpen" class="tw-menu">
               <li v-for="[id, label] in RARITY_OPTIONS" :key="id">
                 <button :class="{ active: id === prepared.rarityOption }" @click="pickRarity(id)">
                   {{ label }}
@@ -355,14 +353,14 @@ function age(iso: string): string {
             ≈ {{ formatExalted(outcome.estimate.anchorExalted!, outcome.estimate.divineRate) }}
           </span>
           <span class="est-market" title="aggregate market rate (poe2scout)">market rate</span>
-          <span class="est-conf" :class="'conf-' + outcome.estimate.confidence">●</span>
+          <span class="est-conf" :class="'conf-' + outcome.estimate.confidence">◆</span>
           <span class="est-detail">
             asks here {{ formatEstimateRange(outcome.estimate) }} · {{ estimateDetail }}
           </span>
         </template>
         <template v-else>
           <span class="est-range">≈ {{ formatEstimateRange(outcome.estimate) }}</span>
-          <span class="est-conf" :class="'conf-' + outcome.estimate.confidence">●</span>
+          <span class="est-conf" :class="'conf-' + outcome.estimate.confidence">◆</span>
           <span class="est-detail">{{ estimateDetail }}</span>
           <!-- Site asks and the aggregate bracket the true price from
                opposite sides — show both, the reader triangulates. -->
@@ -393,13 +391,13 @@ function age(iso: string): string {
         <span class="actions">
           <button
             v-if="!searching"
-            class="web-btn search-btn"
+            class="tw-btn search-btn"
             :class="{ armed: dirty }"
             @click="runSearch"
           >
             Search
           </button>
-          <button v-if="outcome && !searching" class="web-btn" @click="openOnTradeSite">
+          <button v-if="outcome && !searching" class="tw-btn" @click="openOnTradeSite">
             trade site ↗
           </button>
         </span>
@@ -441,7 +439,7 @@ function age(iso: string): string {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  min-width: 320px;
+  min-width: 340px;
 }
 
 .header {
@@ -449,77 +447,43 @@ function age(iso: string): string {
   justify-content: space-between;
   align-items: baseline;
   gap: 12px;
-  border-bottom: 1px solid rgba(175, 96, 37, 0.35);
-  padding-bottom: 6px;
 }
 
+.title {
+  min-width: 0;
+}
+
+/* Item name set in the display face — the popup's one piece of pageantry. */
 .name {
+  font-family: var(--tw-font-display);
   font-size: 13px;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
-.rarity-rare { color: #ffff77; }
-.rarity-unique { color: #af6025; }
-.rarity-magic { color: #8888ff; }
-.rarity-gem { color: #1ba29b; }
-.rarity-currency { color: #aa9e82; }
+.rarity-normal { color: var(--tw-rarity-normal); }
+.rarity-rare { color: var(--tw-rarity-rare); }
+.rarity-unique { color: var(--tw-rarity-unique); }
+.rarity-magic { color: var(--tw-rarity-magic); }
+.rarity-gem { color: var(--tw-rarity-gem); }
+.rarity-currency { color: var(--tw-rarity-currency); }
 
 .item-class {
-  color: #8a8782;
+  color: var(--tw-text-faint);
   margin-left: 8px;
   font-size: 11px;
 }
 
 .base {
-  color: #b8b6b0;
+  color: var(--tw-text-mute);
   margin-left: 8px;
   font-size: 11px;
 }
 
-.league {
+.picker {
   position: relative;
+  flex-shrink: 0;
 }
-
-.league-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 3px;
-  color: #d6d3cd;
-  font: inherit;
-  font-size: 11px;
-  padding: 2px 6px;
-  cursor: pointer;
-}
-
-.league-list {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 2px);
-  margin: 0;
-  padding: 2px;
-  list-style: none;
-  background: rgba(24, 24, 28, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
-  z-index: 10;
-  white-space: nowrap;
-}
-
-.league-list button {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  color: #d6d3cd;
-  font: inherit;
-  font-size: 11px;
-  padding: 3px 8px;
-  cursor: pointer;
-}
-
-.league-list button:hover { background: rgba(255, 255, 255, 0.08); }
-.league-list button.active { color: #af6025; }
 
 .filters {
   display: flex;
@@ -527,22 +491,51 @@ function age(iso: string): string {
   gap: 2px;
   max-height: 200px;
   overflow-y: auto;
+  border-top: 1px solid var(--tw-line);
+  padding-top: 6px;
 }
 
 .filter-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   cursor: pointer;
+  border-radius: 2px;
+  padding: 1px 2px;
 }
 
-.filter-row input {
-  accent-color: #af6025;
+.filter-row:hover {
+  background: var(--tw-bg-raised);
+}
+
+/* Socket-style checkbox: empty bronze socket, gold-lit when active. */
+.filter-row input[type='checkbox'] {
+  appearance: none;
+  width: 11px;
+  height: 11px;
   margin: 0;
   flex-shrink: 0;
+  border: 1px solid var(--tw-bronze-dim);
+  border-radius: 1px;
+  background: var(--tw-bg-inset);
+  cursor: pointer;
+  transition:
+    background-color 100ms ease,
+    border-color 100ms ease;
 }
 
-.property { color: #b8b6b0; }
+.filter-row input[type='checkbox']:hover {
+  border-color: var(--tw-bronze);
+}
+
+.filter-row input[type='checkbox']:checked {
+  border-color: var(--tw-bronze-bright);
+  background:
+    radial-gradient(circle at 50% 50%, var(--tw-gold) 0 2.5px, transparent 3px),
+    var(--tw-bg-inset);
+}
+
+.property { color: var(--tw-text-mute); }
 
 .source-rune { color: #88ccff; }
 .source-enchant { color: #b4b4ff; }
@@ -556,8 +549,15 @@ function age(iso: string): string {
   white-space: nowrap;
 }
 
+/* Rows whose filter is off fade — checked state readable at a glance. */
+.filter-row:has(input[type='checkbox']:not(:checked)) .stat,
+.filter-row:has(input[type='checkbox']:not(:checked)) .property,
+.filter-row:has(input[type='checkbox']:not(:checked)) .val {
+  opacity: 0.55;
+}
+
 .val {
-  color: #e8c878;
+  color: var(--tw-gold);
   flex-shrink: 0;
 }
 
@@ -571,15 +571,16 @@ function age(iso: string): string {
 
 .num {
   width: 48px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  color: #d6d3cd;
+  background: var(--tw-bg-inset);
+  border: 1px solid var(--tw-line);
+  border-radius: 2px;
+  color: var(--tw-text);
   font: inherit;
-  font-size: 11px;
-  padding: 1px 4px;
+  font-size: 12px;
+  padding: 1px 5px;
   appearance: textfield;
   -moz-appearance: textfield;
+  transition: border-color 120ms ease;
 }
 
 .num::-webkit-outer-spin-button,
@@ -590,11 +591,11 @@ function age(iso: string): string {
 
 .num:focus {
   outline: none;
-  border-color: rgba(175, 96, 37, 0.7);
+  border-color: var(--tw-bronze);
 }
 
 .num::placeholder {
-  color: #55524d;
+  color: var(--tw-text-faint);
 }
 
 .unmatched {
@@ -602,54 +603,79 @@ function age(iso: string): string {
   cursor: default;
 }
 
+.unmatched:hover { background: none; }
+
 .sale-row {
   cursor: default;
+  align-items: center;
+  gap: 8px;
 }
 
+.sale-row:hover { background: none; }
+
 .badge {
-  color: #c0a040;
+  color: var(--tw-warn);
   font-weight: bold;
   width: 13px;
   text-align: center;
   flex-shrink: 0;
 }
 
+/* ---- Estimate: the hero line ------------------------------------------ */
+
 .estimate {
   display: flex;
   align-items: baseline;
   gap: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 6px;
+  position: relative;
+  padding-top: 8px;
+  transition: opacity 150ms ease;
+}
+
+/* Hairline that brightens to bronze at the left, where the number sits. */
+.estimate::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--tw-bronze-dim), var(--tw-line) 60%, transparent);
 }
 
 .est-range {
-  color: #e8c878;
-  font-size: 14px;
-  font-weight: bold;
+  font-family: var(--tw-font-display);
+  color: var(--tw-gold);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 12px rgba(232, 200, 120, 0.25);
 }
 
 .est-conf {
-  font-size: 9px;
+  font-size: 8px;
+  transform: translateY(-1px);
 }
 
-.conf-high { color: #7bc97b; }
-.conf-medium { color: #c0a040; }
-.conf-low { color: #d05050; }
+.conf-high { color: var(--tw-good); }
+.conf-medium { color: var(--tw-warn); }
+.conf-low { color: var(--tw-bad); }
 
 .est-detail {
-  color: #8a8782;
+  color: var(--tw-text-mute);
   font-size: 11px;
 }
 
 /* Filters edited since this estimate was computed. */
-.estimate.stale { opacity: 0.45; }
+.estimate.stale { opacity: 0.4; }
 
 .est-market {
-  color: #d08a3c;
+  color: var(--tw-bronze-bright);
   font-size: 10px;
-  border: 1px solid rgba(208, 138, 60, 0.4);
-  border-radius: 3px;
+  border: 1px solid var(--tw-bronze-dim);
+  border-radius: 2px;
   padding: 0 4px;
+  letter-spacing: 0.03em;
 }
 
 .rarity-label {
@@ -658,18 +684,19 @@ function age(iso: string): string {
 
 .tier {
   flex-shrink: 0;
-  color: #8a8782;
+  color: var(--tw-text-mute);
   font-size: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 3px;
+  border: 1px solid var(--tw-line-strong);
+  border-radius: 2px;
   padding: 0 3px;
   line-height: 13px;
 }
 
 /* PoE2: T1 is the top tier. */
 .tier.top {
-  color: #e8c878;
-  border-color: rgba(232, 200, 120, 0.6);
+  color: var(--tw-gold);
+  border-color: rgba(232, 200, 120, 0.55);
+  background: rgba(232, 200, 120, 0.08);
 }
 
 .tier.good {
@@ -681,10 +708,11 @@ function age(iso: string): string {
   display: flex;
   align-items: center;
   gap: 8px;
-  min-height: 14px;
-  color: #8a8782;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 16px;
+  color: var(--tw-text-mute);
+  border-top: 1px solid var(--tw-line);
   padding-top: 6px;
+  font-size: 12px;
 }
 
 .actions {
@@ -694,68 +722,72 @@ function age(iso: string): string {
   flex-shrink: 0;
 }
 
-.web-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 3px;
-  color: #d6d3cd;
-  font: inherit;
-  font-size: 11px;
-  padding: 2px 8px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.web-btn:hover {
-  border-color: rgba(175, 96, 37, 0.7);
-  color: #e8c878;
-}
-
 .search-btn.armed {
-  border-color: rgba(175, 96, 37, 0.9);
-  color: #e8c878;
-  background: rgba(175, 96, 37, 0.18);
+  border-color: var(--tw-bronze);
+  color: var(--tw-gold);
+  background: var(--tw-bronze-faint);
+  animation: armed-glow 2.4s ease-in-out infinite;
 }
 
-.busy { color: #c0a040; }
-.error { color: #d05050; }
-.none { color: #c0a040; }
+@keyframes armed-glow {
+  50% {
+    box-shadow: 0 0 8px rgba(208, 138, 60, 0.35);
+  }
+}
+
+.busy {
+  color: var(--tw-warn);
+  animation: busy-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes busy-pulse {
+  50% { opacity: 0.45; }
+}
+
+.error { color: var(--tw-bad); }
+.none { color: var(--tw-warn); }
+
+/* ---- Listings ledger --------------------------------------------------- */
 
 .listings {
   display: flex;
   flex-direction: column;
-  gap: 1px;
   max-height: 220px;
   overflow-y: auto;
+  border: 1px solid var(--tw-line);
+  border-radius: 2px;
+  background: var(--tw-bg-inset);
 }
 
 .listing {
   display: flex;
+  align-items: baseline;
   gap: 10px;
-  padding: 2px 4px;
-  border-radius: 3px;
+  padding: 2px 8px;
 }
 
-.listing:nth-child(odd) { background: rgba(255, 255, 255, 0.03); }
+.listing + .listing {
+  border-top: 1px solid rgba(216, 212, 203, 0.05);
+}
 
-.listing.unpriceable { opacity: 0.45; }
+.listing.unpriceable { opacity: 0.4; }
 
-.listing.lowball { opacity: 0.45; }
+.listing.lowball { opacity: 0.4; }
 .listing.lowball .price { text-decoration: line-through; }
 
 .price {
-  color: #e8c878;
+  color: var(--tw-gold);
   min-width: 90px;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .stock {
-  color: #6f6c66;
+  color: var(--tw-text-faint);
   flex-shrink: 0;
 }
 
 .seller {
-  color: #8a8782;
+  color: var(--tw-text-mute);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -763,8 +795,9 @@ function age(iso: string): string {
 }
 
 .age {
-  color: #6f6c66;
+  color: var(--tw-text-faint);
   flex-shrink: 0;
+  font-size: 11px;
 }
 
 .raw {
@@ -772,10 +805,11 @@ function age(iso: string): string {
   white-space: pre-wrap;
   max-height: 50vh;
   overflow-y: auto;
+  font: 12px/1.45 Consolas, monospace;
 }
 
 .no-item {
-  color: #8a8782;
+  color: var(--tw-text-mute);
   font-style: italic;
 }
 </style>

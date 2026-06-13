@@ -1,0 +1,159 @@
+/*
+ * Tradewind theme — "in-game artifact".
+ * The popup should read as a native PoE2 panel floating over the game:
+ * dark glass, bronze filigree, gold for value, rarity colors untouched.
+ */
+
+:root {
+  /* Surfaces */
+  --tw-bg: rgba(13, 12, 11, 0.96);
+  --tw-bg-raised: rgba(255, 252, 245, 0.04);
+  --tw-bg-inset: rgba(0, 0, 0, 0.35);
+
+  /* The bronze family — frame, ornament, interactive accents */
+  --tw-bronze: #a05c28;
+  --tw-bronze-bright: #d08a3c;
+  --tw-bronze-dim: rgba(160, 92, 40, 0.45);
+  --tw-bronze-faint: rgba(160, 92, 40, 0.22);
+
+  /* Gold — reserved for prices and values */
+  --tw-gold: #e8c878;
+  --tw-gold-bright: #f5dfa6;
+
+  /* Text */
+  --tw-text: #d8d4cb;
+  --tw-text-mute: #97928a;
+  --tw-text-faint: #645f58;
+
+  /* Hairlines */
+  --tw-line: rgba(216, 212, 203, 0.09);
+  --tw-line-strong: rgba(216, 212, 203, 0.16);
+
+  /* Signals */
+  --tw-good: #84c984;
+  --tw-warn: #c9a542;
+  --tw-bad: #d05858;
+
+  /* PoE rarity colors — canonical, do not restyle */
+  --tw-rarity-normal: #c8c8c8;
+  --tw-rarity-magic: #8888ff;
+  --tw-rarity-rare: #ffff77;
+  --tw-rarity-unique: #af6025;
+  --tw-rarity-gem: #1ba29b;
+  --tw-rarity-currency: #aa9e82;
+
+  --tw-font-display: 'Cinzel', 'Times New Roman', serif;
+  --tw-font-body: 'Alegreya Sans', 'Segoe UI', sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+}
+
+#app {
+  font-family: var(--tw-font-body);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--tw-text);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Shared primitives ------------------------------------------------- */
+
+/* Small-caps bronze label, used for section headings and tab names. */
+.tw-label {
+  font-family: var(--tw-font-display);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tw-bronze-bright);
+}
+
+/* Compact bordered button — the only button shape in the overlay. */
+.tw-btn {
+  background: var(--tw-bg-raised);
+  border: 1px solid var(--tw-line-strong);
+  border-radius: 2px;
+  color: var(--tw-text);
+  font-family: var(--tw-font-body);
+  font-size: 12px;
+  line-height: 1.2;
+  padding: 3px 9px;
+  cursor: pointer;
+  transition:
+    border-color 120ms ease,
+    color 120ms ease,
+    background-color 120ms ease;
+}
+
+.tw-btn:hover {
+  border-color: var(--tw-bronze);
+  color: var(--tw-gold);
+}
+
+/* Dropdown panel shared by league / sale / rarity pickers. */
+.tw-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 3px);
+  margin: 0;
+  padding: 3px;
+  list-style: none;
+  background: rgba(19, 17, 15, 0.98);
+  border: 1px solid var(--tw-bronze-dim);
+  border-radius: 2px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.tw-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--tw-text);
+  font-family: var(--tw-font-body);
+  font-size: 12px;
+  padding: 4px 10px;
+  cursor: pointer;
+  border-radius: 1px;
+}
+
+.tw-menu button:hover {
+  background: var(--tw-bronze-faint);
+  color: var(--tw-gold);
+}
+
+.tw-menu button.active {
+  color: var(--tw-bronze-bright);
+}
+
+/* Thin bronze scrollbars instead of Chromium's default grey slabs. */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--tw-bronze-dim);
+  border-radius: 3px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tw-bronze);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}

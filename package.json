@@ -22,6 +22,8 @@
     "vitest": "^4.1.8"
   },
   "dependencies": {
+    "@fontsource/alegreya-sans": "^5.2.8",
+    "@fontsource/cinzel": "^5.2.8",
     "koffi": "^3.0.2",
     "tradewind-keyhook": "file:native/keyhook",
     "uiohook-napi": "^1.5.5",
