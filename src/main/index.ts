@@ -100,7 +100,12 @@ app.whenReady().then(() => {
   let overlayBounds = { x: 0, y: 0, width: 0, height: 0 }
   // The popup's on-screen rect (overlay-local CSS px) reported by the renderer;
   // null when no popup is open. Doubles as the "popup visible" flag.
-  let popupRect: { x: number; y: number; w: number; h: number } | null = null
+  type Rect = { x: number; y: number; w: number; h: number }
+  let popupRect: Rect | null = null
+  // The hovered listing's item tooltip rect (overlay-local CSS px), or null. It
+  // lives outside popupRect, so it gets its own interactive region — otherwise
+  // reaching for it would flip the overlay click-through and hide it.
+  let tooltipRect: Rect | null = null
 
   let interactiveState = false
   const setInteractive = (interactive: boolean): void => {
@@ -119,6 +124,7 @@ app.whenReady().then(() => {
   const hidePopup = (): void => {
     overlay.webContents.send('tw:hide')
     popupRect = null
+    tooltipRect = null
     setInteractive(false)
     releaseFocus()
   }
@@ -141,10 +147,10 @@ app.whenReady().then(() => {
     const cur = screen.getCursorScreenPoint()
     const x = cur.x - overlayBounds.x
     const y = cur.y - overlayBounds.y
-    const r = popupRect
-    const dx = x < r.x ? r.x - x : x > r.x + r.w ? x - (r.x + r.w) : 0
-    const dy = y < r.y ? r.y - y : y > r.y + r.h ? y - (r.y + r.h) : 0
-    setInteractive(dx === 0 && dy === 0)
+    const hit = (r: Rect): boolean =>
+      x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h
+    // Interactive over the popup OR the open item tooltip beside it.
+    setInteractive(hit(popupRect) || (tooltipRect !== null && hit(tooltipRect)))
   }
 
   let busy = false
@@ -401,9 +407,20 @@ app.whenReady().then(() => {
       popupRect = rect
       // The popup closed itself (its ✕): drop keyboard focus so the next click
       // goes to the game, and restore click-through.
-      if (!rect) releaseFocus()
+      if (!rect) {
+        tooltipRect = null
+        releaseFocus()
+      }
       // Re-evaluate now so interactivity tracks a resized/moved popup even if the
       // cursor is momentarily still.
+      onCursorMove()
+    }
+  )
+
+  ipcMain.on(
+    'tw:tooltip-rect',
+    (_event, rect: { x: number; y: number; w: number; h: number } | null) => {
+      tooltipRect = rect
       onCursorMove()
     }
   )

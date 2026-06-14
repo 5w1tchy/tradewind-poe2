@@ -2,7 +2,9 @@ import { useEffect, useReducer, useRef, useState } from 'react'
 import { anchorDiverges, formatEstimateRange, formatExalted } from '../../../core/pricing'
 import type { ListingStatus, PreparedQuery, PreparedRange } from '../../../core/query/types'
 import type { SearchOutcome } from '../../../core/trade/types'
+import type { TradeListing } from '../../../core/trade/types'
 import type { ItemPayload } from '../../../shared/ipc'
+import ListingTooltip, { type TooltipAnchor } from './ListingTooltip'
 import styles from './PriceCheck.module.css'
 
 const SALE_OPTIONS: Array<[ListingStatus, string]> = [
@@ -58,6 +60,25 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
   const [rarityOpen, setRarityOpen] = useState(false)
   /** Filters changed since the last search — results on screen are stale. */
   const [dirty, setDirty] = useState(false)
+  /** The listing whose item tooltip is showing (null when nothing hovered). */
+  const [hover, setHover] = useState<TooltipAnchor | null>(null)
+  /** Grace timer so the cursor can travel from a row onto its tooltip. */
+  const hideTimer = useRef<number | null>(null)
+
+  function cancelHide(): void {
+    if (hideTimer.current !== null) {
+      clearTimeout(hideTimer.current)
+      hideTimer.current = null
+    }
+  }
+
+  /** Hide after a beat — cancelled if the cursor lands on the tooltip or a row. */
+  function scheduleHide(): void {
+    cancelHide()
+    hideTimer.current = window.setTimeout(() => setHover(null), 140)
+  }
+
+  useEffect(() => cancelHide, [])
 
   /** Edits never auto-search (rate-limit budget is precious) — they arm the Search button. */
   function markDirty(): void {
@@ -70,6 +91,8 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setSearching(true)
     setDirty(false)
     setError(null)
+    cancelHide()
+    setHover(null)
     try {
       const result = await window.tradewind.search(
         JSON.parse(JSON.stringify(prepared.current)) as PreparedQuery
@@ -100,6 +123,8 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setOutcome(null)
     setError(null)
     setDirty(false)
+    cancelHide()
+    setHover(null)
     setLeagueOpen(false)
     setSaleOpen(false)
     setRarityOpen(false)
@@ -197,6 +222,23 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
 
   function openOnTradeSite(): void {
     if (outcome) window.tradewind.openUrl(outcome.webUrl)
+  }
+
+  /** Anchor the item tooltip beside the hovered row — left of the popup when
+   *  there's room, otherwise to its right. */
+  function onRowEnter(event: React.MouseEvent<HTMLDivElement>, l: TradeListing): void {
+    cancelHide()
+    if (!l.item) return setHover(null)
+    const r = event.currentTarget.getBoundingClientRect()
+    // Prefer the right of the popup; flip left only when the panel won't fit.
+    const PANEL = 288
+    const placeLeft = window.innerWidth - r.right < PANEL && r.left >= PANEL
+    setHover({
+      item: l.item,
+      top: r.top,
+      edge: placeLeft ? window.innerWidth - r.left + 8 : r.right + 8,
+      placeLeft
+    })
   }
 
   const q = prepared.current
@@ -512,9 +554,9 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
               {outcome.listings.map((l) => (
                 <div
                   key={l.id}
-                  className={`${styles.listing} ${l.unpriceable ? styles.unpriceable : ''} ${
-                    l.lowball ? styles.lowball : ''
-                  }`}
+                  className={`${styles.listing} ${l.item ? styles.hoverable : ''} ${
+                    l.unpriceable ? styles.unpriceable : ''
+                  } ${l.lowball ? styles.lowball : ''}`}
                   title={
                     l.lowball
                       ? 'far below the going rate — likely bait, not in the estimate'
@@ -522,6 +564,8 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
                         ? 'currency not in the estimate'
                         : undefined
                   }
+                  onMouseEnter={(e) => onRowEnter(e, l)}
+                  onMouseLeave={scheduleHide}
                 >
                   <span className={styles.price}>
                     {l.price ? `${l.price.amount} ${l.price.currency}` : '—'}
@@ -539,6 +583,10 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
           <pre className={styles.raw}>{payload.text}</pre>
           <div className={styles['no-item']}>stat database still loading — raw view</div>
         </>
+      )}
+
+      {hover && (
+        <ListingTooltip anchor={hover} onMouseEnter={cancelHide} onMouseLeave={scheduleHide} />
       )}
     </div>
   )

@@ -7,8 +7,36 @@
  *   open http://localhost:5173/preview.html
  */
 import type { PreparedQuery } from '../../core/query/types'
-import type { SearchOutcome } from '../../core/trade/types'
+import type { ListingItem, ListingMod, SearchOutcome } from '../../core/trade/types'
 import type { ItemPayload, TradewindApi } from '../../shared/ipc'
+
+/** Build a tagged affix from "+329 to maximum Life P1" shorthand. */
+function mod(text: string, tag: string, source = 'explicit'): ListingMod {
+  return {
+    text,
+    affix: tag[0] === 'P' ? 'P' : tag[0] === 'S' ? 'S' : null,
+    tier: Number(tag.slice(1)) || null,
+    source
+  }
+}
+
+/** Canned listing item detail so the hover tooltip can be inspected in preview. */
+function ring(
+  name: string,
+  affixMods: ListingMod[],
+  opts: { implicit?: string; corrupted?: boolean; runes?: string[] } = {}
+): ListingItem {
+  return {
+    rarity: 'rare',
+    name,
+    baseType: 'Sapphire Ring',
+    ilvl: 81,
+    corrupted: opts.corrupted,
+    implicitMods: opts.implicit ? [opts.implicit] : undefined,
+    runeMods: opts.runes,
+    affixMods
+  }
+}
 
 const SAMPLE_QUERY: PreparedQuery = {
   itemClass: 'Rings',
@@ -98,14 +126,14 @@ const SAMPLE_OUTCOME: SearchOutcome = {
   inexact: false,
   webUrl: 'https://www.pathofexile.com/trade2/search/poe2/preview',
   listings: [
-    { id: '1', price: { amount: 95, currency: 'exalted', type: '~b/o' }, accountName: 'Velkharia', indexed: iso(22), itemName: 'Storm Whorl Sapphire Ring', online: true },
-    { id: '2', price: { amount: 110, currency: 'exalted', type: '~b/o' }, accountName: 'drosslicht', indexed: iso(67), itemName: 'Gale Coil Sapphire Ring', online: true },
-    { id: '3', price: { amount: 40, currency: 'exalted', type: '~b/o' }, accountName: 'baitmaster_9', indexed: iso(4300), itemName: 'Doom Loop Sapphire Ring', online: true, lowball: true },
-    { id: '4', price: { amount: 120, currency: 'exalted', type: '~price' }, accountName: 'Ezomyte_Trader', indexed: iso(190), itemName: 'Storm Band Sapphire Ring', online: true },
-    { id: '5', price: { amount: 1, currency: 'divine', type: '~b/o' }, accountName: 'KaruiWanderer', indexed: iso(310), itemName: 'Tempest Whorl Sapphire Ring', online: true },
-    { id: '6', price: { amount: 150, currency: 'exalted', type: '~b/o' }, accountName: 'Sanctum_Lord', indexed: iso(2100), itemName: 'Sky Grip Sapphire Ring', online: true },
+    { id: '1', price: { amount: 95, currency: 'exalted', type: '~b/o' }, accountName: 'Velkharia', indexed: iso(22), itemName: 'Storm Whorl Sapphire Ring', online: true, item: ring('Storm Whorl', [mod('+312 to maximum Life', 'P1'), mod('+38% to Cold Resistance', 'S2'), mod('21% increased Cast Speed', 'S3'), mod('+25 to Intelligence', 'P4'), mod('40% increased Projectile Speed', 'P1', 'desecrated')], { implicit: '+19% to Cold Resistance', runes: ['+12% to Fire Resistance'] }) },
+    { id: '2', price: { amount: 110, currency: 'exalted', type: '~b/o' }, accountName: 'drosslicht', indexed: iso(67), itemName: 'Gale Coil Sapphire Ring', online: true, item: ring('Gale Coil', [mod('+329 to maximum Life', 'P1'), mod('+45% to Cold Resistance', 'S1'), mod('+31% to Lightning Resistance', 'S2'), mod('+2 to Level of all Projectile Skills', 'P1', 'fractured')], { implicit: '+24% to Cold Resistance' }) },
+    { id: '3', price: { amount: 40, currency: 'exalted', type: '~b/o' }, accountName: 'baitmaster_9', indexed: iso(4300), itemName: 'Doom Loop Sapphire Ring', online: true, lowball: true, item: ring('Doom Loop', [mod('+88 to maximum Life', 'P5'), mod('+12% to Cold Resistance', 'S4')], { implicit: '+20% to Cold Resistance' }) },
+    { id: '4', price: { amount: 120, currency: 'exalted', type: '~price' }, accountName: 'Ezomyte_Trader', indexed: iso(190), itemName: 'Storm Band Sapphire Ring', online: true, item: ring('Storm Band', [mod('+305 to maximum Life', 'P1'), mod('+41% to Cold Resistance', 'S1'), mod('24% increased Cast Speed', 'S2'), mod('+14% to all Elemental Resistances', 'P2'), mod('29% increased Critical Damage Bonus', 'S2', 'crafted')], { implicit: '+22% to Cold Resistance', corrupted: true }) },
+    { id: '5', price: { amount: 1, currency: 'divine', type: '~b/o' }, accountName: 'KaruiWanderer', indexed: iso(310), itemName: 'Tempest Whorl Sapphire Ring', online: true, item: ring('Tempest Whorl', [mod('+341 to maximum Life', 'P1'), mod('+48% to Cold Resistance', 'S1'), mod('28% increased Cast Speed', 'S1'), mod('+33 to Intelligence', 'P2'), mod('+11% to Chaos Resistance', 'S3')], { implicit: '+25% to Cold Resistance', runes: ['Can roll Caster modifiers', 'Bonded: 18% increased Spell Damage'] }) },
+    { id: '6', price: { amount: 150, currency: 'exalted', type: '~b/o' }, accountName: 'Sanctum_Lord', indexed: iso(2100), itemName: 'Sky Grip Sapphire Ring', online: true, item: ring('Sky Grip', [mod('+298 to maximum Life', 'P2'), mod('+39% to Cold Resistance', 'S2')], { implicit: '+21% to Cold Resistance' }) },
     { id: '7', price: { amount: 3, currency: 'annul', type: '~b/o' }, accountName: 'mirror_when', indexed: iso(880), itemName: 'Vortex Loop Sapphire Ring', online: true, unpriceable: true },
-    { id: '8', price: { amount: 170, currency: 'exalted', type: '~b/o' }, accountName: 'OghamReaver', indexed: iso(5900), itemName: 'Storm Knot Sapphire Ring', online: true }
+    { id: '8', price: { amount: 170, currency: 'exalted', type: '~b/o' }, accountName: 'OghamReaver', indexed: iso(5900), itemName: 'Storm Knot Sapphire Ring', online: true, item: ring('Storm Knot', [mod('+335 to maximum Life', 'P1'), mod('+44% to Cold Resistance', 'S1'), mod('22% increased Cast Speed', 'S3')], { implicit: '+23% to Cold Resistance' }) }
   ],
   estimate: {
     lowExalted: 95,
@@ -145,6 +173,7 @@ const mock: TradewindApi = {
   },
   async setLeague() {},
   setPopupRect() {},
+  setTooltipRect() {},
   requestFocus() {},
   openUrl(url) {
     console.log('openUrl:', url)
