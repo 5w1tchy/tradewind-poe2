@@ -37,6 +37,31 @@
 .corner.bl { bottom: 2px; left: 2px; border-right: none; border-top: none; }
 .corner.br { bottom: 2px; right: 2px; border-left: none; border-top: none; }
 
+/* Manual dismiss — the popup stays open until clicked away. */
+.close {
+  position: absolute;
+  top: 4px;
+  right: 9px;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 17px;
+  line-height: 1;
+  color: var(--tw-text-faint);
+  transition: color 120ms ease;
+}
+
+.close:hover {
+  color: var(--tw-bronze-bright);
+}
+
 .tabs {
   display: flex;
   align-items: center;
@@ -44,6 +69,11 @@
   margin-bottom: 7px;
   border-bottom: 1px solid var(--tw-line);
   padding-bottom: 5px;
+  /* Leave room for the close button at the right edge. */
+  padding-right: 20px;
+  /* The header bar doubles as the drag handle. */
+  cursor: move;
+  touch-action: none;
 }
 
 .mark {

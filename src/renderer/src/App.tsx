@@ -7,9 +7,6 @@ import styles from './App.module.css'
 type Tab = 'price' | 'craft'
 
 const pad = 12
-// Open beside the cursor, never under it: a popup under the cursor would force
-// the overlay interactive immediately and freeze the game tooltip.
-const CURSOR_GAP = 20
 
 export default function App(): React.JSX.Element | null {
   const [visible, setVisible] = useState(false)
@@ -18,41 +15,77 @@ export default function App(): React.JSX.Element | null {
   const [tab, setTab] = useState<Tab>('price')
 
   const popup = useRef<HTMLDivElement>(null)
-  const cursor = useRef({ x: 0, y: 0 })
+  // Pointer offset captured at drag start; null when not dragging.
+  const drag = useRef<{ dx: number; dy: number } | null>(null)
+  // Once the user drags, stop auto-centering — they've placed it deliberately.
+  const moved = useRef(false)
 
-  /** Initial placement: beside the cursor, flipping sides so it never covers it. */
-  function place(): void {
+  // Push the rect to main so the overlay captures the mouse only while the
+  // cursor is over the popup (everything else stays click-through for the game).
+  // Report with the freshly computed position, never the async `pos` state.
+  function reportRect(x: number, y: number): void {
     const el = popup.current
     if (!el) return
-    const w = el.offsetWidth
-    const h = el.offsetHeight
-    let x = cursor.current.x + CURSOR_GAP
-    if (x + w + pad > window.innerWidth) x = cursor.current.x - CURSOR_GAP - w
-    let y = cursor.current.y + CURSOR_GAP
-    if (y + h + pad > window.innerHeight) y = cursor.current.y - CURSOR_GAP - h
-    setPos({
-      x: Math.max(pad, Math.min(x, window.innerWidth - w - pad)),
-      y: Math.max(pad, Math.min(y, window.innerHeight - h - pad))
-    })
+    window.tradewind.setPopupRect({ x, y, w: el.offsetWidth, h: el.offsetHeight })
   }
 
-  // Content growth (listings, switching to Craft) resizes the popup. Only pull it
-  // back on-screen — never re-flip, or it would jump out from under the cursor
-  // mid-interaction and trip the auto-hide.
-  function reclamp(): void {
+  function moveTo(x: number, y: number): void {
     const el = popup.current
     if (!el) return
-    setPos((prev) => ({
-      x: Math.max(pad, Math.min(prev.x, window.innerWidth - el.offsetWidth - pad)),
-      y: Math.max(pad, Math.min(prev.y, window.innerHeight - el.offsetHeight - pad))
-    }))
+    const cx = Math.max(pad, Math.min(x, window.innerWidth - el.offsetWidth - pad))
+    const cy = Math.max(pad, Math.min(y, window.innerHeight - el.offsetHeight - pad))
+    setPos({ x: cx, y: cy })
+    reportRect(cx, cy)
+  }
+
+  // The popup stays open until dismissed: center it on a fresh item, but once the
+  // user has dragged it, only keep its chosen spot on-screen as content resizes.
+  function reflow(): void {
+    const el = popup.current
+    if (!el) return
+    if (moved.current) {
+      moveTo(el.offsetLeft, el.offsetTop)
+    } else {
+      moveTo((window.innerWidth - el.offsetWidth) / 2, (window.innerHeight - el.offsetHeight) / 2)
+    }
+  }
+
+  function close(): void {
+    setVisible(false)
+    window.tradewind.setPopupRect(null)
+  }
+
+  // Drag from the header bar. Clicks on its buttons (tabs, close) fall through.
+  function onDragStart(e: React.PointerEvent): void {
+    if ((e.target as HTMLElement).closest('button')) return
+    const el = popup.current
+    if (!el) return
+    drag.current = { dx: e.clientX - el.offsetLeft, dy: e.clientY - el.offsetTop }
+    e.currentTarget.setPointerCapture(e.pointerId)
+    e.preventDefault()
+  }
+
+  function onDragMove(e: React.PointerEvent): void {
+    if (!drag.current) return
+    moved.current = true
+    moveTo(e.clientX - drag.current.dx, e.clientY - drag.current.dy)
+  }
+
+  function onDragEnd(e: React.PointerEvent): void {
+    if (!drag.current) return
+    drag.current = null
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    } catch {
+      /* pointer already released */
+    }
   }
 
   // Subscribe once to main->renderer pushes (preload appends listeners with no
   // unsubscribe, so this must run exactly once — see main.tsx, no StrictMode).
   useEffect(() => {
     window.tradewind.onItem((p) => {
-      cursor.current = { x: p.x, y: p.y }
+      moved.current = false
       setPayload(p)
       setTab('price')
       setVisible(true)
@@ -63,30 +96,21 @@ export default function App(): React.JSX.Element | null {
     })
   }, [])
 
-  // Place beside the cursor once the new item's content has laid out.
+  // Place once the new item's content has laid out.
   useLayoutEffect(() => {
-    if (visible && payload) place()
+    if (visible && payload) reflow()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload])
 
-  // Keep the popup on-screen as its content grows/shrinks.
+  // Keep it on-screen / centered as the popup grows/shrinks (results, tab switch).
   useEffect(() => {
     const el = popup.current
     if (!el) return
-    const resizer = new ResizeObserver(() => reclamp())
+    const resizer = new ResizeObserver(() => reflow())
     resizer.observe(el)
     return () => resizer.disconnect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible])
-
-  // Report the popup's rect so the main process can hit-test the cursor.
-  useEffect(() => {
-    const el = popup.current
-    if (!visible || !el) {
-      window.tradewind.setPopupRect(null)
-      return
-    }
-    window.tradewind.setPopupRect({ x: pos.x, y: pos.y, w: el.offsetWidth, h: el.offsetHeight })
-  }, [visible, pos, payload, tab])
 
   if (!visible || !payload) return null
 
@@ -97,7 +121,17 @@ export default function App(): React.JSX.Element | null {
       <i className={`${styles.corner} ${styles.bl}`} />
       <i className={`${styles.corner} ${styles.br}`} />
 
-      <nav className={styles.tabs}>
+      <button className={styles.close} onClick={close} aria-label="Close" title="Close (Esc)">
+        ×
+      </button>
+
+      <nav
+        className={styles.tabs}
+        onPointerDown={onDragStart}
+        onPointerMove={onDragMove}
+        onPointerUp={onDragEnd}
+        onPointerCancel={onDragEnd}
+      >
         <span className={styles.mark}>◆</span>
         <button
           className={`${styles.tab} tw-label ${tab === 'price' ? styles.active : ''}`}

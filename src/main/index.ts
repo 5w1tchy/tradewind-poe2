@@ -123,15 +123,16 @@ app.whenReady().then(() => {
     releaseFocus()
   }
 
-  // How far (DIP px) the cursor may stray past the popup edge before auto-hide.
-  const POPUP_LEAVE_MARGIN = 240
-
   // Overlay is click-through by default so the game always receives mouse-moves
-  // (and manages its own tooltip). On each cursor move, hit-test against the
-  // popup: capture the mouse only while the cursor is over it, and auto-hide
-  // once it wanders well clear.
+  // (and manages its own tooltip). The popup stays open until the user dismisses
+  // it (its ✕, Esc, or a fresh price check); we only hit-test the cursor to
+  // capture the mouse while it is actually over the popup, leaving the rest of
+  // the screen click-through so the game stays playable.
   const onCursorMove = (): void => {
-    if (!popupRect) return
+    if (!popupRect) {
+      setInteractive(false)
+      return
+    }
     // A focused filter input keeps the popup interactive regardless of cursor.
     if (overlay.isFocused()) {
       setInteractive(true)
@@ -144,7 +145,6 @@ app.whenReady().then(() => {
     const dx = x < r.x ? r.x - x : x > r.x + r.w ? x - (r.x + r.w) : 0
     const dy = y < r.y ? r.y - y : y > r.y + r.h ? y - (r.y + r.h) : 0
     setInteractive(dx === 0 && dy === 0)
-    if (dx > POPUP_LEAVE_MARGIN || dy > POPUP_LEAVE_MARGIN) hidePopup()
   }
 
   let busy = false
@@ -396,7 +396,10 @@ app.whenReady().then(() => {
     'tw:popup-rect',
     (_event, rect: { x: number; y: number; w: number; h: number } | null) => {
       popupRect = rect
-      // Re-evaluate now so interactivity tracks a resized popup even if the
+      // The popup closed itself (its ✕): drop keyboard focus so the next click
+      // goes to the game, and restore click-through.
+      if (!rect) releaseFocus()
+      // Re-evaluate now so interactivity tracks a resized/moved popup even if the
       // cursor is momentarily still.
       onCursorMove()
     }

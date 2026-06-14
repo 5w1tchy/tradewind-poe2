@@ -118,6 +118,38 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload])
 
+  // Opening one dropdown closes the others; clicking the button again toggles it.
+  function openLeague(): void {
+    setSaleOpen(false)
+    setRarityOpen(false)
+    setLeagueOpen((o) => !o)
+  }
+
+  function openSale(): void {
+    setLeagueOpen(false)
+    setRarityOpen(false)
+    setSaleOpen((o) => !o)
+  }
+
+  function openRarity(): void {
+    setLeagueOpen(false)
+    setSaleOpen(false)
+    setRarityOpen((o) => !o)
+  }
+
+  // Click anywhere outside an open dropdown dismisses it.
+  useEffect(() => {
+    if (!leagueOpen && !saleOpen && !rarityOpen) return
+    function onDown(e: MouseEvent): void {
+      if ((e.target as HTMLElement).closest('[data-picker]')) return
+      setLeagueOpen(false)
+      setSaleOpen(false)
+      setRarityOpen(false)
+    }
+    document.addEventListener('mousedown', onDown)
+    return () => document.removeEventListener('mousedown', onDown)
+  }, [leagueOpen, saleOpen, rarityOpen])
+
   function pickSale(id: ListingStatus): void {
     setSaleOpen(false)
     if (!prepared.current || prepared.current.status === id) return
@@ -239,8 +271,8 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
           {baseLabel && <span className={styles.base}>{baseLabel}</span>}
           <span className={styles['item-class']}>{q?.itemClass}</span>
         </div>
-        <div className={styles.picker}>
-          <button className="tw-btn" onClick={() => setLeagueOpen(!leagueOpen)}>{league} ▾</button>
+        <div className={styles.picker} data-picker>
+          <button className="tw-btn" onClick={openLeague}>{league} ▾</button>
           {leagueOpen && (
             <ul className="tw-menu">
               {payload.leagues.map((id) => (
@@ -259,8 +291,8 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
         <>
           <div className={`${styles['filter-row']} ${styles['sale-row']}`}>
             <span className="tw-label">Listed</span>
-            <div className={styles.picker}>
-              <button className="tw-btn" onClick={() => setSaleOpen(!saleOpen)}>{saleLabel} ▾</button>
+            <div className={styles.picker} data-picker>
+              <button className="tw-btn" onClick={openSale}>{saleLabel} ▾</button>
               {saleOpen && (
                 <ul className="tw-menu">
                   {SALE_OPTIONS.map(([id, label]) => (
@@ -276,8 +308,8 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
             {rarityEditable && (
               <>
                 <span className={`tw-label ${styles['rarity-label']}`}>Rarity</span>
-                <div className={styles.picker}>
-                  <button className="tw-btn" onClick={() => setRarityOpen(!rarityOpen)}>
+                <div className={styles.picker} data-picker>
+                  <button className="tw-btn" onClick={openRarity}>
                     {rarityLabel} ▾
                   </button>
                   {rarityOpen && (
