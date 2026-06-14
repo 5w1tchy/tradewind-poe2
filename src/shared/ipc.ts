@@ -14,6 +14,15 @@ export interface ItemPayload {
   league: string
 }
 
+/** Auto-update lifecycle, pushed main -> renderer. */
+export type UpdateStatus =
+  | { state: 'checking' }
+  | { state: 'available'; version: string }
+  | { state: 'not-available' }
+  | { state: 'downloading'; percent: number }
+  | { state: 'downloaded'; version: string }
+  | { state: 'error'; message: string }
+
 /** The contextBridge surface exposed as window.tradewind. */
 export interface TradewindApi {
   onItem(cb: (payload: ItemPayload) => void): void
@@ -30,4 +39,13 @@ export interface TradewindApi {
   requestFocus(): void
   /** Open a pathofexile.com URL in the default browser. */
   openUrl(url: string): void
+  /** Subscribe to auto-update status pushes. */
+  onUpdateStatus(cb: (status: UpdateStatus) => void): void
+  /** Quit and install a downloaded update now (the toast's "Restart now"). */
+  restartToUpdate(): void
+  /**
+   * Report the update toast's on-screen rect (overlay-local CSS px) so the main
+   * process makes that region clickable; null when the toast is hidden.
+   */
+  setToastRect(rect: { x: number; y: number; w: number; h: number } | null): void
 }

@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { ItemPayload, TradewindApi } from '../shared/ipc'
+import type { ItemPayload, TradewindApi, UpdateStatus } from '../shared/ipc'
 
 const api: TradewindApi = {
   onItem(cb) {
@@ -22,6 +22,15 @@ const api: TradewindApi = {
   },
   openUrl(url) {
     ipcRenderer.send('tw:open-url', url)
+  },
+  onUpdateStatus(cb) {
+    ipcRenderer.on('tw:update-status', (_event, status: UpdateStatus) => cb(status))
+  },
+  restartToUpdate() {
+    ipcRenderer.send('tw:restart-update')
+  },
+  setToastRect(rect) {
+    ipcRenderer.send('tw:toast-rect', rect)
   }
 }
 

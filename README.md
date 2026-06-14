@@ -4,6 +4,21 @@ A price-check overlay for **Path of Exile 2**. One hotkey on a hovered item → 
 
 > ⚠️ **Early development.** The overlay, hotkey → clipboard loop, item parser, and stat matcher work; live trade search and pricing are in progress. Not ready for general use yet.
 
+## Install
+
+Windows only. Grab the latest `tradewind-*-setup.exe` from the
+[Releases](https://github.com/5w1tchy/tradewind-poe2/releases) page and run it.
+
+The installer is **unsigned**, so Windows SmartScreen will warn on first run:
+click **More info → Run anyway**. (Same posture as other PoE trade tools; signing
+is planned once there's traction.) After install, Tradewind **auto-updates** in the
+background from GitHub Releases — new versions download silently and install on exit,
+with a "Restart now" toast if you'd rather update immediately.
+
+> **Demo channel:** to opt into pre-release builds, set `"updateChannel": "demo"` in
+> `config.json` (in `%APPDATA%/tradewind/`). Demo users still receive stable releases.
+> A settings toggle for this is coming later.
+
 ## Why another trade tool?
 
 Two bets:
@@ -27,6 +42,23 @@ npm run fixtures   # re-split fixtures/inbox.txt into per-item test fixtures
 ```
 
 Test fixtures are real in-game `Ctrl+Alt+C` item copies in `fixtures/`. Found an item that parses wrong? Paste it into `fixtures/inbox.txt` (with a `=====` line between items) and open an issue or PR.
+
+### Releasing
+
+Releases are built and published by GitHub Actions on a version tag. Bump
+`package.json` `version`, then push a matching tag:
+
+```
+# Stable release -> latest.yml (auto-update for everyone)
+git tag v0.2.0 && git push origin v0.2.0
+
+# Demo / pre-release -> beta.yml (demo-channel users only)
+git tag v0.2.0-beta.1 && git push origin v0.2.0-beta.1
+```
+
+The workflow (`.github/workflows/release.yml`) packages the NSIS installer and
+uploads it alongside the channel update manifest to the GitHub Release. To build a
+local installer without publishing: `npm run build:win` (output in `release/`).
 
 ## License
 

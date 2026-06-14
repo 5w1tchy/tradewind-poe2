@@ -1,0 +1,37 @@
+.toast {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 8px 14px;
+  background: var(--tw-bg);
+  border: 1px solid var(--tw-bronze-dim);
+  border-radius: 3px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+}
+
+.text {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--tw-text);
+  font-size: 12px;
+}
+
+.dismiss {
+  background: none;
+  border: none;
+  color: var(--tw-text-mute);
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 2px;
+  cursor: pointer;
+}
+
+.dismiss:hover {
+  color: var(--tw-gold);
+}

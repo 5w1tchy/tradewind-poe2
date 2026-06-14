@@ -1,0 +1,53 @@
+appId: com.tradewind.poe2
+productName: Tradewind
+
+directories:
+  output: release
+  buildResources: build
+
+# electron-vite emits the runnable app to out/; src and tooling configs are
+# build-time only and must not ship inside the asar.
+files:
+  - out/**
+  - package.json
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!vite.preview.config.{js,ts,mjs,cjs}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json,tsconfig.web.tsbuildinfo}'
+  - '!scripts/*'
+  - '!fixtures/*'
+
+# Native addons load real .node binaries at runtime; they cannot be read from
+# inside the asar archive, so keep them on disk. koffi (FFI), uiohook-napi
+# (global input), and the local tradewind-keyhook (WH_KEYBOARD_LL suppression).
+asarUnpack:
+  - '**/*.node'
+  - '**/node_modules/koffi/**'
+  - '**/node_modules/uiohook-napi/**'
+  - '**/node_modules/tradewind-keyhook/**'
+
+# Rebuild native deps against Electron's ABI when packaging.
+npmRebuild: true
+
+win:
+  target: nsis
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+
+publish:
+  provider: github
+  owner: 5w1tchy
+  repo: tradewind-poe2
+
+# Channels are driven by the tag: a plain vX.Y.Z release emits latest.yml; a
+# vX.Y.Z-beta.N pre-release emits beta.yml. The "demo includes stable" behavior
+# is handled client-side by autoUpdater.allowPrerelease (see src/main/updater.ts),
+# which is the GitHub provider's mechanism — generateUpdatesFilesForAllChannels
+# is intentionally NOT used here, as it is ignored for the GitHub provider.

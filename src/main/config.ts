@@ -16,6 +16,9 @@ export interface Config {
   priceCheckHotkey: string
   /** Hotkey that sends the /hideout chat command. */
   hideoutHotkey: string
+  /** Auto-update channel: 'stable' tracks releases; 'demo' also gets pre-releases.
+   *  No settings UI yet — edit config.json to opt into the demo channel. */
+  updateChannel: 'stable' | 'demo'
 }
 
 const defaults: Config = {
@@ -24,7 +27,8 @@ const defaults: Config = {
   league: '',
   spread: 0.1,
   priceCheckHotkey: 'Ctrl+D',
-  hideoutHotkey: 'F5'
+  hideoutHotkey: 'F5',
+  updateChannel: 'stable'
 }
 
 export function saveConfig(config: Config): void {

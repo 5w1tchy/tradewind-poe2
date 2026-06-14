@@ -148,7 +148,10 @@ const mock: TradewindApi = {
   requestFocus() {},
   openUrl(url) {
     console.log('openUrl:', url)
-  }
+  },
+  onUpdateStatus() {},
+  restartToUpdate() {},
+  setToastRect() {}
 }
 
 window.tradewind = mock

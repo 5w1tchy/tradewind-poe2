@@ -1,0 +1,37 @@
+name: Release
+
+# Tag-driven releases. A plain semver tag publishes to the stable channel
+# (latest.yml); a pre-release tag (vX.Y.Z-beta.N) publishes to the demo channel
+# (beta.yml) and is marked a GitHub pre-release automatically by electron-builder.
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Package and publish
+        run: npx electron-builder --win --publish always
+        env:
+          # Provided by Actions; lets electron-builder create/upload the release.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

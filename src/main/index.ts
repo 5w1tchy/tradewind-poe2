@@ -19,6 +19,7 @@ import { RatesProvider } from './rates'
 import { estimatePrice, type RateTable } from '../core/pricing'
 import type { SearchOutcome, TradeListing } from '../core/trade/types'
 import { ScoutAnchorProvider } from './scoutAnchor'
+import { initAutoUpdater, quitAndInstall, stopAutoUpdater } from './updater'
 
 if (!app.requestSingleInstanceLock()) {
   app.quit()
@@ -37,10 +38,15 @@ interface ItemsPayload {
 }
 
 app.whenReady().then(() => {
+  // Stable identity for Windows notifications and the updater relaunch.
+  app.setAppUserModelId('com.tradewind.poe2')
+
   const config = loadConfig()
   const devAnyWindow = config.devAnyWindow || process.env['TRADEWIND_ANY_WINDOW'] === '1'
 
   const overlay = createOverlayWindow()
+  // Background auto-update (no-op in dev); never blocks startup.
+  initAutoUpdater(overlay, config)
   const input = new InputManager()
   const tracker = new GameWindowTracker(config.gameWindowTitle, devAnyWindow)
   const tradeClient = new TradeApiClient()
@@ -101,6 +107,9 @@ app.whenReady().then(() => {
   // The popup's on-screen rect (overlay-local CSS px) reported by the renderer;
   // null when no popup is open. Doubles as the "popup visible" flag.
   let popupRect: { x: number; y: number; w: number; h: number } | null = null
+  // The update toast's rect; like popupRect it makes that region clickable, but
+  // it never triggers auto-hide (the toast manages its own dismissal).
+  let toastRect: { x: number; y: number; w: number; h: number } | null = null
 
   let interactiveState = false
   const setInteractive = (interactive: boolean): void => {
@@ -123,13 +132,20 @@ app.whenReady().then(() => {
     releaseFocus()
   }
 
+  const within = (
+    r: { x: number; y: number; w: number; h: number } | null,
+    x: number,
+    y: number
+  ): boolean => r !== null && x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h
+
   // Overlay is click-through by default so the game always receives mouse-moves
   // (and manages its own tooltip). The popup stays open until the user dismisses
   // it (its ✕, Esc, or a fresh price check); we only hit-test the cursor to
-  // capture the mouse while it is actually over the popup, leaving the rest of
-  // the screen click-through so the game stays playable.
+  // capture the mouse while it is actually over an interactive widget (the popup
+  // or the update toast), leaving the rest of the screen click-through so the
+  // game stays playable.
   const onCursorMove = (): void => {
-    if (!popupRect) {
+    if (!popupRect && !toastRect) {
       setInteractive(false)
       return
     }
@@ -141,10 +157,7 @@ app.whenReady().then(() => {
     const cur = screen.getCursorScreenPoint()
     const x = cur.x - overlayBounds.x
     const y = cur.y - overlayBounds.y
-    const r = popupRect
-    const dx = x < r.x ? r.x - x : x > r.x + r.w ? x - (r.x + r.w) : 0
-    const dy = y < r.y ? r.y - y : y > r.y + r.h ? y - (r.y + r.h) : 0
-    setInteractive(dx === 0 && dy === 0)
+    setInteractive(within(popupRect, x, y) || within(toastRect, x, y))
   }
 
   let busy = false
@@ -415,6 +428,16 @@ app.whenReady().then(() => {
     overlay.focus()
   })
 
+  ipcMain.on(
+    'tw:toast-rect',
+    (_event, rect: { x: number; y: number; w: number; h: number } | null) => {
+      toastRect = rect
+      onCursorMove()
+    }
+  )
+
+  ipcMain.on('tw:restart-update', () => quitAndInstall())
+
   tracker.start()
 
   app.on('will-quit', () => {
@@ -422,6 +445,7 @@ app.whenReady().then(() => {
     keyhook?.stop()
     input.stop()
     tracker.stop()
+    stopAutoUpdater()
   })
 
   console.log(
