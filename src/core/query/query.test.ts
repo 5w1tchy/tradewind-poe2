@@ -78,6 +78,26 @@ describe('prepareQuery', () => {
     expect(rune.enabled).toBe(false)
   })
 
+  it('ignores fixed literals in stat text when computing the roll min', () => {
+    // "per 100 maximum Mana" carries a literal 100 the parser also templates;
+    // the min must come from the roll (4), not the average of 4 and 100.
+    const item = [
+      'Item Class: Staves',
+      'Rarity: Rare',
+      'Phoenix Call',
+      'Mage Staff',
+      '--------',
+      'Item Level: 82',
+      '--------',
+      '{ Prefix Modifier "Test" (Tier: 1) — Mana }',
+      '4(4-5)% increased Spell Damage per 100 maximum Mana'
+    ].join('\n')
+    const q = prepareQuery(parseItem(item), db)
+    const mana = q.stats.find((s) => s.label.includes('per 100 maximum Mana'))!
+    expect(mana.value).toBe(4)
+    expect(mana.min).toBe(3) // floor(4 * 0.9), not floor(52 * 0.9) = 46
+  })
+
   it('derives defence filters from item properties, normalized to 20% quality', () => {
     // 0-quality shield, flat armour mods only: 482 * 120/100 = 578
     const shield = prepareFixture('32-shields--eagle-span-f24731e2.txt')

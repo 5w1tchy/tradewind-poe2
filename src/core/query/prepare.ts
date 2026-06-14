@@ -1,4 +1,4 @@
-import type { ParsedItem, ParsedMod, ParsedStatLine } from '../parser/types'
+import type { ParsedItem, ParsedMod, ParsedStatLine, RollValue } from '../parser/types'
 import type { StatsDb } from '../stats-db/statsDb'
 import { extractBaseType } from './baseType'
 import { categoryForItemClass } from './categories'
@@ -36,10 +36,25 @@ function preferFor(mod: ParsedMod): string[] {
   return ['explicit']
 }
 
-function representativeValue(line: ParsedStatLine): number | null {
-  if (line.values.length === 0) return null
-  const sum = line.values.reduce((acc, v) => acc + v.value, 0)
-  return sum / line.values.length
+/**
+ * The clipboard templates *every* number, but a stat text like "#% increased
+ * Spell Damage per 100 maximum Mana" carries a fixed literal (100) that isn't a
+ * roll. Align the parsed tokens against the matched DB text — '#' marks a roll,
+ * a bare number marks fixed text — and keep only the rolls, so the average isn't
+ * dragged toward the literal. Falls back to all tokens when the alignment is
+ * ambiguous (token count mismatch, or an all-literal "fixed text" stat).
+ */
+function rollValues(line: ParsedStatLine, candidateText: string): RollValue[] {
+  const slots = candidateText.match(/#|-?\d+(?:[.,]\d+)?/g) ?? []
+  if (slots.length !== line.values.length) return line.values
+  const rolls = line.values.filter((_, i) => slots[i] === '#')
+  return rolls.length > 0 ? rolls : line.values
+}
+
+function representativeValue(values: RollValue[]): number | null {
+  if (values.length === 0) return null
+  const sum = values.reduce((acc, v) => acc + v.value, 0)
+  return sum / values.length
 }
 
 /** Lower bound `spread` below the roll; sign-aware so negative rolls loosen downward too. */
@@ -166,7 +181,7 @@ function buildStatRows(
       unmatched.push(line.raw)
       continue
     }
-    let value = representativeValue(line)
+    let value = representativeValue(rollValues(line, best.text))
     if (value !== null && best.negated) value = -value
     const lineSpread = spreadFor(line.template, spread)
 

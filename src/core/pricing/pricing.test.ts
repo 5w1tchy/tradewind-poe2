@@ -27,6 +27,21 @@ describe('estimatePrice', () => {
     expect(est.confidence).toBe('high')
   })
 
+  it('instant-buyout: keeps the cheap end instead of trimming it as bait', () => {
+    // Bimodal book: 3 genuinely-cheap buyouts + 5 aspirational. The default
+    // median-cutoff would discard the cheap floor; instant-buyout must not.
+    const prices = ex([10, 142, 142, 7100, 12070, 14200, 17040, 39476])
+    const trimmed = estimatePrice(prices, RATES, 8)!
+    expect(trimmed.excludedLowball).toBe(3) // default mode drops the cheap 3
+    expect(trimmed.lowExalted).toBe(7100)
+
+    const ibo = estimatePrice(prices, RATES, 8, undefined, { instantBuyout: true })!
+    expect(ibo.excludedLowball).toBe(0)
+    expect(ibo.cutoffExalted).toBe(0) // nothing marked lowball
+    expect(ibo.lowExalted).toBe(10) // the real buyout floor survives
+    expect(ibo.sampleSize).toBe(8)
+  })
+
   it('normalizes divine and chaos listings through the rate table', () => {
     const est = estimatePrice(
       [

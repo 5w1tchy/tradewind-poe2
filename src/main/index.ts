@@ -364,7 +364,10 @@ app.whenReady().then(() => {
       listingPrices(outcome.listings),
       rateTable,
       outcome.total,
-      anchor
+      anchor,
+      // Gear search is instant-buyout only — every listed price is real, so
+      // don't discard the cheap end as bait. Stackable exchange still trims.
+      { instantBuyout: !prepared.exchangeId }
     )
     for (const listing of outcome.listings) {
       if (!listing.price) continue

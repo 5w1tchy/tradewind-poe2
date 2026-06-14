@@ -175,11 +175,16 @@ export class TradeApiClient {
     exchange: new RateLimiter(EXCHANGE_SEED)
   }
 
-  /** Run a search and fetch the first `count` listings (one fetch call, ≤10). */
+  /**
+   * Run a search and fetch the cheapest `count` listings (results are
+   * price-ascending). The fetch endpoint takes ≤10 ids per call, so page
+   * through in chunks — showing the whole cheap end is what lets the user see
+   * the real buyout floor instead of one bait price.
+   */
   async searchWithListings(
     league: string,
     body: TradeSearchRequest,
-    count = 10
+    count = 30
   ): Promise<SearchOutcome> {
     const leaguePath = encodeURIComponent(league)
     const search = await this.request<RawSearchResponse>(
@@ -192,17 +197,18 @@ export class TradeApiClient {
       }
     )
 
-    let listings: TradeListing[] = []
-    const ids = search.result.slice(0, Math.min(count, 10))
-    if (ids.length > 0) {
+    const listings: TradeListing[] = []
+    const ids = search.result.slice(0, count)
+    for (let i = 0; i < ids.length; i += 10) {
+      const chunk = ids.slice(i, i + 10)
       const fetched = await this.request<RawFetchResponse>(
         'fetch',
-        `${API_BASE}/fetch/${ids.join(',')}?query=${search.id}&realm=poe2`,
+        `${API_BASE}/fetch/${chunk.join(',')}?query=${search.id}&realm=poe2`,
         { method: 'GET' }
       )
-      listings = fetched.result
-        .filter((r): r is NonNullable<typeof r> => r !== null)
-        .map((r) => ({
+      for (const r of fetched.result) {
+        if (r === null) continue
+        listings.push({
           id: r.id,
           price: r.listing.price
             ? {
@@ -217,7 +223,8 @@ export class TradeApiClient {
             .filter(Boolean)
             .join(' '),
           online: Boolean(r.listing.account?.online)
-        }))
+        })
+      }
     }
 
     return {

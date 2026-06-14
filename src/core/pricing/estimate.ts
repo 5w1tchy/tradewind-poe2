@@ -59,7 +59,8 @@ export function estimatePrice(
   prices: PriceInput[],
   rates: RateTable,
   total: number,
-  anchorExalted?: number
+  anchorExalted?: number,
+  options: { instantBuyout?: boolean } = {}
 ): PriceEstimate | null {
   const normalized: number[] = []
   let excludedCurrency = 0
@@ -73,17 +74,25 @@ export function estimatePrice(
 
   normalized.sort((a, b) => a - b)
 
-  let cutoff = median(normalized) * LOWBALL_FRACTION
-  let survivors = normalized.filter((v) => v >= cutoff)
-  if (anchorExalted !== undefined) {
-    const windowLow = anchorExalted * ANCHOR_WINDOW_LOW
-    const inWindow = normalized.filter(
-      (v) => v >= windowLow && v <= anchorExalted * ANCHOR_WINDOW_HIGH
-    )
-    if (inWindow.length >= 3) {
-      cutoff = windowLow
-      survivors = inWindow
-    }
+  // Window around an independent aggregate when we have one (works for any
+  // book shape); else, on instant-buyout gear every listed price is genuinely
+  // buyable so nothing is "bait" — keep them all; else (stackables) trim cheap
+  // troll-ask walls below half the median.
+  let cutoff = 0
+  let survivors: number[]
+  const windowLow = anchorExalted !== undefined ? anchorExalted * ANCHOR_WINDOW_LOW : 0
+  const inWindow =
+    anchorExalted !== undefined
+      ? normalized.filter((v) => v >= windowLow && v <= anchorExalted * ANCHOR_WINDOW_HIGH)
+      : []
+  if (inWindow.length >= 3) {
+    cutoff = windowLow
+    survivors = inWindow
+  } else if (options.instantBuyout) {
+    survivors = normalized
+  } else {
+    cutoff = median(normalized) * LOWBALL_FRACTION
+    survivors = normalized.filter((v) => v >= cutoff)
   }
 
   const low = survivors[0]
