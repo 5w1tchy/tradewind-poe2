@@ -10,7 +10,7 @@ A price-check overlay for Path of Exile 2. One hotkey on a hovered item → popu
 | Decision | Choice |
 |---|---|
 | Name / repo | **Tradewind** (`tradewind-poe2`), User-Agent `tradewind/x.y.z (contact: chaideb123@gmail.com)` |
-| Stack | Electron + TypeScript + Vue 3 (the proven APT/EE2 architecture; both are MIT — study freely) |
+| Stack | Electron + TypeScript + React 19 (renderer migrated from Vue 3 → React 2026-06-14; APT/EE2 are MIT — study freely) |
 | Platform / audience | Public release, Windows, English client first |
 | License | MIT, public repo from day one (trust currency of this niche) |
 | Auth | Anonymous — **no POESESSID**. Buying = deep-link to the exact trade-site listing where the user clicks Secure Item |
@@ -47,7 +47,7 @@ tradewind/
 │   │                           rate-limit queue parsing X-Rate-Limit headers; caching
 │   ├─ config store             settings JSON (hotkeys, league, spread %, opt-in flag)
 │   └─ updater                  electron-updater against GitHub releases
-├─ renderer/      Vue 3 + Vite + Tailwind
+├─ renderer/      React 19 + Vite + CSS Modules
 │   ├─ price-check popup        filters UI, tier badges, estimate, listings
 │   ├─ settings window
 │   └─ widget shell             (future: crafting panel, filter editor)
