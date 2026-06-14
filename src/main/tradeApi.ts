@@ -1,6 +1,13 @@
+import { stripMarkup } from '../core/trade/markup'
 import type { RateTable } from '../core/pricing'
 import type { TradeSearchRequest } from '../core/query/types'
-import type { SearchOutcome, TradeListing } from '../core/trade/types'
+import type {
+  ItemProperty,
+  ListingItem,
+  ListingMod,
+  SearchOutcome,
+  TradeListing
+} from '../core/trade/types'
 import { USER_AGENT } from './dataCache'
 
 const API_BASE = 'https://www.pathofexile.com/api/trade2'
@@ -155,6 +162,30 @@ interface RawExchangeResponse {
   >
 }
 
+/** The item shape returned by /fetch — the full game item JSON (we read a subset). */
+interface RawItem {
+  name?: string
+  typeLine?: string
+  baseType?: string
+  ilvl?: number
+  frameType?: number
+  corrupted?: boolean
+  properties?: ItemProperty[]
+  requirements?: ItemProperty[]
+  enchantMods?: string[]
+  implicitMods?: string[]
+  fracturedMods?: string[]
+  explicitMods?: string[]
+  craftedMods?: string[]
+  desecratedMods?: string[]
+  runeMods?: string[]
+  /** Per-mod metadata: mods[cat][i].tier ("P1"), hashes[cat] parallel to the text lines. */
+  extended?: {
+    mods?: Record<string, Array<{ tier?: string }>>
+    hashes?: Record<string, Array<[string, number[] | null]>>
+  }
+}
+
 interface RawFetchResponse {
   result: Array<{
     id: string
@@ -163,8 +194,88 @@ interface RawFetchResponse {
       price: { type?: string; amount: number; currency: string } | null
       account: { name: string; online: unknown }
     }
-    item: { name?: string; typeLine?: string; baseType?: string }
+    item: RawItem
   } | null>
+}
+
+/** frameType → the rarity bucket the tooltip colors the name line by. */
+function rarityOf(frameType?: number): string {
+  switch (frameType) {
+    case 1:
+      return 'magic'
+    case 2:
+      return 'rare'
+    case 3:
+      return 'unique'
+    case 4:
+      return 'gem'
+    case 5:
+      return 'currency'
+    default:
+      return 'normal'
+  }
+}
+
+/** Strip markup and drop empty arrays so the IPC payload is lean and render-ready. */
+function trim(mods?: string[]): string[] | undefined {
+  return mods && mods.length > 0 ? mods.map(stripMarkup) : undefined
+}
+
+/** Clean markup out of property/requirement names and value texts. */
+function cleanProps(props?: ItemProperty[]): ItemProperty[] | undefined {
+  if (!props || props.length === 0) return undefined
+  return props.map((p) => ({
+    name: stripMarkup(p.name),
+    values: p.values.map(([text, type]) => [stripMarkup(text), type] as [string, number])
+  }))
+}
+
+/** The four rolled-mod sources, merged (in this order) into one affix block. */
+const AFFIX_SOURCES: Array<[string, keyof RawItem]> = [
+  ['explicit', 'explicitMods'],
+  ['fractured', 'fracturedMods'],
+  ['crafted', 'craftedMods'],
+  ['desecrated', 'desecratedMods']
+]
+
+/** Tag each rolled mod line with its affix (P/S) + tier from item.extended. */
+function affixLines(source: string, lines: string[] | undefined, ext: RawItem['extended']): ListingMod[] {
+  if (!lines || lines.length === 0) return []
+  const defs = ext?.mods?.[source]
+  const hashes = ext?.hashes?.[source]
+  return lines.map((text, i) => {
+    let affix: 'P' | 'S' | null = null
+    let tier: number | null = null
+    // hashes[source] is parallel to the text lines; its [1] points into mods[source].
+    const idx = hashes?.[i]?.[1]?.[0]
+    const t = idx != null ? defs?.[idx]?.tier : undefined
+    if (t) {
+      affix = t[0] === 'P' ? 'P' : t[0] === 'S' ? 'S' : null
+      const n = Number(t.slice(1))
+      tier = Number.isFinite(n) ? n : null
+    }
+    return { text: stripMarkup(text), affix, tier, source }
+  })
+}
+
+/** Project the fetched item down to the IPC-safe detail the tooltip renders. */
+function toListingItem(item: RawItem): ListingItem {
+  const affixMods = AFFIX_SOURCES.flatMap(([source, key]) =>
+    affixLines(source, item[key] as string[] | undefined, item.extended)
+  )
+  return {
+    rarity: rarityOf(item.frameType),
+    name: stripMarkup(item.name ?? ''),
+    baseType: stripMarkup(item.baseType ?? item.typeLine ?? ''),
+    ilvl: item.ilvl,
+    corrupted: item.corrupted || undefined,
+    properties: cleanProps(item.properties),
+    requirements: cleanProps(item.requirements),
+    enchantMods: trim(item.enchantMods),
+    implicitMods: trim(item.implicitMods),
+    runeMods: trim(item.runeMods),
+    affixMods: affixMods.length > 0 ? affixMods : undefined
+  }
 }
 
 export class TradeApiClient {
@@ -221,7 +332,8 @@ export class TradeApiClient {
           itemName: [r.item.name, r.item.typeLine ?? r.item.baseType]
             .filter(Boolean)
             .join(' '),
-          online: Boolean(r.listing.account?.online)
+          online: Boolean(r.listing.account?.online),
+          item: toListingItem(r.item)
         })
       }
     }

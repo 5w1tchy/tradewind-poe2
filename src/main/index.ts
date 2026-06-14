@@ -106,10 +106,15 @@ app.whenReady().then(() => {
   let overlayBounds = { x: 0, y: 0, width: 0, height: 0 }
   // The popup's on-screen rect (overlay-local CSS px) reported by the renderer;
   // null when no popup is open. Doubles as the "popup visible" flag.
-  let popupRect: { x: number; y: number; w: number; h: number } | null = null
-  // The update toast's rect; like popupRect it makes that region clickable, but
+  type Rect = { x: number; y: number; w: number; h: number }
+  let popupRect: Rect | null = null
+  // The hovered listing's item tooltip rect (overlay-local CSS px), or null. It
+  // lives outside popupRect, so it gets its own interactive region — otherwise
+  // reaching for it would flip the overlay click-through and hide it.
+  let tooltipRect: Rect | null = null
+  // The update toast's rect; like the others it makes that region clickable, but
   // it never triggers auto-hide (the toast manages its own dismissal).
-  let toastRect: { x: number; y: number; w: number; h: number } | null = null
+  let toastRect: Rect | null = null
 
   let interactiveState = false
   const setInteractive = (interactive: boolean): void => {
@@ -128,24 +133,22 @@ app.whenReady().then(() => {
   const hidePopup = (): void => {
     overlay.webContents.send('tw:hide')
     popupRect = null
+    tooltipRect = null
     setInteractive(false)
     releaseFocus()
   }
 
-  const within = (
-    r: { x: number; y: number; w: number; h: number } | null,
-    x: number,
-    y: number
-  ): boolean => r !== null && x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h
+  const within = (r: Rect | null, x: number, y: number): boolean =>
+    r !== null && x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h
 
   // Overlay is click-through by default so the game always receives mouse-moves
   // (and manages its own tooltip). The popup stays open until the user dismisses
   // it (its ✕, Esc, or a fresh price check); we only hit-test the cursor to
-  // capture the mouse while it is actually over an interactive widget (the popup
-  // or the update toast), leaving the rest of the screen click-through so the
-  // game stays playable.
+  // capture the mouse while it is actually over an interactive widget — the
+  // popup, the hovered listing tooltip, or the update toast — leaving the rest
+  // of the screen click-through so the game stays playable.
   const onCursorMove = (): void => {
-    if (!popupRect && !toastRect) {
+    if (!popupRect && !tooltipRect && !toastRect) {
       setInteractive(false)
       return
     }
@@ -157,7 +160,7 @@ app.whenReady().then(() => {
     const cur = screen.getCursorScreenPoint()
     const x = cur.x - overlayBounds.x
     const y = cur.y - overlayBounds.y
-    setInteractive(within(popupRect, x, y) || within(toastRect, x, y))
+    setInteractive(within(popupRect, x, y) || within(tooltipRect, x, y) || within(toastRect, x, y))
   }
 
   let busy = false
@@ -414,9 +417,20 @@ app.whenReady().then(() => {
       popupRect = rect
       // The popup closed itself (its ✕): drop keyboard focus so the next click
       // goes to the game, and restore click-through.
-      if (!rect) releaseFocus()
+      if (!rect) {
+        tooltipRect = null
+        releaseFocus()
+      }
       // Re-evaluate now so interactivity tracks a resized/moved popup even if the
       // cursor is momentarily still.
+      onCursorMove()
+    }
+  )
+
+  ipcMain.on(
+    'tw:tooltip-rect',
+    (_event, rect: { x: number; y: number; w: number; h: number } | null) => {
+      tooltipRect = rect
       onCursorMove()
     }
   )

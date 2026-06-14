@@ -1,0 +1,105 @@
+/*
+ * In-game-style item tooltip shown when hovering a listing row. Reads as a
+ * native PoE2 item panel: dark glass, bronze frame, mod sections divided by
+ * hairlines. Hoverable — the cursor can move onto it to read/scroll without it
+ * dismissing (main keeps its rect interactive; see ListingTooltip.tsx).
+ */
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  width: 280px;
+  max-width: 280px;
+  padding: 8px 0;
+  background: rgba(11, 10, 9, 0.98);
+  border: 1px solid var(--tw-bronze-dim);
+  border-radius: 2px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75);
+  overflow-y: auto;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+/* Name + base header. */
+.head {
+  padding: 0 12px 6px;
+}
+
+.name {
+  font-family: var(--tw-font-display);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.base {
+  font-family: var(--tw-font-display);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.rarity-normal { color: var(--tw-rarity-normal); }
+.rarity-magic { color: var(--tw-rarity-magic); }
+.rarity-rare { color: var(--tw-rarity-rare); }
+.rarity-unique { color: var(--tw-rarity-unique); }
+.rarity-gem { color: var(--tw-rarity-gem); }
+.rarity-currency { color: var(--tw-rarity-currency); }
+
+/* Bronze hairline between sections — the PoE tooltip divider. */
+.section {
+  padding: 6px 12px;
+  border-top: 1px solid var(--tw-line-strong);
+}
+
+.prop {
+  color: var(--tw-text-mute);
+}
+
+.prop b {
+  color: var(--tw-text);
+  font-weight: 400;
+}
+
+.enchant { color: #b4b4ff; }
+.implicit { color: #a0a0a0; }
+.rune { color: #88ccff; }
+
+.mod {
+  margin: 1px 0;
+}
+
+/* ---- Rolled affixes: tier tag in the left gutter, mod text centered ----- */
+.affix {
+  position: relative;
+  margin: 1px 0;
+  padding: 0 26px;
+}
+
+.tag {
+  position: absolute;
+  left: 7px;
+  top: 0;
+  font-size: 10px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.prefix { color: #e06b6b; }
+.suffix { color: #7aa2ff; }
+
+/* Mod-text colors by source. */
+.src-explicit { color: var(--tw-rarity-magic); }
+.src-fractured { color: #c9b78f; }
+.src-crafted { color: #88ccff; }
+/* Desecrated (Abyssal "Well of Souls") mods read green, as in game. */
+.src-desecrated { color: #6fcf78; }
+
+.meta {
+  color: var(--tw-text-faint);
+  font-size: 11px;
+}
+
+.corrupted {
+  color: var(--tw-bad);
+  font-weight: 700;
+}
