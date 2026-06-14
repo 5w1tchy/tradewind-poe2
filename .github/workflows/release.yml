@@ -35,3 +35,7 @@ jobs:
         env:
           # Provided by Actions; lets electron-builder create/upload the release.
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # A tag with a prerelease suffix (vX.Y.Z-beta.N) publishes as a GitHub
+          # pre-release -> demo channel. Plain tags publish as a normal release
+          # (releaseType in electron-builder.yml) -> stable channel.
+          EP_PRE_RELEASE: ${{ contains(github.ref_name, '-') }}

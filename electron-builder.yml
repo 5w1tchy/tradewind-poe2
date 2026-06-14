@@ -45,6 +45,9 @@ publish:
   provider: github
   owner: 5w1tchy
   repo: tradewind-poe2
+  # Publish a live release (not a draft) so auto-update sees it immediately.
+  # The workflow flips beta tags to a GitHub pre-release via EP_PRE_RELEASE.
+  releaseType: release
 
 # Channels are driven by the tag: a plain vX.Y.Z release emits latest.yml; a
 # vX.Y.Z-beta.N pre-release emits beta.yml. The "demo includes stable" behavior
