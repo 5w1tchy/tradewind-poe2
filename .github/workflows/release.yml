@@ -1,8 +1,8 @@
 name: Release
 
 # Tag-driven releases. A plain semver tag publishes to the stable channel
-# (latest.yml); a pre-release tag (vX.Y.Z-beta.N) publishes to the demo channel
-# (beta.yml) and is marked a GitHub pre-release automatically by electron-builder.
+# (latest.yml); a pre-release tag (vX.Y.Z-beta.N) is published as a GitHub
+# pre-release (beta.yml) for the demo channel. See the "Publish release" step.
 on:
   push:
     tags:
@@ -30,12 +30,24 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Package and publish
+      # Builds the installer + update manifest and uploads them to a DRAFT
+      # GitHub release for this tag.
+      - name: Package and upload to draft release
         run: npx electron-builder --win --publish always
         env:
-          # Provided by Actions; lets electron-builder create/upload the release.
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # A tag with a prerelease suffix (vX.Y.Z-beta.N) publishes as a GitHub
-          # pre-release -> demo channel. Plain tags publish as a normal release
-          # (releaseType in electron-builder.yml) -> stable channel.
-          EP_PRE_RELEASE: ${{ contains(github.ref_name, '-') }}
+
+      # Flip the draft to a published release so auto-update can see it. A tag
+      # with a prerelease suffix (vX.Y.Z-beta.N) becomes a GitHub pre-release
+      # (demo channel); a plain tag becomes the latest stable release.
+      - name: Publish release
+        shell: bash
+        run: |
+          tag="${{ github.ref_name }}"
+          if [[ "$tag" == *-* ]]; then
+            gh release edit "$tag" --draft=false --prerelease
+          else
+            gh release edit "$tag" --draft=false --prerelease=false --latest
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
