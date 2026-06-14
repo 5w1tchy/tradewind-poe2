@@ -30,24 +30,28 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Builds the installer + update manifest and uploads them to a DRAFT
-      # GitHub release for this tag.
-      - name: Package and upload to draft release
-        run: npx electron-builder --win --publish always
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Build the installer only. electron-builder still generates the update
+      # manifest (latest.yml / beta.yml) into release/. We do NOT let it publish:
+      # its parallel uploads race and create duplicate releases for the same tag.
+      - name: Build installer
+        run: npx electron-builder --win --publish never
 
-      # Flip the draft to a published release so auto-update can see it. A tag
-      # with a prerelease suffix (vX.Y.Z-beta.N) becomes a GitHub pre-release
-      # (demo channel); a plain tag becomes the latest stable release.
-      - name: Publish release
+      # Create the release and upload every artifact in one atomic call, so the
+      # installer, blockmap, and channel manifest always land together. A tag
+      # with a prerelease suffix (vX.Y.Z-beta.N) is a GitHub pre-release (demo
+      # channel); a plain tag is the latest stable release.
+      - name: Create GitHub release
         shell: bash
         run: |
           tag="${{ github.ref_name }}"
-          if [[ "$tag" == *-* ]]; then
-            gh release edit "$tag" --draft=false --prerelease
-          else
-            gh release edit "$tag" --draft=false --prerelease=false --latest
-          fi
+          flag="--latest"
+          [[ "$tag" == *-* ]] && flag="--prerelease"
+          files=(release/*-setup.exe release/*-setup.exe.blockmap)
+          for y in release/latest.yml release/beta.yml release/alpha.yml; do
+            [[ -f "$y" ]] && files+=("$y")
+          done
+          # Re-runs on the same tag: replace any existing release (keeps the tag).
+          gh release delete "$tag" --yes 2>/dev/null || true
+          gh release create "$tag" "${files[@]}" --title "$tag" --notes "Automated release $tag" $flag
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
