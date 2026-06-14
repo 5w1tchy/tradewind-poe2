@@ -315,7 +315,7 @@
 .listings {
   display: flex;
   flex-direction: column;
-  max-height: 320px;
+  max-height: 220px;
   overflow-y: auto;
   border: 1px solid var(--tw-line);
   border-radius: 2px;

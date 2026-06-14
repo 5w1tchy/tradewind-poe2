@@ -178,13 +178,12 @@ export class TradeApiClient {
   /**
    * Run a search and fetch the cheapest `count` listings (results are
    * price-ascending). The fetch endpoint takes ≤10 ids per call, so page
-   * through in chunks — showing the whole cheap end is what lets the user see
-   * the real buyout floor instead of one bait price.
+   * through in chunks if asked for more.
    */
   async searchWithListings(
     league: string,
     body: TradeSearchRequest,
-    count = 30
+    count = 10
   ): Promise<SearchOutcome> {
     const leaguePath = encodeURIComponent(league)
     const search = await this.request<RawSearchResponse>(
