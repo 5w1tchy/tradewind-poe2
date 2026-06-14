@@ -17,6 +17,9 @@ const api: TradewindApi = {
   setPopupRect(rect) {
     ipcRenderer.send('tw:popup-rect', rect)
   },
+  setTooltipRect(rect) {
+    ipcRenderer.send('tw:tooltip-rect', rect)
+  },
   requestFocus() {
     ipcRenderer.send('tw:focus-input')
   },

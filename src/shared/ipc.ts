@@ -26,6 +26,11 @@ export interface TradewindApi {
    * can hit-test the cursor against it and toggle click-through; null when hidden.
    */
   setPopupRect(rect: { x: number; y: number; w: number; h: number } | null): void
+  /**
+   * Report the hovered item-tooltip's rect (overlay-local CSS px) so the main
+   * process keeps that region interactive too; null when no tooltip is shown.
+   */
+  setTooltipRect(rect: { x: number; y: number; w: number; h: number } | null): void
   /** Grab keyboard focus for a filter input (released when the popup hides). */
   requestFocus(): void
   /** Open a pathofexile.com URL in the default browser. */
