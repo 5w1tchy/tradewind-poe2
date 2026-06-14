@@ -126,10 +126,17 @@ function iso(minutesAgo: number): string {
 }
 
 let deliverItem: ((payload: ItemPayload) => void) | null = null
+let pending: ItemPayload | null = null
 
 const mock: TradewindApi = {
   onItem(cb) {
     deliverItem = cb
+    // React registers onItem in an effect that runs after main.tsx's dynamic
+    // import resolves below, so the sample item may already be queued.
+    if (pending) {
+      cb(pending)
+      pending = null
+    }
   },
   onHide() {},
   async search() {
@@ -156,12 +163,14 @@ SAMPLE_QUERY.itemClass = params.get('class') ?? SAMPLE_QUERY.itemClass
 SAMPLE_QUERY.rarity = params.get('rarity') ?? SAMPLE_QUERY.rarity
 
 import('./main').then(() => {
-  deliverItem?.({
+  const item: ItemPayload = {
     x: 340,
     y: 120,
     text: 'Item Class: Rings\nRarity: Rare\nStorm Whorl\nSapphire Ring\n…',
     prepared: SAMPLE_QUERY,
     leagues: ['Rise of the Abyssal', 'HC Rise of the Abyssal', 'Standard'],
     league: 'Rise of the Abyssal'
-  })
+  }
+  if (deliverItem) deliverItem(item)
+  else pending = item
 })

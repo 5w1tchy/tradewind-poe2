@@ -15,7 +15,9 @@
   },
   "devDependencies": {
     "@types/node": "^25.9.2",
-    "@vitejs/plugin-vue": "^6.0.7",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.2.0",
     "electron": "^42.4.0",
     "electron-vite": "^5.0.0",
     "typescript": "^6.0.3",
@@ -25,8 +27,9 @@
     "@fontsource/alegreya-sans": "^5.2.8",
     "@fontsource/cinzel": "^5.2.8",
     "koffi": "^3.0.2",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
     "tradewind-keyhook": "file:native/keyhook",
-    "uiohook-napi": "^1.5.5",
-    "vue": "^3.5.35"
+    "uiohook-napi": "^1.5.5"
   }
 }

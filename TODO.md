@@ -23,8 +23,8 @@ Running list of known issues and follow-ups not yet scheduled into a milestone.
 
 ## Tech debt
 
-- **Migrate the renderer from Vue 3 to React.** Move the overlay UI off Vue 3
-  onto React. Core logic under `src/core` (parser, query, craft) is
-  framework-agnostic and should carry over unchanged; the work is the renderer
-  layer (`src/renderer`). Plan the migration component-by-component and keep the
-  Electron main/preload boundary intact.
+- _(none open)_
+
+  ~~Migrate the renderer from Vue 3 to React.~~ **Done 2026-06-14** — `src/renderer`
+  is now React (.tsx + CSS Modules); `src/core` carried over unchanged and the
+  Electron main/preload boundary is intact.

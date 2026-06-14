@@ -1,0 +1,111 @@
+.craft {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 340px;
+}
+
+.sections {
+  display: flex;
+  gap: 6px;
+}
+
+/* Engraved chip rail — visually subordinate to the main Price/Craft tabs. */
+.section-btn {
+  background: var(--tw-bg-inset);
+  border: 1px solid var(--tw-line);
+  border-radius: 2px;
+  color: var(--tw-text-mute);
+  font-family: var(--tw-font-body);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition:
+    color 120ms ease,
+    border-color 120ms ease;
+}
+
+.section-btn:hover { color: var(--tw-text); }
+
+.section-btn.active {
+  color: var(--tw-bronze-bright);
+  border-color: var(--tw-bronze-dim);
+  background: var(--tw-bronze-faint);
+}
+
+.note {
+  color: var(--tw-text-mute);
+  font-style: italic;
+  font-size: 12px;
+  border-bottom: 1px solid var(--tw-line);
+  padding-bottom: 6px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.row:hover { background: var(--tw-bg-raised); }
+
+.art {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.art img {
+  max-width: 28px;
+  max-height: 28px;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+}
+
+.text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.name {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tier-greater { color: var(--tw-bronze-bright); }
+.tier-perfect { color: var(--tw-gold); }
+.tier-corrupted { color: var(--tw-bad); }
+
+.mod {
+  color: var(--tw-text);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty {
+  color: var(--tw-text-faint);
+  font-style: italic;
+  padding: 10px 0 6px;
+}

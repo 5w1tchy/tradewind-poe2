@@ -9,12 +9,11 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "lib": ["ES2022", "DOM", "DOM.Iterable"]
   },
   "include": [
     "src/renderer/src/**/*",
-    "src/renderer/src/**/*.vue",
     "src/core/**/*",
     "src/shared/**/*"
   ],
