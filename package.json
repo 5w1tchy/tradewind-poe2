@@ -1,6 +1,6 @@
 {
   "name": "tradewind",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Path of Exile 2 trade companion overlay",
   "main": "./out/main/index.js",
   "private": true,
@@ -11,7 +11,10 @@
     "build": "electron-vite build",
     "start": "electron-vite preview",
     "test": "vitest run",
-    "fixtures": "node scripts/split-fixtures.mjs"
+    "fixtures": "node scripts/split-fixtures.mjs",
+    "pack": "electron-vite build && electron-builder --dir",
+    "build:win": "electron-vite build && electron-builder --win",
+    "postinstall": "electron-builder install-app-deps"
   },
   "devDependencies": {
     "@types/node": "^25.9.2",
@@ -19,6 +22,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.2.0",
     "electron": "^42.4.0",
+    "electron-builder": "^26.15.3",
     "electron-vite": "^5.0.0",
     "typescript": "^6.0.3",
     "vitest": "^4.1.8"
@@ -26,6 +30,7 @@
   "dependencies": {
     "@fontsource/alegreya-sans": "^5.2.8",
     "@fontsource/cinzel": "^5.2.8",
+    "electron-updater": "^6.8.9",
     "koffi": "^3.0.2",
     "react": "19.2.7",
     "react-dom": "19.2.7",
