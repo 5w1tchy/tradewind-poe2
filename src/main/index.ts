@@ -214,6 +214,29 @@ app.whenReady().then(() => {
     setInteractive(within(popupRect, x, y) || within(tooltipRect, x, y) || within(toastRect, x, y))
   }
 
+  // High-polling-rate mice fire mousemove thousands of times a second; each raw
+  // event would otherwise cost a synchronous getCursorScreenPoint + hit-test.
+  // Cap that to ~60Hz (leading edge immediate so entering/leaving the popup still
+  // toggles click-through promptly, plus a trailing call so the final rest
+  // position is always evaluated). Direct onCursorMove() calls elsewhere — after
+  // a fresh rect, focus change, etc. — stay unthrottled; they're rare.
+  const MOVE_INTERVAL_MS = 16
+  let moveTrailing: ReturnType<typeof setTimeout> | null = null
+  let lastMoveAt = 0
+  const onCursorMoveThrottled = (): void => {
+    const elapsed = Date.now() - lastMoveAt
+    if (elapsed >= MOVE_INTERVAL_MS) {
+      lastMoveAt = Date.now()
+      onCursorMove()
+    } else if (moveTrailing === null) {
+      moveTrailing = setTimeout(() => {
+        moveTrailing = null
+        lastMoveAt = Date.now()
+        onCursorMove()
+      }, MOVE_INTERVAL_MS - elapsed)
+    }
+  }
+
   let busy = false
   const priceCheck = async (): Promise<void> => {
     if (busy || !tracker.isGameActive || overlay.isFocused()) return
@@ -339,7 +362,7 @@ app.whenReady().then(() => {
         hidePopup()
       },
       onMouseMove() {
-        onCursorMove()
+        onCursorMoveThrottled()
       }
     },
     { priceCheck: priceCheckKey, hideout: hideoutKey }

@@ -18,6 +18,10 @@ export default function App(): React.JSX.Element | null {
   const popup = useRef<HTMLDivElement>(null)
   // Pointer offset captured at drag start; null when not dragging.
   const drag = useRef<{ dx: number; dy: number } | null>(null)
+  // Latest pending drag target + the rAF that will flush it. Coalesces a
+  // high-polling mouse's flood of pointermoves into one move/repaint per frame.
+  const dragTarget = useRef<{ x: number; y: number } | null>(null)
+  const dragRaf = useRef<number | null>(null)
   // Once the user drags, stop auto-centering — they've placed it deliberately.
   const moved = useRef(false)
 
@@ -82,12 +86,26 @@ export default function App(): React.JSX.Element | null {
   function onDragMove(e: React.PointerEvent): void {
     if (!drag.current) return
     moved.current = true
-    moveTo(e.clientX - drag.current.dx, e.clientY - drag.current.dy)
+    dragTarget.current = { x: e.clientX - drag.current.dx, y: e.clientY - drag.current.dy }
+    if (dragRaf.current === null) {
+      dragRaf.current = requestAnimationFrame(() => {
+        dragRaf.current = null
+        const t = dragTarget.current
+        if (t) moveTo(t.x, t.y)
+      })
+    }
   }
 
   function onDragEnd(e: React.PointerEvent): void {
     if (!drag.current) return
     drag.current = null
+    // Flush any frame still pending so the popup lands exactly where released.
+    if (dragRaf.current !== null) {
+      cancelAnimationFrame(dragRaf.current)
+      dragRaf.current = null
+      const t = dragTarget.current
+      if (t) moveTo(t.x, t.y)
+    }
     try {
       e.currentTarget.releasePointerCapture(e.pointerId)
     } catch {
