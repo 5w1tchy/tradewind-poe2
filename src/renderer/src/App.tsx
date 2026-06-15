@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { ItemPayload } from '../../shared/ipc'
 import CraftPane from './components/CraftPane'
 import PriceCheck from './components/PriceCheck'
+import UpdateToast from './components/UpdateToast'
 import styles from './App.module.css'
 
 type Tab = 'price' | 'craft'
@@ -137,46 +138,52 @@ export default function App(): React.JSX.Element | null {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible])
 
-  if (!visible || !payload) return null
-
+  // The popup renders only when there's an item; the update toast lives
+  // alongside it and shows on its own schedule, so App always returns a tree.
   return (
-    <div ref={popup} className={styles.popup} style={{ left: pos.x + 'px', top: pos.y + 'px' }}>
-      <i className={`${styles.corner} ${styles.tl}`} />
-      <i className={`${styles.corner} ${styles.tr}`} />
-      <i className={`${styles.corner} ${styles.bl}`} />
-      <i className={`${styles.corner} ${styles.br}`} />
+    <>
+      {visible && payload && (
+        <div ref={popup} className={styles.popup} style={{ left: pos.x + 'px', top: pos.y + 'px' }}>
+          <i className={`${styles.corner} ${styles.tl}`} />
+          <i className={`${styles.corner} ${styles.tr}`} />
+          <i className={`${styles.corner} ${styles.bl}`} />
+          <i className={`${styles.corner} ${styles.br}`} />
 
-      <button className={styles.close} onClick={close} aria-label="Close" title="Close (Esc)">
-        ×
-      </button>
+          <button className={styles.close} onClick={close} aria-label="Close" title="Close (Esc)">
+            ×
+          </button>
 
-      <nav
-        className={styles.tabs}
-        onPointerDown={onDragStart}
-        onPointerMove={onDragMove}
-        onPointerUp={onDragEnd}
-        onPointerCancel={onDragEnd}
-      >
-        <span className={styles.mark}>◆</span>
-        <button
-          className={`${styles.tab} tw-label ${tab === 'price' ? styles.active : ''}`}
-          onClick={() => setTab('price')}
-        >
-          Price
-        </button>
-        <button
-          className={`${styles.tab} tw-label ${tab === 'craft' ? styles.active : ''}`}
-          onClick={() => setTab('craft')}
-        >
-          Craft
-        </button>
-      </nav>
+          <nav
+            className={styles.tabs}
+            onPointerDown={onDragStart}
+            onPointerMove={onDragMove}
+            onPointerUp={onDragEnd}
+            onPointerCancel={onDragEnd}
+          >
+            <span className={styles.mark}>◆</span>
+            <button
+              className={`${styles.tab} tw-label ${tab === 'price' ? styles.active : ''}`}
+              onClick={() => setTab('price')}
+            >
+              Price
+            </button>
+            <button
+              className={`${styles.tab} tw-label ${tab === 'craft' ? styles.active : ''}`}
+              onClick={() => setTab('craft')}
+            >
+              Craft
+            </button>
+          </nav>
 
-      <div style={{ display: tab === 'price' ? undefined : 'none' }}>
-        <PriceCheck payload={payload} />
-      </div>
+          <div style={{ display: tab === 'price' ? undefined : 'none' }}>
+            <PriceCheck payload={payload} />
+          </div>
 
-      {tab === 'craft' && <CraftPane payload={payload} />}
-    </div>
+          {tab === 'craft' && <CraftPane payload={payload} />}
+        </div>
+      )}
+
+      <UpdateToast />
+    </>
   )
 }

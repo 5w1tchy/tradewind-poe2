@@ -19,6 +19,9 @@ import { RatesProvider } from './rates'
 import { estimatePrice, type RateTable } from '../core/pricing'
 import type { SearchOutcome, TradeListing } from '../core/trade/types'
 import { ScoutAnchorProvider } from './scoutAnchor'
+import { initAutoUpdater, quitAndInstall, stopAutoUpdater } from './updater'
+import { createTray } from './tray'
+import { createSplashWindow } from './splash'
 
 if (!app.requestSingleInstanceLock()) {
   app.quit()
@@ -37,10 +40,23 @@ interface ItemsPayload {
 }
 
 app.whenReady().then(() => {
+  // Stable identity for Windows notifications and the updater relaunch.
+  app.setAppUserModelId('com.tradewind.poe2')
+
+  // Up first so there's something on screen while the data fetches below warm
+  // up; dismissed once they settle (or a safety cap) — see below.
+  const splash = createSplashWindow()
+  const splashStart = Date.now()
+
   const config = loadConfig()
   const devAnyWindow = config.devAnyWindow || process.env['TRADEWIND_ANY_WINDOW'] === '1'
 
   const overlay = createOverlayWindow()
+  // The overlay is hidden whenever PoE2 isn't focused, so the tray is the only
+  // way to quit. Held in scope so the GC doesn't reap the icon.
+  const tray = createTray()
+  // Background auto-update (no-op in dev); never blocks startup.
+  initAutoUpdater(overlay, config)
   const input = new InputManager()
   const tracker = new GameWindowTracker(config.gameWindowTitle, devAnyWindow)
   const tradeClient = new TradeApiClient()
@@ -49,7 +65,10 @@ app.whenReady().then(() => {
 
   // Stats DB loads in the background; price checks just show raw text until ready.
   let statsDb: StatsDb | null = null
-  void cachedFetchJson<StatsPayload>('stats', 'https://www.pathofexile.com/api/trade2/data/stats')
+  const statsReady = cachedFetchJson<StatsPayload>(
+    'stats',
+    'https://www.pathofexile.com/api/trade2/data/stats'
+  )
     .then((payload) => {
       statsDb = new StatsDb(payload)
       console.log(`[data] stats db ready (${payload.result.length} categories)`)
@@ -62,7 +81,10 @@ app.whenReady().then(() => {
   // not committed — see the renderer's CSP img-src).
   const currencyIcons: Record<string, string> = {}
   const ICON_CURRENCIES = new Set(['exalted', 'divine', 'chaos'])
-  void cachedFetchJson<StaticPayload>('static', 'https://www.pathofexile.com/api/trade2/data/static')
+  const exchangeReady = cachedFetchJson<StaticPayload>(
+    'static',
+    'https://www.pathofexile.com/api/trade2/data/static'
+  )
     .then((payload) => {
       for (const group of payload.result) {
         for (const entry of group.entries ?? []) {
@@ -80,7 +102,10 @@ app.whenReady().then(() => {
 
   // Base names for extracting the true base from decorated white/magic names.
   let baseTypes: string[] = []
-  void cachedFetchJson<ItemsPayload>('items', 'https://www.pathofexile.com/api/trade2/data/items')
+  const baseTypesReady = cachedFetchJson<ItemsPayload>(
+    'items',
+    'https://www.pathofexile.com/api/trade2/data/items'
+  )
     .then((payload) => {
       const seen = new Set<string>()
       for (const group of payload.result) {
@@ -95,7 +120,7 @@ app.whenReady().then(() => {
 
   let leagues: string[] = []
   let league = config.league
-  void cachedFetchJson<LeaguesPayload>(
+  const leaguesReady = cachedFetchJson<LeaguesPayload>(
     'leagues',
     'https://www.pathofexile.com/api/trade2/data/leagues'
   )
@@ -106,6 +131,23 @@ app.whenReady().then(() => {
     })
     .catch((err) => console.error('[data] leagues failed to load:', err))
 
+  // Dismiss the splash once the startup data has settled — but keep it up a
+  // readable minimum so it never just flashes (everything may be disk-cached),
+  // and cap the wait so a hung network can't trap it on screen forever.
+  // splash.close() fades out and is idempotent, so both paths can call it.
+  const SPLASH_MIN_MS = 2500
+  const SPLASH_MAX_MS = 10_000
+  void Promise.allSettled([statsReady, exchangeReady, baseTypesReady, leaguesReady]).then(
+    async () => {
+      const elapsed = Date.now() - splashStart
+      if (elapsed < SPLASH_MIN_MS) {
+        await new Promise((resolve) => setTimeout(resolve, SPLASH_MIN_MS - elapsed))
+      }
+      splash.close()
+    }
+  )
+  setTimeout(() => splash.close(), SPLASH_MAX_MS)
+
   let overlayBounds = { x: 0, y: 0, width: 0, height: 0 }
   // The popup's on-screen rect (overlay-local CSS px) reported by the renderer;
   // null when no popup is open. Doubles as the "popup visible" flag.
@@ -115,6 +157,9 @@ app.whenReady().then(() => {
   // lives outside popupRect, so it gets its own interactive region — otherwise
   // reaching for it would flip the overlay click-through and hide it.
   let tooltipRect: Rect | null = null
+  // The update toast's rect; like the others it makes that region clickable, but
+  // it never triggers auto-hide (the toast manages its own dismissal).
+  let toastRect: Rect | null = null
 
   let interactiveState = false
   const setInteractive = (interactive: boolean): void => {
@@ -138,13 +183,17 @@ app.whenReady().then(() => {
     releaseFocus()
   }
 
+  const within = (r: Rect | null, x: number, y: number): boolean =>
+    r !== null && x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h
+
   // Overlay is click-through by default so the game always receives mouse-moves
   // (and manages its own tooltip). The popup stays open until the user dismisses
   // it (its ✕, Esc, or a fresh price check); we only hit-test the cursor to
-  // capture the mouse while it is actually over the popup, leaving the rest of
-  // the screen click-through so the game stays playable.
+  // capture the mouse while it is actually over an interactive widget — the
+  // popup, the hovered listing tooltip, or the update toast — leaving the rest
+  // of the screen click-through so the game stays playable.
   const onCursorMove = (): void => {
-    if (!popupRect) {
+    if (!popupRect && !tooltipRect && !toastRect) {
       setInteractive(false)
       return
     }
@@ -156,10 +205,7 @@ app.whenReady().then(() => {
     const cur = screen.getCursorScreenPoint()
     const x = cur.x - overlayBounds.x
     const y = cur.y - overlayBounds.y
-    const hit = (r: Rect): boolean =>
-      x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h
-    // Interactive over the popup OR the open item tooltip beside it.
-    setInteractive(hit(popupRect) || (tooltipRect !== null && hit(tooltipRect)))
+    setInteractive(within(popupRect, x, y) || within(tooltipRect, x, y) || within(toastRect, x, y))
   }
 
   let busy = false
@@ -442,6 +488,16 @@ app.whenReady().then(() => {
     overlay.focus()
   })
 
+  ipcMain.on(
+    'tw:toast-rect',
+    (_event, rect: { x: number; y: number; w: number; h: number } | null) => {
+      toastRect = rect
+      onCursorMove()
+    }
+  )
+
+  ipcMain.on('tw:restart-update', () => quitAndInstall())
+
   tracker.start()
 
   app.on('will-quit', () => {
@@ -449,6 +505,8 @@ app.whenReady().then(() => {
     keyhook?.stop()
     input.stop()
     tracker.stop()
+    stopAutoUpdater()
+    tray.destroy()
   })
 
   console.log(
