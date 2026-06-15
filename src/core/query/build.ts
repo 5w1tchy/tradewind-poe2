@@ -20,14 +20,35 @@ function enabledRange(r: PreparedRange | null): MinMax | undefined {
   return minMax(r.min, r.max)
 }
 
+/** Intersect two bounds on the same stat id: tightest min, tightest max. The
+ *  trade site indexes a repeated stat once (summed), so several enabled rows
+ *  for it collapse to one filter — e.g. a single mod plus its "(total)". */
+function intersectBounds(a: MinMax | undefined, b: MinMax | undefined): MinMax | undefined {
+  if (!a) return b
+  if (!b) return a
+  const out: MinMax = {}
+  const mins = [a.min, b.min].filter((n): n is number => n !== undefined)
+  const maxes = [a.max, b.max].filter((n): n is number => n !== undefined)
+  if (mins.length) out.min = Math.max(...mins)
+  if (maxes.length) out.max = Math.min(...maxes)
+  return out
+}
+
 /** PreparedQuery -> the POST body for /api/trade2/search/poe2/{league}. */
 export function buildSearchBody(q: PreparedQuery): TradeSearchRequest {
-  const statFilters: StatFilterSpec[] = q.stats
-    .filter((s) => s.enabled)
-    .map((s) => {
-      const value = minMax(s.min, s.max)
-      return value ? { id: s.statId, value } : { id: s.statId }
-    })
+  // One filter per stat id (insertion order); repeats merge their bounds.
+  const boundsById = new Map<string, MinMax | undefined>()
+  for (const s of q.stats) {
+    if (!s.enabled) continue
+    const value = minMax(s.min, s.max)
+    boundsById.set(
+      s.statId,
+      boundsById.has(s.statId) ? intersectBounds(boundsById.get(s.statId), value) : value
+    )
+  }
+  const statFilters: StatFilterSpec[] = [...boundsById].map(([id, value]) =>
+    value ? { id, value } : { id }
+  )
 
   const filters: TradeQueryFilters = {}
 

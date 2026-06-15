@@ -70,7 +70,10 @@ interface LineContext {
   source: StatSource
   prefer: string[]
   enabled: boolean
+  affix: 'prefix' | 'suffix' | null
   tier: number | null
+  /** Source-mod index; lines of one hybrid mod share it (see PreparedStatFilter). */
+  group: number
 }
 
 /**
@@ -123,20 +126,35 @@ function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
     isRelic ? ['sanctum', ...preferFor(mod)] : preferFor(mod)
 
   const out: LineContext[] = []
+  // One group per source mod, so a hybrid mod's lines render as a single node.
+  let group = 0
   for (const mod of item.implicits) {
+    group++
     for (const line of mod.lines) {
-      out.push({ line, source: 'implicit', prefer: prefer(mod), enabled: false, tier: mod.tier })
+      out.push({
+        line,
+        source: 'implicit',
+        prefer: prefer(mod),
+        enabled: false,
+        affix: null,
+        tier: mod.tier,
+        group
+      })
     }
   }
   for (const mod of [...item.explicits, ...item.enhancements]) {
+    group++
     const source: StatSource = mod.generation === 'enhancement' ? 'enchant' : 'explicit'
+    const affix = mod.generation === 'prefix' || mod.generation === 'suffix' ? mod.generation : null
     for (const line of mod.lines) {
       out.push({
         line,
         source,
         prefer: prefer(mod),
         enabled: statsEnabled && source === 'explicit',
-        tier: mod.tier
+        affix,
+        tier: mod.tier,
+        group
       })
     }
   }
@@ -146,7 +164,9 @@ function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
       source: 'rune',
       prefer: ['rune', 'enchant', 'explicit'],
       enabled: false,
-      tier: null
+      affix: null,
+      tier: null,
+      group: ++group
     })
   }
   for (const line of item.enchantMods) {
@@ -155,7 +175,9 @@ function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
       source: 'enchant',
       prefer: ['enchant', 'explicit'],
       enabled: false,
-      tier: null
+      affix: null,
+      tier: null,
+      group: ++group
     })
   }
   return out
@@ -170,10 +192,13 @@ function buildStatRows(
   const stats: PreparedStatFilter[] = []
   const templates: string[] = []
   const unmatched: string[] = []
-  const rowByKey = new Map<string, number>()
+  // First (so-far only) individual row for a stat id; promoted to a display row
+  // once a duplicate appears. Then aggByKey points at the searchable total.
+  const firstByKey = new Map<string, number>()
+  const aggByKey = new Map<string, number>()
   const category = categoryForItemClass(item.itemClass)
 
-  for (const { line, source, prefer, enabled, tier } of collectLines(item, statsEnabled)) {
+  for (const { line, source, prefer, enabled, affix, tier, group } of collectLines(item, statsEnabled)) {
     const candidates = db.match(line, {
       preferCategories: prefer,
       preferLocal: lineWantsLocal(category, line.template)
@@ -187,41 +212,129 @@ function buildStatRows(
     if (value !== null && best.negated) value = -value
     const lineSpread = spreadFor(line.template, spread)
 
+    const node = (en: boolean): void => {
+      stats.push({
+        statId: best.id,
+        label: line.raw,
+        source,
+        affix,
+        tier,
+        group,
+        value,
+        min: value !== null ? minWithSpread(value, lineSpread) : null,
+        max: null,
+        enabled: en
+      })
+      templates.push(line.template)
+    }
+
     // A stat rolling on several mods (rarity as prefix AND suffix, double ES
-    // prefixes) is indexed by the trade site once, summed — two filters on
-    // the same id would each test their min against that sum. Accumulate
-    // into one row so the min means "total at least".
+    // prefixes, a Spell Damage prefix beside a Spell Damage suffix) is indexed
+    // by the trade site once, summed. So each individual mod stays in its affix
+    // group as its own searchable row (off by default), and a "(total)" row sums
+    // them for the common case. The query builder dedupes the shared id, so the
+    // user can search by a single mod OR by the total without double-filtering.
     const key = `${best.id}|${source}`
-    const existing = rowByKey.get(key)
-    if (existing !== undefined) {
-      const row = stats[existing]
+    const aggIdx = aggByKey.get(key)
+    if (aggIdx !== undefined) {
+      // Known duplicate: add this mod (off by default) and fold into the total.
+      node(false)
       if (value !== null) {
-        row.value = (row.value ?? 0) + value
-        row.min = minWithSpread(row.value, lineSpread)
-        row.label = totalLabel(line.template, row.value)
-        // A summed total is no single mod's roll — a tier badge would lie.
-        row.tier = null
-        row.enabled = row.enabled || enabled
+        const agg = stats[aggIdx]
+        agg.value = (agg.value ?? 0) + value
+        agg.min = minWithSpread(agg.value, lineSpread)
+        agg.label = totalLabel(line.template, agg.value)
       }
       continue
     }
 
-    stats.push({
-      statId: best.id,
-      label: line.raw,
-      source,
-      tier,
-      value,
-      min: value !== null ? minWithSpread(value, lineSpread) : null,
-      max: null,
-      enabled
-    })
-    templates.push(line.template)
-    rowByKey.set(key, stats.length - 1)
+    const firstIdx = firstByKey.get(key)
+    if (firstIdx !== undefined) {
+      // Second occurrence: the total takes over the default search; both mods
+      // stay clickable but off so they don't double-filter the summed id.
+      const first = stats[firstIdx]
+      const firstEnabled = first.enabled
+      first.enabled = false
+      node(false)
+      const total = (first.value ?? 0) + (value ?? 0)
+      stats.push({
+        statId: best.id,
+        label: totalLabel(line.template, total),
+        source,
+        // A summed total is no single mod's roll — a tier/affix badge would lie.
+        affix: null,
+        tier: null,
+        summed: true,
+        value: total,
+        min: total ? minWithSpread(total, lineSpread) : null,
+        max: null,
+        enabled: firstEnabled || enabled
+      })
+      templates.push(line.template)
+      aggByKey.set(key, stats.length - 1)
+      continue
+    }
+
+    node(enabled)
+    firstByKey.set(key, stats.length - 1)
   }
 
   foldResistancePseudos(stats, templates, statsEnabled, spread)
+  addHybridSingles(stats, statsEnabled)
+  disableHybridGroups(stats)
   return { stats, unmatched }
+}
+
+/**
+ * A hybrid mod's single checkbox can't search just one of its stats — so each
+ * component that isn't already independently searchable (no summed "(total)"
+ * and not already a pseudo) is surfaced as its own row in the pseudo area. These
+ * pseudo rows are the default search target (the hybrid node itself is off — see
+ * disableHybridGroups), so they default on like a normal explicit. The builder
+ * dedupes if both a pseudo row and its node end up enabled.
+ */
+function addHybridSingles(stats: PreparedStatFilter[], statsEnabled: boolean): void {
+  const groupSize = new Map<number, number>()
+  for (const s of stats) {
+    if (s.group !== undefined) groupSize.set(s.group, (groupSize.get(s.group) ?? 0) + 1)
+  }
+  // Ids already standalone-searchable in the pseudo area (totals, pseudos).
+  const covered = new Set<string>()
+  for (const s of stats) if (s.summed || s.affix === null) covered.add(s.statId)
+  const extras: PreparedStatFilter[] = []
+  for (const s of stats) {
+    if (s.group === undefined || (groupSize.get(s.group) ?? 0) < 2) continue
+    if (covered.has(s.statId)) continue
+    covered.add(s.statId)
+    extras.push({
+      statId: s.statId,
+      label: s.label,
+      source: s.source,
+      affix: null,
+      tier: null,
+      value: s.value,
+      min: s.min,
+      max: null,
+      enabled: statsEnabled && s.source === 'explicit'
+    })
+  }
+  stats.push(...extras)
+}
+
+/**
+ * A hybrid mod renders as one node with a single checkbox; its stats are also
+ * surfaced individually in the pseudo area (see addHybridSingles), which is the
+ * default search target. So the in-place node is off by default — both its lines
+ * share that off state, keeping the single checkbox honest.
+ */
+function disableHybridGroups(stats: PreparedStatFilter[]): void {
+  const groupSize = new Map<number, number>()
+  for (const s of stats) {
+    if (s.group !== undefined) groupSize.set(s.group, (groupSize.get(s.group) ?? 0) + 1)
+  }
+  for (const s of stats) {
+    if (s.group !== undefined && (groupSize.get(s.group) ?? 0) >= 2) s.enabled = false
+  }
 }
 
 // Weight of one mod line toward summed resistance pseudo stats. The trade
@@ -252,8 +365,10 @@ function foldResistancePseudos(
   let ele = 0
   let chaos = 0
   for (const [i, stat] of stats.entries()) {
-    // Runes/enchants are swappable — they'd skew totals vs. listings.
-    if (stat.value === null || (stat.source !== 'explicit' && stat.source !== 'implicit')) continue
+    // Runes/enchants are swappable — they'd skew totals vs. listings. Synthetic
+    // "(total)" rows are skipped so their individual mods aren't counted twice.
+    if (stat.value === null || stat.summed) continue
+    if (stat.source !== 'explicit' && stat.source !== 'implicit') continue
     const template = templates[i]
     for (const [pattern, weight] of ELE_RES_PATTERNS) {
       if (pattern.test(template)) {
@@ -276,6 +391,7 @@ function foldResistancePseudos(
     statId,
     label,
     source: 'pseudo',
+    affix: null,
     tier: null,
     value,
     min: minWithSpread(value, spread),

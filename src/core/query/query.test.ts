@@ -181,37 +181,86 @@ describe('prepareQuery', () => {
     expect(hybrid.enabled).toBe(false)
   })
 
-  it('accumulates a stat repeated across mods into one summed filter', () => {
+  it('keeps each mod of a summed stat clickable, with one searchable total', () => {
     // Rarity rolls as prefix AND suffix, ES as two prefixes — the trade site
-    // indexes each stat once (summed), so the query must carry one filter.
+    // indexes each stat once (summed). Each mod stays as its own searchable row
+    // (off by default), and a "(total)" row sums them and is on by default.
     const q = prepareFixture('37-helmets--blight-crown-screenshot.txt')
 
     const rarity = q.stats.filter((s) => s.label.includes('Rarity of Items found'))
-    expect(rarity).toHaveLength(1)
-    expect(rarity[0]).toMatchObject({
+    const rarityTotal = rarity.find((s) => s.summed)!
+    expect(rarityTotal).toMatchObject({
       label: '36% increased Rarity of Items found (total)',
       value: 36,
       min: 32, // floor(36 * 0.9)
+      affix: null,
       tier: null,
       enabled: true
     })
+    // The two individual mods stay clickable (affix-tagged) but off by default.
+    const rarityMods = rarity.filter((s) => !s.summed)
+    expect(rarityMods).toHaveLength(2)
+    expect(rarityMods.every((s) => s.affix !== null && !s.enabled)).toBe(true)
 
     const es = q.stats.filter(
       (s) => s.label.includes('increased Energy Shield') && s.source === 'explicit'
     )
-    expect(es).toHaveLength(1)
-    expect(es[0]).toMatchObject({
+    expect(es.find((s) => s.summed)).toMatchObject({
       label: '130% increased Energy Shield (total)',
       value: 130,
       min: 117,
+      affix: null,
       tier: null
     })
+    expect(es.filter((s) => !s.summed)).toHaveLength(2)
 
-    // ...and the search body carries no duplicate stat ids.
+    // The search body carries no duplicate stat ids by default...
     const ids = buildSearchBody(q)
       .query.stats.flatMap((g) => g.filters)
       .map((f) => f.id)
     expect(new Set(ids).size).toBe(ids.length)
+
+    // ...and stays deduped (tightest min wins) if a mod and its total are both on.
+    const mod = rarityMods[0]
+    mod.enabled = true
+    mod.min = 10
+    const merged = buildSearchBody(q)
+      .query.stats.flatMap((g) => g.filters)
+      .filter((f) => f.id === rarityTotal.statId)
+    expect(merged).toHaveLength(1)
+    expect(merged[0].value).toMatchObject({ min: 32 }) // max(10, 32)
+  })
+
+  it('groups a hybrid mod (Energy Shield + Mana) into one node', () => {
+    // The "Sacred" prefix grants two stats under one modifier — they share a
+    // group id (so the UI shows one node) and one enabled state. (The helmet
+    // also has a separate "Fearless" ES prefix, which must NOT join the group.)
+    const q = prepareFixture('11-helmets--phoenix-horn-9c69bdfb.txt')
+
+    const mana = q.stats.find((s) => s.label.includes('to maximum Mana'))!
+    expect(mana.group).toBeDefined()
+    expect(mana.affix).toBe('prefix')
+
+    // The Sacred prefix's ES line shares mana's group, and the group is just
+    // those two hybrid lines.
+    const groupLines = q.stats.filter((s) => s.group === mana.group)
+    expect(groupLines).toHaveLength(2)
+    expect(groupLines.some((s) => s.label.includes('Energy Shield'))).toBe(true)
+    // The in-place hybrid node is off by default (its stats default on in pseudo).
+    expect(groupLines.every((s) => !s.enabled)).toBe(true)
+
+    // Mana isn't summed elsewhere, so it's surfaced as a standalone pseudo row
+    // (affix-less, no group), and is the default-on search target.
+    const manaSingle = q.stats.find(
+      (s) => s.label.includes('to maximum Mana') && s.affix === null && s.group === undefined
+    )!
+    expect(manaSingle).toBeDefined()
+    expect(manaSingle.enabled).toBe(true)
+    // ES already has a summed "(total)", so it is NOT duplicated into pseudo.
+    const esPseudo = q.stats.filter(
+      (s) => s.label.includes('Energy Shield') && s.affix === null && !s.summed
+    )
+    expect(esPseudo).toHaveLength(0)
   })
 
   it('enabled equipment rows land in equipment_filters', () => {
