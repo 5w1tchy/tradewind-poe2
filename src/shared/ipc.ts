@@ -12,6 +12,9 @@ export interface ItemPayload {
   prepared: PreparedQuery | null
   leagues: string[]
   league: string
+  /** Currency id ("exalted"/"divine"/"chaos") -> orb image URL (GGG CDN), for
+   *  the buyout-price icons. Empty until the static data has loaded. */
+  currencyIcons: Record<string, string>
 }
 
 /** Auto-update lifecycle, pushed main -> renderer. */

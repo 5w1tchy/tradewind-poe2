@@ -4,7 +4,9 @@ import { extractBaseType } from './baseType'
 import { categoryForItemClass } from './categories'
 import { deriveEquipmentValues } from './derived'
 import type {
+  ItemFlagKey,
   PreparedEquipmentFilter,
+  PreparedFlag,
   PreparedQuery,
   PreparedRange,
   PreparedStatFilter,
@@ -302,6 +304,23 @@ function range(value: number, opts: Partial<PreparedRange> = {}): PreparedRange 
 
 const EQUIPMENT_RARITIES = new Set(['Normal', 'Magic', 'Rare', 'Unique'])
 
+// Tri-state item attributes shown for equipment, all defaulting to "any" so a
+// price check doesn't silently exclude listings on a property the user hasn't
+// chosen to filter on.
+const EQUIPMENT_FLAGS: ReadonlyArray<[ItemFlagKey, string]> = [
+  ['corrupted', 'Corrupted'],
+  ['mirrored', 'Mirrored'],
+  ['sanctified', 'Sanctified'],
+  ['crafted', 'Crafted'],
+  ['fractured_item', 'Fractured'],
+  ['desecrated', 'Desecrated'],
+  ['identified', 'Identified']
+]
+
+function equipmentFlags(): PreparedFlag[] {
+  return EQUIPMENT_FLAGS.map(([key, label]) => ({ key, label, state: 'any' }))
+}
+
 /**
  * ParsedItem -> editable search state with sensible pre-checked defaults:
  *  - uniques: exact name+type, mods present but unchecked
@@ -337,7 +356,8 @@ export function prepareQuery(
     quality: null,
     gemLevel: null,
     mapTier: null,
-    corrupted: null,
+    flags: [],
+    buyout: { min: null, max: null, option: null },
     equipment: [],
     stats: [],
     unmatched: []
@@ -368,7 +388,10 @@ export function prepareQuery(
     const level = levelProp ? Number(levelProp.raw.match(/^Level: (\d+)/)![1]) : null
     if (level !== null) prepared.gemLevel = range(level, { enabled: true })
     if (item.quality !== null) prepared.quality = range(item.quality)
-    prepared.corrupted = { value: item.corrupted, enabled: true }
+    // A corrupted gem is a different item at a different price — pin it.
+    prepared.flags = [
+      { key: 'corrupted', label: 'Corrupted', state: item.corrupted ? 'yes' : 'no' }
+    ]
     return prepared
   }
 
@@ -418,7 +441,11 @@ export function prepareQuery(
     if (item.waystoneTier !== null) {
       prepared.mapTier = range(item.waystoneTier, { max: item.waystoneTier, enabled: true })
     }
-    if (!item.unidentified) prepared.corrupted = { value: item.corrupted, enabled: true }
+    // Uniques can only meaningfully be corrupted — the rest (mirrored aside,
+    // which is too rare to filter on) don't describe a unique's price.
+    prepared.flags = isUnique
+      ? [{ key: 'corrupted', label: 'Corrupted', state: 'any' }]
+      : equipmentFlags()
 
     prepared.equipment = deriveEquipmentValues(item).map(
       (d): PreparedEquipmentFilter => ({

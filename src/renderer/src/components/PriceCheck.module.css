@@ -132,6 +132,30 @@
   padding-left: 8px;
 }
 
+/* One-click "match my roll" — writes the item's value into min. */
+.fill {
+  appearance: none;
+  width: 18px;
+  flex-shrink: 0;
+  background: var(--tw-bg-inset);
+  border: 1px solid var(--tw-line);
+  border-radius: 2px;
+  color: var(--tw-bronze-bright);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    color 100ms ease,
+    border-color 100ms ease;
+}
+
+.fill:hover {
+  color: var(--tw-gold);
+  border-color: var(--tw-bronze);
+}
+
 .num {
   width: 48px;
   background: var(--tw-bg-inset);
@@ -159,6 +183,121 @@
 
 .num::placeholder {
   color: var(--tw-text-faint);
+}
+
+/* Break line between filter groups (identity · properties · flags). */
+.divider {
+  height: 1px;
+  flex-shrink: 0; /* flex column + overflow would otherwise crush it to 0px */
+  margin: 7px 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--tw-bronze) 12%,
+    var(--tw-bronze) 88%,
+    transparent
+  );
+  opacity: 0.7;
+}
+
+/* ---- Collapsible "Filters" group -------------------------------------- */
+
+.flags-header {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  background: none;
+  border: none;
+  border-radius: 2px;
+  padding: 2px 2px;
+  color: var(--tw-bronze-bright);
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 100ms ease;
+}
+
+.flags-header:hover {
+  background: var(--tw-bg-raised);
+  color: var(--tw-gold);
+}
+
+.flags-title {
+  text-transform: uppercase;
+}
+
+.flags-count {
+  color: var(--tw-gold);
+  background: var(--tw-bronze-faint);
+  border: 1px solid var(--tw-bronze-dim);
+  border-radius: 7px;
+  font-size: 10px;
+  line-height: 13px;
+  min-width: 14px;
+  text-align: center;
+  padding: 0 3px;
+}
+
+.chevron {
+  margin-left: auto;
+  color: var(--tw-text-faint);
+  font-size: 10px;
+}
+
+/* ---- Tri-state item flags (corrupted, mirrored, …) -------------------- */
+
+.flag-row {
+  cursor: default;
+}
+
+.flag-row:hover {
+  background: none;
+}
+
+.flag-row .property {
+  opacity: 1;
+}
+
+.tristate {
+  margin-left: auto;
+  display: flex;
+  flex-shrink: 0;
+  border: 1px solid var(--tw-line-strong);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.tristate button {
+  appearance: none;
+  background: var(--tw-bg-inset);
+  border: none;
+  border-left: 1px solid var(--tw-line);
+  color: var(--tw-text-faint);
+  font: inherit;
+  font-size: 11px;
+  line-height: 16px;
+  padding: 0 9px;
+  cursor: pointer;
+  transition:
+    background-color 100ms ease,
+    color 100ms ease;
+}
+
+.tristate button:first-child {
+  border-left: none;
+}
+
+.tristate button:hover {
+  color: var(--tw-text);
+  background: var(--tw-bg-raised);
+}
+
+.tristate button.active {
+  background: var(--tw-bronze-faint);
+  color: var(--tw-gold);
 }
 
 .unmatched {
@@ -281,8 +420,138 @@
 .actions {
   margin-left: auto;
   display: flex;
+  align-items: center;
   gap: 6px;
   flex-shrink: 0;
+}
+
+/* Buyout-price filter: a "Trade Filters" toggle opening a floating popover (no reflow). */
+.buyout {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Orb icon(s) for the chosen buyout currency, shown on the Trade-Filters toggle. */
+.cur-icon {
+  width: 17px;
+  height: 17px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Currency icon cluster: the "~exalted" equivalent, or "exalted / divine". */
+.cur-set {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.cur-slash {
+  color: var(--tw-text-faint);
+  margin: 0 -1px;
+}
+
+.buyout .num {
+  width: 46px;
+}
+
+/* The popover floats above the coin so revealing it never resizes the window. */
+.buyout-pop {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 6px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: rgba(19, 17, 15, 0.98);
+  border: 1px solid var(--tw-bronze-dim);
+  border-radius: 3px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+}
+
+.buyout-head {
+  font-family: var(--tw-font-display);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tw-bronze-bright);
+}
+
+.buyout-inputs {
+  display: flex;
+  gap: 4px;
+}
+
+.buyout-cur {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.buyout-cur button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--tw-text);
+  font: inherit;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.buyout-cur button:hover {
+  background: var(--tw-bronze-faint);
+  color: var(--tw-gold);
+}
+
+.buyout-cur button.cur-active,
+.buyout-cur button.cur-active:hover {
+  color: var(--tw-gold);
+  background: var(--tw-bronze-faint);
+}
+
+/* "Trade Filters" toggle: label + currency icon, opens the buyout popover. */
+.trade-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1px solid var(--tw-line);
+  border-radius: 2px;
+  padding: 1px 6px;
+  color: var(--tw-text-mute);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    color 100ms ease,
+    border-color 100ms ease;
+}
+
+.trade-btn:hover {
+  color: var(--tw-bronze-bright);
+  border-color: var(--tw-bronze-dim);
+}
+
+/* A buyout filter is set — light the control gold, even while collapsed. */
+.trade-btn.active {
+  color: var(--tw-gold);
+  border-color: var(--tw-bronze-dim);
+}
+
+.trade-label {
+  white-space: nowrap;
 }
 
 .search-btn.armed {

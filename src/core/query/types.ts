@@ -37,12 +37,24 @@ export interface TradeQueryFilters {
   }
   misc_filters?: {
     filters: {
+      identified?: OptionFilter
       corrupted?: OptionFilter
+      mirrored?: OptionFilter
+      sanctified?: OptionFilter
+      crafted?: OptionFilter
+      fractured_item?: OptionFilter
+      desecrated?: OptionFilter
       gem_level?: MinMax
     }
   }
   equipment_filters?: {
     filters: Partial<Record<EquipmentFilterKey, MinMax>>
+  }
+  trade_filters?: {
+    filters: {
+      /** Buyout price; `option` is the currency unit (omitted = exalted equivalent). */
+      price?: { min?: number; max?: number; option?: string }
+    }
   }
 }
 
@@ -102,9 +114,24 @@ export interface PreparedEquipmentFilter extends PreparedRange {
   label: string
 }
 
-export interface PreparedToggle {
-  value: boolean
-  enabled: boolean
+/** Boolean item attributes (corrupted, mirrored, …) search as yes / no / any. */
+export type TriState = 'yes' | 'no' | 'any'
+
+/** misc_filters keys we expose as tri-state item flags. */
+export type ItemFlagKey =
+  | 'corrupted'
+  | 'mirrored'
+  | 'sanctified'
+  | 'crafted'
+  | 'fractured_item'
+  | 'desecrated'
+  | 'identified'
+
+export interface PreparedFlag {
+  key: ItemFlagKey
+  /** Human label shown in the filter list ("Corrupted"). */
+  label: string
+  state: TriState
 }
 
 /**
@@ -140,7 +167,13 @@ export interface PreparedQuery {
   quality: PreparedRange | null
   gemLevel: PreparedRange | null
   mapTier: PreparedRange | null
-  corrupted: PreparedToggle | null
+  /** Tri-state item attributes (corrupted, mirrored, …); empty for currency. */
+  flags: PreparedFlag[]
+  /**
+   * Buyout-price filter. `option` is the currency unit (null = exalted-orb
+   * equivalent, the trade default); min/max are bounds in that unit.
+   */
+  buyout: { min: number | null; max: number | null; option: string | null }
   equipment: PreparedEquipmentFilter[]
   stats: PreparedStatFilter[]
   /** Mod lines with no trade stat id — excluded from the search, surfaced as warnings. */

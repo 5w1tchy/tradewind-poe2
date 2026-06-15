@@ -1,6 +1,12 @@
 import { useEffect, useReducer, useRef, useState } from 'react'
 import { anchorDiverges, formatEstimateRange, formatExalted } from '../../../core/pricing'
-import type { ListingStatus, PreparedQuery, PreparedRange } from '../../../core/query/types'
+import type {
+  ListingStatus,
+  PreparedFlag,
+  PreparedQuery,
+  PreparedRange,
+  TriState
+} from '../../../core/query/types'
 import type { SearchOutcome } from '../../../core/trade/types'
 import type { TradeListing } from '../../../core/trade/types'
 import type { ItemPayload } from '../../../shared/ipc'
@@ -21,6 +27,28 @@ const RARITY_OPTIONS: Array<[string, string]> = [
   ['rare', 'Rare']
 ]
 
+const TRISTATE_OPTIONS: Array<[TriState, string]> = [
+  ['yes', 'Yes'],
+  ['no', 'No'],
+  ['any', 'Any']
+]
+
+// Buyout-price currency: [trade option id (null = exalted equivalent), menu label].
+const BUYOUT_OPTIONS: Array<[string | null, string]> = [
+  [null, 'Exalted Orb Equivalent'],
+  ['exalted_divine', 'Exalted or Divine Orbs'],
+  ['divine', 'Divine Orb'],
+  ['chaos', 'Chaos Orb']
+]
+
+// Single-orb buyout options → their currency icon id. The exalted-equivalent
+// default ("~exalted") and exalted_divine ("exalted / divine") render specially.
+// Resolved to GGG-CDN image URLs via payload.currencyIcons.
+const BUYOUT_ICON_KEYS: Record<string, string[]> = {
+  divine: ['divine'],
+  chaos: ['chaos']
+}
+
 interface Bounded {
   min: number | null
   max: number | null
@@ -34,6 +62,15 @@ interface ToggleRow {
   range?: PreparedRange
   /** Extra behavior after the checkbox flips (e.g. base/category see-saw). */
   onToggle?: () => void
+}
+
+/** Funnel glyph for the collapsible Filters header (PoE trade-site style). */
+function FunnelIcon(): React.JSX.Element {
+  return (
+    <svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true">
+      <path fill="currentColor" d="M2 3h12L9.3 8v5L6.7 11.6V8z" />
+    </svg>
+  )
 }
 
 function age(iso: string): string {
@@ -58,8 +95,12 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
   const [leagueOpen, setLeagueOpen] = useState(false)
   const [saleOpen, setSaleOpen] = useState(false)
   const [rarityOpen, setRarityOpen] = useState(false)
+  /** Buyout-price popover revealed via the coin toggle (collapsed by default). */
+  const [buyoutShown, setBuyoutShown] = useState(false)
   /** Filters changed since the last search — results on screen are stale. */
   const [dirty, setDirty] = useState(false)
+  /** The collapsible tri-state flag group (corrupted, mirrored, …). */
+  const [flagsOpen, setFlagsOpen] = useState(false)
   /** The listing whose item tooltip is showing (null when nothing hovered). */
   const [hover, setHover] = useState<TooltipAnchor | null>(null)
   /** Grace timer so the cursor can travel from a row onto its tooltip. */
@@ -123,11 +164,13 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setOutcome(null)
     setError(null)
     setDirty(false)
+    setFlagsOpen(false)
     cancelHide()
     setHover(null)
     setLeagueOpen(false)
     setSaleOpen(false)
     setRarityOpen(false)
+    setBuyoutShown(false)
     // Auto-search only when the query pins the item by name/type (uniques,
     // gems, currency, white bases) — those defaults are reliable. A rare with
     // every mod pre-checked rarely has market matches; arm Search instead.
@@ -147,33 +190,45 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
   function openLeague(): void {
     setSaleOpen(false)
     setRarityOpen(false)
+    setBuyoutShown(false)
     setLeagueOpen((o) => !o)
   }
 
   function openSale(): void {
     setLeagueOpen(false)
     setRarityOpen(false)
+    setBuyoutShown(false)
     setSaleOpen((o) => !o)
   }
 
   function openRarity(): void {
     setLeagueOpen(false)
     setSaleOpen(false)
+    setBuyoutShown(false)
     setRarityOpen((o) => !o)
+  }
+
+  /** Coin toggle: reveal/hide the buyout-price popover (floats — no layout shift). */
+  function toggleBuyout(): void {
+    setLeagueOpen(false)
+    setSaleOpen(false)
+    setRarityOpen(false)
+    setBuyoutShown((s) => !s)
   }
 
   // Click anywhere outside an open dropdown dismisses it.
   useEffect(() => {
-    if (!leagueOpen && !saleOpen && !rarityOpen) return
+    if (!leagueOpen && !saleOpen && !rarityOpen && !buyoutShown) return
     function onDown(e: MouseEvent): void {
       if ((e.target as HTMLElement).closest('[data-picker]')) return
       setLeagueOpen(false)
       setSaleOpen(false)
       setRarityOpen(false)
+      setBuyoutShown(false)
     }
     document.addEventListener('mousedown', onDown)
     return () => document.removeEventListener('mousedown', onDown)
-  }, [leagueOpen, saleOpen, rarityOpen])
+  }, [leagueOpen, saleOpen, rarityOpen, buyoutShown])
 
   function pickSale(id: ListingStatus): void {
     setSaleOpen(false)
@@ -187,6 +242,23 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setRarityOpen(false)
     if (!prepared.current || prepared.current.rarityOption === id) return
     prepared.current.rarityOption = id
+    markDirty()
+    forceUpdate()
+  }
+
+  function pickBuyout(option: string | null): void {
+    if (!prepared.current || prepared.current.buyout.option === option) return
+    prepared.current.buyout.option = option
+    markDirty()
+    forceUpdate()
+  }
+
+  /** Buyout min/max price input. */
+  function setBuyoutBound(key: 'min' | 'max', event: React.ChangeEvent<HTMLInputElement>): void {
+    if (!prepared.current) return
+    const raw = event.target.value
+    const num = raw === '' ? null : Number(raw)
+    prepared.current.buyout[key] = num !== null && Number.isFinite(num) ? num : null
     markDirty()
     forceUpdate()
   }
@@ -205,6 +277,24 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     const num = raw === '' ? null : Number(raw)
     range[key] = num !== null && Number.isFinite(num) ? num : null
     range.enabled = range.min !== null || range.max !== null
+    markDirty()
+    forceUpdate()
+  }
+
+  /** Tri-state item flag (corrupted, mirrored, …): yes / no / any. */
+  function setFlag(flag: PreparedFlag, state: TriState): void {
+    if (flag.state === state) return
+    flag.state = state
+    markDirty()
+    forceUpdate()
+  }
+
+  /** One-click "match my roll": write the item's actual value into min (100%
+   *  vs the pre-filled spread default), checking the row. */
+  function fillExact(target: { min: number | null; enabled: boolean }, value: number | null): void {
+    if (value === null) return
+    target.min = Math.round(value)
+    target.enabled = true
     markDirty()
     forceUpdate()
   }
@@ -241,36 +331,114 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     })
   }
 
+  /** One checkbox filter row (identity scope or a bounded item property). */
+  function renderToggleRow(row: ToggleRow): React.JSX.Element {
+    return (
+      <label key={row.label} className={styles['filter-row']}>
+        <input
+          type="checkbox"
+          checked={row.model.enabled}
+          onChange={(e) => {
+            row.model.enabled = e.target.checked
+            row.onToggle?.()
+            markDirty()
+            forceUpdate()
+          }}
+        />
+        <span className={styles.property}>{row.label}</span>
+        {row.range && <span className={styles.val}>{row.range.value}</span>}
+        {row.range && (
+          <span className={styles.bounds}>
+            <button
+              type="button"
+              className={styles.fill}
+              title={`Match your roll (${Math.round(row.range.value)})`}
+              onClick={(e) => {
+                e.preventDefault()
+                fillExact(row.range!, row.range!.value)
+              }}
+            >
+              =
+            </button>
+            <input
+              className={styles.num}
+              type="number"
+              placeholder="min"
+              value={row.range.min ?? ''}
+              onMouseDown={armFocus}
+              onChange={(e) => setBound(row.range!, 'min', e)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') void runSearch()
+              }}
+            />
+            <input
+              className={styles.num}
+              type="number"
+              placeholder="max"
+              value={row.range.max ?? ''}
+              onMouseDown={armFocus}
+              onChange={(e) => setBound(row.range!, 'max', e)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') void runSearch()
+              }}
+            />
+          </span>
+        )}
+      </label>
+    )
+  }
+
   const q = prepared.current
 
   const saleLabel = SALE_OPTIONS.find(([id]) => id === q?.status)?.[1] ?? 'Any'
   const rarityLabel = RARITY_OPTIONS.find(([id]) => id === q?.rarityOption)?.[1] ?? 'Any'
+  /** A buyout filter is set (bounded or a non-default currency) — light the control. */
+  const buyoutActive =
+    q != null && (q.buyout.min !== null || q.buyout.max !== null || q.buyout.option !== null)
+  /** Collapsed Trade-Filters label: the price summary once bounded, else the name. */
+  const buyoutSummary = ((): string => {
+    const b = q?.buyout
+    if (!b) return 'Trade Filters'
+    if (b.min !== null && b.max !== null) return `${b.min}-${b.max}`
+    if (b.min !== null) return `Atleast ${b.min}`
+    if (b.max !== null) return `Under ${b.max}`
+    return 'Trade Filters'
+  })()
+  /** One buyout-currency orb icon (GGG CDN), or null until the static data loads. */
+  const curIcon = (k: string): React.JSX.Element | null => {
+    const src = payload.currencyIcons[k]
+    return src ? <img key={k} className={styles['cur-icon']} src={src} alt="" /> : null
+  }
   /** Shown for equipment searches so a base can be checked across rarities. */
   const rarityEditable = q?.rarityOption != null && q.rarityOption !== 'unique'
 
   const baseLabel = q && q.type && q.type !== q.displayName ? q.type : null
 
+  // Identity (category / exact base) and item properties (defences, ilvl,
+  // quality) are two visually divided groups; tri-state flags are a third.
+  const identityRows: ToggleRow[] = []
   const propertyRows: ToggleRow[] = []
   if (q) {
     // Base and category are two scopes for the same search — exactly one stays
     // on: checking one unchecks the other, unchecking one re-checks the other.
+    // Category leads (the broader scope), exact base follows.
     const base = q.baseTypeFilter
     const cat = q.categoryFilter
-    if (base) {
-      propertyRows.push({
-        label: `Base: ${base.value}`,
-        model: base,
-        onToggle: () => {
-          if (cat) cat.enabled = !base.enabled
-        }
-      })
-    }
     if (cat) {
-      propertyRows.push({
+      identityRows.push({
         label: `Category: ${cat.label}`,
         model: cat,
         onToggle: () => {
           if (base) base.enabled = !cat.enabled
+        }
+      })
+    }
+    if (base) {
+      identityRows.push({
+        label: `Base: ${base.value}`,
+        model: base,
+        onToggle: () => {
+          if (cat) cat.enabled = !base.enabled
         }
       })
     }
@@ -282,13 +450,10 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     for (const row of q.equipment) add(row.label, row)
     add('Item Level', q.ilvl)
     add('Quality %', q.quality)
-    if (q.corrupted) {
-      propertyRows.push({
-        label: q.corrupted.value ? 'Corrupted' : 'Not Corrupted',
-        model: q.corrupted
-      })
-    }
   }
+
+  // Badge on the collapsed Filters header so set flags aren't hidden out of sight.
+  const activeFlags = q ? q.flags.filter((f) => f.state !== 'any').length : 0
 
   const est = outcome?.estimate
   let estimateDetail = ''
@@ -316,7 +481,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
         <div className={styles.picker} data-picker>
           <button className="tw-btn" onClick={openLeague}>{league} ▾</button>
           {leagueOpen && (
-            <ul className="tw-menu">
+            <ul className="tw-menu" data-overlay>
               {payload.leagues.map((id) => (
                 <li key={id}>
                   <button className={id === league ? 'active' : ''} onClick={() => pickLeague(id)}>
@@ -336,7 +501,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
             <div className={styles.picker} data-picker>
               <button className="tw-btn" onClick={openSale}>{saleLabel} ▾</button>
               {saleOpen && (
-                <ul className="tw-menu">
+                <ul className="tw-menu" data-overlay>
                   {SALE_OPTIONS.map(([id, label]) => (
                     <li key={id}>
                       <button className={id === q.status ? 'active' : ''} onClick={() => pickSale(id)}>
@@ -355,7 +520,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
                     {rarityLabel} ▾
                   </button>
                   {rarityOpen && (
-                    <ul className="tw-menu">
+                    <ul className="tw-menu" data-overlay>
                       {RARITY_OPTIONS.map(([id, label]) => (
                         <li key={id}>
                           <button
@@ -374,48 +539,47 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
           </div>
 
           <div className={styles.filters}>
-            {propertyRows.map((row) => (
-              <label key={row.label} className={styles['filter-row']}>
-                <input
-                  type="checkbox"
-                  checked={row.model.enabled}
-                  onChange={(e) => {
-                    row.model.enabled = e.target.checked
-                    row.onToggle?.()
-                    markDirty()
-                    forceUpdate()
-                  }}
-                />
-                <span className={styles.property}>{row.label}</span>
-                {row.range && <span className={styles.val}>{row.range.value}</span>}
-                {row.range && (
-                  <span className={styles.bounds}>
-                    <input
-                      className={styles.num}
-                      type="number"
-                      placeholder="min"
-                      value={row.range.min ?? ''}
-                      onMouseDown={armFocus}
-                      onChange={(e) => setBound(row.range!, 'min', e)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') void runSearch()
-                      }}
-                    />
-                    <input
-                      className={styles.num}
-                      type="number"
-                      placeholder="max"
-                      value={row.range.max ?? ''}
-                      onMouseDown={armFocus}
-                      onChange={(e) => setBound(row.range!, 'max', e)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') void runSearch()
-                      }}
-                    />
-                  </span>
+            {identityRows.map(renderToggleRow)}
+            {identityRows.length > 0 && propertyRows.length > 0 && (
+              <div className={styles.divider} />
+            )}
+            {propertyRows.map(renderToggleRow)}
+            {q.flags.length > 0 && (
+              <>
+                <div className={styles.divider} />
+                <button
+                  type="button"
+                  className={styles['flags-header']}
+                  onClick={() => setFlagsOpen((o) => !o)}
+                  aria-expanded={flagsOpen}
+                >
+                  <FunnelIcon />
+                  <span className={styles['flags-title']}>Miscellaneous</span>
+                  {activeFlags > 0 && <span className={styles['flags-count']}>{activeFlags}</span>}
+                  <span className={styles.chevron}>{flagsOpen ? '▾' : '▸'}</span>
+                </button>
+                {flagsOpen &&
+                  q.flags.map((flag) => (
+                    <div key={flag.key} className={`${styles['filter-row']} ${styles['flag-row']}`}>
+                      <span className={styles.property}>{flag.label}</span>
+                      <span className={styles.tristate}>
+                        {TRISTATE_OPTIONS.map(([val, label]) => (
+                          <button
+                            key={val}
+                            className={flag.state === val ? styles.active : ''}
+                            onClick={() => setFlag(flag, val)}
+                          >
+                            {label}
+                          </button>
+                        ))}
+                      </span>
+                    </div>
+                  ))}
+                {(q.stats.length > 0 || q.unmatched.length > 0) && (
+                  <div className={styles.divider} />
                 )}
-              </label>
-            ))}
+              </>
+            )}
             {q.stats.map((stat) => (
               <label key={stat.statId + stat.label} className={styles['filter-row']}>
                 <input
@@ -440,6 +604,16 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
                   {stat.label}
                 </span>
                 <span className={styles.bounds}>
+                  {stat.value !== null && (
+                    <button
+                      type="button"
+                      className={styles.fill}
+                      title={`Match your roll (${Math.round(stat.value)})`}
+                      onClick={() => fillExact(stat, stat.value)}
+                    >
+                      =
+                    </button>
+                  )}
                   <input
                     className={styles.num}
                     type="number"
@@ -533,6 +707,69 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
               )
             ) : null}
             <span className={styles.actions}>
+              <span className={styles.buyout} data-picker>
+                <button
+                  type="button"
+                  className={`${styles['trade-btn']} ${buyoutActive ? styles.active : ''}`}
+                  onClick={toggleBuyout}
+                  title={buyoutShown ? 'Hide buyout price' : 'Buyout price filter'}
+                  aria-expanded={buyoutShown}
+                >
+                  <span className={styles['trade-label']}>{buyoutSummary}</span>
+                  {q.buyout.option === null ? (
+                    <span className={styles['cur-set']}>~{curIcon('exalted')}</span>
+                  ) : q.buyout.option === 'exalted_divine' ? (
+                    <span className={styles['cur-set']}>
+                      {curIcon('exalted')}
+                      <span className={styles['cur-slash']}>/</span>
+                      {curIcon('divine')}
+                    </span>
+                  ) : (
+                    (BUYOUT_ICON_KEYS[q.buyout.option] ?? []).map((k) => curIcon(k))
+                  )}
+                </button>
+                {buyoutShown && (
+                  <div className={styles['buyout-pop']} data-overlay>
+                    <div className={styles['buyout-head']}>Buyout price</div>
+                    <div className={styles['buyout-inputs']}>
+                      <input
+                        className={styles.num}
+                        type="number"
+                        placeholder="min"
+                        value={q.buyout.min ?? ''}
+                        onMouseDown={armFocus}
+                        onChange={(e) => setBuyoutBound('min', e)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') void runSearch()
+                        }}
+                      />
+                      <input
+                        className={styles.num}
+                        type="number"
+                        placeholder="max"
+                        value={q.buyout.max ?? ''}
+                        onMouseDown={armFocus}
+                        onChange={(e) => setBuyoutBound('max', e)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') void runSearch()
+                        }}
+                      />
+                    </div>
+                    <ul className={styles['buyout-cur']}>
+                      {BUYOUT_OPTIONS.map(([id, label]) => (
+                        <li key={id ?? 'eq'}>
+                          <button
+                            className={id === q.buyout.option ? styles['cur-active'] : ''}
+                            onClick={() => pickBuyout(id)}
+                          >
+                            {label}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </span>
               {!searching && (
                 <button
                   className={`tw-btn ${styles['search-btn']} ${dirty ? styles.armed : ''}`}

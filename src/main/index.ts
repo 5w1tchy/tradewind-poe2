@@ -32,7 +32,7 @@ interface LeaguesPayload {
 }
 
 interface StaticPayload {
-  result: Array<{ id: string; entries?: Array<{ id: string; text: string }> }>
+  result: Array<{ id: string; entries?: Array<{ id: string; text: string; image?: string }> }>
 }
 
 interface ItemsPayload {
@@ -77,6 +77,10 @@ app.whenReady().then(() => {
 
   // Exact item text -> bulk-exchange id ("Idol of the Martyr" -> "idol-of-the-martyr").
   let exchangeIds: Record<string, string> = {}
+  // Orb image URLs for the buyout-price currency icons (served from GGG's CDN,
+  // not committed — see the renderer's CSP img-src).
+  const currencyIcons: Record<string, string> = {}
+  const ICON_CURRENCIES = new Set(['exalted', 'divine', 'chaos'])
   const exchangeReady = cachedFetchJson<StaticPayload>(
     'static',
     'https://www.pathofexile.com/api/trade2/data/static'
@@ -85,6 +89,11 @@ app.whenReady().then(() => {
       for (const group of payload.result) {
         for (const entry of group.entries ?? []) {
           if (entry.id && entry.id !== 'sep' && entry.text) exchangeIds[entry.text] = entry.id
+          if (entry.id && entry.image && ICON_CURRENCIES.has(entry.id)) {
+            currencyIcons[entry.id] = entry.image.startsWith('http')
+              ? entry.image
+              : `https://web.poecdn.com${entry.image}`
+          }
         }
       }
       console.log(`[data] exchange ids ready (${Object.keys(exchangeIds).length} items)`)
@@ -227,6 +236,7 @@ app.whenReady().then(() => {
         prepared,
         leagues,
         league,
+        currencyIcons,
         x: cursor.x - overlayBounds.x,
         y: cursor.y - overlayBounds.y
       } satisfies ItemPayload)

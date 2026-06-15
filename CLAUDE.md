@@ -66,8 +66,9 @@ runtime-agnostic. All side effects (network, clipboard, windows) live in `main/`
 
 ## Git
 
-Solo project — commits go straight to `main` and push to `origin/main` (no PR).
-End commit messages with the `Co-Authored-By` trailer.
+Work on a feature branch, push it, and open a PR against `main` — `main` is
+protected, no direct pushes. End commit messages with the `Co-Authored-By`
+trailer.
 
 ## More context
 
