@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { ItemPayload, TradewindApi, UpdateStatus } from '../shared/ipc'
+import type { ItemPayload, OverlayLayout, TradewindApi, UpdateStatus } from '../shared/ipc'
 
 const api: TradewindApi = {
   onItem(cb) {
@@ -8,17 +8,17 @@ const api: TradewindApi = {
   onHide(cb) {
     ipcRenderer.on('tw:hide', () => cb())
   },
+  onViewport(cb) {
+    ipcRenderer.on('tw:viewport', (_event, size: { w: number; h: number }) => cb(size))
+  },
   search(prepared) {
     return ipcRenderer.invoke('tw:search', prepared)
   },
   setLeague(league) {
     return ipcRenderer.invoke('tw:set-league', league)
   },
-  setPopupRect(rect) {
-    ipcRenderer.send('tw:popup-rect', rect)
-  },
-  setTooltipRect(rect) {
-    ipcRenderer.send('tw:tooltip-rect', rect)
+  setLayout(layout: OverlayLayout) {
+    ipcRenderer.send('tw:layout', layout)
   },
   requestFocus() {
     ipcRenderer.send('tw:focus-input')
@@ -34,9 +34,6 @@ const api: TradewindApi = {
   },
   restartToUpdate() {
     ipcRenderer.send('tw:restart-update')
-  },
-  setToastRect(rect) {
-    ipcRenderer.send('tw:toast-rect', rect)
   }
 }
 

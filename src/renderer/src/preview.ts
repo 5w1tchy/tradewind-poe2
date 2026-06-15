@@ -240,23 +240,24 @@ const mock: TradewindApi = {
     }
   },
   onHide() {},
+  onViewport() {},
   async search() {
     await new Promise((r) => setTimeout(r, 250))
     return JSON.parse(JSON.stringify(SAMPLE_OUTCOME)) as SearchOutcome
   },
   async setLeague() {},
-  setPopupRect() {},
-  setTooltipRect() {},
+  setLayout() {},
   requestFocus() {},
   releaseFocus() {},
   openUrl(url) {
     console.log('openUrl:', url)
   },
   onUpdateStatus() {},
-  restartToUpdate() {},
-  setToastRect() {}
+  restartToUpdate() {}
 }
 
+// No OS window to size in the browser: tell App to stay full-size (never shrink).
+;(window as { __twPreview?: boolean }).__twPreview = true
 window.tradewind = mock
 
 // Stand in for the game behind the overlay so contrast is judged honestly.

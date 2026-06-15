@@ -1,7 +1,21 @@
+/* Virtual-space stage: a zero-size, transformed containing block at the game
+   window's origin. Its transform (set in App.tsx) maps the visible content's
+   bounding box onto the content-sized overlay window; `none` when the window is
+   full-size, so the fixed surfaces anchor to the real viewport. */
+.stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+}
+
 .popup {
   position: fixed;
   max-width: 520px;
-  max-height: 80vh;
+  /* max-height is set inline from the virtual viewport — `vh` would track the
+     now content-sized window and collapse the popup. */
   overflow: hidden;
   padding: 8px 14px 12px;
   border: 1px solid var(--tw-bronze-dim);

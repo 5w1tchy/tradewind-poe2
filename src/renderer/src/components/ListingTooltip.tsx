@@ -1,11 +1,9 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import type { ItemProperty, ListingItem, ListingMod } from '../../../core/trade/types'
 import styles from './ListingTooltip.module.css'
 
 /** Keep the panel this far from the viewport edges. */
 const MARGIN = 8
-/** Inflate the interactive rect to bridge the visual gap back to the popup. */
-const SLOP = 12
 
 /** Where the tooltip sits relative to the hovered row (overlay-local px). */
 export interface TooltipAnchor {
@@ -69,29 +67,14 @@ export default function ListingTooltip({
 
   // Once the panel's real height is known, lift it up so it never spills past
   // the bottom edge (and never above the top). Runs before paint — no flash.
+  // The overlay window is full-size whenever a tooltip is up (it's a
+  // viewport-anchored surface), so window.innerHeight is the true viewport.
   useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
     const maxTop = window.innerHeight - el.offsetHeight - MARGIN
     setTop(Math.max(MARGIN, Math.min(anchor.top, maxTop)))
   }, [anchor])
-
-  // Report the laid-out rect (slop-inflated) so main keeps this area interactive
-  // — without it, reaching for the tooltip flips the overlay click-through.
-  useLayoutEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const r = el.getBoundingClientRect()
-    window.tradewind.setTooltipRect({
-      x: r.left - SLOP,
-      y: r.top - SLOP,
-      w: r.width + 2 * SLOP,
-      h: r.height + 2 * SLOP
-    })
-  }, [top, anchor])
-
-  // Drop the interactive region when the tooltip goes away.
-  useEffect(() => () => window.tradewind.setTooltipRect(null), [])
 
   const style: React.CSSProperties = {
     top,
@@ -110,6 +93,8 @@ export default function ListingTooltip({
       style={style}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      data-surface
+      data-viewport-anchored
     >
       <div className={styles.head}>
         {item.name && <div className={`${styles.name} ${styles['rarity-' + item.rarity]}`}>{item.name}</div>}

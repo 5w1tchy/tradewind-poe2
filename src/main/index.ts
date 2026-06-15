@@ -4,7 +4,7 @@ import { buildSearchBody, prepareQuery } from '../core/query'
 import type { PreparedQuery } from '../core/query/types'
 import { StatsDb } from '../core/stats-db/statsDb'
 import type { StatsPayload } from '../core/stats-db/types'
-import type { ItemPayload } from '../shared/ipc'
+import type { ItemPayload, OverlayLayout } from '../shared/ipc'
 import { loadConfig, saveConfig } from './config'
 import { parseHotkey } from './hotkey'
 import { NativeKeyHook } from './keyhook'
@@ -154,18 +154,16 @@ app.whenReady().then(() => {
   )
   setTimeout(() => splash.close(), SPLASH_MAX_MS)
 
-  let overlayBounds = { x: 0, y: 0, width: 0, height: 0 }
-  // The popup's on-screen rect (overlay-local CSS px) reported by the renderer;
-  // null when no popup is open. Doubles as the "popup visible" flag.
+  // The tracked game window's rect (DIP). The renderer lays out in this "virtual"
+  // space (origin = game top-left); main offsets by it to place the overlay
+  // window on screen and to hit-test the cursor.
+  let gameBounds = { x: 0, y: 0, width: 0, height: 0 }
   type Rect = { x: number; y: number; w: number; h: number }
-  let popupRect: Rect | null = null
-  // The hovered listing's item tooltip rect (overlay-local CSS px), or null. It
-  // lives outside popupRect, so it gets its own interactive region — otherwise
-  // reaching for it would flip the overlay click-through and hide it.
-  let tooltipRect: Rect | null = null
-  // The update toast's rect; like the others it makes that region clickable, but
-  // it never triggers auto-hide (the toast manages its own dismissal).
-  let toastRect: Rect | null = null
+  // The renderer's current footprint. `window` is the bounding box the overlay
+  // window is sized to (null = nothing shown → hide the window); `interactive`
+  // are the sub-rects we capture the mouse over (the bounding box may include
+  // click-through gaps between, e.g., a centered popup and a corner toast).
+  let layout: { window: Rect | null; interactive: Rect[] } = { window: null, interactive: [] }
 
   let interactiveState = false
   const setInteractive = (interactive: boolean): void => {
@@ -181,16 +179,43 @@ app.whenReady().then(() => {
     overlay.setFocusable(false)
   }
 
-  const hidePopup = (): void => {
-    overlay.webContents.send('tw:hide')
-    popupRect = null
-    tooltipRect = null
-    setInteractive(false)
-    releaseFocus()
+  // Size/position the content-sized overlay window to the reported footprint, or
+  // hide it when there's nothing to show. The overlay is no longer a fullscreen
+  // transparent surface (those are crippling to composite under software/WARP);
+  // it's only as large as its current content. Coalesced to ~60Hz since drag and
+  // resize can report many times per frame.
+  let boundsPending = false
+  const applyWindowBounds = (): void => {
+    boundsPending = false
+    const w = layout.window
+    if (!w || !tracker.isGameActive) {
+      if (overlay.isVisible()) overlay.hide()
+      return
+    }
+    overlay.setBounds({
+      x: Math.round(gameBounds.x + w.x),
+      y: Math.round(gameBounds.y + w.y),
+      width: Math.max(1, Math.round(w.w)),
+      height: Math.max(1, Math.round(w.h))
+    })
+    if (!overlay.isVisible()) overlay.showInactive()
+  }
+  const scheduleWindowBounds = (): void => {
+    if (boundsPending) return
+    boundsPending = true
+    setTimeout(applyWindowBounds, 8)
   }
 
-  const within = (r: Rect | null, x: number, y: number): boolean =>
-    r !== null && x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h
+  const hidePopup = (): void => {
+    overlay.webContents.send('tw:hide')
+    layout = { window: null, interactive: [] }
+    setInteractive(false)
+    releaseFocus()
+    applyWindowBounds()
+  }
+
+  const within = (r: Rect, x: number, y: number): boolean =>
+    x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h
 
   // Overlay is click-through by default so the game always receives mouse-moves
   // (and manages its own tooltip). The popup stays open until the user dismisses
@@ -199,7 +224,7 @@ app.whenReady().then(() => {
   // popup, the hovered listing tooltip, or the update toast — leaving the rest
   // of the screen click-through so the game stays playable.
   const onCursorMove = (): void => {
-    if (!popupRect && !tooltipRect && !toastRect) {
+    if (layout.interactive.length === 0) {
       setInteractive(false)
       return
     }
@@ -209,9 +234,9 @@ app.whenReady().then(() => {
       return
     }
     const cur = screen.getCursorScreenPoint()
-    const x = cur.x - overlayBounds.x
-    const y = cur.y - overlayBounds.y
-    setInteractive(within(popupRect, x, y) || within(tooltipRect, x, y) || within(toastRect, x, y))
+    const x = cur.x - gameBounds.x
+    const y = cur.y - gameBounds.y
+    setInteractive(layout.interactive.some((r) => within(r, x, y)))
   }
 
   let busy = false
@@ -243,11 +268,11 @@ app.whenReady().then(() => {
         leagues,
         league,
         currencyIcons,
-        x: cursor.x - overlayBounds.x,
-        y: cursor.y - overlayBounds.y
+        x: cursor.x - gameBounds.x,
+        y: cursor.y - gameBounds.y
       } satisfies ItemPayload)
-      // The renderer reports its rect via tw:popup-rect once laid out; from then
-      // on onCursorMove drives interactivity and auto-hide.
+      // The renderer reports its footprint via tw:layout once laid out; from then
+      // on onCursorMove drives interactivity and the window tracks the content.
     } finally {
       busy = false
     }
@@ -320,12 +345,14 @@ app.whenReady().then(() => {
 
   tracker.on('state', (state: GameState) => {
     if (state.active && state.bounds) {
-      overlayBounds = screen.screenToDipRect(null, state.bounds)
-      overlay.setBounds(overlayBounds)
-      if (!overlay.isVisible()) overlay.showInactive()
+      gameBounds = screen.screenToDipRect(null, state.bounds)
+      // Tell the renderer the virtual viewport it lays out in; re-place the
+      // window in case the game moved/resized while a popup is open. The window
+      // itself only shows once the renderer reports content (applyWindowBounds).
+      overlay.webContents.send('tw:viewport', { w: gameBounds.width, h: gameBounds.height })
+      applyWindowBounds()
       claimHotkeys()
     } else {
-      overlay.hide()
       hidePopup()
       releaseHotkeys()
     }
@@ -463,29 +490,17 @@ app.whenReady().then(() => {
     }
   })
 
-  ipcMain.on(
-    'tw:popup-rect',
-    (_event, rect: { x: number; y: number; w: number; h: number } | null) => {
-      popupRect = rect
-      // The popup closed itself (its ✕): drop keyboard focus so the next click
-      // goes to the game, and restore click-through.
-      if (!rect) {
-        tooltipRect = null
-        releaseFocus()
-      }
-      // Re-evaluate now so interactivity tracks a resized/moved popup even if the
-      // cursor is momentarily still.
-      onCursorMove()
-    }
-  )
-
-  ipcMain.on(
-    'tw:tooltip-rect',
-    (_event, rect: { x: number; y: number; w: number; h: number } | null) => {
-      tooltipRect = rect
-      onCursorMove()
-    }
-  )
+  ipcMain.on('tw:layout', (_event, next: OverlayLayout) => {
+    layout = { window: next.window, interactive: next.interactive ?? [] }
+    // Everything gone (popup closed via ✕/Esc/hide): drop keyboard focus so the
+    // next click goes to the game.
+    if (!layout.window) releaseFocus()
+    // Resize/move the window to the new footprint (coalesced), and re-evaluate
+    // click-through now so interactivity tracks a resized/moved popup even if the
+    // cursor is momentarily still.
+    scheduleWindowBounds()
+    onCursorMove()
+  })
 
   // Filter inputs need real keyboard focus; the window is non-focusable the
   // rest of the time so clicks never steal focus from the game.
@@ -501,14 +516,6 @@ app.whenReady().then(() => {
     releaseFocus()
     onCursorMove()
   })
-
-  ipcMain.on(
-    'tw:toast-rect',
-    (_event, rect: { x: number; y: number; w: number; h: number } | null) => {
-      toastRect = rect
-      onCursorMove()
-    }
-  )
 
   ipcMain.on('tw:restart-update', () => quitAndInstall())
 
