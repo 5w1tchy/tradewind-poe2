@@ -19,7 +19,12 @@ import { RatesProvider } from './rates'
 import { estimatePrice, type RateTable } from '../core/pricing'
 import type { SearchOutcome, TradeListing } from '../core/trade/types'
 import { ScoutAnchorProvider } from './scoutAnchor'
-import { initAutoUpdater, quitAndInstall, stopAutoUpdater } from './updater'
+import {
+  checkForUpdatesManually,
+  initAutoUpdater,
+  quitAndInstall,
+  stopAutoUpdater
+} from './updater'
 import { createTray } from './tray'
 import { createSplashWindow } from './splash'
 
@@ -53,8 +58,9 @@ app.whenReady().then(() => {
 
   const overlay = createOverlayWindow()
   // The overlay is hidden whenever PoE2 isn't focused, so the tray is the only
-  // way to quit. Held in scope so the GC doesn't reap the icon.
-  const tray = createTray()
+  // way to quit (and to trigger a manual update check). Held in scope so the GC
+  // doesn't reap the icon.
+  const tray = createTray({ onCheckForUpdates: () => checkForUpdatesManually() })
   // Background auto-update (no-op in dev); never blocks startup.
   initAutoUpdater(overlay, config)
   const input = new InputManager()
