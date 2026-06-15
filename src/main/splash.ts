@@ -45,6 +45,11 @@ export function createSplashWindow(): Splash {
     webPreferences: { sandbox: true },
   });
   win.setMenu(null);
+  // Sit above a windowed-fullscreen game (plain alwaysOnTop loses to it) and let
+  // every click fall through to the game — the card is purely decorative, so it
+  // must never grab input. Same recipe as the price-check overlay (overlay.ts).
+  win.setAlwaysOnTop(true, "screen-saver");
+  win.setIgnoreMouseEvents(true);
 
   const dataUrl = `data:image/png;base64,${readFileSync(splashAsset).toString("base64")}`;
   const html =
