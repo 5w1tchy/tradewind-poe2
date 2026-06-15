@@ -32,6 +32,21 @@ if (!app.requestSingleInstanceLock()) {
   app.quit()
 }
 
+// Coax Chromium into using the GPU on machines where it would otherwise refuse.
+// The overlay is a transparent always-on-top surface; when Chromium falls back
+// to software (WARP) compositing it repaints the whole window on the CPU and the
+// popup turns laggy (jerky drag, late click repaints). These switches recover the
+// common cases where the GPU is fine but Chromium opted out:
+//  - ignore-gpu-blocklist: use a driver Chromium blocklisted (often over-broad).
+//  - disable-gpu-process-crash-limit: don't permanently fall back to software
+//    after a few transient GPU-process crashes (transparent windows can trip it).
+// disableDomainBlockingFor3DAPIs: same, for the GL/3D-context teardown path.
+// (These can't conjure a GPU that's truly absent — e.g. a broken driver serving
+// only the Microsoft Basic Render Driver — that needs the content-sized window.)
+app.commandLine.appendSwitch('ignore-gpu-blocklist')
+app.commandLine.appendSwitch('disable-gpu-process-crash-limit')
+app.disableDomainBlockingFor3DAPIs()
+
 interface LeaguesPayload {
   result: Array<{ id: string; realm: string; text: string }>
 }
