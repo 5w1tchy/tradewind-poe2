@@ -1,6 +1,6 @@
 {
   "name": "tradewind",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Path of Exile 2 trade companion overlay",
   "main": "./out/main/index.js",
   "private": true,
