@@ -20,6 +20,8 @@ import { estimatePrice, type RateTable } from '../core/pricing'
 import type { SearchOutcome, TradeListing } from '../core/trade/types'
 import { ScoutAnchorProvider } from './scoutAnchor'
 import { initAutoUpdater, quitAndInstall, stopAutoUpdater } from './updater'
+import { createTray } from './tray'
+import { createSplashWindow } from './splash'
 
 if (!app.requestSingleInstanceLock()) {
   app.quit()
@@ -41,10 +43,18 @@ app.whenReady().then(() => {
   // Stable identity for Windows notifications and the updater relaunch.
   app.setAppUserModelId('com.tradewind.poe2')
 
+  // Up first so there's something on screen while the data fetches below warm
+  // up; dismissed once they settle (or a safety cap) — see below.
+  const splash = createSplashWindow()
+  const splashStart = Date.now()
+
   const config = loadConfig()
   const devAnyWindow = config.devAnyWindow || process.env['TRADEWIND_ANY_WINDOW'] === '1'
 
   const overlay = createOverlayWindow()
+  // The overlay is hidden whenever PoE2 isn't focused, so the tray is the only
+  // way to quit. Held in scope so the GC doesn't reap the icon.
+  const tray = createTray()
   // Background auto-update (no-op in dev); never blocks startup.
   initAutoUpdater(overlay, config)
   const input = new InputManager()
@@ -55,7 +65,10 @@ app.whenReady().then(() => {
 
   // Stats DB loads in the background; price checks just show raw text until ready.
   let statsDb: StatsDb | null = null
-  void cachedFetchJson<StatsPayload>('stats', 'https://www.pathofexile.com/api/trade2/data/stats')
+  const statsReady = cachedFetchJson<StatsPayload>(
+    'stats',
+    'https://www.pathofexile.com/api/trade2/data/stats'
+  )
     .then((payload) => {
       statsDb = new StatsDb(payload)
       console.log(`[data] stats db ready (${payload.result.length} categories)`)
@@ -64,7 +77,10 @@ app.whenReady().then(() => {
 
   // Exact item text -> bulk-exchange id ("Idol of the Martyr" -> "idol-of-the-martyr").
   let exchangeIds: Record<string, string> = {}
-  void cachedFetchJson<StaticPayload>('static', 'https://www.pathofexile.com/api/trade2/data/static')
+  const exchangeReady = cachedFetchJson<StaticPayload>(
+    'static',
+    'https://www.pathofexile.com/api/trade2/data/static'
+  )
     .then((payload) => {
       for (const group of payload.result) {
         for (const entry of group.entries ?? []) {
@@ -77,7 +93,10 @@ app.whenReady().then(() => {
 
   // Base names for extracting the true base from decorated white/magic names.
   let baseTypes: string[] = []
-  void cachedFetchJson<ItemsPayload>('items', 'https://www.pathofexile.com/api/trade2/data/items')
+  const baseTypesReady = cachedFetchJson<ItemsPayload>(
+    'items',
+    'https://www.pathofexile.com/api/trade2/data/items'
+  )
     .then((payload) => {
       const seen = new Set<string>()
       for (const group of payload.result) {
@@ -92,7 +111,7 @@ app.whenReady().then(() => {
 
   let leagues: string[] = []
   let league = config.league
-  void cachedFetchJson<LeaguesPayload>(
+  const leaguesReady = cachedFetchJson<LeaguesPayload>(
     'leagues',
     'https://www.pathofexile.com/api/trade2/data/leagues'
   )
@@ -102,6 +121,23 @@ app.whenReady().then(() => {
       console.log(`[data] leagues: ${leagues.join(', ')} — using "${league}"`)
     })
     .catch((err) => console.error('[data] leagues failed to load:', err))
+
+  // Dismiss the splash once the startup data has settled — but keep it up a
+  // readable minimum so it never just flashes (everything may be disk-cached),
+  // and cap the wait so a hung network can't trap it on screen forever.
+  // splash.close() fades out and is idempotent, so both paths can call it.
+  const SPLASH_MIN_MS = 2500
+  const SPLASH_MAX_MS = 10_000
+  void Promise.allSettled([statsReady, exchangeReady, baseTypesReady, leaguesReady]).then(
+    async () => {
+      const elapsed = Date.now() - splashStart
+      if (elapsed < SPLASH_MIN_MS) {
+        await new Promise((resolve) => setTimeout(resolve, SPLASH_MIN_MS - elapsed))
+      }
+      splash.close()
+    }
+  )
+  setTimeout(() => splash.close(), SPLASH_MAX_MS)
 
   let overlayBounds = { x: 0, y: 0, width: 0, height: 0 }
   // The popup's on-screen rect (overlay-local CSS px) reported by the renderer;
@@ -460,6 +496,7 @@ app.whenReady().then(() => {
     input.stop()
     tracker.stop()
     stopAutoUpdater()
+    tray.destroy()
   })
 
   console.log(
