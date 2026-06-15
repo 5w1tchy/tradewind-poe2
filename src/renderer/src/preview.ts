@@ -184,6 +184,7 @@ const mock: TradewindApi = {
   setPopupRect() {},
   setTooltipRect() {},
   requestFocus() {},
+  releaseFocus() {},
   openUrl(url) {
     console.log('openUrl:', url)
   },

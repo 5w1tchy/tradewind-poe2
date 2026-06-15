@@ -23,6 +23,9 @@ const api: TradewindApi = {
   requestFocus() {
     ipcRenderer.send('tw:focus-input')
   },
+  releaseFocus() {
+    ipcRenderer.send('tw:release-focus')
+  },
   openUrl(url) {
     ipcRenderer.send('tw:open-url', url)
   },
