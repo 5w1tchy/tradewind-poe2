@@ -32,6 +32,16 @@ if (!app.requestSingleInstanceLock()) {
   app.quit()
 }
 
+// Render the overlay in software, deliberately. On machines where the GPU is
+// present but only half-engaged for Chromium (driver/Windows quirk — the GPU
+// shows up but `gpu_compositing` falls back to a WARP software path), letting
+// Electron *try* the GPU and limp along in that fallback makes the popup lag
+// badly (jerky drag, multi-second hover repaints). The overlay is a tiny, mostly
+// static UI that doesn't need the GPU, so forcing clean software rendering for
+// everyone is smooth across machines and sidesteps that whole fallback class.
+// Must be called before the app is ready.
+app.disableHardwareAcceleration()
+
 interface LeaguesPayload {
   result: Array<{ id: string; realm: string; text: string }>
 }
