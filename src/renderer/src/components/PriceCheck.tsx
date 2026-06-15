@@ -310,6 +310,18 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     window.setTimeout(() => el.focus(), 80)
   }
 
+  /**
+   * When a filter input loses focus to anything but another input — clicking the
+   * popup body, a button, or back into the game — hand the window's keyboard
+   * focus back so PoE2 reclaims it and the player can move again. Without this
+   * the overlay keeps focus indefinitely and only Esc frees the game.
+   */
+  function releaseFocus(event: React.FocusEvent<HTMLInputElement>): void {
+    const next = event.relatedTarget as HTMLElement | null
+    if (next?.tagName === 'INPUT') return
+    window.tradewind.releaseFocus()
+  }
+
   function openOnTradeSite(): void {
     if (outcome) window.tradewind.openUrl(outcome.webUrl)
   }
@@ -366,6 +378,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
               placeholder="min"
               value={row.range.min ?? ''}
               onMouseDown={armFocus}
+              onBlur={releaseFocus}
               onChange={(e) => setBound(row.range!, 'min', e)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') void runSearch()
@@ -377,6 +390,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
               placeholder="max"
               value={row.range.max ?? ''}
               onMouseDown={armFocus}
+              onBlur={releaseFocus}
               onChange={(e) => setBound(row.range!, 'max', e)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') void runSearch()
@@ -620,6 +634,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
                     placeholder="min"
                     value={stat.min ?? ''}
                     onMouseDown={armFocus}
+              onBlur={releaseFocus}
                     onChange={(e) => setBound(stat, 'min', e)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') void runSearch()
@@ -631,6 +646,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
                     placeholder="max"
                     value={stat.max ?? ''}
                     onMouseDown={armFocus}
+              onBlur={releaseFocus}
                     onChange={(e) => setBound(stat, 'max', e)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') void runSearch()
@@ -738,6 +754,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
                         placeholder="min"
                         value={q.buyout.min ?? ''}
                         onMouseDown={armFocus}
+              onBlur={releaseFocus}
                         onChange={(e) => setBuyoutBound('min', e)}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') void runSearch()
@@ -749,6 +766,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
                         placeholder="max"
                         value={q.buyout.max ?? ''}
                         onMouseDown={armFocus}
+              onBlur={releaseFocus}
                         onChange={(e) => setBuyoutBound('max', e)}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') void runSearch()

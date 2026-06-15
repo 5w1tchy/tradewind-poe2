@@ -494,6 +494,14 @@ app.whenReady().then(() => {
     overlay.focus()
   })
 
+  // A focused filter input lost focus to something that isn't another input:
+  // drop the keyboard grab so PoE2 reclaims focus (without closing the popup),
+  // then re-evaluate click-through for the cursor's current position.
+  ipcMain.on('tw:release-focus', () => {
+    releaseFocus()
+    onCursorMove()
+  })
+
   ipcMain.on(
     'tw:toast-rect',
     (_event, rect: { x: number; y: number; w: number; h: number } | null) => {

@@ -45,6 +45,12 @@ export interface TradewindApi {
   setTooltipRect(rect: { x: number; y: number; w: number; h: number } | null): void
   /** Grab keyboard focus for a filter input (released when the popup hides). */
   requestFocus(): void
+  /**
+   * Release the window's keyboard focus back to the game without closing the
+   * popup — sent when a focused filter input loses focus to anything other than
+   * another input (clicking the popup, a button, or back into the game).
+   */
+  releaseFocus(): void
   /** Open a pathofexile.com URL in the default browser. */
   openUrl(url: string): void
   /** Subscribe to auto-update status pushes. */
