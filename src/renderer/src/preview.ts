@@ -53,7 +53,16 @@ const SAMPLE_QUERY: PreparedQuery = {
   quality: null,
   gemLevel: null,
   mapTier: null,
-  corrupted: { value: false, enabled: false },
+  flags: [
+    { key: 'corrupted', label: 'Corrupted', state: 'any' },
+    { key: 'mirrored', label: 'Mirrored', state: 'any' },
+    { key: 'sanctified', label: 'Sanctified', state: 'any' },
+    { key: 'crafted', label: 'Crafted', state: 'any' },
+    { key: 'fractured_item', label: 'Fractured', state: 'any' },
+    { key: 'desecrated', label: 'Desecrated', state: 'any' },
+    { key: 'identified', label: 'Identified', state: 'any' }
+  ],
+  buyout: { min: null, max: null, option: null },
   equipment: [],
   stats: [
     {
@@ -198,7 +207,15 @@ import('./main').then(() => {
     text: 'Item Class: Rings\nRarity: Rare\nStorm Whorl\nSapphire Ring\n…',
     prepared: SAMPLE_QUERY,
     leagues: ['Rise of the Abyssal', 'HC Rise of the Abyssal', 'Standard'],
-    league: 'Rise of the Abyssal'
+    league: 'Rise of the Abyssal',
+    currencyIcons: {
+      exalted:
+        'https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lBZGRNb2RUb1JhcmUiLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/ad7c366789/CurrencyAddModToRare.png',
+      divine:
+        'https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lNb2RWYWx1ZXMiLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/2986e220b3/CurrencyModValues.png',
+      chaos:
+        'https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lSZXJvbGxSYXJlIiwic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/c0ca392a78/CurrencyRerollRare.png'
+    }
   }
   if (deliverItem) deliverItem(item)
   else pending = item

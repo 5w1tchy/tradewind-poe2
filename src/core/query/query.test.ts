@@ -52,7 +52,17 @@ describe('prepareQuery', () => {
     expect(q.rarityOption).toBe('nonunique')
     expect(q.name).toBeNull()
     expect(q.type).toBeNull()
-    expect(q.corrupted).toEqual({ value: false, enabled: true })
+    // Equipment exposes the full flag set, all defaulting to "any".
+    expect(q.flags.map((f) => f.key)).toEqual([
+      'corrupted',
+      'mirrored',
+      'sanctified',
+      'crafted',
+      'fractured_item',
+      'desecrated',
+      'identified'
+    ])
+    expect(q.flags.every((f) => f.state === 'any')).toBe(true)
     expect(q.ilvl).toMatchObject({ value: 83, enabled: false })
     expect(q.unmatched).toEqual([])
 
@@ -356,7 +366,7 @@ describe('prepareQuery', () => {
     expect(q.type).toBe('Permafrost Bolts')
     expect(q.gemLevel).toMatchObject({ min: 26, enabled: true })
     expect(q.quality).toMatchObject({ value: 20, enabled: false })
-    expect(q.corrupted).toEqual({ value: true, enabled: true })
+    expect(q.flags).toEqual([{ key: 'corrupted', label: 'Corrupted', state: 'yes' }])
     expect(q.stats).toEqual([])
   })
 
@@ -387,7 +397,12 @@ describe('prepareQuery', () => {
 
     expect(q.type).toBe('Greater Orb of Augmentation')
     expect(q.stats).toEqual([])
-    expect(q.corrupted).toBeNull()
+    expect(q.flags).toEqual([])
+  })
+
+  it('unique: corrupted is the only flag offered', () => {
+    const q = prepareFixture('02-belts--mageblood-e7e9e4df.txt')
+    expect(q.flags).toEqual([{ key: 'corrupted', label: 'Corrupted', state: 'any' }])
   })
 
   it('magic charm (no trade category): stats-only search', () => {
@@ -418,9 +433,8 @@ describe('buildSearchBody', () => {
       category: { option: 'armour.gloves' },
       rarity: { option: 'nonunique' }
     })
-    expect(body.query.filters?.misc_filters?.filters).toEqual({
-      corrupted: { option: 'false' }
-    })
+    // All flags default to "any" — no misc_filters emitted.
+    expect(body.query.filters?.misc_filters).toBeUndefined()
 
     const stats = body.query.stats[0]
     expect(stats.type).toBe('and')
@@ -429,6 +443,36 @@ describe('buildSearchBody', () => {
       expect(f.id).toMatch(/^[a-z]+\.(stat_\d+|pseudo_\w+)$/)
       expect(f.value?.min).toBeTypeOf('number')
     }
+  })
+
+  it('flags emit into misc_filters only when not "any"', () => {
+    const q = prepareFixture('01-gloves--rapture-caress-8cdf3ae5.txt')
+    q.flags.find((f) => f.key === 'corrupted')!.state = 'no'
+    q.flags.find((f) => f.key === 'mirrored')!.state = 'yes'
+    const body = buildSearchBody(q)
+
+    expect(body.query.filters?.misc_filters?.filters).toEqual({
+      corrupted: { option: 'false' },
+      mirrored: { option: 'true' }
+    })
+  })
+
+  it('buyout price emits trade_filters; default emits nothing', () => {
+    const base = prepareFixture('01-gloves--rapture-caress-8cdf3ae5.txt')
+    expect(buildSearchBody(base).query.filters?.trade_filters).toBeUndefined()
+
+    const priced = prepareFixture('01-gloves--rapture-caress-8cdf3ae5.txt')
+    priced.buyout = { min: null, max: 5, option: 'divine' }
+    expect(buildSearchBody(priced).query.filters?.trade_filters?.filters).toEqual({
+      price: { max: 5, option: 'divine' }
+    })
+
+    // A currency choice alone (no bounds) still filters by unit.
+    const unitOnly = prepareFixture('01-gloves--rapture-caress-8cdf3ae5.txt')
+    unitOnly.buyout = { min: null, max: null, option: 'chaos' }
+    expect(buildSearchBody(unitOnly).query.filters?.trade_filters?.filters).toEqual({
+      price: { option: 'chaos' }
+    })
   })
 
   it('unique body searches by name+type with empty stat group', () => {

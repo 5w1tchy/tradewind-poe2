@@ -26,7 +26,20 @@ export default function App(): React.JSX.Element | null {
   function reportRect(x: number, y: number): void {
     const el = popup.current
     if (!el) return
-    window.tradewind.setPopupRect({ x, y, w: el.offsetWidth, h: el.offsetHeight })
+    let left = x
+    let top = y
+    let right = x + el.offsetWidth
+    let bottom = y + el.offsetHeight
+    // Dropdowns and the buyout popover float outside the card box; fold them into
+    // the reported rect so clicks land on them instead of passing to the game.
+    el.querySelectorAll('[data-overlay]').forEach((o) => {
+      const r = (o as HTMLElement).getBoundingClientRect()
+      left = Math.min(left, r.left)
+      top = Math.min(top, r.top)
+      right = Math.max(right, r.right)
+      bottom = Math.max(bottom, r.bottom)
+    })
+    window.tradewind.setPopupRect({ x: left, y: top, w: right - left, h: bottom - top })
   }
 
   function moveTo(x: number, y: number): void {
@@ -109,6 +122,18 @@ export default function App(): React.JSX.Element | null {
     const resizer = new ResizeObserver(() => reflow())
     resizer.observe(el)
     return () => resizer.disconnect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible])
+
+  // A floating overlay (dropdown / buyout popover) opening or closing doesn't
+  // resize the card, so re-report the rect when one mounts/unmounts — otherwise
+  // its area stays click-through and the cursor falls to the game behind it.
+  useEffect(() => {
+    const el = popup.current
+    if (!el) return
+    const obs = new MutationObserver(() => reportRect(el.offsetLeft, el.offsetTop))
+    obs.observe(el, { childList: true, subtree: true })
+    return () => obs.disconnect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible])
 

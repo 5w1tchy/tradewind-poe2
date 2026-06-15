@@ -44,7 +44,10 @@ export function buildSearchBody(q: PreparedQuery): TradeSearchRequest {
   if (mapTier) filters.map_filters = { filters: { map_tier: mapTier } }
 
   const miscFilters: NonNullable<TradeQueryFilters['misc_filters']>['filters'] = {}
-  if (q.corrupted?.enabled) miscFilters.corrupted = { option: String(q.corrupted.value) }
+  for (const flag of q.flags) {
+    if (flag.state === 'any') continue
+    miscFilters[flag.key] = { option: flag.state === 'yes' ? 'true' : 'false' }
+  }
   const gemLevel = enabledRange(q.gemLevel)
   if (gemLevel) miscFilters.gem_level = gemLevel
   if (Object.keys(miscFilters).length > 0) filters.misc_filters = { filters: miscFilters }
@@ -56,6 +59,17 @@ export function buildSearchBody(q: PreparedQuery): TradeSearchRequest {
   }
   if (Object.keys(equipmentFilters).length > 0) {
     filters.equipment_filters = { filters: equipmentFilters }
+  }
+
+  // Buyout price: emit when bounded, or when a specific currency is chosen
+  // (the currency alone filters listings to that unit on the trade site).
+  const buyout = q.buyout
+  if (buyout.option || buyout.min !== null || buyout.max !== null) {
+    const price: { min?: number; max?: number; option?: string } = {}
+    if (buyout.min !== null) price.min = buyout.min
+    if (buyout.max !== null) price.max = buyout.max
+    if (buyout.option) price.option = buyout.option
+    filters.trade_filters = { filters: { price } }
   }
 
   const body: TradeSearchRequest = {
