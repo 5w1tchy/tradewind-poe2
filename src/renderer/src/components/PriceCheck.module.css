@@ -98,6 +98,22 @@
     var(--tw-bg-inset);
 }
 
+/* Hybrid mod: a normal filter-row whose single checkbox + badge sit centered
+   (via the row's align-items) against a stacked column of its stat lines. The
+   lines reuse the same .stat / .bounds columns, so prefixes stay aligned. */
+.hybrid-lines {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hybrid-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
 .property { color: var(--tw-text-mute); }
 
 .source-rune { color: #88ccff; }
@@ -404,6 +420,19 @@
 .tier.good {
   color: #c9b37b;
   border-color: rgba(201, 179, 123, 0.4);
+}
+
+/* Affix badges: red prefix / blue suffix, matching the listing tooltip tags. */
+.tier.prefix {
+  color: #e06b6b;
+  border-color: rgba(224, 107, 107, 0.45);
+  background: rgba(224, 107, 107, 0.08);
+}
+
+.tier.suffix {
+  color: #7aa2ff;
+  border-color: rgba(122, 162, 255, 0.45);
+  background: rgba(122, 162, 255, 0.08);
 }
 
 .status {

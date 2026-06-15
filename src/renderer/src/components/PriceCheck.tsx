@@ -5,6 +5,7 @@ import type {
   PreparedFlag,
   PreparedQuery,
   PreparedRange,
+  PreparedStatFilter,
   TriState
 } from '../../../core/query/types'
 import type { SearchOutcome } from '../../../core/trade/types'
@@ -402,6 +403,128 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     )
   }
 
+  /** Left badge for a stat: P# (red) prefix, S# (blue) suffix, T# tier-only. */
+  function statBadge(stat: PreparedStatFilter): { text: string; cls: string } | null {
+    if (stat.affix === 'prefix') return { text: `P${stat.tier ?? ''}`, cls: styles.prefix }
+    if (stat.affix === 'suffix') return { text: `S${stat.tier ?? ''}`, cls: styles.suffix }
+    if (stat.tier !== null) {
+      return {
+        text: `T${stat.tier}`,
+        cls: `${stat.tier === 1 ? styles.top : ''} ${stat.tier === 2 ? styles.good : ''}`
+      }
+    }
+    return null
+  }
+
+  /** The "= min max" controls shared by stat rows and hybrid lines. */
+  function renderBounds(stat: PreparedStatFilter): React.JSX.Element {
+    return (
+      <span className={styles.bounds}>
+        {stat.value !== null && (
+          <button
+            type="button"
+            className={styles.fill}
+            title={`Match your roll (${Math.round(stat.value)})`}
+            onClick={() => fillExact(stat, stat.value)}
+          >
+            =
+          </button>
+        )}
+        <input
+          className={styles.num}
+          type="number"
+          placeholder="min"
+          value={stat.min ?? ''}
+          onMouseDown={armFocus}
+          onBlur={releaseFocus}
+          onChange={(e) => setBound(stat, 'min', e)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') void runSearch()
+          }}
+        />
+        <input
+          className={styles.num}
+          type="number"
+          placeholder="max"
+          value={stat.max ?? ''}
+          onMouseDown={armFocus}
+          onBlur={releaseFocus}
+          onChange={(e) => setBound(stat, 'max', e)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') void runSearch()
+          }}
+        />
+      </span>
+    )
+  }
+
+  /** One matched stat filter row. */
+  function renderStatRow(stat: PreparedStatFilter): React.JSX.Element {
+    const badge = statBadge(stat)
+    return (
+      <label key={stat.statId + stat.label} className={styles['filter-row']}>
+        <input
+          type="checkbox"
+          checked={stat.enabled}
+          onChange={(e) => {
+            stat.enabled = e.target.checked
+            markDirty()
+            forceUpdate()
+          }}
+        />
+        {badge && <span className={`${styles.tier} ${badge.cls}`}>{badge.text}</span>}
+        <span className={`${styles.stat} ${styles['source-' + stat.source] ?? ''}`}>
+          {stat.label}
+        </span>
+        {renderBounds(stat)}
+      </label>
+    )
+  }
+
+  /** A hybrid mod (Spell Damage + Mana, …) — one badge and one checkbox toggling
+   *  every line, each line keeping its own min/max (searched on its own id). */
+  function renderHybridNode(lines: PreparedStatFilter[]): React.JSX.Element {
+    const badge = statBadge(lines[0])
+    const allOn = lines.every((l) => l.enabled)
+    return (
+      <label key={'hybrid-' + lines[0].group} className={styles['filter-row']}>
+        <input
+          type="checkbox"
+          checked={allOn}
+          onChange={(e) => {
+            for (const l of lines) l.enabled = e.target.checked
+            markDirty()
+            forceUpdate()
+          }}
+        />
+        {badge && <span className={`${styles.tier} ${badge.cls}`}>{badge.text}</span>}
+        <div className={styles['hybrid-lines']}>
+          {lines.map((line) => (
+            <div key={line.statId + line.label} className={styles['hybrid-line']}>
+              <span className={`${styles.stat} ${styles['source-' + line.source] ?? ''}`}>
+                {line.label}
+              </span>
+              {renderBounds(line)}
+            </div>
+          ))}
+        </div>
+      </label>
+    )
+  }
+
+  /** Render an affix group, collapsing consecutive lines of one hybrid mod. */
+  function renderRows(rows: PreparedStatFilter[]): React.JSX.Element[] {
+    const out: React.JSX.Element[] = []
+    for (let i = 0; i < rows.length; ) {
+      const g = rows[i].group
+      let j = i + 1
+      if (g !== undefined) while (j < rows.length && rows[j].group === g) j++
+      out.push(j - i > 1 ? renderHybridNode(rows.slice(i, j)) : renderStatRow(rows[i]))
+      i = j
+    }
+    return out
+  }
+
   const q = prepared.current
 
   const saleLabel = SALE_OPTIONS.find(([id]) => id === q?.status)?.[1] ?? 'Any'
@@ -594,67 +717,24 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
                 )}
               </>
             )}
-            {q.stats.map((stat) => (
-              <label key={stat.statId + stat.label} className={styles['filter-row']}>
-                <input
-                  type="checkbox"
-                  checked={stat.enabled}
-                  onChange={(e) => {
-                    stat.enabled = e.target.checked
-                    markDirty()
-                    forceUpdate()
-                  }}
-                />
-                {stat.tier !== null && (
-                  <span
-                    className={`${styles.tier} ${stat.tier === 1 ? styles.top : ''} ${
-                      stat.tier === 2 ? styles.good : ''
-                    }`}
-                  >
-                    T{stat.tier}
-                  </span>
-                )}
-                <span className={`${styles.stat} ${styles['source-' + stat.source] ?? ''}`}>
-                  {stat.label}
-                </span>
-                <span className={styles.bounds}>
-                  {stat.value !== null && (
-                    <button
-                      type="button"
-                      className={styles.fill}
-                      title={`Match your roll (${Math.round(stat.value)})`}
-                      onClick={() => fillExact(stat, stat.value)}
-                    >
-                      =
-                    </button>
+            {/* Grouped by affix: prefixes then suffixes (one contiguous block),
+                then a divider before the tier-less rows (implicits/runes/
+                enchants/pseudo totals). */}
+            {(() => {
+              const prefixes = q.stats.filter((s) => s.affix === 'prefix')
+              const suffixes = q.stats.filter((s) => s.affix === 'suffix')
+              const others = q.stats.filter((s) => s.affix === null)
+              return (
+                <>
+                  {renderRows(prefixes)}
+                  {renderRows(suffixes)}
+                  {others.length > 0 && prefixes.length + suffixes.length > 0 && (
+                    <div className={styles.divider} />
                   )}
-                  <input
-                    className={styles.num}
-                    type="number"
-                    placeholder="min"
-                    value={stat.min ?? ''}
-                    onMouseDown={armFocus}
-              onBlur={releaseFocus}
-                    onChange={(e) => setBound(stat, 'min', e)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') void runSearch()
-                    }}
-                  />
-                  <input
-                    className={styles.num}
-                    type="number"
-                    placeholder="max"
-                    value={stat.max ?? ''}
-                    onMouseDown={armFocus}
-              onBlur={releaseFocus}
-                    onChange={(e) => setBound(stat, 'max', e)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') void runSearch()
-                    }}
-                  />
-                </span>
-              </label>
-            ))}
+                  {renderRows(others)}
+                </>
+              )
+            })()}
             {q.unmatched.map((line) => (
               <div key={line} className={`${styles['filter-row']} ${styles.unmatched}`}>
                 <span className={styles.badge}>?</span>

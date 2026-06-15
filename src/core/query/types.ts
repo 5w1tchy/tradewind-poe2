@@ -92,6 +92,17 @@ export interface PreparedStatFilter {
   /** Clipboard line, shown in the filter list. */
   label: string
   source: StatSource
+  /** Affix slot from advanced copy. Null for implicit/rune/enchant/pseudo rows
+   *  and for summed totals (no single affix owns the sum). */
+  affix: 'prefix' | 'suffix' | null
+  /** True on the synthetic "(total)" row that sums a stat the trade site indexes
+   *  once across several mods. The individual mods stay as their own searchable
+   *  rows; the builder dedupes so enabling both can't double-filter the id. */
+  summed?: boolean
+  /** Index of the source modifier. Rows sharing a group come from one hybrid mod
+   *  (e.g. "Spell Damage + Mana") and render as a single node with one checkbox.
+   *  Undefined on synthetic rows (totals, pseudos). */
+  group?: number
   /** Mod tier from advanced copy (PoE2: T1 is best). Null for pseudo/rune/enchant rows. */
   tier: number | null
   /** Representative roll — average when the line has several numbers. */
