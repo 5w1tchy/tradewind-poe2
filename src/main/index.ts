@@ -21,6 +21,7 @@ import type { SearchOutcome, TradeListing } from '../core/trade/types'
 import { ScoutAnchorProvider } from './scoutAnchor'
 import {
   checkForUpdatesManually,
+  downloadUpdate,
   initAutoUpdater,
   quitAndInstall,
   stopAutoUpdater
@@ -70,7 +71,15 @@ app.whenReady().then(() => {
   // The overlay is hidden whenever PoE2 isn't focused, so the tray is the only
   // way to quit (and to trigger a manual update check). Held in scope so the GC
   // doesn't reap the icon.
-  const tray = createTray({ onCheckForUpdates: () => checkForUpdatesManually() })
+  const tray = createTray({
+    onCheckForUpdates: () => checkForUpdatesManually(),
+    // Dev-only: lets the tray's update-preview items pop the corner toast.
+    onDevEmitUpdateStatus: app.isPackaged
+      ? undefined
+      : (status) => {
+          if (!overlay.isDestroyed()) overlay.webContents.send('tw:update-status', status)
+        }
+  })
   // Background auto-update (no-op in dev); never blocks startup.
   initAutoUpdater(overlay, config)
   const input = new InputManager()
@@ -592,6 +601,7 @@ app.whenReady().then(() => {
     }
   )
 
+  ipcMain.on('tw:download-update', () => downloadUpdate())
   ipcMain.on('tw:restart-update', () => quitAndInstall())
 
   tracker.start()

@@ -41,6 +41,9 @@ const api: TradewindApi = {
   onUpdateStatus(cb) {
     ipcRenderer.on('tw:update-status', (_event, status: UpdateStatus) => cb(status))
   },
+  downloadUpdate() {
+    ipcRenderer.send('tw:download-update')
+  },
   restartToUpdate() {
     ipcRenderer.send('tw:restart-update')
   },
