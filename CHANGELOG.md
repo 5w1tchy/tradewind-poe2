@@ -3,6 +3,22 @@
 All notable user-facing changes to Tradewind. Newest first. The top entry of
 each release is reused verbatim as that release's GitHub Release notes.
 
+## v0.1.11
+
+### 📐 Resize the popup — and it remembers
+The price-check popup is now a proper resizable window:
+
+- **Drag the bottom-right corner** to set its size. Your choice is **saved** and restored on every price check and after a restart — no more resizing each time.
+- It now opens **toward the top-middle** of the screen, closer to where the game shows its own item tooltip.
+- The window **keeps its size when you switch tabs** — flipping between **Price** and **Craft/Essences** no longer makes it jump around.
+
+### 📊 More stats, resizable results
+- The stats list now **fills the available space**, so you see far more mods at a glance instead of a cramped few with empty space below.
+- Once results load, **drag the grip above the listings** to make the results list taller or shorter; the stats list takes the rest. That height is **remembered** too.
+
+---
+**Full changelog:** https://github.com/5w1tchy/tradewind-poe2/compare/v0.1.10...v0.1.11
+
 ## v0.1.10
 
 ### 🛠️ Stability
