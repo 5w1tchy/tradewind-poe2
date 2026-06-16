@@ -25,6 +25,60 @@ function prepareFixture(file: string): PreparedQuery {
   return prepareQuery(parseItem(readFileSync(join(fixturesDir, file), 'utf8')), db)
 }
 
+describe('chat-link affix/tier reconstruction', () => {
+  // Badge a reconstructed stat the way the popup does: P#/S# (blank tier omitted).
+  const badge = (q: PreparedQuery, match: string): string | undefined => {
+    const s = q.stats.find((st) => st.label.includes(match))
+    if (!s || !s.affix) return undefined
+    return `${s.affix === 'prefix' ? 'P' : 'S'}${s.tier ?? ''}`
+  }
+  const chatItem = (rarity: string, name: string, base: string, mods: string[]): PreparedQuery =>
+    prepareQuery(
+      parseItem(
+        `Item Class: Rings\nRarity: ${rarity}\n${name}\n${base}\n--------\nItem Level: 80\n--------\n${mods.join('\n')}`
+      ),
+      db
+    )
+
+  it('reconstructs unambiguous prefixes and suffixes with tiers', () => {
+    const q = chatItem('Rare', 'Foo', 'Sapphire Ring', [
+      '+90 to maximum Life',
+      '15% increased Cast Speed'
+    ])
+    expect(badge(q, 'maximum Life')).toBe('P2')
+    expect(badge(q, 'Cast Speed')).toBe('S4')
+  })
+
+  it('leaves a prefix/suffix-ambiguous roll unbadged when slots are open', () => {
+    const q = chatItem('Rare', 'Foo', 'Sapphire Ring', [
+      '+90 to maximum Life',
+      '9% increased Rarity of Items found',
+      '+30% to Fire Resistance'
+    ])
+    // 1 prefix + 1 suffix + the ambiguous one — could be either, so no badge.
+    expect(badge(q, 'Rarity of Items')).toBeUndefined()
+  })
+
+  it('forces the ambiguous roll to the open slot once one affix fills (rare 3+3)', () => {
+    const q = chatItem('Rare', 'Foo', 'Sapphire Ring', [
+      '+90 to maximum Life',
+      '+90 to maximum Mana',
+      'Adds 10 to 20 Fire damage to Attacks',
+      '9% increased Rarity of Items found'
+    ])
+    // 3 prefixes fill the prefix slots -> rarity must be a suffix.
+    expect(badge(q, 'Rarity of Items')).toBe('S3')
+  })
+
+  it('forces the ambiguous roll on a magic item (1 prefix fills the slot)', () => {
+    const q = chatItem('Magic', 'Foo of Bar', 'Sapphire Ring', [
+      '+90 to maximum Life',
+      '9% increased Rarity of Items found'
+    ])
+    expect(badge(q, 'Rarity of Items')).toBe('S3')
+  })
+})
+
 describe('extractBaseType', () => {
   const bases = ['Stalking Spear', 'Spear', 'Thawing Charm', 'Spearfield']
 
