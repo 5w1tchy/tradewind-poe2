@@ -59,6 +59,8 @@ export interface InputHandlers {
   onEscape(): void
   /** Fires on every cursor move; drives popup hit-testing in the main process. */
   onMouseMove(): void
+  /** Fires on every mouse press; drives click-outside-to-close in the main process. */
+  onMouseDown(): void
 }
 
 export class InputManager {
@@ -76,6 +78,7 @@ export class InputManager {
     hotkeys: { priceCheck: ParsedHotkey; hideout: ParsedHotkey }
   ): void {
     uIOhook.on('mousemove', () => handlers.onMouseMove())
+    uIOhook.on('mousedown', () => handlers.onMouseDown())
 
     const matches = (e: { ctrlKey: boolean; altKey: boolean; shiftKey: boolean; keycode: number },
       h: ParsedHotkey): boolean =>

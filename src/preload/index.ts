@@ -20,6 +20,9 @@ const api: TradewindApi = {
   setTooltipRect(rect) {
     ipcRenderer.send('tw:tooltip-rect', rect)
   },
+  setPinned(pinned) {
+    ipcRenderer.send('tw:set-pinned', pinned)
+  },
   requestFocus() {
     ipcRenderer.send('tw:focus-input')
   },

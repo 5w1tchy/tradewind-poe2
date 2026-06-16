@@ -69,7 +69,7 @@
   margin-bottom: 7px;
   border-bottom: 1px solid var(--tw-line);
   padding-bottom: 5px;
-  /* Leave room for the close button at the right edge. */
+  /* Leave room for the pin/close button at the right edge. */
   padding-right: 20px;
   /* The header bar doubles as the drag handle. */
   cursor: move;

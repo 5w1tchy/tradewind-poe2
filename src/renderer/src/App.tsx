@@ -9,11 +9,26 @@ type Tab = 'price' | 'craft'
 
 const pad = 12
 
+/** Thumbtack glyph for the pin toggle — upright pin, filled head. */
+function PinIcon(): React.JSX.Element {
+  return (
+    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M9.2 1.4 14.6 6.8a1 1 0 0 1-1 1.65l-2.2-.5-2.5 2.5.2 2.3a.7.7 0 0 1-1.2.55l-2.4-2.4-3 3-.5-.5 3-3-2.4-2.4a.7.7 0 0 1 .55-1.2l2.3.2 2.5-2.5-.5-2.2a1 1 0 0 1 1.65-1Z"
+      />
+    </svg>
+  )
+}
+
 export default function App(): React.JSX.Element | null {
   const [visible, setVisible] = useState(false)
   const [payload, setPayload] = useState<ItemPayload | null>(null)
   const [pos, setPos] = useState({ x: 0, y: 0 })
   const [tab, setTab] = useState<Tab>('price')
+  // Pinned popups survive an outside click (only Esc / ✕ close them). Off by
+  // default and reset on every fresh item — the main process mirrors this.
+  const [pinned, setPinned] = useState(false)
 
   const popup = useRef<HTMLDivElement>(null)
   // Pointer offset captured at drag start; null when not dragging.
@@ -69,8 +84,19 @@ export default function App(): React.JSX.Element | null {
   }
 
   function close(): void {
+    // Closing always returns to the unpinned default; main mirrors this off the
+    // null rect below.
+    setPinned(false)
     setVisible(false)
     window.tradewind.setPopupRect(null)
+  }
+
+  // Header button: pin when unpinned, close when pinned (issue #32). The popup
+  // mirrors PoE2's item tooltip — a pinned tooltip closes only via its ✕ / Esc,
+  // so once pinned the button *is* the close control (no separate unpin).
+  function pin(): void {
+    setPinned(true)
+    window.tradewind.setPinned(true)
   }
 
   // Drag from the header bar. Clicks on its buttons (tabs, close) fall through.
@@ -118,11 +144,14 @@ export default function App(): React.JSX.Element | null {
   useEffect(() => {
     window.tradewind.onItem((p) => {
       moved.current = false
+      // Pin persists across searches: a fresh item updates a pinned popup in
+      // place and stays pinned (issue #32). Only an actual close resets it.
       setPayload(p)
       setTab('price')
       setVisible(true)
     })
     window.tradewind.onHide(() => {
+      setPinned(false)
       setVisible(false)
       window.tradewind.setPopupRect(null)
     })
@@ -167,8 +196,13 @@ export default function App(): React.JSX.Element | null {
           <i className={`${styles.corner} ${styles.bl}`} />
           <i className={`${styles.corner} ${styles.br}`} />
 
-          <button className={styles.close} onClick={close} aria-label="Close" title="Close (Esc)">
-            ×
+          <button
+            className={styles.close}
+            onClick={pinned ? close : pin}
+            aria-label={pinned ? 'Close' : 'Pin'}
+            title={pinned ? 'Close (Esc)' : 'Pin — keep open when you click away'}
+          >
+            {pinned ? '×' : <PinIcon />}
           </button>
 
           <nav

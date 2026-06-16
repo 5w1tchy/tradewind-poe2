@@ -283,6 +283,7 @@ const mock: TradewindApi = {
   async setLeague() {},
   setPopupRect() {},
   setTooltipRect() {},
+  setPinned() {},
   requestFocus() {},
   releaseFocus() {},
   openUrl(url) {
