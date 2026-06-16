@@ -24,6 +24,25 @@ Follow its existing format exactly.
 
 ---
 
+## Invocation modes
+
+The skill takes an optional `auto` keyword (e.g. `/release auto`):
+
+- **`/release`** (default, interactive) — at the end of Phase A, instead of
+  hard-stopping, **ask** the user whether to (a) merge the release PR now and
+  roll straight into Phase B, or (b) leave it for manual review and continue
+  later. The version bump is still confirmed before any branch/PR is created.
+- **`/release auto`** — autonomous. Don't ask at the Phase A → B boundary:
+  once the PR is open, **merge it and run Phase B through to publish** without
+  pausing. (Still propose the inferred version and stop if anything is wrong —
+  dirty tree, zero commits, failing checks, an ambiguous bump.) `auto` is the
+  user's explicit standing authorization to merge the protected-`main` PR.
+
+Either way, if invoked while a release is already mid-flight, detect the phase
+(below) and resume from there.
+
+---
+
 ## First: figure out which phase we're in
 
 ```sh
@@ -89,9 +108,16 @@ If unsure, ask the user which phase they mean.
    gh pr create --base main --title "Release vX.Y.Z" --body <summary>
    ```
 
-9. **Stop.** Tell the user the PR is up for review and that re-running `/release`
-   after it merges will tag and publish (Phase B). **Do not** merge the PR or
-   push a tag yourself — `main` is protected and the merge is the human gate.
+9. **Decide how to proceed past the PR-merge gate** — this is the only point
+   where `main`'s protection is crossed:
+   - **`auto` mode** → merge the PR now (`gh pr merge --squash --delete-branch`),
+     then continue straight into **Phase B**. Don't ask.
+   - **Default mode** → **ask the user** which they want:
+     - *Merge & continue now* — you merge the PR and immediately run Phase B.
+     - *Review manually & continue later* — leave the PR open; tell them that
+       re-running `/release` after they merge will resume at Phase B.
+   - Before merging in either mode, confirm the PR is mergeable (no failing
+     required checks). If it isn't, stop and surface why rather than forcing it.
 
 ---
 
@@ -133,8 +159,9 @@ If unsure, ask the user which phase they mean.
 
 ## Notes & guardrails
 
-- Never push directly to `main`; never `gh pr merge` a protected-branch release
-  PR on the user's behalf unless they explicitly ask.
+- Never push directly to `main`. Only merge the release PR when the user opts in
+  — either by choosing "merge & continue" at the Phase A prompt or by invoking
+  `/release auto`. Never merge an unrelated PR.
 - One release per invocation. If the working tree is dirty, stop and surface it.
 - If there are zero releasable commits since the last tag, say so and stop.
 - The version lives only in `package.json`/`package-lock.json`; there is no
