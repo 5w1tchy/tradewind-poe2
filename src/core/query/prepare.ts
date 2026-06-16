@@ -10,6 +10,7 @@ import type {
   PreparedQuery,
   PreparedRange,
   PreparedStatFilter,
+  QuickMode,
   StatSource
 } from './types'
 
@@ -57,6 +58,29 @@ function representativeValue(values: RollValue[]): number | null {
   if (values.length === 0) return null
   const sum = values.reduce((acc, v) => acc + v.value, 0)
   return sum / values.length
+}
+
+/**
+ * Tier floor: the average of the rolls' lower bounds (the "(70-90)" range from
+ * advanced copy), parallel to representativeValue. A component with no range —
+ * e.g. the fixed "1" in flat "Adds 1 to 17(16-22)" — doesn't roll, so its own
+ * value is its floor. Null only when *nothing* carries a range (basic copy or a
+ * chat-linked tooltip), in which case "Match Tier" isn't offered.
+ */
+function representativeMin(values: RollValue[]): number | null {
+  if (values.length === 0 || values.every((v) => v.min === undefined)) return null
+  let sum = 0
+  for (const v of values) sum += v.min ?? v.value
+  return sum / values.length
+}
+
+/**
+ * Quick-set mode a freshly prepared row starts on: cliff stats (no spread)
+ * pre-fill at 100% of the roll, so they start on "Match Roll"; everything else
+ * starts on the Smart default that minWithSpread produced.
+ */
+function defaultMode(lineSpread: number): QuickMode {
+  return lineSpread === 0 ? 'roll' : 'smart'
 }
 
 /** Lower bound `spread` below the roll; sign-aware so negative rolls loosen downward too. */
@@ -208,9 +232,19 @@ function buildStatRows(
       unmatched.push(line.raw)
       continue
     }
-    let value = representativeValue(rollValues(line, best.text))
-    if (value !== null && best.negated) value = -value
+    const rolls = rollValues(line, best.text)
+    let value = representativeValue(rolls)
+    let tierMinRaw = representativeMin(rolls)
+    if (best.negated) {
+      // increased<->reduced swap: the displayed roll (and its floor) flip sign.
+      if (value !== null) value = -value
+      if (tierMinRaw !== null) tierMinRaw = -tierMinRaw
+    }
     const lineSpread = spreadFor(line.template, spread)
+    const smart = value !== null ? minWithSpread(value, lineSpread) : null
+    // Floor the tier floor so the worst roll of the tier is never excluded
+    // (added-damage averages like 8.5 must search as 8, not round up to 9).
+    const tierMin = tierMinRaw !== null ? Math.floor(tierMinRaw) : null
 
     const node = (en: boolean): void => {
       stats.push({
@@ -221,7 +255,10 @@ function buildStatRows(
         tier,
         group,
         value,
-        min: value !== null ? minWithSpread(value, lineSpread) : null,
+        tierMin,
+        smartMin: smart,
+        quickMode: defaultMode(lineSpread),
+        min: smart,
         max: null,
         enabled: en
       })
@@ -243,6 +280,7 @@ function buildStatRows(
         const agg = stats[aggIdx]
         agg.value = (agg.value ?? 0) + value
         agg.min = minWithSpread(agg.value, lineSpread)
+        agg.smartMin = agg.min
         agg.label = totalLabel(line.template, agg.value)
       }
       continue
@@ -257,16 +295,21 @@ function buildStatRows(
       first.enabled = false
       node(false)
       const total = (first.value ?? 0) + (value ?? 0)
+      const totalSmart = total ? minWithSpread(total, lineSpread) : null
       stats.push({
         statId: best.id,
         label: totalLabel(line.template, total),
         source,
-        // A summed total is no single mod's roll — a tier/affix badge would lie.
+        // A summed total is no single mod's roll — a tier/affix badge would lie,
+        // and a cross-mod sum has no single tier floor either.
         affix: null,
         tier: null,
         summed: true,
         value: total,
-        min: total ? minWithSpread(total, lineSpread) : null,
+        tierMin: null,
+        smartMin: totalSmart,
+        quickMode: defaultMode(lineSpread),
+        min: totalSmart,
         max: null,
         enabled: firstEnabled || enabled
       })
@@ -313,6 +356,10 @@ function addHybridSingles(stats: PreparedStatFilter[], statsEnabled: boolean): v
       affix: null,
       tier: null,
       value: s.value,
+      // One real mod backs this pseudo row, so its tier floor carries over.
+      tierMin: s.tierMin,
+      smartMin: s.smartMin,
+      quickMode: s.quickMode,
       min: s.min,
       max: null,
       enabled: statsEnabled && s.source === 'explicit'
@@ -394,6 +441,10 @@ function foldResistancePseudos(
     affix: null,
     tier: null,
     value,
+    // A summed pseudo spans several mods of differing tiers — no single floor.
+    tierMin: null,
+    smartMin: minWithSpread(value, spread),
+    quickMode: 'smart',
     min: minWithSpread(value, spread),
     max: null,
     enabled: statsEnabled

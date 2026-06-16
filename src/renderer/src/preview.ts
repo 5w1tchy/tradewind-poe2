@@ -72,6 +72,10 @@ const SAMPLE_QUERY: PreparedQuery = {
       affix: 'prefix',
       tier: 1,
       value: 329,
+      // 'custom': a hand-typed min sits off the cycle (shows the • dot).
+      tierMin: 300,
+      smartMin: 296,
+      quickMode: 'custom',
       min: 300,
       max: null,
       enabled: true
@@ -83,7 +87,10 @@ const SAMPLE_QUERY: PreparedQuery = {
       affix: 'suffix',
       tier: 2,
       value: 38,
-      min: 30,
+      tierMin: 36,
+      smartMin: 34,
+      quickMode: 'smart',
+      min: 34,
       max: null,
       enabled: true
     },
@@ -94,6 +101,9 @@ const SAMPLE_QUERY: PreparedQuery = {
       affix: 'suffix',
       tier: 4,
       value: 24,
+      tierMin: 21,
+      smartMin: 21,
+      quickMode: 'smart',
       min: null,
       max: null,
       enabled: false
@@ -105,9 +115,13 @@ const SAMPLE_QUERY: PreparedQuery = {
       affix: 'prefix',
       tier: 3,
       value: 21,
-      min: null,
+      // 'tier': matched to the tier floor (shows the T glyph).
+      tierMin: 18,
+      smartMin: 18,
+      quickMode: 'tier',
+      min: 18,
       max: null,
-      enabled: false
+      enabled: true
     },
     {
       statId: 'explicit.spell_damage',
@@ -117,6 +131,9 @@ const SAMPLE_QUERY: PreparedQuery = {
       tier: 7,
       group: 99,
       value: 16,
+      tierMin: 14,
+      smartMin: 14,
+      quickMode: 'smart',
       min: 14,
       max: null,
       enabled: false
@@ -129,6 +146,9 @@ const SAMPLE_QUERY: PreparedQuery = {
       tier: 7,
       group: 99,
       value: 17,
+      tierMin: 15,
+      smartMin: 15,
+      quickMode: 'smart',
       min: 15,
       max: null,
       enabled: false
@@ -140,6 +160,9 @@ const SAMPLE_QUERY: PreparedQuery = {
       affix: 'suffix',
       tier: 7,
       value: 41,
+      tierMin: 36,
+      smartMin: 36,
+      quickMode: 'smart',
       min: 36,
       max: null,
       enabled: false
@@ -152,6 +175,10 @@ const SAMPLE_QUERY: PreparedQuery = {
       tier: null,
       summed: true,
       value: 57,
+      // A summed total has no single tier floor — cycle skips "Match Tier".
+      tierMin: null,
+      smartMin: 51,
+      quickMode: 'smart',
       min: 51,
       max: null,
       enabled: true
@@ -163,6 +190,9 @@ const SAMPLE_QUERY: PreparedQuery = {
       affix: null,
       tier: null,
       value: 17,
+      tierMin: 15,
+      smartMin: 15,
+      quickMode: 'smart',
       min: 15,
       max: null,
       enabled: true
@@ -174,6 +204,9 @@ const SAMPLE_QUERY: PreparedQuery = {
       affix: null,
       tier: null,
       value: 12,
+      tierMin: null,
+      smartMin: 10,
+      quickMode: 'smart',
       min: null,
       max: null,
       enabled: false
@@ -185,6 +218,9 @@ const SAMPLE_QUERY: PreparedQuery = {
       affix: null,
       tier: null,
       value: 74,
+      tierMin: null,
+      smartMin: 60,
+      quickMode: 'smart',
       min: 60,
       max: null,
       enabled: true

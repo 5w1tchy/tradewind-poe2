@@ -110,6 +110,69 @@ describe('prepareQuery', () => {
     expect(mana.min).toBe(3) // floor(4 * 0.9), not floor(52 * 0.9) = 46
   })
 
+  it('captures tier floor, smart default, and the smart quick-mode (issue #16)', () => {
+    const item = [
+      'Item Class: Body Armours',
+      'Rarity: Rare',
+      'Test Plate',
+      'Plate',
+      '--------',
+      'Item Level: 82',
+      '--------',
+      '{ Prefix Modifier "Hale" (Tier: 3) — Life }',
+      '+80(70-90) to maximum Life'
+    ].join('\n')
+    const q = prepareQuery(parseItem(item), db)
+    const life = q.stats.find((s) => s.label.includes('maximum Life'))!
+    expect(life.value).toBe(80)
+    expect(life.tierMin).toBe(70) // tier floor from the (70-90) range
+    expect(life.smartMin).toBe(72) // floor(80 * 0.9)
+    expect(life.min).toBe(72) // pre-fills at the smart default
+    expect(life.quickMode).toBe('smart')
+  })
+
+  it('flat damage with a fixed low + ranged high still gets a tier floor (issue #16)', () => {
+    // "Adds 1 to 22(16-22)": the 1 is fixed (no roll), the high rolled 22 of 16-22.
+    // Trade indexes added damage by the average, so the tier floor is the worst
+    // average: floor((1 fixed + 16 high-floor) / 2) = 8.
+    const item = [
+      'Item Class: Gloves',
+      'Rarity: Rare',
+      'Beast Vise',
+      'Test Gloves',
+      '--------',
+      'Item Level: 80',
+      '--------',
+      '{ Prefix Modifier "Test" (Tier: 7) — Lightning, Attack, Damage }',
+      'Adds 1 to 22(16-22) Lightning damage to Attacks'
+    ].join('\n')
+    const q = prepareQuery(parseItem(item), db)
+    const flat = q.stats.find((s) => s.label.includes('Lightning damage to Attacks'))!
+    expect(flat.value).toBe(11.5) // (1 + 22) / 2
+    expect(flat.tierMin).toBe(8) // floor((1 + 16) / 2)
+    expect(flat.smartMin).toBe(10) // floor(11.5 * 0.9)
+  })
+
+  it('cliff stats default to the roll quick-mode; no range means no tier floor', () => {
+    const q = prepareFixture('03-boots--rune-spur-f39b212f.txt')
+    const ms = q.stats.find((s) => s.label.includes('Movement Speed'))!
+    // No spread, so the pre-filled min is the full roll and the cycle starts on roll.
+    expect(ms.quickMode).toBe('roll')
+    expect(ms.smartMin).toBe(35)
+  })
+
+  it('summed totals and folded pseudos expose no single tier floor', () => {
+    const q = prepareFixture('37-helmets--blight-crown-screenshot.txt')
+    const total = q.stats.find((s) => s.summed)!
+    expect(total.tierMin).toBeNull()
+    expect(total.quickMode).toBe('smart')
+
+    const pseudo = prepareFixture('01-gloves--rapture-caress-8cdf3ae5.txt').stats.find(
+      (s) => s.source === 'pseudo'
+    )!
+    expect(pseudo.tierMin).toBeNull()
+  })
+
   it('derives defence filters from item properties, normalized to 20% quality', () => {
     // 0-quality shield, flat armour mods only: 482 * 120/100 = 578
     const shield = prepareFixture('32-shields--eagle-span-f24731e2.txt')

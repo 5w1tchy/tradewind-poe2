@@ -148,7 +148,8 @@
   padding-left: 8px;
 }
 
-/* One-click "match my roll" — writes the item's value into min. */
+/* Quick-set cycle button (issue #16): "=" match roll, "T" tier floor,
+   "%" smart default, "•" custom. The glyph + accent colour signal the mode. */
 .fill {
   appearance: none;
   width: 18px;
@@ -170,6 +171,29 @@
 .fill:hover {
   color: var(--tw-gold);
   border-color: var(--tw-bronze);
+}
+
+/* Match-roll is the exact 100% pick — the default bronze, named so the class
+   always resolves (avoids a stray "undefined" class for this mode). */
+.quick-roll {
+  color: var(--tw-bronze-bright);
+}
+
+/* Tier floor is the precise pick — light it gold like a T1 badge. */
+.quick-tier {
+  color: var(--tw-gold);
+  border-color: var(--tw-bronze-dim);
+}
+
+/* Smart default is the loose, everyday pick — muted bronze. */
+.quick-smart {
+  color: var(--tw-bronze-bright);
+}
+
+/* A hand-typed value sits off the cycle: dim dot, dashed frame. */
+.quick-custom {
+  color: var(--tw-text-faint);
+  border-style: dashed;
 }
 
 .num {
