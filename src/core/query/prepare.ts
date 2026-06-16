@@ -540,16 +540,20 @@ export function prepareQuery(
       // With a loaded base list and no match, the name is decorated in a way
       // we don't understand — a category search beats a guaranteed 400.
     }
-    // Rares show the clean base on the second name line — offer it as an
-    // opt-in restriction (exact base vs whole category).
+    // Rares show the clean base on the second name line; magic names sandwich
+    // it in affix words (recovered from the items DB). Default to the exact
+    // base (issue #23), with Category as the opt-out scope (see-saw, as white
+    // items) — checking Category unchecks Base in the UI.
     if (item.rarity === 'Rare' && item.name) {
-      prepared.baseTypeFilter = { value: item.baseType, enabled: false }
+      prepared.baseTypeFilter = { value: item.baseType, enabled: true }
+      if (prepared.categoryFilter) prepared.categoryFilter.enabled = false
     }
-    // Magic names sandwich the base in affix words — recover it from the
-    // items DB so the base restriction is at least offerable.
     if (item.rarity === 'Magic') {
       const base = extractBaseType(item.baseType, options.baseTypes ?? [])
-      if (base) prepared.baseTypeFilter = { value: base, enabled: false }
+      if (base) {
+        prepared.baseTypeFilter = { value: base, enabled: true }
+        if (prepared.categoryFilter) prepared.categoryFilter.enabled = false
+      }
     }
   }
 

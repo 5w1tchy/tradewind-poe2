@@ -559,7 +559,8 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
   if (q) {
     // Base and category are two scopes for the same search — exactly one stays
     // on: checking one unchecks the other, unchecking one re-checks the other.
-    // Category leads (the broader scope), exact base follows.
+    // Exact base leads (the item's own base); category is the opt-out to the
+    // broader scope.
     const base = q.baseTypeFilter
     const cat = q.categoryFilter
     if (cat) {
