@@ -1,4 +1,4 @@
-import { BrowserWindow } from "electron";
+import { app, BrowserWindow } from "electron";
 import { readFileSync } from "node:fs";
 import splashAsset from "../../build/splash.png?asset";
 
@@ -52,13 +52,20 @@ export function createSplashWindow(): Splash {
   win.setIgnoreMouseEvents(true);
 
   const dataUrl = `data:image/png;base64,${readFileSync(splashAsset).toString("base64")}`;
+  // Version label sat just under the right end of the wordmark (below the final
+  // "D"), right-aligned, fading in with the card. Positioned by percentage so it
+  // tracks the artwork as the card scales.
+  const version = app.getVersion();
   const html =
     '<!doctype html><meta charset="utf-8">' +
     "<style>html,body{margin:0;height:100%;overflow:hidden;background:transparent}" +
     "body{display:flex;align-items:center;justify-content:center}" +
-    `img{width:100%;height:100%;object-fit:contain;-webkit-user-drag:none;user-select:none;` +
-    `opacity:0;transition:opacity ${FADE_MS}ms ease}</style>` +
-    `<img id="splash" src="${dataUrl}">`;
+    "#card{position:relative;width:100%;height:100%}" +
+    `img{width:100%;height:100%;object-fit:contain;-webkit-user-drag:none;user-select:none}` +
+    "#ver{position:absolute;right:17.4%;top:53.2%;font:600 12px/1 system-ui,-apple-system,Segoe UI,sans-serif;" +
+    "color:hsl(44 42% 63% / 1);letter-spacing:.02em;text-shadow:0 1px 2px rgba(0,0,0,.6)}" +
+    `#card{opacity:0;transition:opacity ${FADE_MS}ms ease}</style>` +
+    `<div id="card"><img src="${dataUrl}"><span id="ver">v${version}</span></div>`;
   void win.loadURL(`data:text/html;charset=UTF-8,${encodeURIComponent(html)}`);
 
   // showInactive: appear without stealing focus from whatever is up front. Kick
@@ -68,7 +75,7 @@ export function createSplashWindow(): Splash {
     win.showInactive();
     void win.webContents
       .executeJavaScript(
-        "requestAnimationFrame(()=>{const e=document.getElementById('splash');if(e)e.style.opacity='1'})",
+        "requestAnimationFrame(()=>{const e=document.getElementById('card');if(e)e.style.opacity='1'})",
       )
       .catch(() => {});
   });
@@ -78,7 +85,7 @@ export function createSplashWindow(): Splash {
     if (closing || win.isDestroyed()) return;
     closing = true;
     void win.webContents
-      .executeJavaScript("const e=document.getElementById('splash');if(e)e.style.opacity='0'")
+      .executeJavaScript("const e=document.getElementById('card');if(e)e.style.opacity='0'")
       .catch(() => {});
     setTimeout(() => {
       if (!win.isDestroyed()) win.destroy();
