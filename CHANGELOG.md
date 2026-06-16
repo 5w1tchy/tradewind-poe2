@@ -3,6 +3,32 @@
 All notable user-facing changes to Tradewind. Newest first. The top entry of
 each release is reused verbatim as that release's GitHub Release notes.
 
+## v0.1.12
+
+### 🌐 Updates won't spike your ping mid-match
+Tradewind no longer downloads updates silently in the background — a download
+mid-game could cause a ping spike at the worst possible moment.
+
+- New updates are now downloaded **only with your say-so**: when you click
+  **Update** on the in-app toast, or quietly at startup (before you're in a
+  match). Once a download finishes, the app restarts to install right away —
+  no extra "restart now?" prompt, since you already opted in.
+- The **Update** toast now shows live progress while downloading and an
+  installing state, so you can see exactly what's happening.
+
+### 🎨 Themed tray menu & update dialogs
+The last bits of plain Windows chrome now match the in-game overlay's look:
+
+- The **tray menu** (click the tray icon) is now a themed popup styled like the
+  overlay, instead of the default grey Windows menu — and it opens on either a
+  left or right click.
+- The **Check for updates…** dialogs are themed to match too, walking through
+  Checking… → Available → Downloading → relaunch in one window.
+- The app **version** now appears on the startup splash and in the tray menu.
+
+---
+**Full changelog:** https://github.com/5w1tchy/tradewind-poe2/compare/v0.1.11...v0.1.12
+
 ## v0.1.11
 
 ### 📐 Resize the popup — and it remembers
