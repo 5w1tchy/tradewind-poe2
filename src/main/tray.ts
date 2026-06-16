@@ -1,4 +1,6 @@
-import { app, Menu, nativeImage, Tray } from 'electron'
+import { app, nativeImage, Tray } from 'electron'
+import { showTrayMenu, type TrayMenuItem } from './tray-menu'
+import { showThemedDialog } from './themed-dialog'
 
 // The app's only window is the click-through overlay, which is hidden whenever
 // PoE2 isn't focused — so a tray icon is the user's only way to quit. The icon
@@ -15,6 +17,57 @@ export interface TrayHandlers {
 }
 
 /**
+ * Dev-only menu entries that pop each themed update dialog directly. The real
+ * ones (update-available, ready-to-restart, error) only fire from a packaged
+ * build's update feed, so these let us eyeball them in `npm run dev`. Returns
+ * an empty list in a packaged build, so they never ship.
+ */
+function devDialogTestItems(): TrayMenuItem[] {
+  if (app.isPackaged) return []
+  return [
+    { separator: true },
+    { header: 'Dev — dialog previews' },
+    {
+      label: 'Dialog: up to date',
+      action: () =>
+        void showThemedDialog({
+          message: 'You’re up to date',
+          detail: `Tradewind ${app.getVersion()} is the latest version.`
+        })
+    },
+    {
+      label: 'Dialog: update available',
+      action: () =>
+        void showThemedDialog({
+          message: 'Update 9.9.9 available',
+          detail:
+            'Downloading in the background — you’ll be prompted to restart when it’s ready.'
+        })
+    },
+    {
+      label: 'Dialog: ready (restart?)',
+      action: () =>
+        void showThemedDialog({
+          message: 'Update 9.9.9 ready',
+          detail: 'Restart Tradewind to finish installing.',
+          buttons: ['Restart now', 'Later'],
+          defaultId: 0,
+          cancelId: 1
+        }).then((r) => console.log(`[dev] restart dialog → ${r === 0 ? 'Restart now' : 'Later'}`))
+    },
+    {
+      label: 'Dialog: error',
+      action: () =>
+        void showThemedDialog({
+          title: 'Update check failed',
+          message: 'Couldn’t check for updates.',
+          detail: 'net::ERR_INTERNET_DISCONNECTED'
+        })
+    }
+  ]
+}
+
+/**
  * Create the system-tray (notification-area) icon and its menu. Returns the
  * Tray so the caller can keep it alive (a GC'd Tray disappears from the
  * notification area).
@@ -23,12 +76,21 @@ export function createTray(handlers: TrayHandlers): Tray {
   const icon = nativeImage.createFromDataURL(`data:image/png;base64,${ICON_PNG}`)
   const tray = new Tray(icon)
   tray.setToolTip('Tradewind')
-  tray.setContextMenu(
-    Menu.buildFromTemplate([
-      { label: 'Check for updates…', click: () => handlers.onCheckForUpdates() },
-      { type: 'separator' },
-      { label: 'Quit', click: () => app.quit() }
+
+  // Our own themed menu instead of tray.setContextMenu's native Win32 menu,
+  // which can't be styled to match the overlay. Opened by either button so a
+  // left-click — which the native menu ignores — is also discoverable.
+  const open = (): void =>
+    showTrayMenu([
+      { header: `Tradewind v${app.getVersion()}` },
+      { separator: true },
+      { label: 'Check for updates…', action: () => handlers.onCheckForUpdates() },
+      ...devDialogTestItems(),
+      { separator: true },
+      { label: 'Quit', action: () => app.quit() }
     ])
-  )
+  tray.on('click', open)
+  tray.on('right-click', open)
+
   return tray
 }

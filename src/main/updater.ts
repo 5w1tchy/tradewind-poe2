@@ -1,7 +1,8 @@
-import { app, dialog, type BrowserWindow } from "electron";
+import { app, type BrowserWindow } from "electron";
 import { autoUpdater } from "electron-updater";
 import type { Config } from "./config";
 import type { UpdateStatus } from "../shared/ipc";
+import { showThemedDialog } from "./themed-dialog";
 
 // How often to re-check after the startup check. Releases are infrequent; a
 // few hours keeps us current without hammering the GitHub feed.
@@ -49,9 +50,7 @@ export function initAutoUpdater(overlay: BrowserWindow, config: Config): void {
   autoUpdater.on("update-available", (info) => {
     send({ state: "available", version: info.version });
     if (manualCheck) {
-      void dialog.showMessageBox({
-        type: "info",
-        title: "Tradewind",
+      void showThemedDialog({
         message: `Update ${info.version} available`,
         detail:
           "Downloading in the background — you’ll be prompted to restart when it’s ready.",
@@ -63,9 +62,7 @@ export function initAutoUpdater(overlay: BrowserWindow, config: Config): void {
     autoInstallOnStartup = false;
     if (manualCheck) {
       manualCheck = false;
-      void dialog.showMessageBox({
-        type: "info",
-        title: "Tradewind",
+      void showThemedDialog({
         message: "You’re up to date",
         detail: `Tradewind ${app.getVersion()} is the latest version.`,
       });
@@ -80,19 +77,15 @@ export function initAutoUpdater(overlay: BrowserWindow, config: Config): void {
     autoInstallOnStartup = false;
     if (manualCheck) {
       manualCheck = false;
-      void dialog
-        .showMessageBox({
-          type: "info",
-          title: "Tradewind",
-          message: `Update ${info.version} ready`,
-          detail: "Restart Tradewind to finish installing.",
-          buttons: ["Restart now", "Later"],
-          defaultId: 0,
-          cancelId: 1,
-        })
-        .then(({ response }) => {
-          if (response === 0) quitAndInstall();
-        });
+      void showThemedDialog({
+        message: `Update ${info.version} ready`,
+        detail: "Restart Tradewind to finish installing.",
+        buttons: ["Restart now", "Later"],
+        defaultId: 0,
+        cancelId: 1,
+      }).then((response) => {
+        if (response === 0) quitAndInstall();
+      });
       return;
     }
     // Startup update: install silently and relaunch into the new version. A
@@ -109,7 +102,11 @@ export function initAutoUpdater(overlay: BrowserWindow, config: Config): void {
     autoInstallOnStartup = false;
     if (manualCheck) {
       manualCheck = false;
-      dialog.showErrorBox("Update check failed", message);
+      void showThemedDialog({
+        title: "Update check failed",
+        message: "Couldn’t check for updates.",
+        detail: message,
+      });
     }
   });
 
@@ -134,9 +131,7 @@ export function initAutoUpdater(overlay: BrowserWindow, config: Config): void {
  */
 export function checkForUpdatesManually(): void {
   if (!app.isPackaged) {
-    void dialog.showMessageBox({
-      type: "info",
-      title: "Tradewind",
+    void showThemedDialog({
       message: "Updates are only available in the installed app",
       detail: "Run a packaged build to use auto-update.",
     });
@@ -145,10 +140,11 @@ export function checkForUpdatesManually(): void {
   manualCheck = true;
   autoUpdater.checkForUpdates().catch((err) => {
     manualCheck = false;
-    dialog.showErrorBox(
-      "Update check failed",
-      err instanceof Error ? err.message : String(err),
-    );
+    void showThemedDialog({
+      title: "Update check failed",
+      message: "Couldn’t check for updates.",
+      detail: err instanceof Error ? err.message : String(err),
+    });
   });
 }
 
