@@ -43,6 +43,12 @@ export interface TradewindApi {
    * process keeps that region interactive too; null when no tooltip is shown.
    */
   setTooltipRect(rect: { x: number; y: number; w: number; h: number } | null): void
+  /**
+   * Pin/unpin the popup. While pinned, a click outside the popup no longer
+   * dismisses it (Esc and the ✕ still do); unpinned (the default), an outside
+   * click closes it. Reset to unpinned on every fresh price check.
+   */
+  setPinned(pinned: boolean): void
   /** Grab keyboard focus for a filter input (released when the popup hides). */
   requestFocus(): void
   /**

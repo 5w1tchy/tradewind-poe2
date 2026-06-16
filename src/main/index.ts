@@ -177,6 +177,11 @@ app.whenReady().then(() => {
   // it never triggers auto-hide (the toast manages its own dismissal).
   let toastRect: Rect | null = null
 
+  // While pinned, an outside click won't dismiss the popup, and a fresh price
+  // check updates it in place without unpinning (issue #32). Reset to unpinned
+  // only when the popup actually closes — see hidePopup() and the null popup-rect.
+  let pinned = false
+
   let interactiveState = false
   const setInteractive = (interactive: boolean): void => {
     if (interactive === interactiveState) return
@@ -195,6 +200,7 @@ app.whenReady().then(() => {
     overlay.webContents.send('tw:hide')
     popupRect = null
     tooltipRect = null
+    pinned = false
     setInteractive(false)
     releaseFocus()
   }
@@ -245,6 +251,20 @@ app.whenReady().then(() => {
         onCursorMove()
       }, MOVE_INTERVAL_MS - elapsed)
     }
+  }
+
+  // Click-outside-to-close: with a popup open and unpinned, a mouse press
+  // anywhere outside the popup (and its tooltip/toast satellites) dismisses it.
+  // Presses inside those rects are the user working the popup; pinned keeps it
+  // open regardless (only Esc / the ✕ close it then). The outside click still
+  // passes to the game — outside the popup the overlay is click-through.
+  const onMouseDown = (): void => {
+    if (!popupRect || pinned) return
+    const cur = screen.getCursorScreenPoint()
+    const x = cur.x - overlayBounds.x
+    const y = cur.y - overlayBounds.y
+    if (within(popupRect, x, y) || within(tooltipRect, x, y) || within(toastRect, x, y)) return
+    hidePopup()
   }
 
   let busy = false
@@ -373,6 +393,9 @@ app.whenReady().then(() => {
       },
       onMouseMove() {
         onCursorMoveThrottled()
+      },
+      onMouseDown() {
+        onMouseDown()
       }
     },
     { priceCheck: priceCheckKey, hideout: hideoutKey }
@@ -501,9 +524,10 @@ app.whenReady().then(() => {
     (_event, rect: { x: number; y: number; w: number; h: number } | null) => {
       popupRect = rect
       // The popup closed itself (its ✕): drop keyboard focus so the next click
-      // goes to the game, and restore click-through.
+      // goes to the game, restore click-through, and clear the pin.
       if (!rect) {
         tooltipRect = null
+        pinned = false
         releaseFocus()
       }
       // Re-evaluate now so interactivity tracks a resized/moved popup even if the
@@ -519,6 +543,10 @@ app.whenReady().then(() => {
       onCursorMove()
     }
   )
+
+  ipcMain.on('tw:set-pinned', (_event, value: boolean) => {
+    pinned = value === true
+  })
 
   // Filter inputs need real keyboard focus; the window is non-focusable the
   // rest of the time so clicks never steal focus from the game.
