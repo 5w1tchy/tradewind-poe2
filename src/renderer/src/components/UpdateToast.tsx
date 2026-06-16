@@ -3,11 +3,13 @@ import type { UpdateStatus } from '../../../shared/ipc'
 import styles from './UpdateToast.module.css'
 
 /**
- * Bottom-right toast shown once an update has finished downloading. The update
- * also installs automatically on quit, so this is just the "get it now" path:
- * "Restart now" relaunches into the new version; ✕ dismisses until next launch.
- * It reports its rect to main so that region becomes clickable on the otherwise
- * click-through overlay.
+ * Bottom-right toast for the poll-found update path. Downloads never start on
+ * their own (that could spike ping mid-game), so a polled update shows here as
+ * "available" with an Update button; clicking it downloads and — since that
+ * click is also consent to restart — the app installs and relaunches itself
+ * when the download finishes (no second prompt). The toast just narrates that:
+ * available → downloading → installing. It reports its rect to main so the
+ * region becomes clickable on the otherwise click-through overlay.
  */
 export default function UpdateToast(): React.JSX.Element | null {
   const [status, setStatus] = useState<UpdateStatus | null>(null)
@@ -17,12 +19,18 @@ export default function UpdateToast(): React.JSX.Element | null {
   useEffect(() => {
     window.tradewind.onUpdateStatus((s) => {
       setStatus(s)
-      // A freshly downloaded update re-arms the toast even if a prior one was dismissed.
-      if (s.state === 'downloaded') setDismissed(false)
+      // A fresh "available" re-arms the toast even if a prior one was dismissed.
+      if (s.state === 'available') setDismissed(false)
     })
   }, [])
 
-  const show = status?.state === 'downloaded' && !dismissed
+  // Dismiss only hides the "available" prompt; once downloading/installing the
+  // restart is imminent, so keep narrating it.
+  const show =
+    status != null &&
+    ((status.state === 'available' && !dismissed) ||
+      status.state === 'downloading' ||
+      status.state === 'downloaded')
 
   // Keep main's hit-test rect in sync while the toast is visible (and on overlay
   // resize, e.g. the game window moving); clear it whenever the toast is gone.
@@ -45,24 +53,35 @@ export default function UpdateToast(): React.JSX.Element | null {
     }
   }, [show])
 
-  if (!show || status?.state !== 'downloaded') return null
+  if (!show || status == null) return null
+
+  if (status.state === 'available') {
+    return (
+      <div ref={box} className={styles.toast}>
+        <span className={styles.text}>
+          <span className="tw-label">Update</span> v{status.version} available
+        </span>
+        <button className="tw-btn" onClick={() => window.tradewind.downloadUpdate()}>
+          Update
+        </button>
+        <button
+          className={styles.dismiss}
+          onClick={() => setDismissed(true)}
+          aria-label="Dismiss"
+          title="Dismiss"
+        >
+          ×
+        </button>
+      </div>
+    )
+  }
 
   return (
     <div ref={box} className={styles.toast}>
       <span className={styles.text}>
-        <span className="tw-label">Update ready</span> v{status.version}
+        <span className="tw-label">Updating</span>
+        {status.state === 'downloading' ? `${status.percent}%` : 'restarting…'}
       </span>
-      <button className="tw-btn" onClick={() => window.tradewind.restartToUpdate()}>
-        Restart now
-      </button>
-      <button
-        className={styles.dismiss}
-        onClick={() => setDismissed(true)}
-        aria-label="Dismiss"
-        title="Dismiss"
-      >
-        ×
-      </button>
     </div>
   )
 }

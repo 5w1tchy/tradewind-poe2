@@ -292,6 +292,7 @@ const mock: TradewindApi = {
     console.log('openUrl:', url)
   },
   onUpdateStatus() {},
+  downloadUpdate() {},
   restartToUpdate() {},
   setToastRect() {}
 }

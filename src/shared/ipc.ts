@@ -78,6 +78,11 @@ export interface TradewindApi {
   openUrl(url: string): void
   /** Subscribe to auto-update status pushes. */
   onUpdateStatus(cb: (status: UpdateStatus) => void): void
+  /**
+   * Start downloading the available update (the toast's "Update" button). The
+   * download finishing installs and relaunches on its own — no second prompt.
+   */
+  downloadUpdate(): void
   /** Quit and install a downloaded update now (the toast's "Restart now"). */
   restartToUpdate(): void
   /**
