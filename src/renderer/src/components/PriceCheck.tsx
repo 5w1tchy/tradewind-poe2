@@ -25,7 +25,8 @@ const RARITY_OPTIONS: Array<[string, string]> = [
   ['nonunique', 'Any Non-Unique'],
   ['normal', 'Normal'],
   ['magic', 'Magic'],
-  ['rare', 'Rare']
+  ['rare', 'Rare'],
+  ['unique', 'Unique']
 ]
 
 const TRISTATE_OPTIONS: Array<[TriState, string]> = [
@@ -546,8 +547,8 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     const src = payload.currencyIcons[k]
     return src ? <img key={k} className={styles['cur-icon']} src={src} alt="" /> : null
   }
-  /** Shown for equipment searches so a base can be checked across rarities. */
-  const rarityEditable = q?.rarityOption != null && q.rarityOption !== 'unique'
+  /** Shown for any equipment search (incl. uniques) so rarity can be retargeted. */
+  const rarityEditable = q?.rarityOption != null
 
   const baseLabel = q && q.type && q.type !== q.displayName ? q.type : null
 

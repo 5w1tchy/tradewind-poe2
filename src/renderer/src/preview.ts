@@ -47,7 +47,7 @@ const SAMPLE_QUERY: PreparedQuery = {
   type: 'Sapphire Ring',
   exchangeId: null,
   categoryFilter: { value: 'accessory.ring', label: 'Ring', enabled: false },
-  rarityOption: 'nonunique',
+  rarityOption: 'rare',
   baseTypeFilter: { value: 'Sapphire Ring', enabled: true },
   ilvl: { value: 81, min: null, max: null, enabled: false },
   quality: null,

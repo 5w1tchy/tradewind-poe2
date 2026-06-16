@@ -522,7 +522,9 @@ export function prepareQuery(
     if (category !== null) {
       prepared.categoryFilter = { value: category, label: item.itemClass, enabled: true }
     }
-    prepared.rarityOption = 'nonunique'
+    // Default the rarity filter to the item's own rarity (issue #15). The
+    // trade option ids match the lowercased rarity name: normal/magic/rare.
+    prepared.rarityOption = item.rarity.toLowerCase()
     // White items ARE their base, but the name can carry display prefixes
     // ("Exceptional Stalking Spear") the API rejects — extract the real base
     // and search it, with Category as the opt-out scope (see-saw, as rares).
