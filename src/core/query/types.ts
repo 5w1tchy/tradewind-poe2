@@ -95,6 +95,8 @@ export type EquipmentFilterKey =
   | 'dps'
   | 'pdps'
   | 'edps'
+  | 'aps'
+  | 'crit'
   | 'rune_sockets'
 
 export interface PreparedStatFilter {
@@ -144,6 +146,17 @@ export interface PreparedRange {
 export interface PreparedEquipmentFilter extends PreparedRange {
   key: EquipmentFilterKey
   label: string
+  /** The pre-filled "Smart" default min (spread below the value), so the "="
+   *  button can cycle back to it after the user bumps the row to 100%. Equals
+   *  `value` for no-spread rows (sockets), where the cycle is a no-op. */
+  smartMin: number | null
+  /** No equipment row carries a tier floor — always null. Present so the row
+   *  shares the QuickMode cycle shape with stat rows, which skips the "T" step
+   *  when this is null. */
+  tierMin: number | null
+  /** Which quick-set produced the current min — drives the cycling "=" glyph,
+   *  flipping to 'custom' once a min is typed by hand (issue #16, DPS/defences). */
+  quickMode: QuickMode
 }
 
 /** Boolean item attributes (corrupted, mirrored, …) search as yes / no / any. */

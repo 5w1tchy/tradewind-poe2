@@ -110,5 +110,17 @@ export function deriveEquipmentValues(item: ParsedItem): DerivedValue[] {
     })
   }
 
+  // Attack speed and crit are weapon properties the trade site indexes directly
+  // (not quality-normalized). Kept as fractional values — the trade aps/crit
+  // filters accept decimals, and rounding a 1.30 aps to 1 would gut the filter.
+  if (aps !== null && aps > 0) {
+    out.push({ key: 'aps', label: 'Attacks/sec', value: aps })
+  }
+  const critProp = item.properties.find((p) => p.name === 'Critical Hit Chance')
+  const critValue = critProp ? firstNumber(critProp.raw) : null
+  if (critValue !== null && critValue > 0) {
+    out.push({ key: 'crit', label: 'Crit Chance %', value: critValue })
+  }
+
   return out
 }

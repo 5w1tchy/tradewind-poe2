@@ -210,6 +210,18 @@ describe('prepareQuery', () => {
     expect(bow.equipment.some((e) => e.key === 'edps')).toBe(false)
   })
 
+  it('derives weapon aps/crit, keeping fractional smart mins', () => {
+    const bow = prepareFixture('22-bows--infusing-obliterator-bow-of-the-skilled-b8aaca45.txt')
+    // "Attacks per Second: 1.10" -> 1.1, smart min floor(0.99 * 1.10... ) = 0.99
+    expect(bow.equipment).toContainEqual(
+      expect.objectContaining({ key: 'aps', value: 1.1, smartMin: 0.99, quickMode: 'smart' })
+    )
+    // "Critical Hit Chance: 5.00%" -> 5, smart min floor(4.5) = 4.5
+    expect(bow.equipment).toContainEqual(
+      expect.objectContaining({ key: 'crit', value: 5, smartMin: 4.5 })
+    )
+  })
+
   it('folds resists into pseudo totals (all-res counts x3), folded rows unchecked', () => {
     const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
 
