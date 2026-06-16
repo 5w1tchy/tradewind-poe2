@@ -215,6 +215,10 @@ app.whenReady().then(() => {
   // popup, the hovered listing tooltip, or the update toast — leaving the rest
   // of the screen click-through so the game stays playable.
   const onCursorMove = (): void => {
+    // A trailing-edge throttle timer (below) can fire after quit has destroyed
+    // the overlay; every branch here touches it, so bail before we throw
+    // "Object has been destroyed" into the dying process.
+    if (overlay.isDestroyed()) return
     if (!popupRect && !tooltipRect && !toastRect) {
       setInteractive(false)
       return
@@ -576,12 +580,25 @@ app.whenReady().then(() => {
   tracker.start()
 
   app.on('will-quit', () => {
-    globalShortcut.unregisterAll()
-    keyhook?.stop()
-    input.stop()
-    tracker.stop()
-    stopAutoUpdater()
-    tray.destroy()
+    // A pending trailing mousemove timer would fire onCursorMove against the
+    // soon-to-be-destroyed overlay; drop it before teardown.
+    if (moveTrailing !== null) clearTimeout(moveTrailing)
+    // Teardown is best-effort cleanup of native addons; a throw here used to
+    // surface as Electron's "JavaScript error in the main process" dialog mid
+    // restart-to-install. Isolate each step so quit always completes quietly.
+    const safe = (label: string, fn: () => void): void => {
+      try {
+        fn()
+      } catch (err) {
+        console.error(`[quit] ${label} cleanup failed:`, err)
+      }
+    }
+    safe('globalShortcut', () => globalShortcut.unregisterAll())
+    safe('keyhook', () => keyhook?.stop())
+    safe('input', () => input.stop())
+    safe('tracker', () => tracker.stop())
+    safe('updater', () => stopAutoUpdater())
+    safe('tray', () => tray.destroy())
   })
 
   console.log(
