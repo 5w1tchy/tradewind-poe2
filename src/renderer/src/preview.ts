@@ -284,6 +284,8 @@ const mock: TradewindApi = {
   setPopupRect() {},
   setTooltipRect() {},
   setPinned() {},
+  setPopupSize() {},
+  setResultsHeight() {},
   requestFocus() {},
   releaseFocus() {},
   openUrl(url) {
@@ -313,6 +315,8 @@ import('./main').then(() => {
     prepared: SAMPLE_QUERY,
     leagues: ['Rise of the Abyssal', 'HC Rise of the Abyssal', 'Standard'],
     league: 'Rise of the Abyssal',
+    popupSize: { w: 520, h: 560 },
+    resultsHeight: 200,
     currencyIcons: {
       exalted:
         'https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lBZGRNb2RUb1JhcmUiLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/ad7c366789/CurrencyAddModToRare.png',

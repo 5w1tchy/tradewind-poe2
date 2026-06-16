@@ -296,6 +296,8 @@ app.whenReady().then(() => {
         leagues,
         league,
         currencyIcons,
+        popupSize: config.popupSize,
+        resultsHeight: config.resultsHeight,
         x: cursor.x - overlayBounds.x,
         y: cursor.y - overlayBounds.y
       } satisfies ItemPayload)
@@ -546,6 +548,21 @@ app.whenReady().then(() => {
 
   ipcMain.on('tw:set-pinned', (_event, value: boolean) => {
     pinned = value === true
+  })
+
+  // The user finished dragging the resize handle — persist the new popup size so
+  // it's restored on the next price check and after a restart.
+  ipcMain.on('tw:set-popup-size', (_event, size: { w: number; h: number } | null) => {
+    if (!size || typeof size.w !== 'number' || typeof size.h !== 'number') return
+    config.popupSize = { w: Math.round(size.w), h: Math.round(size.h) }
+    saveConfig(config)
+  })
+
+  // Likewise for the Price-tab results-list height.
+  ipcMain.on('tw:set-results-height', (_event, height: number) => {
+    if (typeof height !== 'number' || !Number.isFinite(height)) return
+    config.resultsHeight = Math.round(height)
+    saveConfig(config)
   })
 
   // Filter inputs need real keyboard focus; the window is non-focusable the

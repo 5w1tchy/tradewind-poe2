@@ -8,6 +8,10 @@ import styles from './App.module.css'
 type Tab = 'price' | 'craft'
 
 const pad = 12
+// Resize bounds (CSS px). Upper bounds are the viewport minus `pad` on each side,
+// computed live in clampSize.
+const MIN_W = 360
+const MIN_H = 220
 
 /** Thumbtack glyph for the pin toggle — upright pin, filled head. */
 function PinIcon(): React.JSX.Element {
@@ -25,6 +29,11 @@ export default function App(): React.JSX.Element | null {
   const [visible, setVisible] = useState(false)
   const [payload, setPayload] = useState<ItemPayload | null>(null)
   const [pos, setPos] = useState({ x: 0, y: 0 })
+  // The popup is a fixed-size box (not content-sized) so it stays put when the
+  // content changes — switching tabs no longer resizes it (issue #35). Seeded
+  // from the persisted size on each item; the user resizes it via the corner
+  // handle, which persists back through main.
+  const [size, setSize] = useState({ w: 520, h: 560 })
   const [tab, setTab] = useState<Tab>('price')
   // Pinned popups survive an outside click (only Esc / ✕ close them). Off by
   // default and reset on every fresh item — the main process mirrors this.
@@ -39,6 +48,21 @@ export default function App(): React.JSX.Element | null {
   const dragRaf = useRef<number | null>(null)
   // Once the user drags, stop auto-centering — they've placed it deliberately.
   const moved = useRef(false)
+  // Resize gesture state, mirroring the drag plumbing: the geometry captured at
+  // grab time, the latest pending target, and the rAF that flushes it.
+  const resize = useRef<{ x: number; y: number; w: number; h: number } | null>(null)
+  const resizeTarget = useRef<{ w: number; h: number } | null>(null)
+  const resizeRaf = useRef<number | null>(null)
+
+  // Clamp a desired size to [MIN, viewport - pad]. Keeps the popup from being
+  // shrunk to nothing or grown past the screen (also re-applied per item, since a
+  // size saved on a larger monitor may not fit the current one).
+  function clampSize(w: number, h: number): { w: number; h: number } {
+    return {
+      w: Math.round(Math.max(MIN_W, Math.min(w, window.innerWidth - pad * 2))),
+      h: Math.round(Math.max(MIN_H, Math.min(h, window.innerHeight - pad * 2)))
+    }
+  }
 
   // Push the rect to main so the overlay captures the mouse only while the
   // cursor is over the popup (everything else stays click-through for the game).
@@ -79,7 +103,11 @@ export default function App(): React.JSX.Element | null {
     if (moved.current) {
       moveTo(el.offsetLeft, el.offsetTop)
     } else {
-      moveTo((window.innerWidth - el.offsetWidth) / 2, (window.innerHeight - el.offsetHeight) / 2)
+      // Top-middle: horizontally centered but biased toward the top of the
+      // screen (≈8% down), closer to where PoE2 draws its own item tooltip than
+      // dead-center (issue #35).
+      const top = Math.round(window.innerHeight * 0.08)
+      moveTo((window.innerWidth - el.offsetWidth) / 2, top)
     }
   }
 
@@ -139,11 +167,59 @@ export default function App(): React.JSX.Element | null {
     }
   }
 
+  // Resize from the bottom-right handle. Anchored top-left (the grabbed corner
+  // follows the cursor), rAF-coalesced like the drag, and persisted on release so
+  // the chosen size survives the next price check / restart (issue #35).
+  function onResizeStart(e: React.PointerEvent): void {
+    // Anchor to the size we *render* (state), not el.offsetWidth — the latter
+    // includes the popup's padding + border, so seeding from it would snap the
+    // frame up by that difference on the first move tick before tracking smoothly.
+    resize.current = { x: e.clientX, y: e.clientY, w: size.w, h: size.h }
+    e.currentTarget.setPointerCapture(e.pointerId)
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  function onResizeMove(e: React.PointerEvent): void {
+    const r = resize.current
+    if (!r) return
+    resizeTarget.current = { w: r.w + (e.clientX - r.x), h: r.h + (e.clientY - r.y) }
+    if (resizeRaf.current === null) {
+      resizeRaf.current = requestAnimationFrame(() => {
+        resizeRaf.current = null
+        const t = resizeTarget.current
+        if (t) setSize(clampSize(t.w, t.h))
+      })
+    }
+  }
+
+  function onResizeEnd(e: React.PointerEvent): void {
+    if (!resize.current) return
+    resize.current = null
+    if (resizeRaf.current !== null) {
+      cancelAnimationFrame(resizeRaf.current)
+      resizeRaf.current = null
+    }
+    const t = resizeTarget.current
+    if (t) {
+      const s = clampSize(t.w, t.h)
+      setSize(s)
+      window.tradewind.setPopupSize(s)
+    }
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    } catch {
+      /* pointer already released */
+    }
+  }
+
   // Subscribe once to main->renderer pushes (preload appends listeners with no
   // unsubscribe, so this must run exactly once — see main.tsx, no StrictMode).
   useEffect(() => {
     window.tradewind.onItem((p) => {
       moved.current = false
+      // Restore the user's saved size (clamped to the current monitor).
+      if (p.popupSize) setSize(clampSize(p.popupSize.w, p.popupSize.h))
       // Pin persists across searches: a fresh item updates a pinned popup in
       // place and stays pinned (issue #32). Only an actual close resets it.
       setPayload(p)
@@ -163,11 +239,17 @@ export default function App(): React.JSX.Element | null {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload])
 
-  // Keep it on-screen / centered as the popup grows/shrinks (results, tab switch).
+  // The frame is fixed-size now, so content changes (results, tab switch) no
+  // longer resize it — only a user resize does. When that happens, keep the
+  // popup on-screen and re-report its rect, but DON'T re-center: a resize is
+  // anchored to the corner the user grabbed, not pulled back to the middle.
   useEffect(() => {
     const el = popup.current
     if (!el) return
-    const resizer = new ResizeObserver(() => reflow())
+    const resizer = new ResizeObserver(() => {
+      const node = popup.current
+      if (node) moveTo(node.offsetLeft, node.offsetTop)
+    })
     resizer.observe(el)
     return () => resizer.disconnect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -190,7 +272,11 @@ export default function App(): React.JSX.Element | null {
   return (
     <>
       {visible && payload && (
-        <div ref={popup} className={styles.popup} style={{ left: pos.x + 'px', top: pos.y + 'px' }}>
+        <div
+          ref={popup}
+          className={styles.popup}
+          style={{ left: pos.x + 'px', top: pos.y + 'px', width: size.w + 'px', height: size.h + 'px' }}
+        >
           <i className={`${styles.corner} ${styles.tl}`} />
           <i className={`${styles.corner} ${styles.tr}`} />
           <i className={`${styles.corner} ${styles.bl}`} />
@@ -227,11 +313,33 @@ export default function App(): React.JSX.Element | null {
             </button>
           </nav>
 
-          <div style={{ display: tab === 'price' ? undefined : 'none' }}>
-            <PriceCheck payload={payload} />
+          <div className={styles.body}>
+            {/* Each tab panel fills the fixed frame and owns its own scrolling
+                (the stats/results lists, the essence list) — so content changes
+                never resize the popup. */}
+            <div
+              style={{
+                display: tab === 'price' ? 'flex' : 'none',
+                flexDirection: 'column',
+                flex: '1 1 auto',
+                minHeight: 0
+              }}
+            >
+              <PriceCheck payload={payload} />
+            </div>
+
+            {tab === 'craft' && <CraftPane payload={payload} />}
           </div>
 
-          {tab === 'craft' && <CraftPane payload={payload} />}
+          <div
+            className={styles.resize}
+            onPointerDown={onResizeStart}
+            onPointerMove={onResizeMove}
+            onPointerUp={onResizeEnd}
+            onPointerCancel={onResizeEnd}
+            title="Drag to resize"
+            aria-hidden="true"
+          />
         </div>
       )}
 

@@ -23,6 +23,12 @@ const api: TradewindApi = {
   setPinned(pinned) {
     ipcRenderer.send('tw:set-pinned', pinned)
   },
+  setPopupSize(size) {
+    ipcRenderer.send('tw:set-popup-size', size)
+  },
+  setResultsHeight(height) {
+    ipcRenderer.send('tw:set-results-height', height)
+  },
   requestFocus() {
     ipcRenderer.send('tw:focus-input')
   },

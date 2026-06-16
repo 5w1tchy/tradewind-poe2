@@ -1,7 +1,10 @@
 .popup {
   position: fixed;
-  max-width: 520px;
-  max-height: 80vh;
+  /* Fixed-size box (width/height set inline from state) so content changes —
+     loading results, switching tabs — never resize the frame; it only changes
+     when the user drags the resize handle. */
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   padding: 8px 14px 12px;
   border: 1px solid var(--tw-bronze-dim);
@@ -81,6 +84,49 @@
   font-size: 8px;
   margin-right: 8px;
   padding-left: 2px;
+}
+
+/* Content region below the fixed header (tabs). A flex column so the active tab
+   panel fills the frame; each panel owns its own scrolling (stats list, results
+   list, essence list) rather than the whole body scrolling as one blob.
+   min-height: 0 lets those inner lists actually shrink so their overflow kicks in. */
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Bottom-right resize grip. Sits over the .br filigree corner (which is
+   pointer-events: none) and shows a small bronze chevron. */
+.resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 18px;
+  height: 18px;
+  cursor: nwse-resize;
+  touch-action: none;
+}
+
+.resize::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--tw-bronze-dim);
+  border-bottom: 2px solid var(--tw-bronze-dim);
+  opacity: 0.75;
+  transition: border-color 120ms ease, opacity 120ms ease;
+}
+
+.resize:hover::after {
+  border-color: var(--tw-bronze-bright);
+  opacity: 1;
 }
 
 .tab {
