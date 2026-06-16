@@ -2,6 +2,7 @@ import { useEffect, useReducer, useRef, useState } from 'react'
 import { anchorDiverges, formatEstimateRange, formatExalted } from '../../../core/pricing'
 import type {
   ListingStatus,
+  PreparedEquipmentFilter,
   PreparedFlag,
   PreparedQuery,
   PreparedRange,
@@ -69,8 +70,22 @@ const QUICK_TITLE: Record<QuickMode, string> = {
   custom: 'Custom value'
 }
 
-/** The min value a quick mode targets for this stat (null when unavailable). */
-function quickTarget(stat: PreparedStatFilter, mode: QuickMode): number | null {
+/**
+ * The cycling "=" button works on any row carrying the quick-set shape — matched
+ * stat rows and derived equipment rows (DPS, defences, aps, crit) alike.
+ */
+interface QuickRow {
+  value: number | null
+  tierMin: number | null
+  smartMin: number | null
+  quickMode: QuickMode
+  min: number | null
+  max: number | null
+  enabled: boolean
+}
+
+/** The min value a quick mode targets for this row (null when unavailable). */
+function quickTarget(stat: QuickRow, mode: QuickMode): number | null {
   if (mode === 'roll') return stat.value
   if (mode === 'tier') return stat.tierMin
   if (mode === 'smart') return stat.smartMin
@@ -78,7 +93,7 @@ function quickTarget(stat: PreparedStatFilter, mode: QuickMode): number | null {
 }
 
 /** Next mode in the cycle, skipping "Match Tier" when there's no tier-floor data. */
-function nextQuickMode(stat: PreparedStatFilter): QuickMode {
+function nextQuickMode(stat: QuickRow): QuickMode {
   const hasTier = stat.tierMin !== null
   switch (stat.quickMode) {
     case 'roll':
@@ -103,6 +118,9 @@ interface ToggleRow {
   model: { enabled: boolean }
   /** Present when the row has editable min/max bounds. */
   range?: PreparedRange
+  /** A derived equipment filter (DPS/defences/aps/crit): renders the cycling
+   *  quick-set "=" button instead of the one-shot match-roll fill. */
+  cycle?: PreparedEquipmentFilter
   /** Extra behavior after the checkbox flips (e.g. base/category see-saw). */
   onToggle?: () => void
 }
@@ -342,13 +360,15 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     forceUpdate()
   }
 
-  /** Advance a stat row's quick-set mode and write that target into min, checking
-   *  the row — the cycling counterpart to fillExact for matched stats (issue #16). */
-  function cycleQuick(stat: PreparedStatFilter): void {
+  /** Advance a row's quick-set mode and write that target into min, checking the
+   *  row — the cycling counterpart to fillExact for stat and equipment rows
+   *  (issue #16). Keeps two decimals so fractional rolls (aps 1.30, crit 5.00)
+   *  survive; integer rolls round clean. */
+  function cycleQuick(stat: QuickRow): void {
     const mode = nextQuickMode(stat)
     const target = quickTarget(stat, mode)
     if (target === null) return
-    stat.min = Math.round(target)
+    stat.min = Math.round(target * 100) / 100
     stat.quickMode = mode
     stat.enabled = true
     markDirty()
@@ -356,7 +376,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
   }
 
   /** Tooltip describing the active quick-set mode and what one more click does. */
-  function quickTitle(stat: PreparedStatFilter): string {
+  function quickTitle(stat: QuickRow): string {
     const here = `${QUICK_TITLE[stat.quickMode]}${stat.min !== null ? ` (min ${stat.min})` : ''}`
     const next = nextQuickMode(stat)
     const target = quickTarget(stat, next)
@@ -423,7 +443,10 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
         />
         <span className={styles.property}>{row.label}</span>
         {row.range && <span className={styles.val}>{row.range.value}</span>}
-        {row.range && (
+        {row.cycle ? (
+          // DPS/defences/aps/crit cycle smart ↔ roll like the matched-stat rows.
+          renderBounds(row.cycle)
+        ) : row.range ? (
           <span className={styles.bounds}>
             <button
               type="button"
@@ -461,7 +484,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
               }}
             />
           </span>
-        )}
+        ) : null}
       </label>
     )
   }
@@ -479,8 +502,9 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     return null
   }
 
-  /** The "= min max" controls shared by stat rows and hybrid lines. */
-  function renderBounds(stat: PreparedStatFilter): React.JSX.Element {
+  /** The "= min max" controls shared by stat rows, hybrid lines, and the derived
+   *  equipment rows (DPS/defences/aps/crit). */
+  function renderBounds(stat: QuickRow): React.JSX.Element {
     return (
       <span className={styles.bounds}>
         {stat.value !== null && (
@@ -652,7 +676,9 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     }
     add('Waystone Tier', q.mapTier)
     add('Gem Level', q.gemLevel)
-    for (const row of q.equipment) add(row.label, row)
+    for (const row of q.equipment) {
+      propertyRows.push({ label: row.label, model: row, range: row, cycle: row })
+    }
     add('Item Level', q.ilvl)
     add('Quality %', q.quality)
   }

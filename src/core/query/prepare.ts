@@ -4,6 +4,7 @@ import { extractBaseType } from './baseType'
 import { categoryForItemClass } from './categories'
 import { deriveEquipmentValues } from './derived'
 import type {
+  EquipmentFilterKey,
   ItemFlagKey,
   PreparedEquipmentFilter,
   PreparedFlag,
@@ -25,6 +26,10 @@ export interface PrepareOptions {
 }
 
 const DEFAULT_SPREAD = 0.1
+
+// Equipment props whose smart min keeps fractional precision (everything else
+// floors to a whole number). aps/crit are fine-grained weapon stats.
+const EQUIP_DECIMALS: Partial<Record<EquipmentFilterKey, number>> = { aps: 2, crit: 2 }
 
 function preferFor(mod: ParsedMod): string[] {
   if (mod.generation === 'implicit') return ['implicit', 'explicit']
@@ -85,8 +90,18 @@ function defaultMode(lineSpread: number): QuickMode {
 
 /** Lower bound `spread` below the roll; sign-aware so negative rolls loosen downward too. */
 function minWithSpread(value: number, spread: number): number {
+  return minWithSpreadPrec(value, spread, 0)
+}
+
+/**
+ * Lower bound `spread` below the roll, kept to `decimals` of precision. Stat
+ * rows and integer equipment props floor to whole numbers (decimals = 0); aps
+ * and crit roll fractionally, so their filters keep a decimal or two.
+ */
+function minWithSpreadPrec(value: number, spread: number, decimals: number): number {
   const lo = value >= 0 ? value * (1 - spread) : value * (1 + spread)
-  return Math.floor(lo)
+  const f = 10 ** decimals
+  return Math.floor(lo * f) / f
 }
 
 interface LineContext {
@@ -620,16 +635,25 @@ export function prepareQuery(
       ? [{ key: 'corrupted', label: 'Corrupted', state: 'any' }]
       : equipmentFlags()
 
-    prepared.equipment = deriveEquipmentValues(item).map(
-      (d): PreparedEquipmentFilter => ({
+    prepared.equipment = deriveEquipmentValues(item).map((d): PreparedEquipmentFilter => {
+      // Socket counts are small integers — "at least this many" wants the exact
+      // count, not 90% of it. aps/crit roll fractionally, so keep their decimals.
+      const noSpread = d.key === 'rune_sockets'
+      const smartMin = noSpread
+        ? d.value
+        : minWithSpreadPrec(d.value, spread, EQUIP_DECIMALS[d.key] ?? 0)
+      return {
         ...d,
-        // Socket counts are small integers — "at least this many" wants the
-        // exact count, not 90% of it.
-        min: d.key === 'rune_sockets' ? d.value : minWithSpread(d.value, spread),
+        smartMin,
+        tierMin: null,
+        // Sockets start matched at 100% (smart == roll); the rest pre-fill at
+        // the loose smart default and cycle up to the roll via the "=" button.
+        quickMode: noSpread ? 'roll' : 'smart',
+        min: smartMin,
         max: null,
         enabled: false
-      })
-    )
+      }
+    })
 
     const { stats, unmatched } = buildStatRows(item, db, !isUnique, spread)
     prepared.stats = stats
