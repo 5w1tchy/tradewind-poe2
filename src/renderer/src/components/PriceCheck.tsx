@@ -6,6 +6,7 @@ import type {
   PreparedQuery,
   PreparedRange,
   PreparedStatFilter,
+  QuickMode,
   TriState
 } from '../../../core/query/types'
 import type { SearchOutcome } from '../../../core/trade/types'
@@ -49,6 +50,46 @@ const BUYOUT_OPTIONS: Array<[string | null, string]> = [
 const BUYOUT_ICON_KEYS: Record<string, string[]> = {
   divine: ['divine'],
   chaos: ['chaos']
+}
+
+// Quick-set cycle (issue #16): the stat-row "=" button steps through these,
+// writing the matching target into `min`. The glyph is the active-mode indicator;
+// '•' marks a hand-typed value sitting off the cycle.
+const QUICK_GLYPH: Record<QuickMode, string> = {
+  roll: '=',
+  tier: 'T',
+  smart: '%',
+  custom: '•'
+}
+
+const QUICK_TITLE: Record<QuickMode, string> = {
+  roll: 'Match your roll',
+  tier: 'Match tier floor',
+  smart: 'Smart default',
+  custom: 'Custom value'
+}
+
+/** The min value a quick mode targets for this stat (null when unavailable). */
+function quickTarget(stat: PreparedStatFilter, mode: QuickMode): number | null {
+  if (mode === 'roll') return stat.value
+  if (mode === 'tier') return stat.tierMin
+  if (mode === 'smart') return stat.smartMin
+  return null
+}
+
+/** Next mode in the cycle, skipping "Match Tier" when there's no tier-floor data. */
+function nextQuickMode(stat: PreparedStatFilter): QuickMode {
+  const hasTier = stat.tierMin !== null
+  switch (stat.quickMode) {
+    case 'roll':
+      return hasTier ? 'tier' : 'smart'
+    case 'tier':
+      return 'smart'
+    case 'smart':
+      return 'roll'
+    default:
+      return 'roll' // from a custom edit, restart the cycle
+  }
 }
 
 interface Bounded {
@@ -301,6 +342,27 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     forceUpdate()
   }
 
+  /** Advance a stat row's quick-set mode and write that target into min, checking
+   *  the row — the cycling counterpart to fillExact for matched stats (issue #16). */
+  function cycleQuick(stat: PreparedStatFilter): void {
+    const mode = nextQuickMode(stat)
+    const target = quickTarget(stat, mode)
+    if (target === null) return
+    stat.min = Math.round(target)
+    stat.quickMode = mode
+    stat.enabled = true
+    markDirty()
+    forceUpdate()
+  }
+
+  /** Tooltip describing the active quick-set mode and what one more click does. */
+  function quickTitle(stat: PreparedStatFilter): string {
+    const here = `${QUICK_TITLE[stat.quickMode]}${stat.min !== null ? ` (min ${stat.min})` : ''}`
+    const next = nextQuickMode(stat)
+    const target = quickTarget(stat, next)
+    return `${here} — click for ${QUICK_TITLE[next]}${target !== null ? ` (${Math.round(target)})` : ''}`
+  }
+
   /**
    * The overlay window is non-focusable until an input is clicked, so typing
    * works without ordinary clicks ever stealing focus from the game. Focus the
@@ -424,11 +486,11 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
         {stat.value !== null && (
           <button
             type="button"
-            className={styles.fill}
-            title={`Match your roll (${Math.round(stat.value)})`}
-            onClick={() => fillExact(stat, stat.value)}
+            className={`${styles.fill} ${styles['quick-' + stat.quickMode]}`}
+            title={quickTitle(stat)}
+            onClick={() => cycleQuick(stat)}
           >
-            =
+            {QUICK_GLYPH[stat.quickMode]}
           </button>
         )}
         <input
@@ -438,7 +500,11 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
           value={stat.min ?? ''}
           onMouseDown={armFocus}
           onBlur={releaseFocus}
-          onChange={(e) => setBound(stat, 'min', e)}
+          onChange={(e) => {
+            // A hand-typed min steps off the cycle — show the 'custom' dot.
+            stat.quickMode = 'custom'
+            setBound(stat, 'min', e)
+          }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') void runSearch()
           }}

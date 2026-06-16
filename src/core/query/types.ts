@@ -75,6 +75,16 @@ export interface TradeSearchRequest {
 
 export type StatSource = 'explicit' | 'implicit' | 'enchant' | 'rune' | 'pseudo'
 
+/**
+ * Quick-set mode for a stat row's `min` bound (issue #16). The "=" button cycles
+ * through these and writes the matching target into `min`:
+ *   roll  — the item's actual roll (100%)
+ *   tier  — the tier floor (worst roll of the mod's current tier; see `tierMin`)
+ *   smart — the pre-filled default (spread below the roll, or 100% for cliffs)
+ *   custom — the user typed a value by hand (off the cycle, shown as a dot)
+ */
+export type QuickMode = 'roll' | 'tier' | 'smart' | 'custom'
+
 /** trade2 equipment_filters keys we emit. */
 export type EquipmentFilterKey =
   | 'ar'
@@ -107,6 +117,17 @@ export interface PreparedStatFilter {
   tier: number | null
   /** Representative roll — average when the line has several numbers. */
   value: number | null
+  /** Tier floor: the worst roll within the mod's current tier, from advanced-copy
+   *  ranges (the "(70-90)" parentheticals). Null when the copy carried no range
+   *  (basic copy) or the row is a cross-mod sum/pseudo with no single tier —
+   *  then the quick-set cycle skips the "Match Tier" step. */
+  tierMin: number | null
+  /** The pre-filled "Smart" default min (spread below the roll, or the full roll
+   *  for cliff stats). Stored so cycling back to Smart restores it after edits. */
+  smartMin: number | null
+  /** Which quick-set produced the current min — drives the cycling "=" button
+   *  glyph; flips to 'custom' once the user types a min by hand. */
+  quickMode: QuickMode
   min: number | null
   max: number | null
   enabled: boolean
