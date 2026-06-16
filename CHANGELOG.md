@@ -3,6 +3,27 @@
 All notable user-facing changes to Tradewind. Newest first. The top entry of
 each release is reused verbatim as that release's GitHub Release notes.
 
+## v0.1.13
+
+### 🏷️ Tier badges on chat-linked items
+Price-checking an item linked in **chat** now looks just like checking one from
+your **inventory** — same prefix/suffix grouping and `P#`/`S#` **tier badges**,
+plus the `=`/`%`/`T` quick buttons (including **Match Tier**).
+
+A chat-linked copy leaves out the tier/affix info the game includes for an
+inventory copy, so Tradewind now reconstructs it from the rolled values:
+
+- Prefixes and suffixes are **grouped and tier-badged**, including
+  **crafted**, **desecrated**, and **essence** mods.
+- **Match Tier** works on these too, with proper decimals for stats like
+  Critical Hit Chance and Attacks per Second.
+- When a roll is genuinely undecidable (a value that could be either a prefix
+  or a suffix), Tradewind leaves it **unbadged rather than guess wrong** — but
+  it resolves automatically once the item's other mods fill one side.
+
+---
+**Full changelog:** https://github.com/5w1tchy/tradewind-poe2/compare/v0.1.12...v0.1.13
+
 ## v0.1.12
 
 ### 🌐 Updates won't spike your ping mid-match
