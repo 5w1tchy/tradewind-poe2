@@ -3,6 +3,10 @@
   flex-direction: column;
   gap: 8px;
   min-width: 340px;
+  /* Fill the tab panel so the stats list can flex-grow into the free space
+     instead of leaving an empty gap below a short query (issue #35). */
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .header {
@@ -52,8 +56,14 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  max-height: 200px;
+  /* Grows to fill the popup; the results list below takes a fixed (resizable)
+     height and this absorbs the rest. Scrolls internally when the stats overflow. */
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
+  /* Don't let the browser preserve a scroll anchor when this box shrinks (results
+     loading) — it would leave the stats list scrolled past the top rows. */
+  overflow-anchor: none;
   border-top: 1px solid var(--tw-line);
   padding-top: 6px;
 }
@@ -634,10 +644,40 @@
 
 /* ---- Listings ledger --------------------------------------------------- */
 
+/* Thin grab bar above the results list. Drag it to set the list's height; the
+   stats list above absorbs the remaining space (issue #35). */
+.results-resize {
+  flex-shrink: 0;
+  height: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ns-resize;
+  touch-action: none;
+}
+
+.results-resize::after {
+  content: '';
+  width: 38px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--tw-bronze-dim);
+  opacity: 0.55;
+  transition:
+    background 120ms ease,
+    opacity 120ms ease;
+}
+
+.results-resize:hover::after {
+  background: var(--tw-bronze-bright);
+  opacity: 1;
+}
+
 .listings {
   display: flex;
   flex-direction: column;
-  max-height: 220px;
+  /* Height is set inline (resizable, persisted); never shrink in the flex column. */
+  flex-shrink: 0;
   overflow-y: auto;
   border: 1px solid var(--tw-line);
   border-radius: 2px;

@@ -3,6 +3,10 @@
   flex-direction: column;
   gap: 7px;
   min-width: 340px;
+  /* Fill the tab panel; the essence list scrolls within rather than the popup
+     growing or the content clipping. */
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .sections {
@@ -47,7 +51,9 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  max-height: 340px;
+  /* Fill the remaining craft-pane height and scroll, instead of a fixed cap. */
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   padding-right: 4px;
 }

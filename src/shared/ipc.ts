@@ -15,6 +15,11 @@ export interface ItemPayload {
   /** Currency id ("exalted"/"divine"/"chaos") -> orb image URL (GGG CDN), for
    *  the buyout-price icons. Empty until the static data has loaded. */
   currencyIcons: Record<string, string>
+  /** Persisted popup size (CSS px) the renderer restores the frame to, so a
+   *  user's resize sticks across checks. */
+  popupSize: { w: number; h: number }
+  /** Persisted height (CSS px) of the Price-tab results list. */
+  resultsHeight: number
 }
 
 /** Auto-update lifecycle, pushed main -> renderer. */
@@ -49,6 +54,18 @@ export interface TradewindApi {
    * click closes it. Reset to unpinned on every fresh price check.
    */
   setPinned(pinned: boolean): void
+  /**
+   * Persist a user-chosen popup size (CSS px) so it's restored on the next price
+   * check and after a restart. Reported when the user finishes dragging the
+   * resize handle.
+   */
+  setPopupSize(size: { w: number; h: number }): void
+  /**
+   * Persist the Price-tab results-list height (CSS px) so it's restored on the
+   * next price check and after a restart. Reported when the user finishes
+   * dragging the results resize handle.
+   */
+  setResultsHeight(height: number): void
   /** Grab keyboard focus for a filter input (released when the popup hides). */
   requestFocus(): void
   /**

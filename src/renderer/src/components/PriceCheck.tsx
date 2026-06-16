@@ -134,6 +134,11 @@ function FunnelIcon(): React.JSX.Element {
   )
 }
 
+// Minimum heights (CSS px) kept for each list when the user drags the results
+// resize handle, so neither the stats nor the results list can collapse away.
+const MIN_RESULTS = 90
+const MIN_STATS = 90
+
 function age(iso: string): string {
   const mins = Math.max(0, (Date.now() - Date.parse(iso)) / 60000)
   if (mins < 60) return `${Math.round(mins)}m`
@@ -166,6 +171,18 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
   const [hover, setHover] = useState<TooltipAnchor | null>(null)
   /** Grace timer so the cursor can travel from a row onto its tooltip. */
   const hideTimer = useRef<number | null>(null)
+
+  // Results-list height (CSS px) — the stats list above it flex-fills the rest.
+  // Seeded from the persisted value and dragged via the handle above the list.
+  const [resultsHeight, setResultsHeight] = useState(payload.resultsHeight)
+  // The stats and results lists share the popup's flexible vertical space; refs
+  // let the resize clamp keep a minimum for each.
+  const filtersRef = useRef<HTMLDivElement>(null)
+  const listingsRef = useRef<HTMLDivElement>(null)
+  // Resize gesture state, mirroring the window-resize plumbing.
+  const resultsDrag = useRef<{ y: number; h: number; combined: number } | null>(null)
+  const resultsTarget = useRef<number | null>(null)
+  const resultsRaf = useRef<number | null>(null)
 
   function cancelHide(): void {
     if (hideTimer.current !== null) {
@@ -222,6 +239,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
       ? (JSON.parse(JSON.stringify(payload.prepared)) as PreparedQuery)
       : null
     setLeague(payload.league)
+    setResultsHeight(payload.resultsHeight)
     setOutcome(null)
     setError(null)
     setDirty(false)
@@ -408,6 +426,51 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
 
   function openOnTradeSite(): void {
     if (outcome) window.tradewind.openUrl(outcome.webUrl)
+  }
+
+  // Drag the handle above the results list to set its height; the stats list
+  // (flex-fill) takes the rest. Anchored to the bottom — dragging up grows the
+  // results — and clamped so both lists keep MIN_* px. Persisted on release
+  // (issue #35).
+  function onResultsResizeStart(e: React.PointerEvent): void {
+    const lst = listingsRef.current
+    if (!lst) return
+    const combined = lst.offsetHeight + (filtersRef.current?.offsetHeight ?? 0)
+    resultsDrag.current = { y: e.clientY, h: lst.offsetHeight, combined }
+    e.currentTarget.setPointerCapture(e.pointerId)
+    e.preventDefault()
+  }
+
+  function onResultsResizeMove(e: React.PointerEvent): void {
+    const d = resultsDrag.current
+    if (!d) return
+    const max = Math.max(MIN_RESULTS, d.combined - MIN_STATS)
+    const next = Math.min(Math.max(d.h - (e.clientY - d.y), MIN_RESULTS), max)
+    resultsTarget.current = Math.round(next)
+    if (resultsRaf.current === null) {
+      resultsRaf.current = requestAnimationFrame(() => {
+        resultsRaf.current = null
+        if (resultsTarget.current !== null) setResultsHeight(resultsTarget.current)
+      })
+    }
+  }
+
+  function onResultsResizeEnd(e: React.PointerEvent): void {
+    if (!resultsDrag.current) return
+    resultsDrag.current = null
+    if (resultsRaf.current !== null) {
+      cancelAnimationFrame(resultsRaf.current)
+      resultsRaf.current = null
+    }
+    if (resultsTarget.current !== null) {
+      setResultsHeight(resultsTarget.current)
+      window.tradewind.setResultsHeight(resultsTarget.current)
+    }
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    } catch {
+      /* pointer already released */
+    }
   }
 
   /** Anchor the item tooltip beside the hovered row — left of the popup when
@@ -769,7 +832,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
             )}
           </div>
 
-          <div className={styles.filters}>
+          <div className={styles.filters} ref={filtersRef}>
             {identityRows.map(renderToggleRow)}
             {identityRows.length > 0 && propertyRows.length > 0 && (
               <div className={styles.divider} />
@@ -979,7 +1042,19 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
           </div>
 
           {outcome && outcome.listings.length > 0 && (
-            <div className={styles.listings}>
+            <div
+              className={styles['results-resize']}
+              onPointerDown={onResultsResizeStart}
+              onPointerMove={onResultsResizeMove}
+              onPointerUp={onResultsResizeEnd}
+              onPointerCancel={onResultsResizeEnd}
+              title="Drag to resize results"
+              aria-hidden="true"
+            />
+          )}
+
+          {outcome && outcome.listings.length > 0 && (
+            <div className={styles.listings} ref={listingsRef} style={{ height: resultsHeight + 'px' }}>
               {outcome.listings.map((l) => (
                 <div
                   key={l.id}
