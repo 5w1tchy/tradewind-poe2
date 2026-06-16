@@ -72,6 +72,15 @@ Work on a feature branch, push it, and open a PR against `main` — `main` is
 protected, no direct pushes. End commit messages with the `Co-Authored-By`
 trailer.
 
+Releases are tag-driven (push a `vX.Y.Z` tag → `.github/workflows/release.yml`).
+The **`/release` skill** (`.claude/skills/release/SKILL.md`, committed so every
+collaborator has it) cuts a release in two phases around the PR-merge gate:
+Phase A infers the next version from commits since the last tag, bumps
+`package.json`, prepends the user-facing entry to `CHANGELOG.md`, and opens the
+release PR; Phase B (after merge) tags, lets CI publish, then sets the GitHub
+Release notes from the `CHANGELOG.md` entry. `CHANGELOG.md` is the single source
+of truth for the polished notes.
+
 ## More context
 
 `PLAN.md` (vision, milestones, locked decisions — note the stale stack line),
