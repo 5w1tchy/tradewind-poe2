@@ -49,7 +49,7 @@ describe('prepareQuery', () => {
     const q = prepareFixture('01-gloves--rapture-caress-8cdf3ae5.txt')
 
     expect(q.categoryFilter).toEqual({ value: 'armour.gloves', label: 'Gloves', enabled: true })
-    expect(q.rarityOption).toBe('nonunique')
+    expect(q.rarityOption).toBe('rare')
     expect(q.name).toBeNull()
     expect(q.type).toBeNull()
     // Equipment exposes the full flag set, all defaulting to "any".
@@ -458,7 +458,7 @@ describe('prepareQuery', () => {
     const q = prepareFixture('20-charms--sunny-thawing-charm-of-the-copious-58a4ca81.txt')
 
     expect(q.categoryFilter).toBeNull()
-    expect(q.rarityOption).toBe('nonunique')
+    expect(q.rarityOption).toBe('magic')
     expect(q.stats.filter((s) => s.enabled).length).toBeGreaterThan(0)
   })
 
@@ -480,7 +480,7 @@ describe('buildSearchBody', () => {
     expect(body.query.name).toBeUndefined()
     expect(body.query.filters?.type_filters?.filters).toEqual({
       category: { option: 'armour.gloves' },
-      rarity: { option: 'nonunique' }
+      rarity: { option: 'rare' }
     })
     // All flags default to "any" — no misc_filters emitted.
     expect(body.query.filters?.misc_filters).toBeUndefined()
