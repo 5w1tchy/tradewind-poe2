@@ -48,7 +48,9 @@ describe('prepareQuery', () => {
   it('rare gloves: category + checked explicits with spread mins', () => {
     const q = prepareFixture('01-gloves--rapture-caress-8cdf3ae5.txt')
 
-    expect(q.categoryFilter).toEqual({ value: 'armour.gloves', label: 'Gloves', enabled: true })
+    // Exact base leads by default (issue #23); category is the opt-out scope.
+    expect(q.categoryFilter).toEqual({ value: 'armour.gloves', label: 'Gloves', enabled: false })
+    expect(q.baseTypeFilter).toEqual({ value: 'Refined Bracers', enabled: true })
     expect(q.rarityOption).toBe('rare')
     expect(q.name).toBeNull()
     expect(q.type).toBeNull()
@@ -316,12 +318,12 @@ describe('prepareQuery', () => {
     expect(buildSearchBody(q).query.type).toBe('Stalking Spear')
   })
 
-  it('magic item: base recovered from the items DB as an opt-in filter', () => {
+  it('magic item: base recovered from the items DB, on by default', () => {
     const item = parseItem(
       readFileSync(join(fixturesDir, '20-charms--sunny-thawing-charm-of-the-copious-58a4ca81.txt'), 'utf8')
     )
     const q = prepareQuery(item, db, { baseTypes: ['Thawing Charm', 'Charm'] })
-    expect(q.baseTypeFilter).toEqual({ value: 'Thawing Charm', enabled: false })
+    expect(q.baseTypeFilter).toEqual({ value: 'Thawing Charm', enabled: true })
   })
 
   it('weapon mods match (Local) stat ids; armour attack speed stays global', () => {
@@ -363,16 +365,19 @@ describe('prepareQuery', () => {
     expect(q.rarityOption).toBe('unique')
   })
 
-  it('rare base type is an opt-in exact filter', () => {
+  it('rare base type is on by default, see-saws with category', () => {
     const q = prepareFixture('04-rings--rift-grip-7bdd59f9.txt')
-    expect(q.baseTypeFilter).toEqual({ value: 'Amethyst Ring', enabled: false })
+    expect(q.baseTypeFilter).toEqual({ value: 'Amethyst Ring', enabled: true })
+    expect(q.categoryFilter?.enabled).toBe(false)
 
     let body = buildSearchBody(q)
-    expect(body.query.type).toBeUndefined()
-
-    q.baseTypeFilter!.enabled = true
-    body = buildSearchBody(q)
     expect(body.query.type).toBe('Amethyst Ring')
+
+    // Opt back out to the whole category.
+    q.baseTypeFilter!.enabled = false
+    if (q.categoryFilter) q.categoryFilter.enabled = true
+    body = buildSearchBody(q)
+    expect(body.query.type).toBeUndefined()
   })
 
   it('essence-crafted mod searches the explicit stat id', () => {
@@ -478,8 +483,10 @@ describe('buildSearchBody', () => {
     expect(body.sort).toEqual({ price: 'asc' })
     expect(body.query.status).toEqual({ option: 'securable' }) // instant buyout default
     expect(body.query.name).toBeUndefined()
+    // Base leads by default, so the search pins the exact base and drops the
+    // (now unchecked) category from type_filters.
+    expect(body.query.type).toBe('Refined Bracers')
     expect(body.query.filters?.type_filters?.filters).toEqual({
-      category: { option: 'armour.gloves' },
       rarity: { option: 'rare' }
     })
     // All flags default to "any" — no misc_filters emitted.
