@@ -3,6 +3,17 @@
 All notable user-facing changes to Tradewind. Newest first. The top entry of
 each release is reused verbatim as that release's GitHub Release notes.
 
+## v0.1.10
+
+### 🛠️ Stability
+- Fixed a rare **"A JavaScript error occurred in the main process"** crash
+  dialog that could appear during the auto-update **restart-to-install**. A
+  mouse-move handler could fire a moment after the overlay was torn down; it
+  now bows out cleanly so the update installs without interruption (#37).
+
+---
+**Full changelog:** https://github.com/5w1tchy/tradewind-poe2/compare/v0.1.9...v0.1.10
+
 ## v0.1.9
 
 ### 📌 Pin & click-away to close
