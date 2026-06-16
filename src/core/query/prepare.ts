@@ -1,5 +1,6 @@
 import type { ParsedItem, ParsedMod, ParsedStatLine, RollValue } from '../parser/types'
 import type { StatsDb } from '../stats-db/statsDb'
+import { affixForStat, KNOWN_BASES, reconstructCandidates } from '../mod-pool/modPool'
 import { extractBaseType } from './baseType'
 import { categoryForItemClass } from './categories'
 import { deriveEquipmentValues } from './derived'
@@ -111,6 +112,8 @@ interface LineContext {
   enabled: boolean
   affix: 'prefix' | 'suffix' | null
   tier: number | null
+  /** Reconstructed tier floor (chat copies have no roll range to derive it). */
+  reconTierMin?: number
   /** Source-mod index; lines of one hybrid mod share it (see PreparedStatFilter). */
   group: number
 }
@@ -156,7 +159,90 @@ function totalLabel(template: string, total: number): string {
   return `${template} (total ${rounded})`
 }
 
-function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
+interface ReconResult {
+  affix: 'prefix' | 'suffix'
+  tier: number | null
+  tierMin: number | null
+}
+
+/**
+ * Basic-copy (chat-linked) items carry no affix/tier in the clipboard text, so
+ * a parsed explicit mod has generation 'explicit' and tier null. Recover both
+ * from the bundled mod pool by matching each rolled value — including
+ * crafted/desecrated mods, which reuse the regular tier ladder (a "(crafted)"
+ * 26% cast speed is the same T3 a rolled one would be). Advanced-copy mods
+ * already state their affix/tier and are left alone.
+ *
+ * Resolution order:
+ *  1. confident — exactly one affix fits the roll (affix + tier);
+ *  2. affix-only — no tier (out-of-pool value), but the stat has one fixed slot;
+ *  3. group-collision guard — PoE can't roll two mods of one group, so a
+ *     collision means we misread one: drop them;
+ *  4. slot constraint — an ambiguous roll (fits both a prefix and a suffix) is
+ *     forced once one side fills up (rares cap at 3+3, magic at 1+1). The rare
+ *     "+1 prefix/suffix" crafts can exceed the cap — a known edge.
+ * Anything still undecided stays unbadged.
+ */
+function reconstructExplicits(
+  mods: ParsedMod[],
+  reconBase: string | null,
+  maxAffix: number
+): Map<ParsedMod, ReconResult> {
+  const out = new Map<ParsedMod, ReconResult>()
+  if (!reconBase) return out
+
+  const confident: Array<{ mod: ParsedMod; affix: 'prefix' | 'suffix'; tier: number; tierMin: number; group: string }> = []
+  const ambiguous: Array<{ mod: ParsedMod; cands: ReturnType<typeof reconstructCandidates> }> = []
+  const affixOnly: Array<{ mod: ParsedMod; affix: 'prefix' | 'suffix' }> = []
+
+  for (const mod of mods) {
+    if (mod.generation !== 'explicit' || mod.tier !== null || mod.lines.length !== 1) continue
+    const cands = reconstructCandidates(reconBase, mod.lines[0])
+    if (cands.length === 1) confident.push({ mod, ...cands[0] })
+    else if (cands.length === 0) {
+      const affix = affixForStat(reconBase, mod.lines[0])
+      if (affix) affixOnly.push({ mod, affix })
+    } else ambiguous.push({ mod, cands })
+  }
+
+  // Drop confident reconstructions that collide on a group (impossible — a misread).
+  const groupCount = new Map<string, number>()
+  for (const c of confident) groupCount.set(c.group, (groupCount.get(c.group) ?? 0) + 1)
+
+  let prefixes = 0
+  let suffixes = 0
+  const place = (mod: ParsedMod, affix: 'prefix' | 'suffix', tier: number | null, tierMin: number | null): void => {
+    out.set(mod, { affix, tier, tierMin })
+    if (affix === 'prefix') prefixes++
+    else suffixes++
+  }
+  for (const c of confident) {
+    if ((groupCount.get(c.group) ?? 0) > 1) continue
+    place(c.mod, c.affix, c.tier, c.tierMin)
+  }
+  for (const a of affixOnly) place(a.mod, a.affix, null, null)
+
+  // A full affix slot forces every ambiguous roll to the open side. Loop to a
+  // fixpoint so cascading resolutions settle (two ambiguous mods, one full side).
+  let changed = true
+  while (changed && ambiguous.length > 0) {
+    changed = false
+    for (let i = ambiguous.length - 1; i >= 0; i--) {
+      const { cands } = ambiguous[i]
+      let pick: (typeof cands)[number] | undefined
+      if (prefixes >= maxAffix && suffixes < maxAffix) pick = cands.find((c) => c.affix === 'suffix')
+      else if (suffixes >= maxAffix && prefixes < maxAffix) pick = cands.find((c) => c.affix === 'prefix')
+      if (pick) {
+        place(ambiguous[i].mod, pick.affix, pick.tier, pick.tierMin)
+        ambiguous.splice(i, 1)
+        changed = true
+      }
+    }
+  }
+  return out
+}
+
+function collectLines(item: ParsedItem, statsEnabled: boolean, reconBase: string | null): LineContext[] {
   // Relic mods are indexed in the sanctum stat group; texts like "#%
   // increased Movement Speed" also exist as regular explicits, so without
   // this preference a relic search matches zero relics.
@@ -181,10 +267,21 @@ function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
       })
     }
   }
-  for (const mod of [...item.explicits, ...item.enhancements]) {
+  const explicitMods = [...item.explicits, ...item.enhancements]
+  // Affix-slot caps for the constraint step: magic items hold 1 prefix + 1
+  // suffix, rares 3 + 3.
+  const maxAffix = item.rarity === 'Magic' ? 1 : 3
+  const reconstructed = reconstructExplicits(explicitMods, reconBase, maxAffix)
+  for (const mod of explicitMods) {
     group++
     const source: StatSource = mod.generation === 'enhancement' ? 'enchant' : 'explicit'
-    const affix = mod.generation === 'prefix' || mod.generation === 'suffix' ? mod.generation : null
+    // Advanced copy states the affix/tier; for a basic copy the reconstruction
+    // fills it (the clipboard tags implicits "(implicit)" even in a chat copy,
+    // so the parser already split those out — everything here is an explicit).
+    const known = mod.generation === 'prefix' || mod.generation === 'suffix' ? mod.generation : null
+    const rec = reconstructed.get(mod)
+    const affix = known ?? rec?.affix ?? null
+    const tier = known ? mod.tier : (rec?.tier ?? null)
     for (const line of mod.lines) {
       out.push({
         line,
@@ -192,7 +289,8 @@ function collectLines(item: ParsedItem, statsEnabled: boolean): LineContext[] {
         prefer: prefer(mod),
         enabled: statsEnabled && source === 'explicit',
         affix,
-        tier: mod.tier,
+        tier,
+        reconTierMin: known ? undefined : (rec?.tierMin ?? undefined),
         group
       })
     }
@@ -226,7 +324,8 @@ function buildStatRows(
   item: ParsedItem,
   db: StatsDb,
   statsEnabled: boolean,
-  spread: number
+  spread: number,
+  reconBase: string | null
 ): { stats: PreparedStatFilter[]; unmatched: string[] } {
   const stats: PreparedStatFilter[] = []
   const templates: string[] = []
@@ -237,7 +336,7 @@ function buildStatRows(
   const aggByKey = new Map<string, number>()
   const category = categoryForItemClass(item.itemClass)
 
-  for (const { line, source, prefer, enabled, affix, tier, group } of collectLines(item, statsEnabled)) {
+  for (const { line, source, prefer, enabled, affix, tier, reconTierMin, group } of collectLines(item, statsEnabled, reconBase)) {
     const candidates = db.match(line, {
       preferCategories: prefer,
       preferLocal: lineWantsLocal(category, line.template)
@@ -249,17 +348,24 @@ function buildStatRows(
     }
     const rolls = rollValues(line, best.text)
     let value = representativeValue(rolls)
-    let tierMinRaw = representativeMin(rolls)
+    // Advanced copies carry the roll range, so representativeMin gives the tier
+    // floor directly; a chat copy has no range, so fall back to the floor the
+    // reconstruction recovered from the mod pool.
+    let tierMinRaw = representativeMin(rolls) ?? reconTierMin ?? null
     if (best.negated) {
       // increased<->reduced swap: the displayed roll (and its floor) flip sign.
       if (value !== null) value = -value
       if (tierMinRaw !== null) tierMinRaw = -tierMinRaw
     }
     const lineSpread = spreadFor(line.template, spread)
-    const smart = value !== null ? minWithSpread(value, lineSpread) : null
-    // Floor the tier floor so the worst roll of the tier is never excluded
-    // (added-damage averages like 8.5 must search as 8, not round up to 9).
-    const tierMin = tierMinRaw !== null ? Math.floor(tierMinRaw) : null
+    // Fractional stats (crit chance, attacks/sec) keep two decimals; flooring a
+    // 4.41 tier floor to 4 would loosen the search below the tier. Integer stats
+    // still floor to a whole number (an added-damage average like 8.5 -> 8 so
+    // the worst roll of the tier is never excluded).
+    const decimals = rolls.some((r) => !Number.isInteger(r.value)) ? 2 : 0
+    const smart = value !== null ? minWithSpreadPrec(value, lineSpread, decimals) : null
+    const prec = 10 ** decimals
+    const tierMin = tierMinRaw !== null ? Math.floor(tierMinRaw * prec) / prec : null
 
     const node = (en: boolean): void => {
       stats.push({
@@ -655,7 +761,17 @@ export function prepareQuery(
       }
     })
 
-    const { stats, unmatched } = buildStatRows(item, db, !isUnique, spread)
+    // Affix/tier reconstruction needs the clean base name (the join key into the
+    // mod pool's spawn tags). Resolve it against the pool's own base list so a
+    // decorated name — magic affixes ("… of the Rainbow") or weapon/armour tier
+    // words ("Expert Dualstring Bow") — maps to the real base. Uniques roll
+    // unique-specific mods (not in the pool) and whites have no explicits.
+    const reconBase =
+      item.rarity === 'Rare' || item.rarity === 'Magic'
+        ? extractBaseType(item.baseType, KNOWN_BASES) ?? item.baseType
+        : null
+
+    const { stats, unmatched } = buildStatRows(item, db, !isUnique, spread, reconBase)
     prepared.stats = stats
     prepared.unmatched = unmatched
   }
