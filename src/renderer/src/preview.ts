@@ -6,6 +6,7 @@
  *   npx vite --config vite.preview.config.ts
  *   open http://localhost:5173/preview.html
  */
+import type { CurrencyPoint, CurrencyQuote } from '../../core/exchange'
 import type { PreparedQuery } from '../../core/query/types'
 import type { ListingItem, ListingMod, SearchOutcome } from '../../core/trade/types'
 import type { ItemPayload, TradewindApi } from '../../shared/ipc'
@@ -262,6 +263,45 @@ function iso(minutesAgo: number): string {
   return new Date(Date.now() - minutesAgo * 60_000).toISOString()
 }
 
+// Canned currency-exchange item (Rakiata's Flow) for ?view=currency.
+const SAMPLE_CURRENCY: CurrencyQuote = {
+  apiId: 'rakiatas-flow',
+  text: "Rakiata's Flow",
+  category: 'lineagesupportgems',
+  iconUrl: null,
+  priceExalted: 22570,
+  rates: { divine: 201.44, chaos: 19.56 }
+}
+
+const SAMPLE_HISTORY: CurrencyPoint[] = [
+  [18831, 892],
+  [19250, 587],
+  [18544, 466],
+  [18670, 772],
+  [20322, 863],
+  [22570, 493]
+].map(([priceExalted, quantity], i) => ({
+  time: new Date(Date.now() - (5 - i) * 6 * 3_600_000).toISOString(),
+  priceExalted,
+  quantity
+}))
+
+const CURRENCY_QUERY: PreparedQuery = {
+  ...SAMPLE_QUERY,
+  itemClass: 'Lineage Support Gems',
+  rarity: 'Currency',
+  displayName: "Rakiata's Flow",
+  name: null,
+  type: null,
+  exchangeId: 'rakiatas-flow',
+  categoryFilter: null,
+  baseTypeFilter: null,
+  rarityOption: null,
+  ilvl: null,
+  stats: [],
+  unmatched: []
+}
+
 let deliverItem: ((payload: ItemPayload) => void) | null = null
 let pending: ItemPayload | null = null
 
@@ -279,6 +319,13 @@ const mock: TradewindApi = {
   async search() {
     await new Promise((r) => setTimeout(r, 250))
     return JSON.parse(JSON.stringify(SAMPLE_OUTCOME)) as SearchOutcome
+  },
+  async getCurrencyQuote() {
+    return SAMPLE_CURRENCY
+  },
+  async getCurrencyHistory() {
+    await new Promise((r) => setTimeout(r, 200))
+    return SAMPLE_HISTORY
   },
   async setLeague() {},
   setPopupRect() {},
@@ -308,12 +355,15 @@ const params = new URLSearchParams(location.search)
 SAMPLE_QUERY.itemClass = params.get('class') ?? SAMPLE_QUERY.itemClass
 SAMPLE_QUERY.rarity = params.get('rarity') ?? SAMPLE_QUERY.rarity
 
+const isCurrency = params.get('view') === 'currency'
+
 import('./main').then(() => {
   const item: ItemPayload = {
     x: 340,
     y: 120,
     text: 'Item Class: Rings\nRarity: Rare\nStorm Whorl\nSapphire Ring\n…',
-    prepared: SAMPLE_QUERY,
+    prepared: isCurrency ? CURRENCY_QUERY : SAMPLE_QUERY,
+    currency: isCurrency ? SAMPLE_CURRENCY : null,
     leagues: ['Rise of the Abyssal', 'HC Rise of the Abyssal', 'Standard'],
     league: 'Rise of the Abyssal',
     popupSize: { w: 520, h: 560 },

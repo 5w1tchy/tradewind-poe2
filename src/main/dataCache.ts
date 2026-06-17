@@ -4,8 +4,8 @@ import { join } from 'node:path'
 
 export const USER_AGENT = 'tradewind/0.0.1 (contact: chaideb123@gmail.com)'
 
-/** Don't re-validate against GGG more often than this. */
-const FRESH_MS = 12 * 60 * 60 * 1000
+/** Default: don't re-validate against GGG more often than this. */
+const DEFAULT_FRESH_MS = 12 * 60 * 60 * 1000
 
 interface CacheMeta {
   etag: string | null
@@ -20,8 +20,15 @@ interface CacheMeta {
  *  3. network failed — stale cache if present, else the bundled snapshot
  *
  * This is what makes new GGG mods work day-one without an app update.
+ *
+ * `freshMs` overrides the no-network window — GGG static data (stats/items)
+ * barely changes so it defaults to 12h, but price snapshots want it shorter.
  */
-export async function cachedFetchJson<T>(name: string, url: string): Promise<T> {
+export async function cachedFetchJson<T>(
+  name: string,
+  url: string,
+  freshMs: number = DEFAULT_FRESH_MS
+): Promise<T> {
   const dir = join(app.getPath('userData'), 'cache')
   mkdirSync(dir, { recursive: true })
   const dataFile = join(dir, `${name}.json`)
@@ -36,7 +43,7 @@ export async function cachedFetchJson<T>(name: string, url: string): Promise<T> 
     }
   }
 
-  if (meta && Date.now() - meta.fetchedAt < FRESH_MS) {
+  if (meta && Date.now() - meta.fetchedAt < freshMs) {
     return JSON.parse(readFileSync(dataFile, 'utf8')) as T
   }
 

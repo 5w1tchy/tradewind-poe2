@@ -14,6 +14,7 @@ import type { SearchOutcome } from '../../../core/trade/types'
 import type { TradeListing } from '../../../core/trade/types'
 import type { ItemPayload } from '../../../shared/ipc'
 import ListingTooltip, { type TooltipAnchor } from './ListingTooltip'
+import CurrencyView from './CurrencyView'
 import styles from './PriceCheck.module.css'
 
 const SALE_OPTIONS: Array<[ListingStatus, string]> = [
@@ -250,6 +251,12 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setSaleOpen(false)
     setRarityOpen(false)
     setBuyoutShown(false)
+    // Currency-exchange items with a snapshot quote render the chart view and
+    // never touch the live search path (no listings, no Search button).
+    if (payload.currency) {
+      forceUpdate()
+      return
+    }
     // Auto-search only when the query pins the item by name/type (uniques,
     // gems, currency, white bases) — those defaults are reliable. A rare with
     // every mod pre-checked rarely has market matches; arm Search instead.
@@ -788,7 +795,13 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
         </div>
       </div>
 
-      {q ? (
+      {payload.currency ? (
+        <CurrencyView
+          quote={payload.currency}
+          league={league}
+          currencyIcons={payload.currencyIcons}
+        />
+      ) : q ? (
         <>
           <div className={`${styles['filter-row']} ${styles['sale-row']}`}>
             <span className="tw-label">Listed</span>

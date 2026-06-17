@@ -575,6 +575,41 @@ describe('prepareQuery', () => {
     expect(q.type).toBeNull()
   })
 
+  it('lineage support gem (Rarity: Gem) on the exchange prefers the snapshot', () => {
+    // These are gems but trade on the in-game Currency Exchange by exact name,
+    // so an exchange id wins over the per-gem live search (regression: the gem
+    // branch used to return before any exchange lookup).
+    const item = parseItem(
+      [
+        'Item Class: Support Gems',
+        'Rarity: Gem',
+        "Rakiata's Flow",
+        '--------',
+        'Support, Lineage',
+        "Category: Rakiata's Flow",
+        'Cost Multiplier: 120%',
+        '--------',
+        'Requires: Level 65'
+      ].join('\n')
+    )
+    const q = prepareQuery(item, db, {
+      exchangeIds: { "Rakiata's Flow": 'rakiatas-flow' }
+    })
+
+    expect(q.exchangeId).toBe('rakiatas-flow')
+    expect(q.gemLevel).toBeNull()
+  })
+
+  it('a gem with no exchange id still uses the live gem search', () => {
+    const item = parseItem(
+      ['Item Class: Skill Gems', 'Rarity: Gem', 'Spark', '--------', 'Level: 20'].join('\n')
+    )
+    const q = prepareQuery(item, db, { exchangeIds: { "Rakiata's Flow": 'rakiatas-flow' } })
+
+    expect(q.exchangeId).toBeNull()
+    expect(q.type).toBe('Spark')
+  })
+
   it('stackable currency: exact type only', () => {
     const q = prepareFixture('10-stackable-currency--greater-orb-of-augmentation-a4de8d25.txt')
 

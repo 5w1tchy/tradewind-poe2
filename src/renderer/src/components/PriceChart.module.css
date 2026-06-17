@@ -1,0 +1,49 @@
+.chart {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+}
+
+.svg {
+  display: block;
+}
+
+.grid {
+  stroke: var(--tw-line);
+  stroke-width: 1;
+}
+
+.axis {
+  fill: var(--tw-text-faint);
+  font-family: var(--tw-font-body);
+  font-size: 9px;
+}
+
+.empty {
+  fill: var(--tw-text-faint);
+  font-family: var(--tw-font-body);
+  font-size: 11px;
+}
+
+.bar {
+  fill: var(--tw-bronze-faint);
+}
+
+.area {
+  fill: var(--tw-bronze-faint);
+  opacity: 0.4;
+}
+
+.line {
+  fill: none;
+  stroke: var(--tw-gold);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.dot {
+  fill: var(--tw-gold-bright);
+  stroke: var(--tw-bg);
+  stroke-width: 1;
+}
