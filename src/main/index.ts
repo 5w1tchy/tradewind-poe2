@@ -19,6 +19,7 @@ import { RatesProvider } from './rates'
 import { estimatePrice, type RateTable } from '../core/pricing'
 import type { SearchOutcome, TradeListing } from '../core/trade/types'
 import { ScoutAnchorProvider } from './scoutAnchor'
+import { ExchangeSnapshotProvider } from './exchangeSnapshot'
 import {
   checkForUpdatesManually,
   downloadUpdate,
@@ -87,6 +88,7 @@ app.whenReady().then(() => {
   const tradeClient = new TradeApiClient()
   const rates = new RatesProvider(tradeClient)
   const scout = new ScoutAnchorProvider()
+  const exchange = new ExchangeSnapshotProvider()
 
   // Stats DB loads in the background; price checks just show raw text until ready.
   let statsDb: StatsDb | null = null
@@ -302,10 +304,18 @@ app.whenReady().then(() => {
           console.error('[item] failed to prepare query:', err)
         }
       }
+      // Exchange items (currency/fragments/runes/essences/lineage gems/…) get an
+      // aggregate snapshot price instead of a live search — resolved here so the
+      // popup shows it instantly. A miss/failure leaves it null and the renderer
+      // falls back to the live exchange path.
+      const currency = prepared?.exchangeId
+        ? await exchange.quote(league, prepared.exchangeId).catch(() => null)
+        : null
       const cursor = screen.getCursorScreenPoint()
       overlay.webContents.send('tw:item', {
         text,
         prepared,
+        currency,
         leagues,
         league,
         currencyIcons,
@@ -521,6 +531,14 @@ app.whenReady().then(() => {
     outcome.listings.sort((a, b) => Number(a.lowball ?? false) - Number(b.lowball ?? false))
     return outcome
   })
+
+  ipcMain.handle('tw:currency-quote', (_event, leagueArg: string, apiId: string) =>
+    exchange.quote(leagueArg || league, apiId)
+  )
+
+  ipcMain.handle('tw:currency-history', (_event, leagueArg: string, apiId: string) =>
+    exchange.getHistory(leagueArg || league, apiId)
+  )
 
   ipcMain.handle('tw:set-league', (_event, id: string) => {
     league = id

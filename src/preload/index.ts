@@ -11,6 +11,12 @@ const api: TradewindApi = {
   search(prepared) {
     return ipcRenderer.invoke('tw:search', prepared)
   },
+  getCurrencyQuote(league, apiId) {
+    return ipcRenderer.invoke('tw:currency-quote', league, apiId)
+  },
+  getCurrencyHistory(league, apiId) {
+    return ipcRenderer.invoke('tw:currency-history', league, apiId)
+  },
   setLeague(league) {
     return ipcRenderer.invoke('tw:set-league', league)
   },

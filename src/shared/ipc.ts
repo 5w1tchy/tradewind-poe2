@@ -1,3 +1,4 @@
+import type { CurrencyPoint, CurrencyQuote } from '../core/exchange'
 import type { PreparedQuery } from '../core/query/types'
 import type { SearchOutcome } from '../core/trade/types'
 
@@ -10,6 +11,13 @@ export interface ItemPayload {
   text: string
   /** null when parsing failed or the stats DB isn't ready yet. */
   prepared: PreparedQuery | null
+  /**
+   * Aggregate exchange price (poe2scout snapshot) for a currency-exchange item,
+   * present only when the item trades on the exchange and the snapshot carries
+   * it. When set, the renderer shows the currency chart view instead of running
+   * a live search; absent/null falls back to the live exchange path.
+   */
+  currency?: CurrencyQuote | null
   leagues: string[]
   league: string
   /** Currency id ("exalted"/"divine"/"chaos") -> orb image URL (GGG CDN), for
@@ -37,6 +45,17 @@ export interface TradewindApi {
   onHide(cb: () => void): void
   /** Build the trade body from edited filters, run search + first fetch. */
   search(prepared: PreparedQuery): Promise<SearchOutcome>
+  /**
+   * Re-resolve a currency-exchange item's aggregate quote for a league — used
+   * when the user switches league in the currency view. null when the snapshot
+   * is unavailable or doesn't carry the item.
+   */
+  getCurrencyQuote(league: string, apiId: string): Promise<CurrencyQuote | null>
+  /**
+   * Fetch the price/volume history (ascending time) for a currency-exchange
+   * item from the poe2scout snapshot, for the chart. Resolves to [] on failure.
+   */
+  getCurrencyHistory(league: string, apiId: string): Promise<CurrencyPoint[]>
   setLeague(league: string): Promise<void>
   /**
    * Report the popup's on-screen rect (overlay-local CSS px) so the main process

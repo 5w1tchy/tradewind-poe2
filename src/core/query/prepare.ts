@@ -651,13 +651,23 @@ export function prepareQuery(
     unmatched: []
   }
 
-  if (isCurrency) {
-    // Stackable currency trades on the bulk exchange when it has an id there.
-    const exchangeId = options.exchangeIds?.[item.baseType]
+  // Anything GGG lists on the in-game Currency Exchange prices off the
+  // aggregate snapshot, regardless of rarity — that covers stackable currency
+  // AND non-gear oddities like lineage support gems (Rarity: Gem) and uncut
+  // gems, which the exchange lists by exact name. Gear (Normal/Magic/Rare/
+  // Unique) is never exchange-traded, so it's excluded to avoid a unique name
+  // colliding with an exchange id. The exchange view needs nothing else.
+  if (!isEquipment) {
+    const exchangeId =
+      options.exchangeIds?.[item.baseType] ??
+      (item.name ? options.exchangeIds?.[item.name] : undefined)
     if (exchangeId) {
       prepared.exchangeId = exchangeId
       return prepared
     }
+  }
+
+  if (isCurrency) {
     // "Uncut Skill Gem (Level 19)" -> type + exact gem level filter.
     const uncut = item.baseType.match(/^(.+) \(Level (\d+)\)$/)
     if (uncut) {
