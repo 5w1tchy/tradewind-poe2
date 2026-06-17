@@ -71,6 +71,7 @@ const SAMPLE_QUERY: PreparedQuery = {
       label: '+329 to maximum Life',
       source: 'explicit',
       affix: 'prefix',
+      origin: 'fractured',
       tier: 1,
       value: 329,
       // 'custom': a hand-typed min sits off the cycle (shows the • dot).
@@ -114,6 +115,7 @@ const SAMPLE_QUERY: PreparedQuery = {
       label: '21% increased Cast Speed',
       source: 'explicit',
       affix: 'prefix',
+      origin: 'crafted',
       tier: 3,
       value: 21,
       // 'tier': matched to the tier floor (shows the T glyph).

@@ -77,6 +77,24 @@ describe('targeted parsing', () => {
     expect(mod.name).toBe('Of the Underground')
   })
 
+  it('Corruption Enhancement header parses as a corrupted enhancement (issue #54)', () => {
+    // A corruption-added enhancement copies as `{ Corruption Enhancement }`,
+    // parallel to a normal anoint's `{ Enhancement }` — both are enhancement
+    // generation; only the corruption flag distinguishes them (→ CE vs E tag).
+    const mod = parseModHeader('{ Corruption Enhancement — Evasion }')
+    expect(mod.generation).toBe('enhancement')
+    expect(mod.corrupted).toBe(true)
+    expect(mod.tags).toEqual(['Evasion'])
+
+    const anoint = parseModHeader('{ Enhancement }')
+    expect(anoint.generation).toBe('enhancement')
+    expect(anoint.corrupted).toBe(false)
+
+    const item = parseItem(load('constricting-command-b2a788b0'))
+    const enh = item.enhancements.find((m) => m.corrupted)
+    expect(enh?.lines[0].template).toBe('#% increased Evasion Rating')
+  })
+
   it('unique with empty desecrated mod name and unscalable lines', () => {
     const item = parseItem(load('the-unborn-lich'))
     expect(item.rarity).toBe('Unique')

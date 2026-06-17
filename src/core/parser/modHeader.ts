@@ -25,6 +25,7 @@ export function parseModHeader(line: string): ParsedMod {
     crafted: false,
     desecrated: false,
     fractured: false,
+    corrupted: false,
     name: null,
     tier: null,
     tags: [],
@@ -46,8 +47,13 @@ export function parseModHeader(line: string): ParsedMod {
     else mod.tags.push(...part.split(', '))
   }
 
-  if (descriptor === 'Enhancement') {
+  // Anoints/enchants copy as `{ Enhancement }`; a corruption-added enhancement
+  // copies as `{ Corruption Enhancement }` (e.g. corrupted-implicit "increased
+  // Evasion Rating"). Both are enhancement-generation; the corruption flag is
+  // what later tags it CE rather than E.
+  if (descriptor === 'Enhancement' || descriptor === 'Corruption Enhancement') {
     mod.generation = 'enhancement'
+    mod.corrupted = descriptor === 'Corruption Enhancement'
     return mod
   }
 

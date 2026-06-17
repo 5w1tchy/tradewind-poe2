@@ -7,6 +7,7 @@ import { deriveEquipmentValues } from './derived'
 import type {
   EquipmentFilterKey,
   ItemFlagKey,
+  ModOrigin,
   PreparedEquipmentFilter,
   PreparedFlag,
   PreparedQuery,
@@ -43,6 +44,21 @@ function preferFor(mod: ParsedMod): string[] {
   if (mod.crafted) return ['explicit', 'crafted']
   if (mod.generation === 'enhancement') return ['enchant', 'sanctum', 'explicit', 'skill']
   return ['explicit']
+}
+
+/**
+ * Special provenance of a mod, for the origin tag after the affix badge (issue
+ * #54). Mutually exclusive in practice — a mod carries one of these flags at
+ * most. A `{ Corruption Enhancement }` mod parses as enhancement-generation with
+ * `corrupted` set, so it reads as 'corruption' rather than a plain 'enhanced'
+ * anoint. Ordinary rolls return null.
+ */
+function originFor(mod: ParsedMod): ModOrigin | null {
+  if (mod.fractured) return 'fractured'
+  if (mod.desecrated) return 'desecrated'
+  if (mod.crafted) return 'crafted'
+  if (mod.generation === 'enhancement') return mod.corrupted ? 'corruption' : 'enhanced'
+  return null
 }
 
 /**
@@ -111,6 +127,8 @@ interface LineContext {
   prefer: string[]
   enabled: boolean
   affix: 'prefix' | 'suffix' | null
+  /** Special mod provenance (fractured/crafted/…) for the origin tag, or null. */
+  origin: ModOrigin | null
   tier: number | null
   /** Reconstructed tier floor (chat copies have no roll range to derive it). */
   reconTierMin?: number
@@ -271,6 +289,7 @@ function collectLines(item: ParsedItem, statsEnabled: boolean, reconBase: string
         prefer: prefer(mod),
         enabled: false,
         affix: null,
+        origin: null,
         tier: mod.tier,
         group
       })
@@ -298,6 +317,7 @@ function collectLines(item: ParsedItem, statsEnabled: boolean, reconBase: string
         prefer: prefer(mod),
         enabled: statsEnabled && source === 'explicit',
         affix,
+        origin: originFor(mod),
         tier,
         reconTierMin: known ? undefined : (rec?.tierMin ?? undefined),
         group
@@ -311,6 +331,7 @@ function collectLines(item: ParsedItem, statsEnabled: boolean, reconBase: string
       prefer: ['rune', 'enchant', 'explicit'],
       enabled: false,
       affix: null,
+      origin: null,
       tier: null,
       group: ++group
     })
@@ -322,6 +343,11 @@ function collectLines(item: ParsedItem, statsEnabled: boolean, reconBase: string
       prefer: ['enchant', 'explicit'],
       enabled: false,
       affix: null,
+      // A chat-copy `(enchant)` line is an enhancement (anoint/enchant, or a
+      // corruption-added enchant). Chat copies can't say which, so it tags as
+      // the generic 'enhanced' (E) — the advanced copy's `{ Corruption
+      // Enhancement }` header is the only place the CE distinction survives.
+      origin: 'enhanced',
       tier: null,
       group: ++group
     })
@@ -345,7 +371,7 @@ function buildStatRows(
   const aggByKey = new Map<string, number>()
   const category = categoryForItemClass(item.itemClass)
 
-  for (const { line, source, prefer, enabled, affix, tier, reconTierMin, group } of collectLines(item, statsEnabled, reconBase)) {
+  for (const { line, source, prefer, enabled, affix, origin, tier, reconTierMin, group } of collectLines(item, statsEnabled, reconBase)) {
     const candidates = db.match(line, {
       preferCategories: prefer,
       preferLocal: lineWantsLocal(category, line.template)
@@ -382,6 +408,7 @@ function buildStatRows(
         label: line.raw,
         source,
         affix,
+        origin,
         tier,
         group,
         value,
@@ -431,8 +458,9 @@ function buildStatRows(
         label: totalLabel(line.template, total),
         source,
         // A summed total is no single mod's roll — a tier/affix badge would lie,
-        // and a cross-mod sum has no single tier floor either.
+        // and a cross-mod sum has no single tier floor or origin either.
         affix: null,
+        origin: null,
         tier: null,
         summed: true,
         value: total,
@@ -484,6 +512,9 @@ function addHybridSingles(stats: PreparedStatFilter[], statsEnabled: boolean): v
       label: s.label,
       source: s.source,
       affix: null,
+      // The in-place hybrid node carries the origin tag; this convenience row in
+      // the pseudo area stays untagged so a tag isn't shown twice.
+      origin: null,
       tier: null,
       value: s.value,
       // One real mod backs this pseudo row, so its tier floor carries over.
@@ -569,6 +600,7 @@ function foldResistancePseudos(
     label,
     source: 'pseudo',
     affix: null,
+    origin: null,
     tier: null,
     value,
     // A summed pseudo spans several mods of differing tiers — no single floor.

@@ -2,6 +2,7 @@ import { useEffect, useReducer, useRef, useState } from 'react'
 import { anchorDiverges, formatEstimateRange, formatExalted } from '../../../core/pricing'
 import type {
   ListingStatus,
+  ModOrigin,
   PreparedEquipmentFilter,
   PreparedFlag,
   PreparedQuery,
@@ -69,6 +70,38 @@ const QUICK_TITLE: Record<QuickMode, string> = {
   tier: 'Match tier floor',
   smart: 'Smart default',
   custom: 'Custom value'
+}
+
+// Origin tag shown after the affix badge (issue #54): a short glyph colored to
+// match the mod's in-game origin color.
+const ORIGIN_LABEL: Record<ModOrigin, string> = {
+  crafted: 'C',
+  desecrated: 'D',
+  fractured: 'F',
+  enhanced: 'E',
+  corruption: 'CE'
+}
+
+const ORIGIN_TITLE: Record<ModOrigin, string> = {
+  crafted: 'Crafted',
+  desecrated: 'Desecrated',
+  fractured: 'Fractured',
+  enhanced: 'Enhanced',
+  corruption: 'Corruption Enhanced'
+}
+
+/** Small colored origin tag rendered after a stat's affix badge, or null for an
+ *  ordinary roll. */
+function originTag(stat: PreparedStatFilter): React.JSX.Element | null {
+  if (!stat.origin) return null
+  return (
+    <span
+      className={`${styles.origin} ${styles['origin-' + stat.origin]}`}
+      title={ORIGIN_TITLE[stat.origin]}
+    >
+      {ORIGIN_LABEL[stat.origin]}
+    </span>
+  )
 }
 
 /**
@@ -634,6 +667,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
           }}
         />
         {badge && <span className={`${styles.tier} ${badge.cls}`}>{badge.text}</span>}
+        {originTag(stat)}
         <span className={`${styles.stat} ${styles['source-' + stat.source] ?? ''}`}>
           {stat.label}
         </span>
@@ -659,6 +693,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
           }}
         />
         {badge && <span className={`${styles.tier} ${badge.cls}`}>{badge.text}</span>}
+        {originTag(lines[0])}
         <div className={styles['hybrid-lines']}>
           {lines.map((line) => (
             <div key={line.statId + line.label} className={styles['hybrid-line']}>
