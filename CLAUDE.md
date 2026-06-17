@@ -86,6 +86,16 @@ release PR; Phase B (after merge) tags, lets CI publish, then sets the GitHub
 Release notes from the `CHANGELOG.md` entry. `CHANGELOG.md` is the single source
 of truth for the polished notes.
 
+## Researching game mechanics
+
+When you (or a collaborator) need to research PoE2 mechanics, items, or crafting
+data, the canonical sources are the **wiki** (`poewiki.net`, the
+`poe2wiki:` namespace — e.g. `poewiki.net/wiki/poe2wiki:<Page>`) and
+**`poe2db.tw`** (the data dump the generator scripts already scrape — see
+`scripts/gen-essences.mjs`). Prefer the wiki for "how does X work" and poe2db
+for the per-item mod/target tables. Both occasionally `403` automated fetches;
+retry or fetch the equivalent page on the other site.
+
 ## More context
 
 `PLAN.md` (vision, milestones, locked decisions — note the stale stack line),
