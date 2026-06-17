@@ -270,7 +270,7 @@ describe('prepareQuery', () => {
   })
 
   it('summed totals and folded pseudos expose no single tier floor', () => {
-    const q = prepareFixture('37-helmets--blight-crown-screenshot.txt')
+    const q = prepareFixture('40-helmets--blight-crown-c27b19bd.txt')
     const total = q.stats.find((s) => s.summed)!
     expect(total.tierMin).toBeNull()
     expect(total.quickMode).toBe('smart')
@@ -370,7 +370,7 @@ describe('prepareQuery', () => {
     // Rarity rolls as prefix AND suffix, ES as two prefixes — the trade site
     // indexes each stat once (summed). Each mod stays as its own searchable row
     // (off by default), and a "(total)" row sums them and is on by default.
-    const q = prepareFixture('37-helmets--blight-crown-screenshot.txt')
+    const q = prepareFixture('40-helmets--blight-crown-c27b19bd.txt')
 
     const rarity = q.stats.filter((s) => s.label.includes('Rarity of Items found'))
     const rarityTotal = rarity.find((s) => s.summed)!
@@ -577,6 +577,36 @@ describe('prepareQuery', () => {
     expect(allRes.statId).toBe('explicit.stat_2901986750')
     // folded into the pseudo total, so unchecked by default
     expect(allRes.enabled).toBe(false)
+  })
+
+  it('carries mod origin onto stat rows for the origin tag (issue #54)', () => {
+    // A corruption-added enhancement (`{ Corruption Enhancement }`) surfaces as
+    // an enchant-source stat row tagged 'corruption' (→ CE badge).
+    const helm = prepareFixture('37-helmets--constricting-command-b2a788b0.txt')
+    const evasion = helm.stats.find((s) => s.label.includes('increased Evasion Rating'))
+    expect(evasion?.origin).toBe('corruption')
+
+    // Desecrated / fractured / crafted advanced-copy headers each tag their row,
+    // while the plain rolls on the same item carry no origin.
+    const gloves = prepareFixture('38-gloves--dragon-nails-bd9b701f.txt')
+    const originOf = (needle: string): string | null | undefined =>
+      gloves.stats.find((s) => s.label.includes(needle))?.origin
+    expect(originOf('increased Projectile Damage')).toBe('desecrated')
+    expect(originOf('Level of all Projectile Skills')).toBe('fractured')
+    expect(originOf('Critical Damage Bonus')).toBe('crafted')
+    expect(originOf('increased Projectile Speed')).toBeFalsy()
+
+    // A chat-copy `(enchant)` line is an enhancement — tagged 'enhanced' (E),
+    // not 'corruption', since chat copies can't say whether it came from a
+    // corruption (anoints are enchants too and need no corruption).
+    const bow = prepareFixture('42-crossbows--onslaught-core-e779a1c1.txt')
+    const maim = bow.stats.find((s) => s.label.includes('chance to Maim on Hit'))
+    expect(maim?.source).toBe('enchant')
+    expect(maim?.origin).toBe('enhanced')
+
+    // Ordinary rolls carry no origin (no tag).
+    const plain = prepareFixture('02-belts--mageblood-e7e9e4df.txt')
+    expect(plain.stats.every((s) => !s.origin)).toBe(true)
   })
 
   it('unique: exact name+type, mods unchecked', () => {

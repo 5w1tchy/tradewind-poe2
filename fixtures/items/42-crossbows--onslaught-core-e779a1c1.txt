@@ -1,0 +1,32 @@
+Item Class: Crossbows
+Rarity: Rare
+Onslaught Core
+Flexed Crossbow
+--------
+Quality: +21% (augmented)
+Physical Damage: 286-776 (augmented)
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.82 (augmented)
+Reload Time: 0.75 (augmented)
+--------
+Requires: Level 77, 89 Str, 89 Dex
+--------
+Sockets: S S 
+--------
+Item Level: 80
+--------
+10% chance to Maim on Hit (enchant)
+--------
+20% increased Physical Damage (rune)
+Gain 5% of Damage as Extra Damage of all Elements (rune)
+--------
+20% increased Bolt Speed (implicit)
+--------
+199% increased Physical Damage
+Adds 42 to 74 Physical Damage
++117 to Accuracy Rating
+14% increased Attack Speed
+Gain 49 Life per enemy killed
++3 to Level of all Attack Skills (crafted)
+--------
+Corrupted

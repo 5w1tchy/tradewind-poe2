@@ -1,0 +1,35 @@
+Item Class: Helmets
+Rarity: Unique
+Constricting Command
+Viper Cap
+--------
+Quality: +20% (augmented)
+Evasion Rating: 256 (augmented)
+--------
+Requires: Level 38, 54 Dex
+--------
+Sockets: S S 
+--------
+Item Level: 80
+--------
+{ Corruption Enhancement — Evasion }
+19(15-25)% increased Evasion Rating
+--------
++18% to Cold Resistance (rune)
++18% to Lightning Resistance (rune)
+--------
+{ Unique Modifier — Life }
++119(80-120) to maximum Life
+{ Unique Modifier — Attribute }
++11(10-15) to all Attributes
+{ Unique Modifier — Life }
+8.7(8-12) Life Regeneration per second
+{ Unique Modifier }
+Require 4(4-2) fewer enemies to be Surrounded
+--------
+"Be vigilant, Nezahul! When the serpent is cornered, does it give up?
+No... It waits. Then it bites the first hand it finds. 
+The danger of numbers is all in your mind!"
+- Viper Napuatzi, instructing Royal Commander Nezahul
+--------
+Twice Corrupted

@@ -8,6 +8,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -34,6 +35,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -68,6 +70,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
       "tier": 5,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -101,6 +104,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -129,6 +133,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -156,6 +161,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -231,6 +237,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -249,6 +256,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -267,6 +275,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -285,6 +294,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -303,6 +313,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -330,6 +341,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -352,6 +364,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -408,6 +421,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -434,6 +448,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
       "tier": 3,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -460,6 +475,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": true,
       "fractured": false,
@@ -484,6 +500,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -510,6 +527,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -538,6 +556,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -613,6 +632,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -646,6 +666,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -680,6 +701,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -714,6 +736,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -740,6 +763,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
       "tier": 3,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": true,
       "fractured": false,
@@ -770,6 +794,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -801,6 +826,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -857,6 +883,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
   "enchantMods": [],
   "enhancements": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -877,6 +904,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
   ],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -903,6 +931,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
       "tier": 7,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -929,6 +958,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -953,6 +983,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -975,6 +1006,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1005,6 +1037,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
       "tier": 3,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": true,
       "fractured": false,
@@ -1037,6 +1070,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1091,6 +1125,7 @@ exports[`parseItem on every fixture > 06-helmets--constricting-command-9054f669.
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1117,6 +1152,7 @@ exports[`parseItem on every fixture > 06-helmets--constricting-command-9054f669.
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1143,6 +1179,7 @@ exports[`parseItem on every fixture > 06-helmets--constricting-command-9054f669.
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1169,6 +1206,7 @@ exports[`parseItem on every fixture > 06-helmets--constricting-command-9054f669.
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1247,6 +1285,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1280,6 +1319,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1320,6 +1360,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
       "tier": 4,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1348,6 +1389,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
       "tier": 3,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1375,6 +1417,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1401,6 +1444,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
       "tier": 3,
     },
     {
+      "corrupted": false,
       "crafted": true,
       "desecrated": false,
       "fractured": false,
@@ -1428,6 +1472,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1519,6 +1564,7 @@ exports[`parseItem on every fixture > 08-life-flasks--bubbling-ultimate-life-fla
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1543,6 +1589,7 @@ exports[`parseItem on every fixture > 08-life-flasks--bubbling-ultimate-life-fla
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1615,6 +1662,7 @@ exports[`parseItem on every fixture > 09-relics--swift-seal-relic-of-overflowing
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1639,6 +1687,7 @@ exports[`parseItem on every fixture > 09-relics--swift-seal-relic-of-overflowing
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1737,6 +1786,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1763,6 +1813,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
       "tier": 4,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1802,6 +1853,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
       "tier": 4,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1828,6 +1880,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
       "tier": 5,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1856,6 +1909,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1883,6 +1937,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1943,6 +1998,7 @@ exports[`parseItem on every fixture > 12-sceptres--mazarine-omen-sceptre-of-the-
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -1969,6 +2025,7 @@ exports[`parseItem on every fixture > 12-sceptres--mazarine-omen-sceptre-of-the-
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2027,6 +2084,7 @@ exports[`parseItem on every fixture > 13-body-armours--exceptional-corsair-coat-
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2085,6 +2143,7 @@ exports[`parseItem on every fixture > 14-waystones--painful-waystone-tier-15-of-
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2109,6 +2168,7 @@ exports[`parseItem on every fixture > 14-waystones--painful-waystone-tier-15-of-
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2208,6 +2268,7 @@ exports[`parseItem on every fixture > 16-staves--the-unborn-lich-767adbc8.txt 1`
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": true,
       "fractured": false,
@@ -2244,6 +2305,7 @@ exports[`parseItem on every fixture > 16-staves--the-unborn-lich-767adbc8.txt 1`
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": true,
       "fractured": false,
@@ -2275,6 +2337,7 @@ exports[`parseItem on every fixture > 16-staves--the-unborn-lich-767adbc8.txt 1`
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2299,6 +2362,7 @@ exports[`parseItem on every fixture > 16-staves--the-unborn-lich-767adbc8.txt 1`
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": true,
       "fractured": false,
@@ -2451,6 +2515,7 @@ exports[`parseItem on every fixture > 18-jewels--dusk-shine-cb55974a.txt 1`] = `
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2477,6 +2542,7 @@ exports[`parseItem on every fixture > 18-jewels--dusk-shine-cb55974a.txt 1`] = `
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2505,6 +2571,7 @@ exports[`parseItem on every fixture > 18-jewels--dusk-shine-cb55974a.txt 1`] = `
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2532,6 +2599,7 @@ exports[`parseItem on every fixture > 18-jewels--dusk-shine-cb55974a.txt 1`] = `
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2594,6 +2662,7 @@ exports[`parseItem on every fixture > 19-charms--sanguis-heroum-a68061d7.txt 1`]
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2614,6 +2683,7 @@ exports[`parseItem on every fixture > 19-charms--sanguis-heroum-a68061d7.txt 1`]
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2641,6 +2711,7 @@ exports[`parseItem on every fixture > 19-charms--sanguis-heroum-a68061d7.txt 1`]
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2709,6 +2780,7 @@ exports[`parseItem on every fixture > 20-charms--sunny-thawing-charm-of-the-copi
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2735,6 +2807,7 @@ exports[`parseItem on every fixture > 20-charms--sunny-thawing-charm-of-the-copi
       "tier": 6,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2762,6 +2835,7 @@ exports[`parseItem on every fixture > 20-charms--sunny-thawing-charm-of-the-copi
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2830,6 +2904,7 @@ exports[`parseItem on every fixture > 21-crossbows--spirit-core-9efeb666.txt 1`]
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2864,6 +2939,7 @@ exports[`parseItem on every fixture > 21-crossbows--spirit-core-9efeb666.txt 1`]
       "tier": 5,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2892,6 +2968,7 @@ exports[`parseItem on every fixture > 21-crossbows--spirit-core-9efeb666.txt 1`]
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2917,6 +2994,7 @@ exports[`parseItem on every fixture > 21-crossbows--spirit-core-9efeb666.txt 1`]
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -2983,6 +3061,7 @@ exports[`parseItem on every fixture > 22-bows--infusing-obliterator-bow-of-the-s
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3013,6 +3092,7 @@ exports[`parseItem on every fixture > 22-bows--infusing-obliterator-bow-of-the-s
       "tier": 5,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3038,6 +3118,7 @@ exports[`parseItem on every fixture > 22-bows--infusing-obliterator-bow-of-the-s
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3131,6 +3212,7 @@ exports[`parseItem on every fixture > 24-tablet--teeming-abyss-tablet-of-escalat
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3155,6 +3237,7 @@ exports[`parseItem on every fixture > 24-tablet--teeming-abyss-tablet-of-escalat
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3185,6 +3268,7 @@ exports[`parseItem on every fixture > 24-tablet--teeming-abyss-tablet-of-escalat
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3242,6 +3326,7 @@ exports[`parseItem on every fixture > 25-jewels--against-the-darkness-32d65d52.t
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3268,6 +3353,7 @@ exports[`parseItem on every fixture > 25-jewels--against-the-darkness-32d65d52.t
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3337,6 +3423,7 @@ exports[`parseItem on every fixture > 26-rings--tempered-topaz-ring-of-the-rainb
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3370,6 +3457,7 @@ exports[`parseItem on every fixture > 26-rings--tempered-topaz-ring-of-the-rainb
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3403,6 +3491,7 @@ exports[`parseItem on every fixture > 26-rings--tempered-topaz-ring-of-the-rainb
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3456,6 +3545,7 @@ exports[`parseItem on every fixture > 27-staves--glyphic-chiming-staff-of-sortil
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3483,6 +3573,7 @@ exports[`parseItem on every fixture > 27-staves--glyphic-chiming-staff-of-sortil
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3539,6 +3630,7 @@ exports[`parseItem on every fixture > 28-quivers--focused-visceral-quiver-of-ren
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3565,6 +3657,7 @@ exports[`parseItem on every fixture > 28-quivers--focused-visceral-quiver-of-ren
       "tier": 7,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3595,6 +3688,7 @@ exports[`parseItem on every fixture > 28-quivers--focused-visceral-quiver-of-ren
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3651,6 +3745,7 @@ exports[`parseItem on every fixture > 29-one-hand-maces--viper-grinder-2eaa445c.
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3679,6 +3774,7 @@ exports[`parseItem on every fixture > 29-one-hand-maces--viper-grinder-2eaa445c.
       "tier": 3,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3703,6 +3799,7 @@ exports[`parseItem on every fixture > 29-one-hand-maces--viper-grinder-2eaa445c.
       "tier": 4,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3729,6 +3826,7 @@ exports[`parseItem on every fixture > 29-one-hand-maces--viper-grinder-2eaa445c.
       "tier": 7,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3797,6 +3895,7 @@ exports[`parseItem on every fixture > 30-sceptres--agony-cry-9c164282.txt 1`] = 
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3823,6 +3922,7 @@ exports[`parseItem on every fixture > 30-sceptres--agony-cry-9c164282.txt 1`] = 
       "tier": 5,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3859,6 +3959,7 @@ exports[`parseItem on every fixture > 30-sceptres--agony-cry-9c164282.txt 1`] = 
       "tier": 7,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3885,6 +3986,7 @@ exports[`parseItem on every fixture > 30-sceptres--agony-cry-9c164282.txt 1`] = 
       "tier": 6,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3921,6 +4023,7 @@ exports[`parseItem on every fixture > 30-sceptres--agony-cry-9c164282.txt 1`] = 
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -3981,6 +4084,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4008,6 +4112,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4047,6 +4152,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4073,6 +4179,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4101,6 +4208,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
       "tier": 5,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4129,6 +4237,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4189,6 +4298,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4215,6 +4325,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
       "tier": 3,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4247,6 +4358,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
       "tier": 6,
     },
     {
+      "corrupted": false,
       "crafted": true,
       "desecrated": false,
       "fractured": false,
@@ -4273,6 +4385,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
       "tier": 4,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4297,6 +4410,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4324,6 +4438,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
       "tier": 4,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4388,6 +4503,7 @@ exports[`parseItem on every fixture > 33-wands--frostbound-dueling-wand-of-leger
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4416,6 +4532,7 @@ exports[`parseItem on every fixture > 33-wands--frostbound-dueling-wand-of-leger
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4472,6 +4589,7 @@ exports[`parseItem on every fixture > 34-wands--behemoth-spell-dbe6504d.txt 1`] 
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4512,6 +4630,7 @@ exports[`parseItem on every fixture > 34-wands--behemoth-spell-dbe6504d.txt 1`] 
       "tier": 7,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4538,6 +4657,7 @@ exports[`parseItem on every fixture > 34-wands--behemoth-spell-dbe6504d.txt 1`] 
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4565,6 +4685,7 @@ exports[`parseItem on every fixture > 34-wands--behemoth-spell-dbe6504d.txt 1`] 
       "tier": 6,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4621,6 +4742,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4648,6 +4770,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4674,6 +4797,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4698,6 +4822,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4724,6 +4849,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4742,6 +4868,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4760,6 +4887,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4860,6 +4988,7 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4893,6 +5022,7 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
       "tier": 9,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4919,6 +5049,7 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
       "tier": 5,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4947,6 +5078,7 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
       "tier": 3,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -4974,6 +5106,7 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5028,7 +5161,620 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
 }
 `;
 
-exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`] = `
+exports[`parseItem on every fixture > 37-helmets--constricting-command-b2a788b0.txt 1`] = `
+{
+  "baseType": "Viper Cap",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [
+    {
+      "corrupted": true,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "enhancement",
+      "lines": [
+        {
+          "raw": "19(15-25)% increased Evasion Rating",
+          "template": "#% increased Evasion Rating",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 25,
+              "min": 15,
+              "value": 19,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Evasion",
+      ],
+      "tier": null,
+    },
+  ],
+  "explicits": [
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "+119(80-120) to maximum Life",
+          "template": "+# to maximum Life",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 120,
+              "min": 80,
+              "value": 119,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": null,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "+11(10-15) to all Attributes",
+          "template": "+# to all Attributes",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 15,
+              "min": 10,
+              "value": 11,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Attribute",
+      ],
+      "tier": null,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "8.7(8-12) Life Regeneration per second",
+          "template": "# Life Regeneration per second",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 12,
+              "min": 8,
+              "value": 8.7,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": null,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Require 4(4-2) fewer enemies to be Surrounded",
+          "template": "Require # fewer enemies to be Surrounded",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 2,
+              "min": 4,
+              "value": 4,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Helmets",
+  "itemLevel": 80,
+  "name": "Constricting Command",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +20% (augmented)",
+    },
+    {
+      "name": "Evasion Rating",
+      "raw": "Evasion Rating: 256 (augmented)",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Unique",
+  "requiredLevel": 38,
+  "requirements": "Requires: Level 38, 54 Dex",
+  "runeMods": [
+    {
+      "raw": "+18% to Cold Resistance",
+      "template": "+#% to Cold Resistance",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 18,
+        },
+      ],
+    },
+    {
+      "raw": "+18% to Lightning Resistance",
+      "template": "+#% to Lightning Resistance",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 18,
+        },
+      ],
+    },
+  ],
+  "sockets": 2,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      ""Be vigilant, Nezahul! When the serpent is cornered, does it give up?",
+      "No... It waits. Then it bites the first hand it finds.",
+      "The danger of numbers is all in your mind!"",
+      "- Viper Napuatzi, instructing Royal Commander Nezahul",
+    ],
+    [
+      "Twice Corrupted",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 38-gloves--dragon-nails-bd9b701f.txt 1`] = `
+{
+  "baseType": "Polished Bracers",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "36(31-40)% increased Projectile Speed",
+          "template": "#% increased Projectile Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 40,
+              "min": 31,
+              "value": 36,
+            },
+          ],
+        },
+      ],
+      "name": "Kolr's",
+      "qualityIncrease": null,
+      "tags": [
+        "Speed",
+      ],
+      "tier": 1,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "Adds 18(16-20) to 27(25-31) Cold damage to Attacks",
+          "template": "Adds # to # Cold damage to Attacks",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 20,
+              "min": 16,
+              "value": 18,
+            },
+            {
+              "max": 31,
+              "min": 25,
+              "value": 27,
+            },
+          ],
+        },
+      ],
+      "name": "Polar",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Elemental",
+        "Cold",
+        "Attack",
+      ],
+      "tier": 2,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": true,
+      "fractured": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "40(31-40)% increased Projectile Damage",
+          "template": "#% increased Projectile Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 40,
+              "min": 31,
+              "value": 40,
+            },
+          ],
+        },
+      ],
+      "name": "Kolr's",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+      ],
+      "tier": 1,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": true,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+2 to Level of all Projectile Skills",
+          "template": "+# to Level of all Projectile Skills",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 2,
+            },
+          ],
+        },
+      ],
+      "name": "of the Hunt",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 1,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "+39(36-40)% to Cold Resistance",
+          "template": "+#% to Cold Resistance",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 40,
+              "min": 36,
+              "value": 39,
+            },
+          ],
+        },
+      ],
+      "name": "of the Ice",
+      "qualityIncrease": null,
+      "tags": [
+        "Elemental",
+        "Cold",
+        "Resistance",
+      ],
+      "tier": 2,
+    },
+    {
+      "corrupted": false,
+      "crafted": true,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "28(25-29)% increased Critical Damage Bonus",
+          "template": "#% increased Critical Damage Bonus",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 29,
+              "min": 25,
+              "value": 28,
+            },
+          ],
+        },
+      ],
+      "name": "of Fury",
+      "qualityIncrease": null,
+      "tags": [
+        "Damage",
+        "Critical",
+      ],
+      "tier": 2,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Gloves",
+  "itemLevel": 81,
+  "name": "Dragon Nails",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +20% (augmented)",
+    },
+    {
+      "name": "Evasion Rating",
+      "raw": "Evasion Rating: 204 (augmented)",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Rare",
+  "requiredLevel": 80,
+  "requirements": "Requires: Level 80, 101 Dex",
+  "runeMods": [
+    {
+      "raw": "8% increased Attack Speed",
+      "template": "#% increased Attack Speed",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 8,
+        },
+      ],
+    },
+    {
+      "raw": "Can roll Marksman modifiers",
+      "template": "Can roll Marksman modifiers",
+      "unscalable": false,
+      "values": [],
+    },
+  ],
+  "sockets": 2,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Fractured Item",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 39-helmets--constricting-command-0c417e4c.txt 1`] = `
+{
+  "baseType": "Viper Cap",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "enhancement",
+      "lines": [
+        {
+          "raw": "Allocates Climate Change — Unscalable Value",
+          "template": "Allocates Climate Change",
+          "unscalable": true,
+          "values": [],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "explicits": [
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "+114(80-120) to maximum Life",
+          "template": "+# to maximum Life",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 120,
+              "min": 80,
+              "value": 114,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": null,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "+15(10-15) to all Attributes",
+          "template": "+# to all Attributes",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 15,
+              "min": 10,
+              "value": 15,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Attribute",
+      ],
+      "tier": null,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "11.1(8-12) Life Regeneration per second",
+          "template": "# Life Regeneration per second",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 12,
+              "min": 8,
+              "value": 11.1,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": null,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "unique",
+      "lines": [
+        {
+          "raw": "Require 4(4-2) fewer enemies to be Surrounded",
+          "template": "Require # fewer enemies to be Surrounded",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 2,
+              "min": 4,
+              "value": 4,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Helmets",
+  "itemLevel": 81,
+  "name": "Constricting Command",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +20% (augmented)",
+    },
+    {
+      "name": "Evasion Rating",
+      "raw": "Evasion Rating: 215 (augmented)",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Unique",
+  "requiredLevel": 60,
+  "requirements": "Requires: Level 60, 54 Dex",
+  "runeMods": [
+    {
+      "raw": "+11% to Chaos Resistance",
+      "template": "+#% to Chaos Resistance",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 11,
+        },
+      ],
+    },
+    {
+      "raw": "Raven-Touched",
+      "template": "Raven-Touched",
+      "unscalable": false,
+      "values": [],
+    },
+  ],
+  "sockets": 2,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      ""Be vigilant, Nezahul! When the serpent is cornered, does it give up?",
+      "No... It waits. Then it bites the first hand it finds.",
+      "The danger of numbers is all in your mind!"",
+      "- Viper Napuatzi, instructing Royal Commander Nezahul",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 40-helmets--blight-crown-c27b19bd.txt 1`] = `
 {
   "baseType": "Ancestral Tiara",
   "corrupted": false,
@@ -5036,6 +5782,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5062,6 +5809,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5086,6 +5834,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
       "tier": 1,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5112,6 +5861,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5138,6 +5888,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5166,6 +5917,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
       "tier": 2,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5194,6 +5946,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
       "tier": 5,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5257,7 +6010,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
 }
 `;
 
-exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] = `
+exports[`parseItem on every fixture > 41-amulets--agony-torc-5eaddd27.txt 1`] = `
 {
   "baseType": "Solar Amulet",
   "corrupted": false,
@@ -5265,6 +6018,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
   "enhancements": [],
   "explicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": true,
@@ -5287,6 +6041,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5309,6 +6064,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5331,6 +6087,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5353,6 +6110,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": true,
       "fractured": false,
@@ -5375,6 +6133,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
       "tier": null,
     },
     {
+      "corrupted": false,
       "crafted": true,
       "desecrated": false,
       "fractured": false,
@@ -5400,6 +6159,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
   "grantedSkills": [],
   "implicits": [
     {
+      "corrupted": false,
       "crafted": false,
       "desecrated": false,
       "fractured": false,
@@ -5444,6 +6204,251 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
       "Fractured Item",
     ],
   ],
+  "waystoneTier": null,
+}
+`;
+
+exports[`parseItem on every fixture > 42-crossbows--onslaught-core-e779a1c1.txt 1`] = `
+{
+  "baseType": "Flexed Crossbow",
+  "corrupted": true,
+  "enchantMods": [
+    {
+      "raw": "10% chance to Maim on Hit",
+      "template": "#% chance to Maim on Hit",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 10,
+        },
+      ],
+    },
+  ],
+  "enhancements": [],
+  "explicits": [
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "199% increased Physical Damage",
+          "template": "#% increased Physical Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 199,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "Adds 42 to 74 Physical Damage",
+          "template": "Adds # to # Physical Damage",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 42,
+            },
+            {
+              "value": 74,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "+117 to Accuracy Rating",
+          "template": "+# to Accuracy Rating",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 117,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "14% increased Attack Speed",
+          "template": "#% increased Attack Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 14,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "Gain 49 Life per enemy killed",
+          "template": "Gain # Life per enemy killed",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 49,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+    {
+      "corrupted": false,
+      "crafted": true,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "explicit",
+      "lines": [
+        {
+          "raw": "+3 to Level of all Attack Skills",
+          "template": "+# to Level of all Attack Skills",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 3,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "implicit",
+      "lines": [
+        {
+          "raw": "20% increased Bolt Speed",
+          "template": "#% increased Bolt Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 20,
+            },
+          ],
+        },
+      ],
+      "name": null,
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "itemClass": "Crossbows",
+  "itemLevel": 80,
+  "name": "Onslaught Core",
+  "note": null,
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +21% (augmented)",
+    },
+    {
+      "name": "Physical Damage",
+      "raw": "Physical Damage: 286-776 (augmented)",
+    },
+    {
+      "name": "Critical Hit Chance",
+      "raw": "Critical Hit Chance: 5.00%",
+    },
+    {
+      "name": "Attacks per Second",
+      "raw": "Attacks per Second: 1.82 (augmented)",
+    },
+    {
+      "name": "Reload Time",
+      "raw": "Reload Time: 0.75 (augmented)",
+    },
+  ],
+  "quality": 21,
+  "rarity": "Rare",
+  "requiredLevel": 77,
+  "requirements": "Requires: Level 77, 89 Str, 89 Dex",
+  "runeMods": [
+    {
+      "raw": "20% increased Physical Damage",
+      "template": "#% increased Physical Damage",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 20,
+        },
+      ],
+    },
+    {
+      "raw": "Gain 5% of Damage as Extra Damage of all Elements",
+      "template": "Gain #% of Damage as Extra Damage of all Elements",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 5,
+        },
+      ],
+    },
+  ],
+  "sockets": 2,
+  "unidentified": false,
+  "unknownSections": [],
   "waystoneTier": null,
 }
 `;

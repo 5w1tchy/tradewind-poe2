@@ -1062,3 +1062,201 @@ Gain 27(19-28) Life per enemy killed
 Leeches 6.12(6-6.9)% of Physical Damage as Mana
 { Suffix Modifier "of Impact" (Tier: 6) }
 13(11-13)% increased Stun Duration
+
+=====
+
+Item Class: Helmets
+Rarity: Unique
+Constricting Command
+Viper Cap
+--------
+Quality: +20% (augmented)
+Evasion Rating: 256 (augmented)
+--------
+Requires: Level 38, 54 Dex
+--------
+Sockets: S S 
+--------
+Item Level: 80
+--------
+{ Corruption Enhancement — Evasion }
+19(15-25)% increased Evasion Rating
+--------
++18% to Cold Resistance (rune)
++18% to Lightning Resistance (rune)
+--------
+{ Unique Modifier — Life }
++119(80-120) to maximum Life
+{ Unique Modifier — Attribute }
++11(10-15) to all Attributes
+{ Unique Modifier — Life }
+8.7(8-12) Life Regeneration per second
+{ Unique Modifier }
+Require 4(4-2) fewer enemies to be Surrounded
+--------
+"Be vigilant, Nezahul! When the serpent is cornered, does it give up?
+No... It waits. Then it bites the first hand it finds. 
+The danger of numbers is all in your mind!"
+- Viper Napuatzi, instructing Royal Commander Nezahul
+--------
+Twice Corrupted
+
+=====
+
+Item Class: Gloves
+Rarity: Rare
+Dragon Nails
+Polished Bracers
+--------
+Quality: +20% (augmented)
+Evasion Rating: 204 (augmented)
+--------
+Requires: Level 80, 101 Dex
+--------
+Sockets: S S 
+--------
+Item Level: 81
+--------
+8% increased Attack Speed (rune)
+Can roll Marksman modifiers (rune)
+--------
+{ Prefix Modifier "Kolr's" (Tier: 1) — Speed }
+36(31-40)% increased Projectile Speed
+{ Prefix Modifier "Polar" (Tier: 2) — Damage, Elemental, Cold, Attack }
+Adds 18(16-20) to 27(25-31) Cold damage to Attacks
+{ Desecrated Prefix Modifier "Kolr's" (Tier: 1) — Damage }
+40(31-40)% increased Projectile Damage
+{ Fractured Suffix Modifier "of the Hunt" (Tier: 1) }
++2 to Level of all Projectile Skills
+{ Suffix Modifier "of the Ice" (Tier: 2) — Elemental, Cold, Resistance }
++39(36-40)% to Cold Resistance
+{ Crafted Suffix Modifier "of Fury" (Tier: 2) — Damage, Critical }
+28(25-29)% increased Critical Damage Bonus
+--------
+Fractured Item
+
+=====
+
+Item Class: Helmets
+Rarity: Unique
+Constricting Command
+Viper Cap
+--------
+Quality: +20% (augmented)
+Evasion Rating: 215 (augmented)
+--------
+Requires: Level 60, 54 Dex
+--------
+Sockets: S S 
+--------
+Item Level: 81
+--------
+{ Enhancement }
+Allocates Climate Change — Unscalable Value
+--------
++11% to Chaos Resistance (rune)
+Raven-Touched (rune)
+--------
+{ Unique Modifier — Life }
++114(80-120) to maximum Life
+{ Unique Modifier — Attribute }
++15(10-15) to all Attributes
+{ Unique Modifier — Life }
+11.1(8-12) Life Regeneration per second
+{ Unique Modifier }
+Require 4(4-2) fewer enemies to be Surrounded
+--------
+"Be vigilant, Nezahul! When the serpent is cornered, does it give up?
+No... It waits. Then it bites the first hand it finds. 
+The danger of numbers is all in your mind!"
+- Viper Napuatzi, instructing Royal Commander Nezahul
+
+=====
+
+Item Class: Helmets
+Rarity: Rare
+Blight Crown
+Ancestral Tiara
+--------
+Quality: +20% (augmented)
+Energy Shield: 324 (augmented)
+--------
+Requires: Level 80, 115 Int
+--------
+Item Level: 81
+--------
+18% increased Armour, Evasion and Energy Shield (rune)
+--------
+{ Prefix Modifier "Incandescent" (Tier: 1) — Defences }
+96(92-100)% increased Energy Shield
+{ Prefix Modifier "Magpie's" (Tier: 1) }
+18(16-19)% increased Rarity of Items found
+{ Prefix Modifier "Glittering" (Tier: 2) — Defences }
+34(33-38)% increased Energy Shield
+{ Suffix Modifier "of the Augur" (Tier: 2) — Mana }
++27(27-32) to maximum Mana
+{ Suffix Modifier "of the Puma" (Tier: 2) — Elemental, Lightning, Resistance }
++36(36-40)% to Lightning Resistance
+{ Suffix Modifier "of the Walrus" (Tier: 5) — Elemental, Cold, Resistance }
++22(21-25)% to Cold Resistance
+{ Suffix Modifier "of Plunder" (Tier: 1) }
+18(15-18)% increased Rarity of Items found
+
+=====
+
+Item Class: Amulets
+Rarity: Rare
+Agony Torc
+Solar Amulet
+--------
+Quality (Cold Modifiers): +40% (augmented)
+--------
+Requires: Level 64
+--------
+Item Level: 81
+--------
++15 to Spirit (implicit)
+--------
++50 to Spirit (fractured)
+42% increased Evasion Rating
++3 to Level of all Projectile Skills
++23% to all Elemental Resistances
++23% to Cold and Chaos Resistances (desecrated)
+30% increased Global Armour, Evasion and Energy Shield (crafted)
+--------
+Fractured Item
+
+=====
+
+Item Class: Crossbows
+Rarity: Rare
+Onslaught Core
+Flexed Crossbow
+--------
+Quality: +21% (augmented)
+Physical Damage: 286-776 (augmented)
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.82 (augmented)
+Reload Time: 0.75 (augmented)
+--------
+Requires: Level 77, 89 Str, 89 Dex
+--------
+Sockets: S S 
+--------
+Item Level: 80
+--------
+10% chance to Maim on Hit (enchant)
+--------
+20% increased Physical Damage (rune)
+Gain 5% of Damage as Extra Damage of all Elements (rune)
+--------
+20% increased Bolt Speed (implicit)
+--------
+199% increased Physical Damage
+Adds 42 to 74 Physical Damage
++117 to Accuracy Rating
+14% increased Attack Speed
+Gain 49 Life per enemy killed
++3 to Level of all Attack Skills (crafted)
+--------
+Corrupted

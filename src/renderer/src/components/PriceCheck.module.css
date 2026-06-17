@@ -469,6 +469,53 @@
   background: rgba(122, 162, 255, 0.08);
 }
 
+/* Origin tag (issue #54): a short glyph after the affix badge, colored to match
+   the mod's in-game origin. Same chip shape as .tier. */
+.origin {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 600;
+  border: 1px solid var(--tw-line-strong);
+  border-radius: 2px;
+  padding: 0 3px;
+  line-height: 13px;
+}
+
+/* Fractured: fracture tan/khaki. */
+.origin-fractured {
+  color: #c2ad77;
+  border-color: rgba(162, 145, 98, 0.5);
+  background: rgba(162, 145, 98, 0.1);
+}
+
+/* Crafted: bench light blue. */
+.origin-crafted {
+  color: #b4b4ff;
+  border-color: rgba(180, 180, 255, 0.45);
+  background: rgba(180, 180, 255, 0.08);
+}
+
+/* Desecrated: Abyssal green. */
+.origin-desecrated {
+  color: #6fcf97;
+  border-color: rgba(111, 207, 151, 0.45);
+  background: rgba(111, 207, 151, 0.08);
+}
+
+/* Enhanced (anoint/enchant): cyan-ish blue, distinct from crafted's blue. */
+.origin-enhanced {
+  color: #88ccff;
+  border-color: rgba(136, 204, 255, 0.45);
+  background: rgba(136, 204, 255, 0.08);
+}
+
+/* Corruption Enhanced: corrupted red. */
+.origin-corruption {
+  color: #e85b5b;
+  border-color: rgba(210, 0, 0, 0.55);
+  background: rgba(210, 0, 0, 0.1);
+}
+
 .status {
   display: flex;
   align-items: center;

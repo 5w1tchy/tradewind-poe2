@@ -76,6 +76,15 @@ export interface TradeSearchRequest {
 export type StatSource = 'explicit' | 'implicit' | 'enchant' | 'rune' | 'pseudo'
 
 /**
+ * Special provenance of a mod, surfaced as a short tag after the affix badge
+ * (issue #54). Null for an ordinary rolled prefix/suffix/implicit. A mod has at
+ * most one: crafted (bench), desecrated (Abyss), fractured (locked by a
+ * Fracturing Orb), enhanced (anoint/enchant `{ Enhancement }`), or corruption
+ * (`{ Corruption Enhancement }`).
+ */
+export type ModOrigin = 'crafted' | 'desecrated' | 'fractured' | 'enhanced' | 'corruption'
+
+/**
  * Quick-set mode for a stat row's `min` bound (issue #16). The "=" button cycles
  * through these and writes the matching target into `min`:
  *   roll  — the item's actual roll (100%)
@@ -107,6 +116,11 @@ export interface PreparedStatFilter {
   /** Affix slot from advanced copy. Null for implicit/rune/enchant/pseudo rows
    *  and for summed totals (no single affix owns the sum). */
   affix: 'prefix' | 'suffix' | null
+  /** Special mod provenance (crafted/desecrated/fractured/enhanced/corruption),
+   *  rendered as a tag after the affix badge. Null/absent for an ordinary roll
+   *  and for synthetic rows (summed totals, resistance pseudos) spanning several
+   *  mods. Optional like the other situational fields (`summed`, `group`). */
+  origin?: ModOrigin | null
   /** True on the synthetic "(total)" row that sums a stat the trade site indexes
    *  once across several mods. The individual mods stay as their own searchable
    *  rows; the builder dedupes so enabling both can't double-filter the id. */

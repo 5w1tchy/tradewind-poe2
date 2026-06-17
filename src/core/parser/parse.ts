@@ -84,6 +84,7 @@ function parseBasicModLine(line: string): ParsedMod {
     crafted: origin === 'crafted',
     desecrated: origin === 'desecrated',
     fractured: origin === 'fractured',
+    corrupted: false,
     name: null,
     tier: null,
     tags: [],

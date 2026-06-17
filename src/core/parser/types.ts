@@ -31,6 +31,9 @@ export interface ParsedMod {
   desecrated: boolean
   /** Locked by a Fracturing Orb. Still a normal prefix/suffix for pricing. */
   fractured: boolean
+  /** Added/enhanced by corruption (`{ Corruption Enhancement }` header) — an
+   *  enhancement-generation mod, distinct from a normal anoint `{ Enhancement }`. */
+  corrupted: boolean
   /** Affix name from the header, e.g. "Virile". Empty string occurs in game data. */
   name: string | null
   tier: number | null

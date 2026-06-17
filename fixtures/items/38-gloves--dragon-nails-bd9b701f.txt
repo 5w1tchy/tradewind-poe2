@@ -1,0 +1,31 @@
+Item Class: Gloves
+Rarity: Rare
+Dragon Nails
+Polished Bracers
+--------
+Quality: +20% (augmented)
+Evasion Rating: 204 (augmented)
+--------
+Requires: Level 80, 101 Dex
+--------
+Sockets: S S 
+--------
+Item Level: 81
+--------
+8% increased Attack Speed (rune)
+Can roll Marksman modifiers (rune)
+--------
+{ Prefix Modifier "Kolr's" (Tier: 1) — Speed }
+36(31-40)% increased Projectile Speed
+{ Prefix Modifier "Polar" (Tier: 2) — Damage, Elemental, Cold, Attack }
+Adds 18(16-20) to 27(25-31) Cold damage to Attacks
+{ Desecrated Prefix Modifier "Kolr's" (Tier: 1) — Damage }
+40(31-40)% increased Projectile Damage
+{ Fractured Suffix Modifier "of the Hunt" (Tier: 1) }
++2 to Level of all Projectile Skills
+{ Suffix Modifier "of the Ice" (Tier: 2) — Elemental, Cold, Resistance }
++39(36-40)% to Cold Resistance
+{ Crafted Suffix Modifier "of Fury" (Tier: 2) — Damage, Critical }
+28(25-29)% increased Critical Damage Bonus
+--------
+Fractured Item
