@@ -15,7 +15,18 @@ describe('config sanitize', () => {
       expect(c.updateChannel).toBe('stable')
       expect(c.popupSize).toEqual({ w: 520, h: 560 })
       expect(c.resultsHeight).toBe(200)
+      expect(c.buyoutCurrency).toBeNull()
     }
+  })
+
+  it('keeps a known buyout currency and rejects anything else (issue #20)', () => {
+    expect(sanitize({ buyoutCurrency: 'divine' }).buyoutCurrency).toBe('divine')
+    expect(sanitize({ buyoutCurrency: 'exalted_divine' }).buyoutCurrency).toBe('exalted_divine')
+    expect(sanitize({ buyoutCurrency: 'chaos' }).buyoutCurrency).toBe('chaos')
+    // null is the explicit "Exalted Orb Equivalent" default; bogus/stale → null too.
+    expect(sanitize({ buyoutCurrency: null }).buyoutCurrency).toBeNull()
+    expect(sanitize({ buyoutCurrency: 'mirror' }).buyoutCurrency).toBeNull()
+    expect(sanitize({ buyoutCurrency: 42 }).buyoutCurrency).toBeNull()
   })
 
   it('keeps valid values untouched', () => {

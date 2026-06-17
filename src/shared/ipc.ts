@@ -58,6 +58,11 @@ export interface TradewindApi {
   getCurrencyHistory(league: string, apiId: string): Promise<CurrencyPoint[]>
   setLeague(league: string): Promise<void>
   /**
+   * Persist the last-chosen buyout-price currency (issue #20) so the picker
+   * defaults to it on the next price check. null = Exalted Orb Equivalent.
+   */
+  setBuyoutCurrency(option: string | null): void
+  /**
    * Report the popup's on-screen rect (overlay-local CSS px) so the main process
    * can hit-test the cursor against it and toggle click-through; null when hidden.
    */

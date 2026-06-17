@@ -25,6 +25,9 @@ export interface PrepareOptions {
   /** Known base type names (from /api/trade2/data/items) for extracting the
    *  true base out of decorated white/magic names. */
   baseTypes?: string[]
+  /** Last-chosen buyout-price currency (issue #20) seeded into the buyout filter
+   *  so the picker remembers the user's choice. null = Exalted Orb Equivalent. */
+  buyoutOption?: string | null
 }
 
 const DEFAULT_SPREAD = 0.1
@@ -686,7 +689,7 @@ export function prepareQuery(
     gemLevel: null,
     mapTier: null,
     flags: [],
-    buyout: { min: null, max: null, option: null },
+    buyout: { min: null, max: null, option: options.buyoutOption ?? null },
     equipment: [],
     stats: [],
     unmatched: []
