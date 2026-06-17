@@ -77,6 +77,60 @@ describe('chat-link affix/tier reconstruction', () => {
     ])
     expect(badge(q, 'Rarity of Items')).toBe('S3')
   })
+
+  it('badges a fractured + desecrated mod of the same stat (issue #53)', () => {
+    // A fractured "increased Physical Damage" and a desecrated one legitimately
+    // co-exist on one item (desecrated is a separate pool), so the same-group
+    // guard must not drop the pair — both badge as the prefixes they are.
+    const q = prepareQuery(
+      parseItem(
+        [
+          'Item Class: Crossbows',
+          'Rarity: Rare',
+          'Foo',
+          'Desolate Crossbow',
+          '--------',
+          'Item Level: 82',
+          '--------',
+          '178% increased Physical Damage (fractured)',
+          '74% increased Physical Damage (desecrated)',
+          '--------',
+          'Fractured Item'
+        ].join('\n')
+      ),
+      db
+    )
+    const phys = q.stats.filter((s) => /increased Physical Damage$/.test(s.label) && !s.summed)
+    expect(phys).toHaveLength(2)
+    expect(phys.every((s) => s.affix === 'prefix')).toBe(true)
+  })
+
+  it('advanced-copy fractured mod badges from its header, not as a pseudo (issue #53)', () => {
+    // Inventory copy qualifies the fractured mod in its "{ ... }" header; the
+    // affix/tier come straight off it (no reconstruction) and it must group with
+    // the real prefixes/suffixes, not fall into the affix-less pseudo block.
+    const q = prepareQuery(
+      parseItem(
+        [
+          'Item Class: Amulets',
+          'Rarity: Rare',
+          'Foo',
+          'Solar Amulet',
+          '--------',
+          'Item Level: 81',
+          '--------',
+          '{ Fractured Prefix Modifier "Of the Underground" (Tier: 1) — Attribute }',
+          '+50 to Spirit',
+          '--------',
+          'Fractured Item'
+        ].join('\n')
+      ),
+      db
+    )
+    const spirit = q.stats.find((s) => s.label.includes('Spirit'))
+    expect(spirit?.affix).toBe('prefix')
+    expect(spirit?.tier).toBe(1)
+  })
 })
 
 describe('extractBaseType', () => {

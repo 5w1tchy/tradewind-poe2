@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { parseItem } from './parse'
+import { parseModHeader } from './modHeader'
 
 const fixturesDir = join(__dirname, '../../../fixtures/items')
 const fixtures = readdirSync(fixturesDir).filter((f) => f.endsWith('.txt'))
@@ -63,6 +64,17 @@ describe('targeted parsing', () => {
     const crafted = shield.explicits.find((m) => m.crafted)
     expect(crafted?.name).toBe('Virile')
     expect(shield.note).toBe('~b/o 1 divine')
+  })
+
+  it('advanced-copy Fractured header parses as a real prefix/suffix', () => {
+    // Inventory (advanced) copy qualifies a fractured mod in the header the same
+    // way it does Desecrated/Crafted — it must parse as the prefix/suffix it is,
+    // not fall through to generation 'unknown' (issue #53).
+    const mod = parseModHeader('{ Fractured Prefix Modifier "Of the Underground" (Tier: 1) — Attribute }')
+    expect(mod.generation).toBe('prefix')
+    expect(mod.fractured).toBe(true)
+    expect(mod.tier).toBe(1)
+    expect(mod.name).toBe('Of the Underground')
   })
 
   it('unique with empty desecrated mod name and unscalable lines', () => {
@@ -130,6 +142,7 @@ describe('targeted parsing', () => {
     // Inline origin tags are stripped from the stat and mapped onto the mod.
     const fractured = item.explicits[0]
     expect(fractured.lines[0].template).toBe('+# to Spirit')
+    expect(fractured.fractured).toBe(true)
     expect(item.explicits.find((m) => m.desecrated)?.lines[0].template).toBe(
       '+#% to Cold and Chaos Resistances'
     )

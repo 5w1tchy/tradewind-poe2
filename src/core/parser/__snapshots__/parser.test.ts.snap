@@ -10,6 +10,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -35,6 +36,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -68,6 +70,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -100,6 +103,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -127,6 +131,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -153,6 +158,7 @@ exports[`parseItem on every fixture > 01-gloves--rapture-caress-8cdf3ae5.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -227,6 +233,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -244,6 +251,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -261,6 +269,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -278,6 +287,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -295,6 +305,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -321,6 +332,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -342,6 +354,7 @@ exports[`parseItem on every fixture > 02-belts--mageblood-e7e9e4df.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -397,6 +410,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -422,6 +436,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -447,6 +462,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
     {
       "crafted": false,
       "desecrated": true,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -470,6 +486,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -495,6 +512,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -522,6 +540,7 @@ exports[`parseItem on every fixture > 03-boots--rune-spur-f39b212f.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -596,6 +615,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -628,6 +648,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -661,6 +682,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -694,6 +716,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -719,6 +742,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
     {
       "crafted": false,
       "desecrated": true,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -748,6 +772,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -778,6 +803,7 @@ exports[`parseItem on every fixture > 04-rings--rift-grip-7bdd59f9.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -833,6 +859,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "enhancement",
       "lines": [
         {
@@ -852,6 +879,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -877,6 +905,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -902,6 +931,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -925,6 +955,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -946,6 +977,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -975,6 +1007,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
     {
       "crafted": false,
       "desecrated": true,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -1006,6 +1039,7 @@ exports[`parseItem on every fixture > 05-amulets--pandemonium-beads-70198ee7.txt
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -1059,6 +1093,7 @@ exports[`parseItem on every fixture > 06-helmets--constricting-command-9054f669.
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -1084,6 +1119,7 @@ exports[`parseItem on every fixture > 06-helmets--constricting-command-9054f669.
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -1109,6 +1145,7 @@ exports[`parseItem on every fixture > 06-helmets--constricting-command-9054f669.
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -1134,6 +1171,7 @@ exports[`parseItem on every fixture > 06-helmets--constricting-command-9054f669.
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -1211,6 +1249,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -1243,6 +1282,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -1282,6 +1322,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -1309,6 +1350,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -1335,6 +1377,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -1360,6 +1403,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
     {
       "crafted": true,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -1386,6 +1430,7 @@ exports[`parseItem on every fixture > 07-crossbows--onslaught-core-4beea36c.txt 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -1476,6 +1521,7 @@ exports[`parseItem on every fixture > 08-life-flasks--bubbling-ultimate-life-fla
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -1499,6 +1545,7 @@ exports[`parseItem on every fixture > 08-life-flasks--bubbling-ultimate-life-fla
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -1570,6 +1617,7 @@ exports[`parseItem on every fixture > 09-relics--swift-seal-relic-of-overflowing
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -1593,6 +1641,7 @@ exports[`parseItem on every fixture > 09-relics--swift-seal-relic-of-overflowing
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -1690,6 +1739,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -1715,6 +1765,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -1753,6 +1804,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -1778,6 +1830,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -1805,6 +1858,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -1831,6 +1885,7 @@ exports[`parseItem on every fixture > 11-helmets--phoenix-horn-9c69bdfb.txt 1`] 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -1890,6 +1945,7 @@ exports[`parseItem on every fixture > 12-sceptres--mazarine-omen-sceptre-of-the-
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -1915,6 +1971,7 @@ exports[`parseItem on every fixture > 12-sceptres--mazarine-omen-sceptre-of-the-
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -1972,6 +2029,7 @@ exports[`parseItem on every fixture > 13-body-armours--exceptional-corsair-coat-
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -2029,6 +2087,7 @@ exports[`parseItem on every fixture > 14-waystones--painful-waystone-tier-15-of-
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -2052,6 +2111,7 @@ exports[`parseItem on every fixture > 14-waystones--painful-waystone-tier-15-of-
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -2150,6 +2210,7 @@ exports[`parseItem on every fixture > 16-staves--the-unborn-lich-767adbc8.txt 1`
     {
       "crafted": false,
       "desecrated": true,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -2185,6 +2246,7 @@ exports[`parseItem on every fixture > 16-staves--the-unborn-lich-767adbc8.txt 1`
     {
       "crafted": false,
       "desecrated": true,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -2215,6 +2277,7 @@ exports[`parseItem on every fixture > 16-staves--the-unborn-lich-767adbc8.txt 1`
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -2238,6 +2301,7 @@ exports[`parseItem on every fixture > 16-staves--the-unborn-lich-767adbc8.txt 1`
     {
       "crafted": false,
       "desecrated": true,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -2389,6 +2453,7 @@ exports[`parseItem on every fixture > 18-jewels--dusk-shine-cb55974a.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -2414,6 +2479,7 @@ exports[`parseItem on every fixture > 18-jewels--dusk-shine-cb55974a.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -2441,6 +2507,7 @@ exports[`parseItem on every fixture > 18-jewels--dusk-shine-cb55974a.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -2467,6 +2534,7 @@ exports[`parseItem on every fixture > 18-jewels--dusk-shine-cb55974a.txt 1`] = `
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -2528,6 +2596,7 @@ exports[`parseItem on every fixture > 19-charms--sanguis-heroum-a68061d7.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -2547,6 +2616,7 @@ exports[`parseItem on every fixture > 19-charms--sanguis-heroum-a68061d7.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -2573,6 +2643,7 @@ exports[`parseItem on every fixture > 19-charms--sanguis-heroum-a68061d7.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -2640,6 +2711,7 @@ exports[`parseItem on every fixture > 20-charms--sunny-thawing-charm-of-the-copi
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -2665,6 +2737,7 @@ exports[`parseItem on every fixture > 20-charms--sunny-thawing-charm-of-the-copi
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -2691,6 +2764,7 @@ exports[`parseItem on every fixture > 20-charms--sunny-thawing-charm-of-the-copi
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -2758,6 +2832,7 @@ exports[`parseItem on every fixture > 21-crossbows--spirit-core-9efeb666.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -2791,6 +2866,7 @@ exports[`parseItem on every fixture > 21-crossbows--spirit-core-9efeb666.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -2818,6 +2894,7 @@ exports[`parseItem on every fixture > 21-crossbows--spirit-core-9efeb666.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -2842,6 +2919,7 @@ exports[`parseItem on every fixture > 21-crossbows--spirit-core-9efeb666.txt 1`]
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -2907,6 +2985,7 @@ exports[`parseItem on every fixture > 22-bows--infusing-obliterator-bow-of-the-s
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -2936,6 +3015,7 @@ exports[`parseItem on every fixture > 22-bows--infusing-obliterator-bow-of-the-s
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -2960,6 +3040,7 @@ exports[`parseItem on every fixture > 22-bows--infusing-obliterator-bow-of-the-s
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -3052,6 +3133,7 @@ exports[`parseItem on every fixture > 24-tablet--teeming-abyss-tablet-of-escalat
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -3075,6 +3157,7 @@ exports[`parseItem on every fixture > 24-tablet--teeming-abyss-tablet-of-escalat
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -3104,6 +3187,7 @@ exports[`parseItem on every fixture > 24-tablet--teeming-abyss-tablet-of-escalat
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -3160,6 +3244,7 @@ exports[`parseItem on every fixture > 25-jewels--against-the-darkness-32d65d52.t
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -3185,6 +3270,7 @@ exports[`parseItem on every fixture > 25-jewels--against-the-darkness-32d65d52.t
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -3253,6 +3339,7 @@ exports[`parseItem on every fixture > 26-rings--tempered-topaz-ring-of-the-rainb
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -3285,6 +3372,7 @@ exports[`parseItem on every fixture > 26-rings--tempered-topaz-ring-of-the-rainb
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -3317,6 +3405,7 @@ exports[`parseItem on every fixture > 26-rings--tempered-topaz-ring-of-the-rainb
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -3369,6 +3458,7 @@ exports[`parseItem on every fixture > 27-staves--glyphic-chiming-staff-of-sortil
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -3395,6 +3485,7 @@ exports[`parseItem on every fixture > 27-staves--glyphic-chiming-staff-of-sortil
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -3450,6 +3541,7 @@ exports[`parseItem on every fixture > 28-quivers--focused-visceral-quiver-of-ren
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -3475,6 +3567,7 @@ exports[`parseItem on every fixture > 28-quivers--focused-visceral-quiver-of-ren
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -3504,6 +3597,7 @@ exports[`parseItem on every fixture > 28-quivers--focused-visceral-quiver-of-ren
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -3559,6 +3653,7 @@ exports[`parseItem on every fixture > 29-one-hand-maces--viper-grinder-2eaa445c.
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -3586,6 +3681,7 @@ exports[`parseItem on every fixture > 29-one-hand-maces--viper-grinder-2eaa445c.
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -3609,6 +3705,7 @@ exports[`parseItem on every fixture > 29-one-hand-maces--viper-grinder-2eaa445c.
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -3634,6 +3731,7 @@ exports[`parseItem on every fixture > 29-one-hand-maces--viper-grinder-2eaa445c.
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -3701,6 +3799,7 @@ exports[`parseItem on every fixture > 30-sceptres--agony-cry-9c164282.txt 1`] = 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -3726,6 +3825,7 @@ exports[`parseItem on every fixture > 30-sceptres--agony-cry-9c164282.txt 1`] = 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -3761,6 +3861,7 @@ exports[`parseItem on every fixture > 30-sceptres--agony-cry-9c164282.txt 1`] = 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -3786,6 +3887,7 @@ exports[`parseItem on every fixture > 30-sceptres--agony-cry-9c164282.txt 1`] = 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -3821,6 +3923,7 @@ exports[`parseItem on every fixture > 30-sceptres--agony-cry-9c164282.txt 1`] = 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -3880,6 +3983,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -3906,6 +4010,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -3944,6 +4049,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -3969,6 +4075,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -3996,6 +4103,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4023,6 +4131,7 @@ exports[`parseItem on every fixture > 31-foci--entropy-anthem-70274d00.txt 1`] =
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4082,6 +4191,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -4107,6 +4217,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -4138,6 +4249,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
     {
       "crafted": true,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -4163,6 +4275,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4186,6 +4299,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4212,6 +4326,7 @@ exports[`parseItem on every fixture > 32-shields--eagle-span-f24731e2.txt 1`] = 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4275,6 +4390,7 @@ exports[`parseItem on every fixture > 33-wands--frostbound-dueling-wand-of-leger
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -4302,6 +4418,7 @@ exports[`parseItem on every fixture > 33-wands--frostbound-dueling-wand-of-leger
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4357,6 +4474,7 @@ exports[`parseItem on every fixture > 34-wands--behemoth-spell-dbe6504d.txt 1`] 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -4396,6 +4514,7 @@ exports[`parseItem on every fixture > 34-wands--behemoth-spell-dbe6504d.txt 1`] 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4421,6 +4540,7 @@ exports[`parseItem on every fixture > 34-wands--behemoth-spell-dbe6504d.txt 1`] 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4447,6 +4567,7 @@ exports[`parseItem on every fixture > 34-wands--behemoth-spell-dbe6504d.txt 1`] 
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4502,6 +4623,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -4528,6 +4650,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -4553,6 +4676,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -4576,6 +4700,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -4601,6 +4726,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -4618,6 +4744,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -4635,6 +4762,7 @@ exports[`parseItem on every fixture > 35-helmets--the-bringer-of-rain-8556ffba.t
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "unique",
       "lines": [
         {
@@ -4734,6 +4862,7 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -4766,6 +4895,7 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4791,6 +4921,7 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4818,6 +4949,7 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -4844,6 +4976,7 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {
@@ -4905,6 +5038,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -4930,6 +5064,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -4953,6 +5088,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "prefix",
       "lines": [
         {
@@ -4978,6 +5114,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -5003,6 +5140,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -5030,6 +5168,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -5057,6 +5196,7 @@ exports[`parseItem on every fixture > 37-helmets--blight-crown-screenshot.txt 1`
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "suffix",
       "lines": [
         {
@@ -5127,6 +5267,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": true,
       "generation": "explicit",
       "lines": [
         {
@@ -5148,6 +5289,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "explicit",
       "lines": [
         {
@@ -5169,6 +5311,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "explicit",
       "lines": [
         {
@@ -5190,6 +5333,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "explicit",
       "lines": [
         {
@@ -5211,6 +5355,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
     {
       "crafted": false,
       "desecrated": true,
+      "fractured": false,
       "generation": "explicit",
       "lines": [
         {
@@ -5232,6 +5377,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
     {
       "crafted": true,
       "desecrated": false,
+      "fractured": false,
       "generation": "explicit",
       "lines": [
         {
@@ -5256,6 +5402,7 @@ exports[`parseItem on every fixture > 38-amulets--agony-torc-chat-link.txt 1`] =
     {
       "crafted": false,
       "desecrated": false,
+      "fractured": false,
       "generation": "implicit",
       "lines": [
         {

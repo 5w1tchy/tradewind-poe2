@@ -29,6 +29,8 @@ export interface ParsedMod {
   generation: ModGeneration
   crafted: boolean
   desecrated: boolean
+  /** Locked by a Fracturing Orb. Still a normal prefix/suffix for pricing. */
+  fractured: boolean
   /** Affix name from the header, e.g. "Virile". Empty string occurs in game data. */
   name: string | null
   tier: number | null
