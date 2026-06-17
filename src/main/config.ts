@@ -25,6 +25,10 @@ export interface Config {
   /** Height (CSS px) of the Price-tab results list — the stats list above it fills
    *  the rest. Persisted like popupSize (reported via tw:set-results-height). */
   resultsHeight: number
+  /** Last-chosen buyout-price currency (issue #20), seeded into every new price
+   *  check's buyout filter so the picker remembers the user's preference. null =
+   *  Exalted Orb Equivalent (the picker default); else 'exalted_divine'|'divine'|'chaos'. */
+  buyoutCurrency: string | null
 }
 
 const defaults: Config = {
@@ -36,7 +40,8 @@ const defaults: Config = {
   hideoutHotkey: 'F5',
   updateChannel: 'stable',
   popupSize: { w: 520, h: 560 },
-  resultsHeight: 200
+  resultsHeight: 200,
+  buyoutCurrency: null
 }
 
 // ---- Field coercion -------------------------------------------------------
@@ -62,6 +67,12 @@ function asEnum<T extends string>(v: unknown, allowed: readonly T[], fallback: T
   return typeof v === 'string' && (allowed as readonly string[]).includes(v) ? (v as T) : fallback
 }
 
+/** A valid buyout-currency option id, or null (Exalted Orb Equivalent) for
+ *  anything else — including absent, a stale shape, or a removed option. */
+function asBuyoutCurrency(v: unknown): string | null {
+  return v === 'exalted_divine' || v === 'divine' || v === 'chaos' ? v : null
+}
+
 /**
  * Normalize an arbitrary parsed value into a valid Config. Exported for unit
  * tests. When a new field is added, add a line here (and to `defaults`) — old
@@ -85,7 +96,8 @@ export function sanitize(raw: unknown): Config {
       w: asNumber(size.w, defaults.popupSize.w, 200, 20000),
       h: asNumber(size.h, defaults.popupSize.h, 200, 20000)
     },
-    resultsHeight: asNumber(o.resultsHeight, defaults.resultsHeight, 40, 20000)
+    resultsHeight: asNumber(o.resultsHeight, defaults.resultsHeight, 40, 20000),
+    buyoutCurrency: asBuyoutCurrency(o.buyoutCurrency)
   }
 }
 

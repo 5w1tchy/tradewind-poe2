@@ -368,6 +368,8 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
   function pickBuyout(option: string | null): void {
     if (!prepared.current || prepared.current.buyout.option === option) return
     prepared.current.buyout.option = option
+    // Persist the choice (issue #20) so the next price check defaults to it.
+    window.tradewind.setBuyoutCurrency(option)
     markDirty()
     forceUpdate()
   }

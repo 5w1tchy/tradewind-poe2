@@ -298,7 +298,8 @@ app.whenReady().then(() => {
           prepared = prepareQuery(parseItem(text), statsDb, {
             spread: config.spread,
             exchangeIds,
-            baseTypes
+            baseTypes,
+            buyoutOption: config.buyoutCurrency
           })
         } catch (err) {
           console.error('[item] failed to prepare query:', err)
@@ -543,6 +544,15 @@ app.whenReady().then(() => {
   ipcMain.handle('tw:set-league', (_event, id: string) => {
     league = id
     config.league = id
+    saveConfig(config)
+  })
+
+  // Remember the user's buyout-currency choice (issue #20) so the next price
+  // check defaults to it. Anything but a known option id falls back to null
+  // (Exalted Orb Equivalent), matching config's own sanitizer.
+  ipcMain.on('tw:set-buyout-currency', (_event, option: unknown) => {
+    config.buyoutCurrency =
+      option === 'exalted_divine' || option === 'divine' || option === 'chaos' ? option : null
     saveConfig(config)
   })
 

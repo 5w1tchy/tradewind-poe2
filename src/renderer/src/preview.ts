@@ -330,6 +330,7 @@ const mock: TradewindApi = {
     return SAMPLE_HISTORY
   },
   async setLeague() {},
+  setBuyoutCurrency() {},
   setPopupRect() {},
   setTooltipRect() {},
   setPinned() {},

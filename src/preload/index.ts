@@ -20,6 +20,9 @@ const api: TradewindApi = {
   setLeague(league) {
     return ipcRenderer.invoke('tw:set-league', league)
   },
+  setBuyoutCurrency(option) {
+    ipcRenderer.send('tw:set-buyout-currency', option)
+  },
   setPopupRect(rect) {
     ipcRenderer.send('tw:popup-rect', rect)
   },
