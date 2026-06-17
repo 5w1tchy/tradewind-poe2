@@ -1,6 +1,7 @@
 node_modules/
 /out/
 /dist/
+src/renderer/dist/
 /release/
 native/keyhook/build/
 *.log
