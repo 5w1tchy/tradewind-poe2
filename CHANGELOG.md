@@ -3,6 +3,31 @@
 All notable user-facing changes to Tradewind. Newest first. The top entry of
 each release is reused verbatim as that release's GitHub Release notes.
 
+## v0.1.14
+
+### 🪙 Currency & exchange items get a price and a chart
+Price-checking anything the in-game **Currency Exchange** trades — currency,
+fragments, runes, essences, lineage support gems, and more — now shows an
+**aggregate market price** in Exalted, Divine, and Chaos, plus a **price &
+volume chart** of its recent history, instead of an empty listing search. (#56)
+
+### 🏷️ Mod-origin tags on your stats
+Each stat row now shows a small colored tag after its prefix/suffix badge, so
+you can tell a mod's origin at a glance:
+
+- **F** fractured · **C** crafted · **D** desecrated · **E** enhanced
+  (anoint/enchant) · **CE** corruption-enhanced — each colored to match its
+  in-game origin.
+- A chat-linked item shows an enhancement as **E** (the game doesn't reveal
+  corruption in a chat link); an inventory copy tells **CE** apart. (#54)
+
+### 🧬 Fractured mods read correctly
+Fractured mods now display as the **prefix or suffix they actually are**, with
+proper tier badges — instead of being lumped in with the pseudo totals. (#53)
+
+---
+**Full changelog:** https://github.com/5w1tchy/tradewind-poe2/compare/v0.1.13...v0.1.14
+
 ## v0.1.13
 
 ### 🏷️ Tier badges on chat-linked items
