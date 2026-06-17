@@ -50,6 +50,14 @@ export function buildSearchBody(q: PreparedQuery): TradeSearchRequest {
     value ? { id, value } : { id }
   )
 
+  // "Number of empty modifiers" pseudo filters (issue #22). Distinct pseudo ids
+  // that never collide with the matched stats above, so they append straight in.
+  for (const m of q.modCounts) {
+    if (!m.enabled) continue
+    const value = minMax(m.min, m.max)
+    statFilters.push(value ? { id: m.statId, value } : { id: m.statId })
+  }
+
   const filters: TradeQueryFilters = {}
 
   const typeFilters: NonNullable<TradeQueryFilters['type_filters']>['filters'] = {}

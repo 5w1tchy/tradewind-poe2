@@ -156,6 +156,22 @@ export interface PreparedRange {
   enabled: boolean
 }
 
+/**
+ * A "number of modifiers" pseudo filter (issue #22): empty prefix/suffix/total
+ * affix-slot counts, for finding craftable bases with open slots (e.g. "1 open
+ * prefix and 2 open suffixes"). Searched as a plain pseudo stat (`statId`)
+ * bounded by min/max — there is no roll value, so no quick-set cycle. Offered on
+ * rares/magic only; `enabled` is bound-driven (set when min or max is present).
+ */
+export interface PreparedModCount {
+  statId: string
+  /** Human label shown in the filter list ("Open Prefix Modifiers"). */
+  label: string
+  min: number | null
+  max: number | null
+  enabled: boolean
+}
+
 /** Derived item numbers (defences, DPS) searchable via equipment_filters. */
 export interface PreparedEquipmentFilter extends PreparedRange {
   key: EquipmentFilterKey
@@ -235,6 +251,9 @@ export interface PreparedQuery {
   buyout: { min: number | null; max: number | null; option: string | null }
   equipment: PreparedEquipmentFilter[]
   stats: PreparedStatFilter[]
+  /** "Number of empty modifiers" pseudo filters (issue #22); empty for items
+   *  without affix slots (uniques, currency, gems, white bases). */
+  modCounts: PreparedModCount[]
   /** Mod lines with no trade stat id — excluded from the search, surfaced as warnings. */
   unmatched: string[]
 }

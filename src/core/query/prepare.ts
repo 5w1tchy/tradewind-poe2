@@ -10,6 +10,7 @@ import type {
   ModOrigin,
   PreparedEquipmentFilter,
   PreparedFlag,
+  PreparedModCount,
   PreparedQuery,
   PreparedRange,
   PreparedStatFilter,
@@ -653,6 +654,27 @@ function equipmentFlags(): PreparedFlag[] {
   return EQUIPMENT_FLAGS.map(([key, label]) => ({ key, label, state: 'any' }))
 }
 
+// "Number of empty modifiers" pseudo filters (issue #22), for finding crafting
+// bases with open affix slots. These are GGG pseudo stat ids searched like any
+// other stat; the trade site indexes them itself, so we never derive a value —
+// the user bounds them. Offered on rares/magic only (uniques roll fixed mods,
+// white bases have none). [pseudo stat id, label].
+const MOD_COUNT_FILTERS: ReadonlyArray<[string, string]> = [
+  ['pseudo.pseudo_number_of_empty_prefix_mods', 'Open Prefix Modifiers'],
+  ['pseudo.pseudo_number_of_empty_suffix_mods', 'Open Suffix Modifiers'],
+  ['pseudo.pseudo_number_of_empty_affix_mods', 'Open Modifiers (total)']
+]
+
+function modCountFilters(): PreparedModCount[] {
+  return MOD_COUNT_FILTERS.map(([statId, label]) => ({
+    statId,
+    label,
+    min: null,
+    max: null,
+    enabled: false
+  }))
+}
+
 /**
  * ParsedItem -> editable search state with sensible pre-checked defaults:
  *  - uniques: exact name+type, mods present but unchecked
@@ -692,6 +714,7 @@ export function prepareQuery(
     buyout: { min: null, max: null, option: options.buyoutOption ?? null },
     equipment: [],
     stats: [],
+    modCounts: [],
     unmatched: []
   }
 
@@ -828,6 +851,12 @@ export function prepareQuery(
     const { stats, unmatched } = buildStatRows(item, db, !isUnique, spread, reconBase)
     prepared.stats = stats
     prepared.unmatched = unmatched
+
+    // Open-affix-slot counts (issue #22) only make sense where slots can be
+    // empty — a rolled rare or magic item. Uniques have fixed mods, whites none.
+    if (item.rarity === 'Rare' || item.rarity === 'Magic') {
+      prepared.modCounts = modCountFilters()
+    }
   }
 
   return prepared

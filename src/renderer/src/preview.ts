@@ -229,6 +229,11 @@ const SAMPLE_QUERY: PreparedQuery = {
       enabled: true
     }
   ],
+  modCounts: [
+    { statId: 'pseudo.pseudo_number_of_empty_prefix_mods', label: 'Open Prefix Modifiers', min: 1, max: null, enabled: true },
+    { statId: 'pseudo.pseudo_number_of_empty_suffix_mods', label: 'Open Suffix Modifiers', min: null, max: null, enabled: false },
+    { statId: 'pseudo.pseudo_number_of_empty_affix_mods', label: 'Open Modifiers (total)', min: null, max: null, enabled: false }
+  ],
   unmatched: ['Allocates Inner Conviction (enchant)']
 }
 
@@ -301,6 +306,7 @@ const CURRENCY_QUERY: PreparedQuery = {
   rarityOption: null,
   ilvl: null,
   stats: [],
+  modCounts: [],
   unmatched: []
 }
 
