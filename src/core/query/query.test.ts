@@ -795,6 +795,40 @@ describe('buildSearchBody', () => {
     expect(body.query.filters?.type_filters?.filters.ilvl).toEqual({ min: 83 })
   })
 
+  it('open-slot mod counts: seeded on rares, emitted into the stat group when bounded', () => {
+    const q = prepareFixture('01-gloves--rapture-caress-8cdf3ae5.txt')
+    // Rares get the three empty-prefix/suffix/total pseudo filters, all off.
+    expect(q.modCounts.map((m) => m.statId)).toEqual([
+      'pseudo.pseudo_number_of_empty_prefix_mods',
+      'pseudo.pseudo_number_of_empty_suffix_mods',
+      'pseudo.pseudo_number_of_empty_affix_mods'
+    ])
+    expect(q.modCounts.every((m) => !m.enabled)).toBe(true)
+    // Untouched, none reach the body.
+    const baseFilters = buildSearchBody(q).query.stats[0].filters
+    expect(baseFilters.some((f) => f.id.startsWith('pseudo.pseudo_number_of_empty'))).toBe(false)
+
+    // "1 open prefix, 2 open suffixes" → two bounded pseudo filters.
+    q.modCounts[0].min = 1
+    q.modCounts[0].enabled = true
+    q.modCounts[1].min = 2
+    q.modCounts[1].enabled = true
+    const filters = buildSearchBody(q).query.stats[0].filters
+    expect(filters).toContainEqual({
+      id: 'pseudo.pseudo_number_of_empty_prefix_mods',
+      value: { min: 1 }
+    })
+    expect(filters).toContainEqual({
+      id: 'pseudo.pseudo_number_of_empty_suffix_mods',
+      value: { min: 2 }
+    })
+  })
+
+  it('uniques carry no open-slot mod counts', () => {
+    const q = prepareFixture('02-belts--mageblood-e7e9e4df.txt')
+    expect(q.modCounts).toEqual([])
+  })
+
   it('unscalable lines become value-less stat filters when enabled', () => {
     const q = prepareFixture('14-waystones--painful-waystone-tier-15-of-erosion-d59c5af4.txt')
     const unscalable = q.stats.find((s) => s.value === null)

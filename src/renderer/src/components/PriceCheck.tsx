@@ -5,6 +5,7 @@ import type {
   ModOrigin,
   PreparedEquipmentFilter,
   PreparedFlag,
+  PreparedModCount,
   PreparedQuery,
   PreparedRange,
   PreparedStatFilter,
@@ -201,6 +202,8 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
   const [dirty, setDirty] = useState(false)
   /** The collapsible tri-state flag group (corrupted, mirrored, …). */
   const [flagsOpen, setFlagsOpen] = useState(false)
+  /** The collapsible "open modifier slots" count group (issue #22). */
+  const [modsOpen, setModsOpen] = useState(false)
   /** The listing whose item tooltip is showing (null when nothing hovered). */
   const [hover, setHover] = useState<TooltipAnchor | null>(null)
   /** Grace timer so the cursor can travel from a row onto its tooltip. */
@@ -278,6 +281,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setError(null)
     setDirty(false)
     setFlagsOpen(false)
+    setModsOpen(false)
     cancelHide()
     setHover(null)
     setLeagueOpen(false)
@@ -594,6 +598,43 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     )
   }
 
+  /** One "open modifier slots" count row (issue #22): a label plus min/max. No
+   *  roll value, so no quick-set "=" button — just the bounds (setBound enables
+   *  the row when a bound is typed, disables when both clear). */
+  function renderModCountRow(m: PreparedModCount): React.JSX.Element {
+    return (
+      <div key={m.statId} className={`${styles['filter-row']} ${styles['flag-row']}`}>
+        <span className={styles.property}>{m.label}</span>
+        <span className={styles.bounds}>
+          <input
+            className={styles.num}
+            type="number"
+            placeholder="min"
+            value={m.min ?? ''}
+            onMouseDown={armFocus}
+            onBlur={releaseFocus}
+            onChange={(e) => setBound(m, 'min', e)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') void runSearch()
+            }}
+          />
+          <input
+            className={styles.num}
+            type="number"
+            placeholder="max"
+            value={m.max ?? ''}
+            onMouseDown={armFocus}
+            onBlur={releaseFocus}
+            onChange={(e) => setBound(m, 'max', e)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') void runSearch()
+            }}
+          />
+        </span>
+      </div>
+    )
+  }
+
   /** Left badge for a stat: P# (red) prefix, S# (blue) suffix, T# tier-only. */
   function statBadge(stat: PreparedStatFilter): { text: string; cls: string } | null {
     if (stat.affix === 'prefix') return { text: `P${stat.tier ?? ''}`, cls: styles.prefix }
@@ -792,6 +833,8 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
 
   // Badge on the collapsed Filters header so set flags aren't hidden out of sight.
   const activeFlags = q ? q.flags.filter((f) => f.state !== 'any').length : 0
+  // Same, for the bound "open modifier slots" count filters (issue #22).
+  const activeModCounts = q ? q.modCounts.filter((m) => m.enabled).length : 0
 
   const est = outcome?.estimate
   let estimateDetail = ''
@@ -919,6 +962,30 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
                       </span>
                     </div>
                   ))}
+                {(q.modCounts.length > 0 || q.stats.length > 0 || q.unmatched.length > 0) && (
+                  <div className={styles.divider} />
+                )}
+              </>
+            )}
+            {/* Open-affix-slot counts (issue #22): rares/magic only. The flags
+                block always precedes it on such items, so it owns the divider
+                above; this section owns the divider below it. */}
+            {q.modCounts.length > 0 && (
+              <>
+                <button
+                  type="button"
+                  className={styles['flags-header']}
+                  onClick={() => setModsOpen((o) => !o)}
+                  aria-expanded={modsOpen}
+                >
+                  <FunnelIcon />
+                  <span className={styles['flags-title']}>Open Modifier Slots</span>
+                  {activeModCounts > 0 && (
+                    <span className={styles['flags-count']}>{activeModCounts}</span>
+                  )}
+                  <span className={styles.chevron}>{modsOpen ? '▾' : '▸'}</span>
+                </button>
+                {modsOpen && q.modCounts.map(renderModCountRow)}
                 {(q.stats.length > 0 || q.unmatched.length > 0) && (
                   <div className={styles.divider} />
                 )}
