@@ -3,6 +3,16 @@
 All notable user-facing changes to Tradewind. Newest first. The top entry of
 each release is reused verbatim as that release's GitHub Release notes.
 
+## v0.1.15
+
+### 🪙 The buyout-price currency now sticks
+The buyout-price filter used to reset to **Exalted Orb Equivalent** on every
+price check. Now Tradewind **remembers the last currency you picked** (Divine,
+Chaos, …) and defaults to it on the next item — and across restarts. (#20)
+
+---
+**Full changelog:** https://github.com/5w1tchy/tradewind-poe2/compare/v0.1.14...v0.1.15
+
 ## v0.1.14
 
 ### 🪙 Currency & exchange items get a price and a chart
