@@ -2,7 +2,7 @@ import type { ParsedMod } from './types'
 
 const HEADER_LINE = /^\{ (.+) \}$/
 const DESCRIPTOR =
-  /^(?:(Desecrated|Crafted|Veiled) )?(Prefix|Suffix|Implicit|Unique) Modifier(?: "(.*)")?(?: \(Tier: (\d+)\))?$/
+  /^(?:(Desecrated|Crafted|Veiled|Fractured) )?(Prefix|Suffix|Implicit|Unique) Modifier(?: "(.*)")?(?: \(Tier: (\d+)\))?$/
 const QUALITY_BOOST = /^(\d+)% Increased$/
 
 export function isModHeader(line: string): boolean {
@@ -24,6 +24,7 @@ export function parseModHeader(line: string): ParsedMod {
     generation: 'unknown',
     crafted: false,
     desecrated: false,
+    fractured: false,
     name: null,
     tier: null,
     tags: [],
@@ -60,6 +61,7 @@ export function parseModHeader(line: string): ParsedMod {
   mod.generation = generation.toLowerCase() as ParsedMod['generation']
   mod.crafted = variant === 'Crafted'
   mod.desecrated = variant === 'Desecrated'
+  mod.fractured = variant === 'Fractured'
   mod.name = name ?? null
   mod.tier = tier !== undefined ? Number(tier) : null
   return mod

@@ -198,8 +198,14 @@ function reconstructExplicits(
   for (const mod of mods) {
     if (mod.generation !== 'explicit' || mod.tier !== null || mod.lines.length !== 1) continue
     const cands = reconstructCandidates(reconBase, mod.lines[0])
-    if (cands.length === 1) confident.push({ mod, ...cands[0] })
-    else if (cands.length === 0) {
+    if (cands.length === 1) {
+      // Desecrated mods come from a separate pool that can legitimately share a
+      // stat group with a regular/fractured mod (e.g. a fractured + a desecrated
+      // "increased Physical Damage" on one item) — namespace the collision key
+      // so the same-group guard below doesn't drop the pair as a misread.
+      const group = mod.desecrated ? `desecrated:${cands[0].group}` : cands[0].group
+      confident.push({ mod, ...cands[0], group })
+    } else if (cands.length === 0) {
       const affix = affixForStat(reconBase, mod.lines[0])
       if (affix) affixOnly.push({ mod, affix })
     } else ambiguous.push({ mod, cands })
@@ -213,6 +219,9 @@ function reconstructExplicits(
   let suffixes = 0
   const place = (mod: ParsedMod, affix: 'prefix' | 'suffix', tier: number | null, tierMin: number | null): void => {
     out.set(mod, { affix, tier, tierMin })
+    // Desecrated mods sit on top of the 3+3 regular affix slots, so they don't
+    // consume a slot the ambiguous-roll constraint counts against.
+    if (mod.desecrated) return
     if (affix === 'prefix') prefixes++
     else suffixes++
   }
