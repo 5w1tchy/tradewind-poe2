@@ -393,6 +393,29 @@ if (SAMPLE_QUERY.rarity === 'Unique') {
   SAMPLE_QUERY.rarityOption = 'unique'
 }
 
+// ?exceptional=quality|sockets previews the issue-#14 defaults: an Exceptional
+// item arms either the Quality filter (quality over the 20% cap) or the Sockets
+// filter (an extra augment socket) — exactly one. Combine with ?rarity=Unique to
+// confirm uniques are gated the same way.
+const exceptional = params.get('exceptional')
+if (exceptional === 'quality') {
+  SAMPLE_QUERY.quality = { value: 24, min: 24, max: null, enabled: true }
+} else if (exceptional === 'sockets') {
+  SAMPLE_QUERY.equipment = [
+    {
+      key: 'rune_sockets',
+      label: 'Sockets',
+      value: 3,
+      smartMin: 3,
+      tierMin: null,
+      quickMode: 'roll',
+      min: 3,
+      max: null,
+      enabled: true
+    }
+  ]
+}
+
 const isCurrency = params.get('view') === 'currency'
 
 // ?used=2&cap=2 exercises the essence crafted-mod cap (issue #24) on the Craft
