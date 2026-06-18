@@ -80,4 +80,36 @@ describe('essencesForItem', () => {
     const { applicable } = essencesForItem('Boots', 'Rare')
     expect(applicable.every((e) => e.icon !== null && e.icon.endsWith('.webp'))).toBe(true)
   })
+
+  it('without item mods, nothing is flagged blocked', () => {
+    const { applicable } = essencesForItem('Rings', 'Rare', { used: 0, cap: 1 })
+    expect(applicable.length).toBeGreaterThan(0)
+    expect(applicable.every((e) => e.blockedBy === null)).toBe(true)
+  })
+
+  it('rare: an augment essence is blocked by a same-group mod (issue #72)', () => {
+    // Perfect Essence of the Mind grants "% increased maximum Mana"
+    // (group MaximumManaIncreasePercent); a Rare already carrying that group
+    // mod blocks it, while same-list essences stay usable.
+    const existing = [{ label: '8% increased maximum Mana', groups: ['MaximumManaIncreasePercent'] }]
+    const { applicable } = essencesForItem('Rings', 'Rare', { used: 0, cap: 1 }, existing)
+    const mind = applicable.find((e) => e.name === 'Perfect Essence of the Mind')
+    expect(mind?.blockedBy).toBe('8% increased maximum Mana')
+    expect(applicable.filter((e) => e.name !== 'Perfect Essence of the Mind').every((e) => e.blockedBy === null)).toBe(true)
+  })
+
+  it('greater: a Magic→Rare essence is blocked by a same-group mod (issue #72)', () => {
+    // The user's case: a Magic item with a Rarity suffix can't take Greater
+    // Essence of Opulence (group ItemFoundRarityIncrease).
+    const existing = [{ label: '14% increased Rarity of Items found', groups: ['ItemFoundRarityIncrease'] }]
+    const { applicable } = essencesForItem('Rings', 'Magic', undefined, existing)
+    const opulence = applicable.find((e) => e.name === 'Greater Essence of Opulence')
+    expect(opulence?.blockedBy).toBe('14% increased Rarity of Items found')
+  })
+
+  it('a mod in a different group never blocks (issue #72)', () => {
+    const existing = [{ label: '+25 to Strength', groups: ['Strength'] }]
+    const { applicable } = essencesForItem('Rings', 'Rare', { used: 0, cap: 1 }, existing)
+    expect(applicable.every((e) => e.blockedBy === null)).toBe(true)
+  })
 })

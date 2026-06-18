@@ -9,6 +9,7 @@
 import type { CurrencyPoint, CurrencyQuote } from '../../core/exchange'
 import type { PreparedQuery } from '../../core/query/types'
 import type { ListingItem, ListingMod, SearchOutcome } from '../../core/trade/types'
+import type { ItemMod } from '../../core/craft/conflict'
 import type { ItemPayload, TradewindApi } from '../../shared/ipc'
 
 /** Build a tagged affix from "+329 to maximum Life P1" shorthand. */
@@ -376,6 +377,16 @@ const craftedSlots = {
   cap: Number(params.get('cap') ?? 1)
 }
 
+// Existing item mods + groups for the essence group-conflict gate (#72): the
+// "% increased maximum Mana" mod shares MaximumManaIncreasePercent with Perfect
+// Essence of the Mind, so it shows blocked. Try ?used=0 to clear the #24 cap
+// block and see the gate on the listed essences.
+const SAMPLE_ITEM_MODS: ItemMod[] = [
+  { label: '8% increased maximum Mana', groups: ['MaximumManaIncreasePercent'] },
+  { label: '+38% to Cold Resistance', groups: ['ColdResistance'] },
+  { label: '16% increased Spell Damage', groups: ['SpellDamage'] }
+]
+
 import('./main').then(() => {
   const item: ItemPayload = {
     x: 340,
@@ -383,6 +394,7 @@ import('./main').then(() => {
     text: 'Item Class: Rings\nRarity: Rare\nStorm Whorl\nSapphire Ring\n…',
     prepared: isCurrency ? CURRENCY_QUERY : SAMPLE_QUERY,
     craftedSlots: isCurrency ? null : craftedSlots,
+    itemMods: isCurrency ? null : SAMPLE_ITEM_MODS,
     currency: isCurrency ? SAMPLE_CURRENCY : null,
     leagues: ['Rise of the Abyssal', 'HC Rise of the Abyssal', 'Standard'],
     league: 'Rise of the Abyssal',

@@ -33,7 +33,12 @@ export default function CraftPane({ payload }: { payload: ItemPayload }): React.
   const essences = useMemo(() => {
     const p = payload.prepared
     if (!p) return null
-    return essencesForItem(p.itemClass, p.rarity, payload.craftedSlots ?? undefined)
+    return essencesForItem(
+      p.itemClass,
+      p.rarity,
+      payload.craftedSlots ?? undefined,
+      payload.itemMods ?? undefined
+    )
   }, [payload])
 
   const liquids = useMemo(() => {
@@ -74,7 +79,10 @@ export default function CraftPane({ payload }: { payload: ItemPayload }): React.
                 {essences.applicable.map((e) => {
                   const url = essenceIcon(e.icon)
                   return (
-                    <div key={e.id} className={styles.row}>
+                    <div
+                      key={e.id}
+                      className={`${styles.row} ${e.blockedBy ? styles.blocked : ''}`}
+                    >
                       <span className={styles.art}>
                         {url && <img src={url} alt={e.name} />}
                       </span>
@@ -84,6 +92,14 @@ export default function CraftPane({ payload }: { payload: ItemPayload }): React.
                         </span>
                         <span className={styles.mod}>{e.modText}</span>
                       </span>
+                      {e.blockedBy && (
+                        <span
+                          className={styles.blockedBy}
+                          title={`Blocked: the item already has "${e.blockedBy}", which shares this mod's group`}
+                        >
+                          blocked by “{e.blockedBy}”
+                        </span>
+                      )}
                     </div>
                   )
                 })}

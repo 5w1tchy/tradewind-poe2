@@ -184,3 +184,21 @@ export function reconstructAffix(
   const candidates = reconstructCandidates(baseType, line)
   return candidates.length === 1 ? candidates[0] : null
 }
+
+/**
+ * Every repoe mod-group a stat line could belong to on a base — for the
+ * group-conflict gate (#72/#51), which needs only the *group*, not the tier or
+ * affix. Unlike reconstruct*, this stays deliberately loose: a mod's group is
+ * intrinsic to its stat (the same across tiers and affixes), so it returns all
+ * candidate groups and a conflict is caught even when the exact tier/affix is
+ * ambiguous. Base tags narrow the candidates when known; an unknown base falls
+ * back to every entry with that text. Empty when the stat isn't in the pool.
+ */
+export function groupsForLine(baseType: string, line: ParsedStatLine): string[] {
+  const sameStat = byText.get(normalizeStatText(line.raw))
+  if (!sameStat) return []
+  const tags = BASE_TAGS[baseType]
+  const onBase = tags ? sameStat.filter((e) => spawnsOn(e, new Set(tags))) : []
+  const pool = onBase.length > 0 ? onBase : sameStat
+  return [...new Set(pool.map((e) => e.g))]
+}

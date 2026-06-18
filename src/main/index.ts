@@ -1,5 +1,6 @@
 import { app, globalShortcut, ipcMain, screen, shell } from 'electron'
 import { craftedSlots, type CraftedSlots } from '../core/craft/craftedSlots'
+import { itemMods as collectItemMods, type ItemMod } from '../core/craft/conflict'
 import { parseItem } from '../core/parser/parse'
 import { buildSearchBody, prepareQuery } from '../core/query'
 import type { PreparedQuery } from '../core/query/types'
@@ -295,10 +296,12 @@ app.whenReady().then(() => {
       if (!text) return
       let prepared: PreparedQuery | null = null
       let craftedSlotsInfo: CraftedSlots | null = null
+      let itemModsInfo: ItemMod[] | null = null
       if (statsDb) {
         try {
           const parsed = parseItem(text)
           craftedSlotsInfo = craftedSlots(parsed)
+          itemModsInfo = collectItemMods(parsed, parsed.baseType)
           prepared = prepareQuery(parsed, statsDb, {
             spread: config.spread,
             exchangeIds,
@@ -321,6 +324,7 @@ app.whenReady().then(() => {
         text,
         prepared,
         craftedSlots: craftedSlotsInfo,
+        itemMods: itemModsInfo,
         currency,
         leagues,
         league,
