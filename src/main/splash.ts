@@ -18,6 +18,12 @@ const FADE_MS = 280;
 export interface Splash {
   /** Fade the card out, then destroy the window. Idempotent. */
   close(): void;
+  /**
+   * Replace the version label with a status line (e.g. "Updating to v0.1.14…").
+   * Used by the startup auto-update path so a silent download+relaunch isn't a
+   * mystery restart. Pass null to restore the plain version label.
+   */
+  setStatus(text: string | null): void;
 }
 
 /**
@@ -92,5 +98,16 @@ export function createSplashWindow(): Splash {
     }, FADE_MS);
   };
 
-  return { close };
+  const setStatus = (text: string | null): void => {
+    if (closing || win.isDestroyed()) return;
+    // The version label doubles as the status slot: a startup update swaps it
+    // from "v0.1.14" to "Updating to v0.1.14…". JSON.stringify both escapes the
+    // string and quotes it for safe injection.
+    const label = text === null ? `"v${version}"` : JSON.stringify(text);
+    void win.webContents
+      .executeJavaScript(`{const e=document.getElementById('ver');if(e)e.textContent=${label}}`)
+      .catch(() => {});
+  };
+
+  return { close, setStatus };
 }
