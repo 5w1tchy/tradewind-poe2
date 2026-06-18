@@ -83,7 +83,20 @@ interface RawEssence {
   id: string
   name: string
   behavior: string
-  mods: Array<{ targets: string[]; text: string }>
+  mods: Array<{
+    targets: string[]
+    text: string
+    /**
+     * Mod-group(s) of this guaranteed mod (joined from repoe-fork by
+     * gen-essences.mjs). Two mods can't share a group, so an "augment a Rare"
+     * essence/alloy is blocked when the item already has a mod in any of these
+     * — the basis for the planned crafting-conflict gate. Empty when the mod
+     * has no normal group (e.g. "Mark of the Abyssal Lord") or didn't match.
+     */
+    groups: string[]
+    /** Affix slot the mod occupies; null when ambiguous/unmatched. */
+    affix: 'prefix' | 'suffix' | null
+  }>
   icon?: string
 }
 

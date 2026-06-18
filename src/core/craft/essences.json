@@ -11,13 +11,21 @@
       "Armour",
       "Belt"
      ],
-     "text": "+(30–39) to maximum Life"
+     "text": "+(30–39) to maximum Life",
+     "groups": [
+      "IncreasedLife"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Jewellery"
      ],
-     "text": "+(20–29) to maximum Life"
+     "text": "+(20–29) to maximum Life",
+     "groups": [
+      "IncreasedLife"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyLesserEssenceLife.webp"
@@ -35,7 +43,11 @@
       "Helmet",
       "Jewellery"
      ],
-     "text": "+(25–34) to maximum Mana"
+     "text": "+(25–34) to maximum Mana",
+     "groups": [
+      "IncreasedMana"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyLesserEssenceMana.webp"
@@ -49,7 +61,11 @@
      "targets": [
       "Armour"
      ],
-     "text": "(27–42)% increased Armour, Evasion and Energy Shield"
+     "text": "(27–42)% increased Armour, Evasion and Energy Shield",
+     "groups": [
+      "DefencesPercent"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyLesserEssenceDefences.webp"
@@ -64,14 +80,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds (4–6) to (7–11) Physical Damage"
+     "text": "Adds (4–6) to (7–11) Physical Damage",
+     "groups": [
+      "PhysicalDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (5–8) to (10–15) Physical Damage"
+     "text": "Adds (5–8) to (10–15) Physical Damage",
+     "groups": [
+      "PhysicalDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyLesserEssencePhysical.webp"
@@ -86,14 +110,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds (4–6) to (7–10) Fire Damage"
+     "text": "Adds (4–6) to (7–10) Fire Damage",
+     "groups": [
+      "FireDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (6–9) to (10–16) Fire Damage"
+     "text": "Adds (6–9) to (10–16) Fire Damage",
+     "groups": [
+      "FireDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyLesserEssenceFire.webp"
@@ -108,14 +140,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds (3–5) to (6–9) Cold Damage"
+     "text": "Adds (3–5) to (6–9) Cold Damage",
+     "groups": [
+      "ColdDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (5–8) to (9–14) Cold Damage"
+     "text": "Adds (5–8) to (9–14) Cold Damage",
+     "groups": [
+      "ColdDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyLesserEssenceCold.webp"
@@ -130,14 +170,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds 1 to (13–19) Lightning Damage"
+     "text": "Adds 1 to (13–19) Lightning Damage",
+     "groups": [
+      "LightningDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (1–2) to (19–27) Lightning Damage"
+     "text": "Adds (1–2) to (19–27) Lightning Damage",
+     "groups": [
+      "LightningDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyLesserEssenceLightning.webp"
@@ -153,7 +201,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(4–7)% to Chaos Resistance"
+     "text": "+(4–7)% to Chaos Resistance",
+     "groups": [
+      "ChaosResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyLesserEssenceChaos.webp"
@@ -167,7 +219,11 @@
      "targets": [
       "Martial Weapon"
      ],
-     "text": "+(61–84) to Accuracy Rating"
+     "text": "+(61–84) to Accuracy Rating",
+     "groups": [
+      "IncreasedAccuracy"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyLesserEssenceAttack.webp"
@@ -182,13 +238,22 @@
       "Focus",
       "Wand"
      ],
-     "text": "(35–44)% increased Spell Damage"
+     "text": "(35–44)% increased Spell Damage",
+     "groups": [
+      "WeaponCasterDamagePrefix",
+      "SpellDamage"
+     ],
+     "affix": null
     },
     {
      "targets": [
       "Staff"
      ],
-     "text": "(69–88)% increased Spell Damage"
+     "text": "(69–88)% increased Spell Damage",
+     "groups": [
+      "WeaponCasterDamagePrefix"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyLesserEssenceCaster.webp"
@@ -202,14 +267,24 @@
      "targets": [
       "Melee Weapon"
      ],
-     "text": "(11–13)% increased Attack Speed"
+     "text": "(11–13)% increased Attack Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Bow",
       "Crossbow"
      ],
-     "text": "(8–10)% increased Attack Speed"
+     "text": "(8–10)% increased Attack Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyLesserEssenceSpeed.webp"
@@ -223,7 +298,9 @@
      "targets": [
       "Equipment"
      ],
-     "text": "+(9–12) to Strength, Dexterity or Intelligence"
+     "text": "+(9–12) to Strength, Dexterity or Intelligence",
+     "groups": [],
+     "affix": null
     }
    ],
    "icon": "CurrencyLesserEssenceAttribute.webp"
@@ -240,7 +317,11 @@
       "Helmet",
       "Shield"
      ],
-     "text": "+(85–99) to maximum Life"
+     "text": "+(85–99) to maximum Life",
+     "groups": [
+      "IncreasedLife"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
@@ -249,7 +330,11 @@
       "Gloves",
       "Ring"
      ],
-     "text": "+(70–84) to maximum Life"
+     "text": "+(70–84) to maximum Life",
+     "groups": [
+      "IncreasedLife"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyEssenceLife.webp"
@@ -266,13 +351,21 @@
       "Gloves",
       "Helmet"
      ],
-     "text": "+(65–79) to maximum Mana"
+     "text": "+(65–79) to maximum Mana",
+     "groups": [
+      "IncreasedMana"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Jewellery"
      ],
-     "text": "+(80–89) to maximum Mana"
+     "text": "+(80–89) to maximum Mana",
+     "groups": [
+      "IncreasedMana"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyEssenceMana.webp"
@@ -286,7 +379,11 @@
      "targets": [
       "Armour"
      ],
-     "text": "(56–67)% increased Armour, Evasion and Energy Shield"
+     "text": "(56–67)% increased Armour, Evasion and Energy Shield",
+     "groups": [
+      "DefencesPercent"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyEssenceDefences.webp"
@@ -301,14 +398,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds (10–15) to (18–26) Physical Damage"
+     "text": "Adds (10–15) to (18–26) Physical Damage",
+     "groups": [
+      "PhysicalDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (14–21) to (25–37) Physical Damage"
+     "text": "Adds (14–21) to (25–37) Physical Damage",
+     "groups": [
+      "PhysicalDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyEssencePhysical.webp"
@@ -323,14 +428,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds (20–24) to (32–37) Fire Damage"
+     "text": "Adds (20–24) to (32–37) Fire Damage",
+     "groups": [
+      "FireDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (30–37) to (45–56) Fire Damage"
+     "text": "Adds (30–37) to (45–56) Fire Damage",
+     "groups": [
+      "FireDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyEssenceFire.webp"
@@ -345,14 +458,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds (17–20) to (26–32) Cold Damage"
+     "text": "Adds (17–20) to (26–32) Cold Damage",
+     "groups": [
+      "ColdDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (25–30) to (38–46) Cold Damage"
+     "text": "Adds (25–30) to (38–46) Cold Damage",
+     "groups": [
+      "ColdDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyEssenceCold.webp"
@@ -367,14 +488,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds (1–3) to (55–60) Lightning Damage"
+     "text": "Adds (1–3) to (55–60) Lightning Damage",
+     "groups": [
+      "LightningDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (1–4) to (80–88) Lightning Damage"
+     "text": "Adds (1–4) to (80–88) Lightning Damage",
+     "groups": [
+      "LightningDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyEssenceLightning.webp"
@@ -390,7 +519,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(8–11)% to Chaos Resistance"
+     "text": "+(8–11)% to Chaos Resistance",
+     "groups": [
+      "ChaosResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyEssenceChaos.webp"
@@ -404,7 +537,11 @@
      "targets": [
       "Martial Weapon"
      ],
-     "text": "+(124–167) to Accuracy Rating"
+     "text": "+(124–167) to Accuracy Rating",
+     "groups": [
+      "IncreasedAccuracy"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyEssenceAttack.webp"
@@ -419,13 +556,21 @@
       "Focus",
       "Wand"
      ],
-     "text": "(55–64)% increased Spell Damage"
+     "text": "(55–64)% increased Spell Damage",
+     "groups": [
+      "WeaponCasterDamagePrefix"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Staff"
      ],
-     "text": "(109–128)% increased Spell Damage"
+     "text": "(109–128)% increased Spell Damage",
+     "groups": [
+      "WeaponCasterDamagePrefix"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyEssenceCaster.webp"
@@ -439,14 +584,24 @@
      "targets": [
       "Melee Weapon"
      ],
-     "text": "(17–19)% increased Attack Speed"
+     "text": "(17–19)% increased Attack Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Bow",
       "Crossbow"
      ],
-     "text": "(11–13)% increased Attack Speed"
+     "text": "(11–13)% increased Attack Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyEssenceSpeed.webp"
@@ -460,7 +615,9 @@
      "targets": [
       "Equipment"
      ],
-     "text": "+(17–20) to Strength, Dexterity or Intelligence"
+     "text": "+(17–20) to Strength, Dexterity or Intelligence",
+     "groups": [],
+     "affix": null
     }
    ],
    "icon": "CurrencyEssenceAttribute.webp"
@@ -477,7 +634,11 @@
       "Helmet",
       "Shield"
      ],
-     "text": "+(100–119) to maximum Life"
+     "text": "+(100–119) to maximum Life",
+     "groups": [
+      "IncreasedLife"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
@@ -485,7 +646,11 @@
       "Boots",
       "Gloves"
      ],
-     "text": "+(85–99) to maximum Life"
+     "text": "+(85–99) to maximum Life",
+     "groups": [
+      "IncreasedLife"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyGreaterEssenceLife.webp"
@@ -502,13 +667,21 @@
       "Gloves",
       "Helmet"
      ],
-     "text": "+(80–89) to maximum Mana"
+     "text": "+(80–89) to maximum Mana",
+     "groups": [
+      "IncreasedMana"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Jewellery"
      ],
-     "text": "+(90–104) to maximum Mana"
+     "text": "+(90–104) to maximum Mana",
+     "groups": [
+      "IncreasedMana"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyGreaterEssenceMana.webp"
@@ -522,7 +695,11 @@
      "targets": [
       "Armour"
      ],
-     "text": "(68–79)% increased Armour, Evasion and Energy Shield"
+     "text": "(68–79)% increased Armour, Evasion and Energy Shield",
+     "groups": [
+      "DefencesPercent"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyGreaterEssenceDefences.webp"
@@ -537,14 +714,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds (16–24) to (28–42) Physical Damage"
+     "text": "Adds (16–24) to (28–42) Physical Damage",
+     "groups": [
+      "PhysicalDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (23–35) to (39–59) Physical Damage"
+     "text": "Adds (23–35) to (39–59) Physical Damage",
+     "groups": [
+      "PhysicalDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyGreaterEssencePhysical.webp"
@@ -559,14 +744,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds (35–44) to (56–71) Fire Damage"
+     "text": "Adds (35–44) to (56–71) Fire Damage",
+     "groups": [
+      "FireDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (56–70) to (84–107) Fire Damage"
+     "text": "Adds (56–70) to (84–107) Fire Damage",
+     "groups": [
+      "FireDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyGreaterEssenceFire.webp"
@@ -581,14 +774,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds (31–38) to (47–59) Cold Damage"
+     "text": "Adds (31–38) to (47–59) Cold Damage",
+     "groups": [
+      "ColdDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (46–57) to (70–88) Cold Damage"
+     "text": "Adds (46–57) to (70–88) Cold Damage",
+     "groups": [
+      "ColdDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyGreaterEssenceCold.webp"
@@ -603,14 +804,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Adds (1–6) to (85–107) Lightning Damage"
+     "text": "Adds (1–6) to (85–107) Lightning Damage",
+     "groups": [
+      "LightningDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Adds (1–8) to (128–162) Lightning Damage"
+     "text": "Adds (1–8) to (128–162) Lightning Damage",
+     "groups": [
+      "LightningDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyGreaterEssenceLightning.webp"
@@ -626,7 +835,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(16–19)% to Chaos Resistance"
+     "text": "+(16–19)% to Chaos Resistance",
+     "groups": [
+      "ChaosResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyGreaterEssenceChaos.webp"
@@ -642,7 +855,11 @@
       "Gloves",
       "Quiver"
      ],
-     "text": "+(237–346) to Accuracy Rating"
+     "text": "+(237–346) to Accuracy Rating",
+     "groups": [
+      "IncreasedAccuracy"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyGreaterEssenceAttack.webp"
@@ -657,13 +874,21 @@
       "Focus",
       "Wand"
      ],
-     "text": "(75–89)% increased Spell Damage"
+     "text": "(75–89)% increased Spell Damage",
+     "groups": [
+      "WeaponCasterDamagePrefix"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Staff"
      ],
-     "text": "(149–188)% increased Spell Damage"
+     "text": "(149–188)% increased Spell Damage",
+     "groups": [
+      "WeaponCasterDamagePrefix"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyGreaterEssenceCaster.webp"
@@ -677,14 +902,24 @@
      "targets": [
       "Melee Weapon"
      ],
-     "text": "(23–25)% increased Attack Speed"
+     "text": "(23–25)% increased Attack Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Bow",
       "Crossbow"
      ],
-     "text": "(14–16)% increased Attack Speed"
+     "text": "(14–16)% increased Attack Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyGreaterEssenceSpeed.webp"
@@ -698,7 +933,9 @@
      "targets": [
       "Equipment"
      ],
-     "text": "+(25–27) to Strength, Dexterity or Intelligence"
+     "text": "+(25–27) to Strength, Dexterity or Intelligence",
+     "groups": [],
+     "affix": null
     }
    ],
    "icon": "CurrencyGreaterEssenceAttribute.webp"
@@ -712,7 +949,11 @@
      "targets": [
       "Body Armour"
      ],
-     "text": "(8–10)% increased maximum Life"
+     "text": "(8–10)% increased maximum Life",
+     "groups": [
+      "MaximumLifeIncreasePercent"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyPerfectEssenceLife.webp"
@@ -726,7 +967,11 @@
      "targets": [
       "Ring"
      ],
-     "text": "(4–6)% increased maximum Mana"
+     "text": "(4–6)% increased maximum Mana",
+     "groups": [
+      "MaximumManaIncreasePercent"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyPerfectEssenceMana.webp"
@@ -740,7 +985,11 @@
      "targets": [
       "Amulet"
      ],
-     "text": "(20–30)% increased Global Armour, Evasion and Energy Shield"
+     "text": "(20–30)% increased Global Armour, Evasion and Energy Shield",
+     "groups": [
+      "AllDefences"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyPerfectEssenceDefences.webp"
@@ -755,14 +1004,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Gain (15–20)% of Damage as Extra Physical Damage"
+     "text": "Gain (15–20)% of Damage as Extra Physical Damage",
+     "groups": [
+      "MartialWeaponGainedDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Gain (25–33)% of Damage as Extra Physical Damage"
+     "text": "Gain (25–33)% of Damage as Extra Physical Damage",
+     "groups": [
+      "MartialWeaponGainedDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyPerfectEssencePhysical.webp"
@@ -777,14 +1034,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Gain (15–20)% of Damage as Extra Fire Damage"
+     "text": "Gain (15–20)% of Damage as Extra Fire Damage",
+     "groups": [
+      "MartialWeaponGainedDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Gain (25–33)% of Damage as Extra Fire Damage"
+     "text": "Gain (25–33)% of Damage as Extra Fire Damage",
+     "groups": [
+      "MartialWeaponGainedDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyPerfectEssenceFire.webp"
@@ -799,14 +1064,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Gain (15–20)% of Damage as Extra Cold Damage"
+     "text": "Gain (15–20)% of Damage as Extra Cold Damage",
+     "groups": [
+      "MartialWeaponGainedDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Gain (25–33)% of Damage as Extra Cold Damage"
+     "text": "Gain (25–33)% of Damage as Extra Cold Damage",
+     "groups": [
+      "MartialWeaponGainedDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyPerfectEssenceCold.webp"
@@ -821,14 +1094,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "Gain (15–20)% of Damage as Extra Lightning Damage"
+     "text": "Gain (15–20)% of Damage as Extra Lightning Damage",
+     "groups": [
+      "MartialWeaponGainedDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "Gain (25–33)% of Damage as Extra Lightning Damage"
+     "text": "Gain (25–33)% of Damage as Extra Lightning Damage",
+     "groups": [
+      "MartialWeaponGainedDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyPerfectEssenceLightning.webp"
@@ -842,7 +1123,11 @@
      "targets": [
       "Body Armour"
      ],
-     "text": "(10–15)% of Physical Damage from Hits taken as Chaos Damage"
+     "text": "(10–15)% of Physical Damage from Hits taken as Chaos Damage",
+     "groups": [
+      "PhysicalDamageTakenAsChaos"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyPerfectEssenceChaos.webp"
@@ -857,14 +1142,22 @@
       "One Handed Melee Weapon",
       "Bow"
      ],
-     "text": "+2 to Level of all Attack Skills"
+     "text": "+2 to Level of all Attack Skills",
+     "groups": [
+      "IncreaseSocketedGemLevel"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Two Handed Melee Weapon",
       "Crossbow"
      ],
-     "text": "+3 to Level of all Attack Skills"
+     "text": "+3 to Level of all Attack Skills",
+     "groups": [
+      "IncreaseSocketedGemLevel"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyPerfectEssenceAttack.webp"
@@ -878,13 +1171,21 @@
      "targets": [
       "Wand"
      ],
-     "text": "+3 to Level of all Spell Skills"
+     "text": "+3 to Level of all Spell Skills",
+     "groups": [
+      "IncreaseSocketedGemLevel"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Staff"
      ],
-     "text": "+5 to Level of all Spell Skills"
+     "text": "+5 to Level of all Spell Skills",
+     "groups": [
+      "IncreaseSocketedGemLevel"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyPerfectEssenceCaster.webp"
@@ -898,7 +1199,11 @@
      "targets": [
       "Martial Weapon"
      ],
-     "text": "(20–25)% chance to gain Onslaught on Killing Hits with this Weapon"
+     "text": "(20–25)% chance to gain Onslaught on Killing Hits with this Weapon",
+     "groups": [
+      "Onslaught"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyPerfectEssenceSpeed.webp"
@@ -912,7 +1217,9 @@
      "targets": [
       "Amulet"
      ],
-     "text": "(7–10)% increased Strength, Dexterity or Intelligence"
+     "text": "(7–10)% increased Strength, Dexterity or Intelligence",
+     "groups": [],
+     "affix": null
     }
    ],
    "icon": "CurrencyPerfectEssenceAttribute.webp"
@@ -926,20 +1233,32 @@
      "targets": [
       "Martial Weapon"
      ],
-     "text": "+(1.51–2.1)% to Critical Hit Chance"
+     "text": "+(1.51–2.1)% to Critical Hit Chance",
+     "groups": [
+      "BaseCriticalHitChance"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Focus",
       "Wand"
      ],
-     "text": "(34–39)% increased Critical Hit Chance for Spells"
+     "text": "(34–39)% increased Critical Hit Chance for Spells",
+     "groups": [
+      "SpellCriticalStrikeChanceIncrease"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Staff"
      ],
-     "text": "(50–59)% increased Critical Hit Chance for Spells"
+     "text": "(50–59)% increased Critical Hit Chance for Spells",
+     "groups": [
+      "SpellCriticalStrikeChanceIncrease"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyLesserEssenceCritical.webp"
@@ -953,20 +1272,32 @@
      "targets": [
       "Martial Weapon"
      ],
-     "text": "+(2.11–2.7)% to Critical Hit Chance"
+     "text": "+(2.11–2.7)% to Critical Hit Chance",
+     "groups": [
+      "BaseCriticalHitChance"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Focus",
       "Wand"
      ],
-     "text": "(40–46)% increased Critical Hit Chance for Spells"
+     "text": "(40–46)% increased Critical Hit Chance for Spells",
+     "groups": [
+      "SpellCriticalStrikeChanceIncrease"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Staff"
      ],
-     "text": "(60–69)% increased Critical Hit Chance for Spells"
+     "text": "(60–69)% increased Critical Hit Chance for Spells",
+     "groups": [
+      "SpellCriticalStrikeChanceIncrease"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyEssenceCritical.webp"
@@ -980,20 +1311,32 @@
      "targets": [
       "Martial Weapon"
      ],
-     "text": "+(3.11–3.8)% to Critical Hit Chance"
+     "text": "+(3.11–3.8)% to Critical Hit Chance",
+     "groups": [
+      "BaseCriticalHitChance"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Focus",
       "Wand"
      ],
-     "text": "(47–53)% increased Critical Hit Chance for Spells"
+     "text": "(47–53)% increased Critical Hit Chance for Spells",
+     "groups": [
+      "SpellCriticalStrikeChanceIncrease"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Staff"
      ],
-     "text": "(70–79)% increased Critical Hit Chance for Spells"
+     "text": "(70–79)% increased Critical Hit Chance for Spells",
+     "groups": [
+      "SpellCriticalStrikeChanceIncrease"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyGreaterEssenceCritical.webp"
@@ -1007,7 +1350,11 @@
      "targets": [
       "Body Armour"
      ],
-     "text": "Hits against you have (40–50)% reduced Critical Damage Bonus"
+     "text": "Hits against you have (40–50)% reduced Critical Damage Bonus",
+     "groups": [
+      "ReducedCriticalStrikeDamageTaken"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyPerfectEssenceCritical.webp"
@@ -1021,61 +1368,101 @@
      "targets": [
       "Helmet"
      ],
-     "text": "+1 to Level of all Minion Skills"
+     "text": "+1 to Level of all Minion Skills",
+     "groups": [
+      "IncreaseSocketedGemLevel"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Body Armour"
      ],
-     "text": "(64–97) to (98–145) Physical Thorns damage"
+     "text": "(64–97) to (98–145) Physical Thorns damage",
+     "groups": [
+      "Thorns"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Gloves"
      ],
-     "text": "(25–29)% increased Critical Damage Bonus"
+     "text": "(25–29)% increased Critical Damage Bonus",
+     "groups": [
+      "CriticalStrikeMultiplier"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Boots"
      ],
-     "text": "30% increased Movement Speed"
+     "text": "30% increased Movement Speed",
+     "groups": [
+      "MovementVelocity"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Ring"
      ],
-     "text": "(50–59)% increased Mana Regeneration Rate"
+     "text": "(50–59)% increased Mana Regeneration Rate",
+     "groups": [
+      "ManaRegeneration"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Amulet"
      ],
-     "text": "(19–21)% of Damage taken Recouped as Life"
+     "text": "(19–21)% of Damage taken Recouped as Life",
+     "groups": [
+      "DamageTakenGainedAsLife"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Belt"
      ],
-     "text": "+(254–304) to Stun Threshold"
+     "text": "+(254–304) to Stun Threshold",
+     "groups": [
+      "StunThreshold"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Shield"
      ],
-     "text": "(20–24)% increased Block chance"
+     "text": "(20–24)% increased Block chance",
+     "groups": [
+      "IncreasedShieldBlockPercentage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Quiver"
      ],
-     "text": "(43–50)% increased Damage with Bow Skills"
+     "text": "(43–50)% increased Damage with Bow Skills",
+     "groups": [
+      "DamageWithWeaponTypeSkill"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Focus"
      ],
-     "text": "(20–23)% increased Energy Shield Recharge Rate"
+     "text": "(20–23)% increased Energy Shield Recharge Rate",
+     "groups": [
+      "EnergyShieldRegeneration"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyCorruptedEssenceHysteria.webp"
@@ -1089,7 +1476,9 @@
      "targets": [
       "Body Armour"
      ],
-     "text": "Allocates a random Notable Passive Skill"
+     "text": "Allocates a random Notable Passive Skill",
+     "groups": [],
+     "affix": null
     }
    ],
    "icon": "CurrencyCorruptedEssenceDelirium.webp"
@@ -1104,7 +1493,11 @@
       "Gloves",
       "Boots"
      ],
-     "text": "60% increased effect of Socketed Augment Items"
+     "text": "60% increased effect of Socketed Augment Items",
+     "groups": [
+      "SoulCore"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyCorruptedEssenceHorror.webp"
@@ -1118,7 +1511,11 @@
      "targets": [
       "Belt"
      ],
-     "text": "On Corruption, Item gains two Enchantments"
+     "text": "On Corruption, Item gains two Enchantments",
+     "groups": [
+      "CorruptionIntertactions"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyCorruptedEssenceInsanity.webp"
@@ -1132,7 +1529,9 @@
      "targets": [
       "Equipment"
      ],
-     "text": "Mark of the Abyssal Lord"
+     "text": "Mark of the Abyssal Lord",
+     "groups": [],
+     "affix": null
     }
    ],
    "icon": "CurrencyCorruptedEssenceAbyss.webp"
@@ -1146,7 +1545,11 @@
      "targets": [
       "Jewellery"
      ],
-     "text": "+20% to Maximum Quality"
+     "text": "+20% to Maximum Quality",
+     "groups": [
+      "LocalMaximumQuality"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyCorruptedEssenceBreach.webp"
@@ -1162,7 +1565,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(11–15)% to Fire Resistance"
+     "text": "+(11–15)% to Fire Resistance",
+     "groups": [
+      "FireResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyLesserEssenceFireResist.webp"
@@ -1178,7 +1585,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(21–25)% to Fire Resistance"
+     "text": "+(21–25)% to Fire Resistance",
+     "groups": [
+      "FireResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyEssenceFireResist.webp"
@@ -1194,7 +1605,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(31–35)% to Fire Resistance"
+     "text": "+(31–35)% to Fire Resistance",
+     "groups": [
+      "FireResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyGreaterEssenceFireResist.webp"
@@ -1208,7 +1623,11 @@
      "targets": [
       "Belt"
      ],
-     "text": "(26–30)% of Fire Damage taken Recouped as Life"
+     "text": "(26–30)% of Fire Damage taken Recouped as Life",
+     "groups": [
+      "FireDamageTakenRecoupedAsLife"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyPerfectEssenceFireResist.webp"
@@ -1224,7 +1643,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(11–15)% to Cold Resistance"
+     "text": "+(11–15)% to Cold Resistance",
+     "groups": [
+      "ColdResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyLesserEssenceColdResist.webp"
@@ -1240,7 +1663,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(21–25)% to Cold Resistance"
+     "text": "+(21–25)% to Cold Resistance",
+     "groups": [
+      "ColdResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyEssenceColdResist.webp"
@@ -1256,7 +1683,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(31–35)% to Cold Resistance"
+     "text": "+(31–35)% to Cold Resistance",
+     "groups": [
+      "ColdResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyGreaterEssenceColdResist.webp"
@@ -1270,7 +1701,11 @@
      "targets": [
       "Helmet"
      ],
-     "text": "(26–30)% of Cold Damage taken Recouped as Life"
+     "text": "(26–30)% of Cold Damage taken Recouped as Life",
+     "groups": [
+      "ColdDamageTakenRecoupedAsLife"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyPerfectEssenceColdResist.webp"
@@ -1286,7 +1721,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(11–15)% to Lightning Resistance"
+     "text": "+(11–15)% to Lightning Resistance",
+     "groups": [
+      "LightningResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyLesserEssenceLightningResist.webp"
@@ -1302,7 +1741,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(21–25)% to Lightning Resistance"
+     "text": "+(21–25)% to Lightning Resistance",
+     "groups": [
+      "LightningResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyEssenceLightningResist.webp"
@@ -1318,7 +1761,11 @@
       "Belt",
       "Jewellery"
      ],
-     "text": "+(31–35)% to Lightning Resistance"
+     "text": "+(31–35)% to Lightning Resistance",
+     "groups": [
+      "LightningResistance"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyGreaterEssenceLightningResist.webp"
@@ -1332,7 +1779,11 @@
      "targets": [
       "Gloves"
      ],
-     "text": "(26–30)% of Lightning Damage taken Recouped as Life"
+     "text": "(26–30)% of Lightning Damage taken Recouped as Life",
+     "groups": [
+      "LightningDamageTakenRecoupedAsLife"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyPerfectEssenceLightningResist.webp"
@@ -1347,13 +1798,23 @@
       "Focus",
       "Wand"
      ],
-     "text": "(13–16)% increased Cast Speed"
+     "text": "(13–16)% increased Cast Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Staff"
      ],
-     "text": "(20–25)% increased Cast Speed"
+     "text": "(20–25)% increased Cast Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyLesserEssenceSpeedCaster.webp"
@@ -1368,13 +1829,23 @@
       "Focus",
       "Wand"
      ],
-     "text": "(17–20)% increased Cast Speed"
+     "text": "(17–20)% increased Cast Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Staff"
      ],
-     "text": "(26–31)% increased Cast Speed"
+     "text": "(26–31)% increased Cast Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyEssenceSpeedCaster.webp"
@@ -1389,13 +1860,23 @@
       "Focus",
       "Wand"
      ],
-     "text": "(25–28)% increased Cast Speed"
+     "text": "(25–28)% increased Cast Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Staff"
      ],
-     "text": "(38–43)% increased Cast Speed"
+     "text": "(38–43)% increased Cast Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyGreaterEssenceSpeedCaster.webp"
@@ -1410,13 +1891,21 @@
       "Focus",
       "Wand"
      ],
-     "text": "(18–20)% increased Mana Cost Efficiency"
+     "text": "(18–20)% increased Mana Cost Efficiency",
+     "groups": [
+      "ManaCostEfficiency"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Staff"
      ],
-     "text": "(28–32)% increased Mana Cost Efficiency"
+     "text": "(28–32)% increased Mana Cost Efficiency",
+     "groups": [
+      "ManaCostEfficiency"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyPerfectEssenceSpeedCaster.webp"
@@ -1433,7 +1922,12 @@
       "Helmet",
       "Jewellery"
      ],
-     "text": "(6–10)% increased Rarity of Items found"
+     "text": "(6–10)% increased Rarity of Items found",
+     "groups": [
+      "ItemFoundRarityIncrease",
+      "ItemFoundRarityIncreasePrefix"
+     ],
+     "affix": null
     }
    ],
    "icon": "CurrencyLesserEssenceRarity.webp"
@@ -1450,7 +1944,12 @@
       "Helmet",
       "Jewellery"
      ],
-     "text": "(11–14)% increased Rarity of Items found"
+     "text": "(11–14)% increased Rarity of Items found",
+     "groups": [
+      "ItemFoundRarityIncrease",
+      "ItemFoundRarityIncreasePrefix"
+     ],
+     "affix": null
     }
    ],
    "icon": "CurrencyEssenceRarity.webp"
@@ -1467,7 +1966,12 @@
       "Helmet",
       "Jewellery"
      ],
-     "text": "(15–18)% increased Rarity of Items found"
+     "text": "(15–18)% increased Rarity of Items found",
+     "groups": [
+      "ItemFoundRarityIncrease",
+      "ItemFoundRarityIncreasePrefix"
+     ],
+     "affix": null
     }
    ],
    "icon": "CurrencyGreaterEssenceRarity.webp"
@@ -1481,7 +1985,11 @@
      "targets": [
       "Gloves"
      ],
-     "text": "(10–15)% increased Quantity of Gold Dropped by Slain Enemies"
+     "text": "(10–15)% increased Quantity of Gold Dropped by Slain Enemies",
+     "groups": [
+      "EssenceGoldDropped"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyPerfectEssenceRarity.webp"
@@ -1495,7 +2003,11 @@
      "targets": [
       "Sceptre"
      ],
-     "text": "Allies in your Presence deal (35–44)% increased Damage"
+     "text": "Allies in your Presence deal (35–44)% increased Damage",
+     "groups": [
+      "AllDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyLesserEssenceAlly.webp"
@@ -1509,7 +2021,11 @@
      "targets": [
       "Sceptre"
      ],
-     "text": "Allies in your Presence deal (55–64)% increased Damage"
+     "text": "Allies in your Presence deal (55–64)% increased Damage",
+     "groups": [
+      "AllDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyEssenceAlly.webp"
@@ -1523,7 +2039,11 @@
      "targets": [
       "Sceptre"
      ],
-     "text": "Allies in your Presence deal (75–89)% increased Damage"
+     "text": "Allies in your Presence deal (75–89)% increased Damage",
+     "groups": [
+      "AllDamage"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyGreaterEssenceAlly.webp"
@@ -1537,7 +2057,11 @@
      "targets": [
       "Sceptre"
      ],
-     "text": "Aura Skills have (15–20)% increased Magnitudes"
+     "text": "Aura Skills have (15–20)% increased Magnitudes",
+     "groups": [
+      "AuraEffect"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyPerfectEssenceAlly.webp"
@@ -1551,19 +2075,31 @@
      "targets": [
       "Ring"
      ],
-     "text": "+(37–49) to maximum Runic Ward"
+     "text": "+(37–49) to maximum Runic Ward",
+     "groups": [
+      "BaseRunicWard"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Amulet"
      ],
-     "text": "(6–10)% increased maximum Runic Ward"
+     "text": "(6–10)% increased maximum Runic Ward",
+     "groups": [
+      "RunicWardPercent"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Belt"
      ],
-     "text": "(15–20)% increased Runic Ward Regeneration Rate"
+     "text": "(15–20)% increased Runic Ward Regeneration Rate",
+     "groups": [
+      "WardRegenerationRate"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy1.webp"
@@ -1577,25 +2113,41 @@
      "targets": [
       "Staff"
      ],
-     "text": "Gain (42–52)% of Damage as Extra Fire Damage while you are missing Runic Ward"
+     "text": "Gain (42–52)% of Damage as Extra Fire Damage while you are missing Runic Ward",
+     "groups": [
+      "FireDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Wand"
      ],
-     "text": "Gain (21–26)% of Damage as Extra Fire Damage while you are missing Runic Ward"
+     "text": "Gain (21–26)% of Damage as Extra Fire Damage while you are missing Runic Ward",
+     "groups": [
+      "FireDamage"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Sceptre"
      ],
-     "text": "(30–50)% Surpassing Chance to gain a Puppet Master stack whenever you use a Command Skill"
+     "text": "(30–50)% Surpassing Chance to gain a Puppet Master stack whenever you use a Command Skill",
+     "groups": [
+      "MinionGainPuppetMasterOnCommand"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Gloves"
      ],
-     "text": "(10–15)% increased Attack Speed while missing Runic Ward"
+     "text": "(10–15)% increased Attack Speed while missing Runic Ward",
+     "groups": [
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy2.webp"
@@ -1609,19 +2161,31 @@
      "targets": [
       "Belt"
      ],
-     "text": "Recover (32–45) Runic Ward when a Charm is used"
+     "text": "Recover (32–45) Runic Ward when a Charm is used",
+     "groups": [
+      "RecoverRunicWardOnCharmUse"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Weapons"
      ],
-     "text": "+(51–74) to maximum Runic Ward"
+     "text": "+(51–74) to maximum Runic Ward",
+     "groups": [
+      "BaseRunicWard"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Shield"
      ],
-     "text": "Recover (10–15) Runic Ward when you Block"
+     "text": "Recover (10–15) Runic Ward when you Block",
+     "groups": [
+      "GainFlatLifeOnBlock"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy3.webp"
@@ -1635,25 +2199,41 @@
      "targets": [
       "Gloves"
      ],
-     "text": "Remnants can be collected from (35–50)% further away"
+     "text": "Remnants can be collected from (35–50)% further away",
+     "groups": [
+      "RemnantPickupRadius"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Body Armour"
      ],
-     "text": "(35–50)% increased Presence Area of Effect"
+     "text": "(35–50)% increased Presence Area of Effect",
+     "groups": [
+      "PresenceRadius"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Helmet"
      ],
-     "text": "(18–29)% increased Mana Cost Efficiency"
+     "text": "(18–29)% increased Mana Cost Efficiency",
+     "groups": [
+      "ManaCostEfficiency"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Boots"
      ],
-     "text": "Temporary Minion Skills have +(1–2) to Limit of Minions summoned"
+     "text": "Temporary Minion Skills have +(1–2) to Limit of Minions summoned",
+     "groups": [
+      "TemporaryMinionLimit"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy4.webp"
@@ -1667,26 +2247,44 @@
      "targets": [
       "Gloves"
      ],
-     "text": "(9–12)% increased Cast Speed"
+     "text": "(9–12)% increased Cast Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Ring"
      ],
-     "text": "(7–9)% increased Attack Speed"
+     "text": "(7–9)% increased Attack Speed",
+     "groups": [
+      "IncreasedCastSpeed",
+      "IncreasedAttackSpeed"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Belt"
      ],
-     "text": "Flasks gain (0.75–1) charges per Second"
+     "text": "Flasks gain (0.75–1) charges per Second",
+     "groups": [
+      "FlaskChargeGeneration"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Shield",
       "Focus"
      ],
-     "text": "(30–49)% increased Totem Placement speed"
+     "text": "(30–49)% increased Totem Placement speed",
+     "groups": [
+      "SummonTotemCastSpeed"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy5.webp"
@@ -1700,25 +2298,41 @@
      "targets": [
       "Body Armour"
      ],
-     "text": "(15–30)% reduced Slowing Potency of Debuffs on You"
+     "text": "(15–30)% reduced Slowing Potency of Debuffs on You",
+     "groups": [
+      "SlowPotency"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Boots"
      ],
-     "text": "(15–19)% increased Skill Effect Duration"
+     "text": "(15–19)% increased Skill Effect Duration",
+     "groups": [
+      "SkillEffectDuration"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Gloves"
      ],
-     "text": "(20–25)% increased Duration of Damaging Ailments on Enemies"
+     "text": "(20–25)% increased Duration of Damaging Ailments on Enemies",
+     "groups": [
+      "DamagingAilmentDuration"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Helmet"
      ],
-     "text": "(35–42)% increased Archon Buff duration"
+     "text": "(35–42)% increased Archon Buff duration",
+     "groups": [
+      "ArchonDuration"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy6.webp"
@@ -1732,13 +2346,21 @@
      "targets": [
       "Gloves"
      ],
-     "text": "Damage Penetrates (9–15)% Elemental Resistances"
+     "text": "Damage Penetrates (9–15)% Elemental Resistances",
+     "groups": [
+      "ElementalPenetration"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Martial Weapon"
      ],
-     "text": "(20–30)% increased Magnitude of Ailments you inflict"
+     "text": "(20–30)% increased Magnitude of Ailments you inflict",
+     "groups": [
+      "AilmentEffect"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
@@ -1746,13 +2368,21 @@
       "Staff",
       "Wand"
      ],
-     "text": "(40–50)% increased Exposure Effect"
+     "text": "(40–50)% increased Exposure Effect",
+     "groups": [
+      "ExposureEffect"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Sceptre"
      ],
-     "text": "Minions have (40–49)% increased Magnitude of Damaging Ailments"
+     "text": "Minions have (40–49)% increased Magnitude of Damaging Ailments",
+     "groups": [
+      "MinionDamagingAilments"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy7.webp"
@@ -1766,31 +2396,51 @@
      "targets": [
       "Helmet"
      ],
-     "text": "Spell Skills have (10–15)% increased Area of Effect"
+     "text": "Spell Skills have (10–15)% increased Area of Effect",
+     "groups": [
+      "SpellAreaOfEffect"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Gloves"
      ],
-     "text": "(10–15)% increased Area of Effect for Attacks"
+     "text": "(10–15)% increased Area of Effect for Attacks",
+     "groups": [
+      "IncreasedAttackAreaOfEffect"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Boots"
      ],
-     "text": "+(10–15) to Spirit"
+     "text": "+(10–15) to Spirit",
+     "groups": [
+      "BaseSpirit"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Quiver"
      ],
-     "text": "(25–35)% chance to Chain an additional time"
+     "text": "(25–35)% chance to Chain an additional time",
+     "groups": [
+      "Chain"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Caster Weapon"
      ],
-     "text": "+1 to maximum number of Elemental Infusions"
+     "text": "+1 to maximum number of Elemental Infusions",
+     "groups": [
+      "ElementalInfusion"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy8.webp"
@@ -1804,20 +2454,32 @@
      "targets": [
       "Weapons"
      ],
-     "text": "(20–30)% increased effect of Socketed Augment Items"
+     "text": "(20–30)% increased effect of Socketed Augment Items",
+     "groups": [
+      "SoulCore"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Armour"
      ],
-     "text": "(24–30)% increased Runic Ward"
+     "text": "(24–30)% increased Runic Ward",
+     "groups": [
+      "LocalRunicWardPercent"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Jewellery",
       "Belt"
      ],
-     "text": "(20–30)% increased Explicit Resistance Modifier magnitudes"
+     "text": "(20–30)% increased Explicit Resistance Modifier magnitudes",
+     "groups": [
+      "EnchantmentHeistArmour"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy9.webp"
@@ -1832,13 +2494,21 @@
       "Staff",
       "Wand"
      ],
-     "text": "+(142–188) to maximum Mana+1 to Level of all Spell Skills"
+     "text": "+(142–188) to maximum Mana+1 to Level of all Spell Skills",
+     "groups": [
+      "IncreasedMana"
+     ],
+     "affix": "prefix"
     },
     {
      "targets": [
       "Martial Weapon"
      ],
-     "text": "+(327–427) to Accuracy Rating(5–8)% increased Attack Speed"
+     "text": "+(327–427) to Accuracy Rating(5–8)% increased Attack Speed",
+     "groups": [
+      "IncreasedAccuracy"
+     ],
+     "affix": "prefix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy10.webp"
@@ -1852,13 +2522,23 @@
      "targets": [
       "Staff"
      ],
-     "text": "(39–47)% increased Cast SpeedGain (11–16)% of Elemental Damage as Extra Cold Damage"
+     "text": "(39–47)% increased Cast SpeedGain (11–16)% of Elemental Damage as Extra Cold Damage",
+     "groups": [
+      "IncreasedCastSpeed"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Martial Weapon"
      ],
-     "text": "(15–20)% increased Physical Damage+(7–10) to all Attributes"
+     "text": "(15–20)% increased Physical Damage+(7–10) to all Attributes",
+     "groups": [
+      "Strength",
+      "Dexterity",
+      "Intelligence"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy11.webp"
@@ -1872,31 +2552,51 @@
      "targets": [
       "Staff"
      ],
-     "text": "(25–50)% chance to gain Nature's Archon when your Plants Overgrow"
+     "text": "(25–50)% chance to gain Nature's Archon when your Plants Overgrow",
+     "groups": [
+      "ChanceToGainNaturesArchon"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Wand"
      ],
-     "text": "+1 to Limit for Elemental Skills"
+     "text": "+1 to Limit for Elemental Skills",
+     "groups": [
+      "ElementalSkillLimit"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Sceptre"
      ],
-     "text": "+(4–5) maximum stacks of Puppet Master"
+     "text": "+(4–5) maximum stacks of Puppet Master",
+     "groups": [
+      "MaximumPuppeteerStacks"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Crossbow"
      ],
-     "text": "+2 to maximum number of Summoned Ballista Totems"
+     "text": "+2 to maximum number of Summoned Ballista Totems",
+     "groups": [
+      "AdditionalBallistaTotem"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Bow"
      ],
-     "text": "(40–50)% increased Effect of your Mark Skills"
+     "text": "(40–50)% increased Effect of your Mark Skills",
+     "groups": [
+      "CurseEffectiveness"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy12.webp"
@@ -1910,25 +2610,41 @@
      "targets": [
       "Mace"
      ],
-     "text": "(60–75)% chance for Skills to retain 40% of Glory on use"
+     "text": "(60–75)% chance for Skills to retain 40% of Glory on use",
+     "groups": [
+      "GloryChanceToNotConsume"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Quarterstaff"
      ],
-     "text": "Tempest Bells are destroyed after an additional (4–5) Hits"
+     "text": "Tempest Bells are destroyed after an additional (4–5) Hits",
+     "groups": [
+      "BellHitLimit"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Spear"
      ],
-     "text": "+(8–10) to Weapon Range"
+     "text": "+(8–10) to Weapon Range",
+     "groups": [
+      "MeleeWeaponAndUnarmedRange"
+     ],
+     "affix": "suffix"
     },
     {
      "targets": [
       "Talisman"
      ],
-     "text": "Lightning Damage from Hits also Contributes to Flammability and Ignite Magnitudes"
+     "text": "Lightning Damage from Hits also Contributes to Flammability and Ignite Magnitudes",
+     "groups": [
+      "LightningDamageCanIgnite"
+     ],
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyVerisiumAlloy13.webp"
