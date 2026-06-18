@@ -33,6 +33,15 @@ export interface PrepareOptions {
 
 const DEFAULT_SPREAD = 0.1
 
+// The item level at which every *rollable* mod unlocks its top (T1) tier. Across
+// the bundled mod pool (src/core/mod-pool/pool.json, `r` = required_level per
+// tier) the max required_level for any mod with spawn weights is exactly 82; the
+// only entries above it (flat Chaos damage on weapons, req 83) have no spawn
+// weights and can't be crafted. So an ilvl-82 base and an ilvl-90 base roll the
+// same top tiers — capping the ilvl filter's min at 82 widens a high-ilvl search
+// to all equivalent listings. Re-verify after a patch (re-run gen-mod-pool.mjs).
+const T1_ILVL_CEILING = 82
+
 // Quality cap on ordinary equipment. An Exceptional item (issue #14) breaks it.
 const NORMAL_MAX_QUALITY = 20
 
@@ -837,7 +846,15 @@ export function prepareQuery(
   }
 
   if (isEquipment) {
-    if (item.itemLevel !== null && !isUnique) prepared.ilvl = range(item.itemLevel)
+    if (item.itemLevel !== null && !isUnique) {
+      // Cap the search floor at the T1 ceiling — a higher ilvl rolls no better
+      // tiers, so 82+ matches every equivalent base. Default the filter ON for
+      // Normal bases (their value IS their ilvl — a crafting input), opt-in for
+      // Magic/Rare (dominated by their actual mods). `value` keeps the item's
+      // real ilvl for display; only `min` is capped.
+      const min = Math.min(item.itemLevel, T1_ILVL_CEILING)
+      prepared.ilvl = range(item.itemLevel, { min, enabled: item.rarity === 'Normal' })
+    }
     if (item.quality !== null) prepared.quality = range(item.quality)
     if (item.waystoneTier !== null) {
       prepared.mapTier = range(item.waystoneTier, { max: item.waystoneTier, enabled: true })
