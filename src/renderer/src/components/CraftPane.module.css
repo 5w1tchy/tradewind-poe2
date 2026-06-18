@@ -106,6 +106,9 @@
 .liquid { color: var(--tw-bronze-bright); }
 .potent { color: var(--tw-gold); }
 
+/* Verisium Alloys are a flat (untiered) currency — one bronze accent. */
+.alloy { color: var(--tw-bronze-bright); }
+
 .mod {
   color: var(--tw-text);
   font-size: 12px;

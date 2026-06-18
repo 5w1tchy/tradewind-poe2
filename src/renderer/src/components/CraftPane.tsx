@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react'
 import { essencesForItem } from '../../../core/craft/essences'
 import { liquidsForItem } from '../../../core/craft/liquids'
+import { alloysForItem } from '../../../core/craft/alloys'
 import type { ItemPayload } from '../../../shared/ipc'
 import styles from './CraftPane.module.css'
 
 /** Inner sections of the craft tab; essences first, more to come. */
-type Section = 'essences' | 'liquids'
+type Section = 'essences' | 'liquids' | 'alloys'
 
 // Craft art is bundled at build time (scripts/gen-essences.mjs / gen-liquids.mjs
 // download it); resolve id -> asset URL through Vite's glob so CSP stays 'self'.
@@ -56,6 +57,17 @@ export default function CraftPane({ payload }: { payload: ItemPayload }): React.
     )
   }, [payload])
 
+  const alloys = useMemo(() => {
+    const p = payload.prepared
+    if (!p) return null
+    return alloysForItem(
+      p.itemClass,
+      p.rarity,
+      payload.craftedSlots ?? undefined,
+      payload.itemMods ?? undefined
+    )
+  }, [payload])
+
   return (
     <div className={styles.craft}>
       <nav className={styles.sections}>
@@ -70,6 +82,12 @@ export default function CraftPane({ payload }: { payload: ItemPayload }): React.
           onClick={() => setSection('liquids')}
         >
           Liquids
+        </button>
+        <button
+          className={`${styles['section-btn']} ${section === 'alloys' ? styles.active : ''}`}
+          onClick={() => setSection('alloys')}
+        >
+          Alloys
         </button>
       </nav>
 
@@ -164,6 +182,58 @@ export default function CraftPane({ payload }: { payload: ItemPayload }): React.
             ) : (
               !liquids.note && (
                 <div className={styles.empty}>liquids only apply to jewels</div>
+              )
+            )}
+          </>
+        ))}
+
+      {section === 'alloys' &&
+        (!alloys ? (
+          <div className={styles.empty}>stat database still loading</div>
+        ) : (
+          <>
+            {alloys.note && <div className={styles.note}>{alloys.note}</div>}
+
+            {alloys.applicable.length > 0 ? (
+              <div className={styles.list}>
+                {alloys.applicable.map((a) => {
+                  const url = essenceIcon(a.icon)
+                  return (
+                    <div
+                      key={a.id}
+                      className={`${styles.row} ${a.blockedBy ? styles.blocked : ''}`}
+                    >
+                      <span className={styles.art}>
+                        {url && <img src={url} alt={a.name} />}
+                      </span>
+                      <span className={styles.text}>
+                        <span className={`${styles.name} ${styles.alloy}`}>{a.name}</span>
+                        <span className={styles.mod}>
+                          {a.affix && (
+                            <span className={styles.affix}>
+                              {a.affix === 'prefix' ? 'P' : 'S'}
+                            </span>
+                          )}
+                          {a.modText}
+                        </span>
+                      </span>
+                      {a.blockedBy && (
+                        <span
+                          className={styles.blockedBy}
+                          title={`Blocked: the item already has "${a.blockedBy}", which shares this mod's group`}
+                        >
+                          blocked by “{a.blockedBy}”
+                        </span>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            ) : (
+              !alloys.note && (
+                <div className={styles.empty}>
+                  no alloys exist for {payload.prepared?.itemClass ?? 'this item'}
+                </div>
               )
             )}
           </>
