@@ -3,6 +3,29 @@
 All notable user-facing changes to Tradewind. Newest first. The top entry of
 each release is reused verbatim as that release's GitHub Release notes.
 
+## v0.1.17
+
+### 💧 Liquid Emotion advisor for jewel crafting
+The **Craft** tab now has a **Liquids** section for **Liquid Emotions** — the
+jewel-crafting counterpart to essences. Hover a Rare jewel and Tradewind shows
+which liquids apply and the exact modifier each one would add, keyed to the
+jewel's base type (Time-Lost vs basic, and the right attribute for Ruby /
+Sapphire / Emerald / Diamond). Wildcard and **Potent** liquids that can land one
+of several mods are tagged "rolls one of". (#48)
+
+### 🚫 Essence advice flags conflicting modifiers
+On the **Craft** tab, an essence whose guaranteed modifier would clash with one
+already on the item is now shown **greyed out with the reason** — e.g.
+*blocked by "+38% to Cold Resistance"* — instead of being listed as if it would
+work. The game refuses these crafts because two modifiers can't share a group,
+and Tradewind now matches that rule for both Perfect/corrupted essences on Rares
+and Greater essences upgrading a Magic item. It even tells prefix and suffix
+versions of the same stat apart (a suffix Rarity mod blocks Greater Essence of
+Opulence, a prefix one doesn't). (#72)
+
+---
+**Full changelog:** https://github.com/5w1tchy/tradewind-poe2/compare/v0.1.16...v0.1.17
+
 ## v0.1.16
 
 ### 🔍 Find craftable bases by their open modifier slots
