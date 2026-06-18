@@ -3,6 +3,24 @@
 All notable user-facing changes to Tradewind. Newest first. The top entry of
 each release is reused verbatim as that release's GitHub Release notes.
 
+## v0.1.16
+
+### 🔍 Find craftable bases by their open modifier slots
+A new filter lets you search by **how many prefix and suffix slots are empty** —
+e.g. "1 open prefix and 2 open suffixes" — so you can hunt down the right
+craftable base instead of eyeballing every listing. Offered on rares and magic
+items. (#22)
+
+### 🧪 Essence advice now knows the crafted-mod cap
+On the **Craft** tab, a Perfect or corrupted Essence augments a Rare with a
+guaranteed modifier in its single **crafted** slot — so the game blocks it when
+that slot is already full. Tradewind now spots this and shows a plain reason
+instead of listing essences you can't use. It also accounts for **Astrid's
+Creativity**, which raises the cap to two crafted mods. (#24)
+
+---
+**Full changelog:** https://github.com/5w1tchy/tradewind-poe2/compare/v0.1.15...v0.1.16
+
 ## v0.1.15
 
 ### 🪙 The buyout-price currency now sticks
