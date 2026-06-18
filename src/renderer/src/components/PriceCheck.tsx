@@ -36,11 +36,17 @@ const RARITY_OPTIONS: Array<[string, string]> = [
   ['unique', 'Unique']
 ]
 
-const TRISTATE_OPTIONS: Array<[TriState, string]> = [
-  ['yes', 'Yes'],
-  ['no', 'No'],
-  ['any', 'Any']
-]
+// Tri-state flag chip (issue #57): one click cycles the chip through its states,
+// the leading glyph + color being the at-a-glance indicator. The order matches
+// the natural mental model — a fresh "any" chip lights to "yes" (must have),
+// then "no" (must not), then clears back to "any".
+const FLAG_NEXT: Record<TriState, TriState> = { any: 'yes', yes: 'no', no: 'any' }
+const FLAG_GLYPH: Record<TriState, string> = { any: '◇', yes: '✓', no: '✕' }
+const FLAG_STATE_TITLE: Record<TriState, string> = {
+  any: 'Any',
+  yes: 'Must have',
+  no: 'Must not have'
+}
 
 // Buyout-price currency: [trade option id (null = exalted equivalent), menu label].
 const BUYOUT_OPTIONS: Array<[string | null, string]> = [
@@ -162,15 +168,6 @@ interface ToggleRow {
   onToggle?: () => void
 }
 
-/** Funnel glyph for the collapsible Filters header (PoE trade-site style). */
-function FunnelIcon(): React.JSX.Element {
-  return (
-    <svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true">
-      <path fill="currentColor" d="M2 3h12L9.3 8v5L6.7 11.6V8z" />
-    </svg>
-  )
-}
-
 // Minimum heights (CSS px) kept for each list when the user drags the results
 // resize handle, so neither the stats nor the results list can collapse away.
 const MIN_RESULTS = 90
@@ -202,8 +199,9 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
   const [buyoutShown, setBuyoutShown] = useState(false)
   /** Filters changed since the last search — results on screen are stale. */
   const [dirty, setDirty] = useState(false)
-  /** The collapsible tri-state flag group (corrupted, mirrored, …). */
-  const [flagsOpen, setFlagsOpen] = useState(false)
+  /** The tri-state flag group (corrupted, mirrored, …). Open by default now that
+   *  it's a compact chip row (issue #57). */
+  const [flagsOpen, setFlagsOpen] = useState(true)
   /** The collapsible "open modifier slots" count group (issue #22). */
   const [modsOpen, setModsOpen] = useState(false)
   /** The listing whose item tooltip is showing (null when nothing hovered). */
@@ -282,7 +280,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setOutcome(null)
     setError(null)
     setDirty(false)
-    setFlagsOpen(false)
+    setFlagsOpen(true)
     setModsOpen(false)
     cancelHide()
     setHover(null)
@@ -425,6 +423,11 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     forceUpdate()
   }
 
+  /** Click a flag chip to advance its tri-state (any → yes → no → any). */
+  function cycleFlag(flag: PreparedFlag): void {
+    setFlag(flag, FLAG_NEXT[flag.state])
+  }
+
   /** One-click "match my roll": write the item's actual value into min (100%
    *  vs the pre-filled spread default), checking the row. */
   function fillExact(target: { min: number | null; enabled: boolean }, value: number | null): void {
@@ -547,6 +550,34 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     })
   }
 
+  /** A section title sitting in the middle of its divider line (issue #57): the
+   *  whole legend is the collapse toggle, the rule fading out to each popup edge
+   *  so the title breaks the line. A right-side count badge surfaces set filters
+   *  while collapsed. */
+  function sectionLegend(
+    title: string,
+    open: boolean,
+    toggle: () => void,
+    count: number
+  ): React.JSX.Element {
+    return (
+      <button
+        type="button"
+        className={styles['section-legend']}
+        onClick={toggle}
+        aria-expanded={open}
+      >
+        <span className={styles['legend-rule']} aria-hidden="true" />
+        <span className={styles['legend-label']}>
+          <span className={styles['legend-chevron']}>{open ? '▾' : '▸'}</span>
+          {title}
+          {count > 0 && <span className={styles['flags-count']}>{count}</span>}
+        </span>
+        <span className={styles['legend-rule']} aria-hidden="true" />
+      </button>
+    )
+  }
+
   /** One checkbox filter row (identity scope or a bounded item property). */
   function renderToggleRow(row: ToggleRow): React.JSX.Element {
     return (
@@ -614,7 +645,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
    *  the row when a bound is typed, disables when both clear). */
   function renderModCountRow(m: PreparedModCount): React.JSX.Element {
     return (
-      <div key={m.statId} className={`${styles['filter-row']} ${styles['flag-row']}`}>
+      <div key={m.statId} className={`${styles['filter-row']} ${styles['mod-count-row']}`}>
         <span className={styles.property}>{m.label}</span>
         <span className={styles.bounds}>
           <input
@@ -964,60 +995,53 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
               <div className={styles.divider} />
             )}
             {propertyRows.map(renderToggleRow)}
+            {/* Miscellaneous tri-state flags (issue #57): the title sits in the
+                divider line; the flags wrap as compact chips, each one click
+                cycling any → yes → no. The legend's own rule is the separator,
+                so a plain divider is only needed when the next section is the
+                plain stats group (no following legend to break the line). */}
             {q.flags.length > 0 && (
               <>
-                <div className={styles.divider} />
-                <button
-                  type="button"
-                  className={styles['flags-header']}
-                  onClick={() => setFlagsOpen((o) => !o)}
-                  aria-expanded={flagsOpen}
-                >
-                  <FunnelIcon />
-                  <span className={styles['flags-title']}>Miscellaneous</span>
-                  {activeFlags > 0 && <span className={styles['flags-count']}>{activeFlags}</span>}
-                  <span className={styles.chevron}>{flagsOpen ? '▾' : '▸'}</span>
-                </button>
-                {flagsOpen &&
-                  q.flags.map((flag) => (
-                    <div key={flag.key} className={`${styles['filter-row']} ${styles['flag-row']}`}>
-                      <span className={styles.property}>{flag.label}</span>
-                      <span className={styles.tristate}>
-                        {TRISTATE_OPTIONS.map(([val, label]) => (
-                          <button
-                            key={val}
-                            className={flag.state === val ? styles.active : ''}
-                            onClick={() => setFlag(flag, val)}
-                          >
-                            {label}
-                          </button>
-                        ))}
-                      </span>
-                    </div>
-                  ))}
-                {(q.modCounts.length > 0 || q.stats.length > 0 || q.unmatched.length > 0) && (
+                {sectionLegend(
+                  'Miscellaneous',
+                  flagsOpen,
+                  () => setFlagsOpen((o) => !o),
+                  activeFlags
+                )}
+                {flagsOpen && (
+                  <div className={styles['flag-chips']}>
+                    {q.flags.map((flag) => (
+                      <button
+                        key={flag.key}
+                        type="button"
+                        className={`${styles.chip} ${styles['chip-' + flag.state]}`}
+                        onClick={() => cycleFlag(flag)}
+                        title={`${flag.label}: ${FLAG_STATE_TITLE[flag.state]} — click to cycle`}
+                      >
+                        <span className={styles['chip-mark']} aria-hidden="true">
+                          {FLAG_GLYPH[flag.state]}
+                        </span>
+                        {flag.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {q.modCounts.length === 0 && (q.stats.length > 0 || q.unmatched.length > 0) && (
                   <div className={styles.divider} />
                 )}
               </>
             )}
-            {/* Open-affix-slot counts (issue #22): rares/magic only. The flags
-                block always precedes it on such items, so it owns the divider
-                above; this section owns the divider below it. */}
+            {/* Open-affix-slot counts (issue #22): rares/magic only. Shares the
+                centered-divider legend; its own rule separates it from the flags
+                chips above, and it owns the divider before the stats below. */}
             {q.modCounts.length > 0 && (
               <>
-                <button
-                  type="button"
-                  className={styles['flags-header']}
-                  onClick={() => setModsOpen((o) => !o)}
-                  aria-expanded={modsOpen}
-                >
-                  <FunnelIcon />
-                  <span className={styles['flags-title']}>Open Modifier Slots</span>
-                  {activeModCounts > 0 && (
-                    <span className={styles['flags-count']}>{activeModCounts}</span>
-                  )}
-                  <span className={styles.chevron}>{modsOpen ? '▾' : '▸'}</span>
-                </button>
+                {sectionLegend(
+                  'Open Modifier Slots',
+                  modsOpen,
+                  () => setModsOpen((o) => !o),
+                  activeModCounts
+                )}
                 {modsOpen && q.modCounts.map(renderModCountRow)}
                 {(q.stats.length > 0 || q.unmatched.length > 0) && (
                   <div className={styles.divider} />
