@@ -633,6 +633,10 @@ app.whenReady().then(() => {
     exchange.uniqueQuote(leagueArg || league, name, type)
   )
 
+  ipcMain.handle('tw:uncut-quote', (_event, leagueArg: string, levels: number[]) =>
+    exchange.uncutSupportQuotes(leagueArg || league, levels)
+  )
+
   ipcMain.handle('tw:set-league', (_event, id: string) => {
     league = id
     config.league = id

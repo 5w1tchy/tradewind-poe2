@@ -18,6 +18,7 @@ import type { ItemPayload } from '../../../shared/ipc'
 import ListingTooltip, { type TooltipAnchor } from './ListingTooltip'
 import CurrencyView from './CurrencyView'
 import UniqueQuoteBanner from './UniqueQuoteBanner'
+import UncutSupportBanner from './UncutSupportBanner'
 import styles from './PriceCheck.module.css'
 
 const SALE_OPTIONS: Array<[ListingStatus, string]> = [
@@ -300,11 +301,14 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     // mod pre-checked rarely has market matches; arm Search instead. Uniques
     // are excluded too (#80): their instant poe2scout aggregate banner is the
     // ballpark, and the rate-limited live search is now a deliberate click.
+    // Cuttable support gems (#58) are excluded the same way: the Uncut Support
+    // banner is the instant info, the finished-gem search is a deliberate click.
     if (prepared.current) {
-      const isUnique = prepared.current.rarity === 'Unique'
+      const p = prepared.current
+      const armOnly = p.rarity === 'Unique' || p.uncutSupportLevels != null
       if (
-        !isUnique &&
-        (prepared.current.name || prepared.current.type || prepared.current.exchangeId)
+        !armOnly &&
+        (p.name || p.type || p.exchangeId)
       ) {
         void runSearch()
       } else {
@@ -898,6 +902,16 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
               rarity={q.rarity}
               name={q.name}
               type={q.type}
+              league={league}
+              currencyIcons={payload.currencyIcons}
+            />
+          )}
+          {/* A cuttable support gem (#58): the realistic way to get one is to
+              buy an Uncut Support Gem and engrave it, so lead with the uncut
+              floor; the live finished-gem search below is armed, not auto-run. */}
+          {q.uncutSupportLevels && (
+            <UncutSupportBanner
+              levels={q.uncutSupportLevels}
               league={league}
               currencyIcons={payload.currencyIcons}
             />

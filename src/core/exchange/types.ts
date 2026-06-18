@@ -66,6 +66,28 @@ export interface UniqueQuote {
   rates: ExchangeRates
 }
 
+/**
+ * Aggregate price of one Uncut Support Gem level, from the same poe2scout
+ * snapshot as currency (the `uncutgems` category, ApiId `uncut-support-gem-{N}`).
+ * Shown above a *cuttable* support gem's view (issue #58): the realistic way to
+ * obtain one is to buy an uncut and engrave it, so the uncut floor is the
+ * relevant reference. A list of these (one per available level) renders as a
+ * compact banner; the cheapest is highlighted since any uncut ≥ the required
+ * tier can cut the gem.
+ */
+export interface UncutQuote {
+  /** Uncut Support Gem level (1–5). */
+  level: number
+  /** poe2scout ApiId ("uncut-support-gem-3"). */
+  apiId: string
+  /** Current aggregate price, in exalted. */
+  priceExalted: number
+  /** Item art URL (GGG CDN), or null. */
+  iconUrl: string | null
+  /** Conversion rates to derive divine/chaos, in exalted per unit. */
+  rates: ExchangeRates
+}
+
 /** A price expressed in all three display denominations. */
 export interface Denominations {
   exalted: number

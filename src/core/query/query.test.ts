@@ -641,6 +641,21 @@ describe('prepareQuery', () => {
     expect(q.gemSockets).toMatchObject({ value: 5, min: 5, enabled: true })
     expect(q.flags).toEqual([{ key: 'corrupted', label: 'Corrupted', state: 'yes' }])
     expect(q.stats).toEqual([])
+    // Skill gems aren't supports — no Uncut Support ladder.
+    expect(q.uncutSupportLevels).toBeNull()
+  })
+
+  it('cuttable support gem arms the Uncut Support ladder (issue #58)', () => {
+    // A regular support has no exchange id, so it reaches the gem branch and is
+    // flagged for the uncut banner (all 5 levels — we have no required-tier data).
+    const item = parseItem(
+      ['Item Class: Support Gems', 'Rarity: Gem', 'Martial Tempo', '--------', 'Support'].join('\n')
+    )
+    const q = prepareQuery(item, db)
+
+    expect(q.exchangeId).toBeNull()
+    expect(q.type).toBe('Martial Tempo')
+    expect(q.uncutSupportLevels).toEqual([1, 2, 3, 4, 5])
   })
 
   it('skill gem body emits gem level/quality/sockets/corruption (issue #58)', () => {
@@ -710,6 +725,8 @@ describe('prepareQuery', () => {
 
     expect(q.exchangeId).toBe('rakiatas-flow')
     expect(q.gemLevel).toBeNull()
+    // Lineage supports take the exchange/chart path — never the uncut ladder.
+    expect(q.uncutSupportLevels).toBeNull()
   })
 
   it('a gem with no exchange id still uses the live gem search', () => {

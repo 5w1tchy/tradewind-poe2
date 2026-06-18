@@ -1,4 +1,10 @@
-import type { CurrencyPoint, CurrencyQuote, ExchangeRates, UniqueQuote } from '../core/exchange'
+import type {
+  CurrencyPoint,
+  CurrencyQuote,
+  ExchangeRates,
+  UncutQuote,
+  UniqueQuote
+} from '../core/exchange'
 import { cachedFetchJson, USER_AGENT } from './dataCache'
 
 const REALM = 'poe2'
@@ -117,6 +123,38 @@ export class ExchangeSnapshotProvider {
       itemId: row.ItemId,
       rates: snap.rates
     }
+  }
+
+  /**
+   * Aggregate prices for the given Uncut Support Gem levels, joined on the
+   * `uncut-support-gem-{level}` ApiId in the same snapshot that prices currency
+   * (#58). Shown above a cuttable support gem as its "cut it yourself" floor.
+   * Levels missing from the snapshot (no listings) are dropped; the result is
+   * ascending by level. [] when the snapshot is unavailable — the renderer then
+   * shows no banner and the live search stays the source of truth.
+   */
+  async uncutSupportQuotes(league: string, levels: number[]): Promise<UncutQuote[]> {
+    let snap: SnapshotIndex
+    try {
+      snap = await this.loadIndex(league)
+    } catch (err) {
+      console.warn('[exchange] snapshot unavailable:', err)
+      return []
+    }
+    const out: UncutQuote[] = []
+    for (const level of [...levels].sort((a, b) => a - b)) {
+      const apiId = `uncut-support-gem-${level}`
+      const row = snap.byApiId.get(apiId)
+      if (!row || typeof row.CurrentPrice !== 'number' || row.CurrentPrice <= 0) continue
+      out.push({
+        level,
+        apiId,
+        priceExalted: row.CurrentPrice,
+        iconUrl: row.IconUrl ?? null,
+        rates: snap.rates
+      })
+    }
+    return out
   }
 
   /** Recent price/volume history (ascending time) for the chart; [] on failure. */

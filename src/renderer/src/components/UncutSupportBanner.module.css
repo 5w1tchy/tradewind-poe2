@@ -1,0 +1,127 @@
+/* "Cut it yourself" banner for a cuttable support gem (#58). Tinted with the
+ * gem rarity hue (teal) the way the unique banner bends its rarity color, so it
+ * reads as gem-adjacent at a glance; prices stay gold — value is gold, the rule
+ * the whole overlay keeps. */
+.banner {
+  --accent: var(--tw-rarity-gem);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 7px 11px 8px 13px;
+  margin-bottom: 7px;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+  background:
+    radial-gradient(
+      130% 180% at 0% 0%,
+      color-mix(in srgb, var(--accent) 22%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 6%, transparent) 42%,
+      transparent 72%
+    ),
+    var(--tw-bg-inset);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--accent) 18%, transparent);
+  animation: bannerIn 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* The glowing gem spine — the eye-catch. */
+.banner::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 9px 1px color-mix(in srgb, var(--accent) 65%, transparent);
+}
+
+@keyframes bannerIn {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag {
+  font-family: var(--tw-font-display);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.dot {
+  font-size: 5px;
+  color: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.source {
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  color: var(--tw-text-faint);
+}
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 7px;
+}
+
+.row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px 2px 6px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.level {
+  font-family: var(--tw-font-display);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--tw-text-mute);
+  letter-spacing: 0.04em;
+}
+
+.price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.orb {
+  width: 13px;
+  height: 13px;
+  align-self: center;
+}
+
+.amount {
+  font-family: var(--tw-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tw-gold);
+}
+
+.unit {
+  font-size: 10px;
+  color: var(--tw-text-faint);
+}
