@@ -6452,3 +6452,228 @@ exports[`parseItem on every fixture > 42-crossbows--onslaught-core-e779a1c1.txt 
   "waystoneTier": null,
 }
 `;
+
+exports[`parseItem on every fixture > 43-boots--skull-goad-5f12aa5c.txt 1`] = `
+{
+  "baseType": "Dragonscale Boots",
+  "corrupted": false,
+  "enchantMods": [],
+  "enhancements": [],
+  "explicits": [
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "+139(120-149) to maximum Life",
+          "template": "+# to maximum Life",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 149,
+              "min": 120,
+              "value": 139,
+            },
+          ],
+        },
+      ],
+      "name": "Athlete's",
+      "qualityIncrease": null,
+      "tags": [
+        "Life",
+      ],
+      "tier": 1,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "30% increased Movement Speed",
+          "template": "#% increased Movement Speed",
+          "unscalable": false,
+          "values": [
+            {
+              "value": 30,
+            },
+          ],
+        },
+      ],
+      "name": "Cheetah's",
+      "qualityIncrease": null,
+      "tags": [
+        "Speed",
+      ],
+      "tier": 2,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "prefix",
+      "lines": [
+        {
+          "raw": "38(33-38)% increased Evasion Rating",
+          "template": "#% increased Evasion Rating",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 38,
+              "min": 33,
+              "value": 38,
+            },
+          ],
+        },
+        {
+          "raw": "+75(64-94) to Stun Threshold",
+          "template": "+# to Stun Threshold",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 94,
+              "min": 64,
+              "value": 75,
+            },
+          ],
+        },
+      ],
+      "name": "Dragonfly's",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 2,
+    },
+    {
+      "corrupted": false,
+      "crafted": true,
+      "desecrated": false,
+      "fractured": true,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "18(15-18)% increased Rarity of Items found",
+          "template": "#% increased Rarity of Items found",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 18,
+              "min": 15,
+              "value": 18,
+            },
+          ],
+        },
+      ],
+      "name": "of Archaeology",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": 1,
+    },
+    {
+      "corrupted": false,
+      "crafted": false,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "Gain Deflection Rating equal to 21(21-23)% of Evasion Rating",
+          "template": "Gain Deflection Rating equal to #% of Evasion Rating",
+          "unscalable": false,
+          "values": [
+            {
+              "max": 23,
+              "min": 21,
+              "value": 21,
+            },
+          ],
+        },
+      ],
+      "name": "of Flexure",
+      "qualityIncrease": null,
+      "tags": [
+        "Evasion",
+      ],
+      "tier": 1,
+    },
+    {
+      "corrupted": false,
+      "crafted": true,
+      "desecrated": false,
+      "fractured": false,
+      "generation": "suffix",
+      "lines": [
+        {
+          "raw": "60% increased effect of Socketed Augment Items — Unscalable Value",
+          "template": "#% increased effect of Socketed Augment Items",
+          "unscalable": true,
+          "values": [
+            {
+              "value": 60,
+            },
+          ],
+        },
+      ],
+      "name": "of the Essence",
+      "qualityIncrease": null,
+      "tags": [],
+      "tier": null,
+    },
+  ],
+  "grantedSkills": [],
+  "implicits": [],
+  "itemClass": "Boots",
+  "itemLevel": 82,
+  "name": "Skull Goad",
+  "note": "~b/o 20 divine",
+  "properties": [
+    {
+      "name": "Quality",
+      "raw": "Quality: +20% (augmented)",
+    },
+    {
+      "name": "Evasion Rating",
+      "raw": "Evasion Rating: 404 (augmented)",
+    },
+  ],
+  "quality": 20,
+  "rarity": "Rare",
+  "requiredLevel": 75,
+  "requirements": "Requires: Level 75, 101 Dex",
+  "runeMods": [
+    {
+      "raw": "Can have 1 additional Crafted Modifier",
+      "template": "Can have # additional Crafted Modifier",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 1,
+        },
+      ],
+    },
+    {
+      "raw": "8% increased Movement Speed",
+      "template": "#% increased Movement Speed",
+      "unscalable": false,
+      "values": [
+        {
+          "value": 8,
+        },
+      ],
+    },
+  ],
+  "sockets": 2,
+  "unidentified": false,
+  "unknownSections": [
+    [
+      "Fractured Item",
+    ],
+  ],
+  "waystoneTier": null,
+}
+`;

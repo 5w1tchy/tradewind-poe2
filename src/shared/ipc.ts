@@ -1,3 +1,4 @@
+import type { CraftedSlots } from '../core/craft/craftedSlots'
 import type { CurrencyPoint, CurrencyQuote } from '../core/exchange'
 import type { PreparedQuery } from '../core/query/types'
 import type { SearchOutcome } from '../core/trade/types'
@@ -11,6 +12,9 @@ export interface ItemPayload {
   text: string
   /** null when parsing failed or the stats DB isn't ready yet. */
   prepared: PreparedQuery | null
+  /** Crafted-mod count + cap for the Craft tab's essence advice (issue #24).
+   *  Null when parsing failed/DB not ready; only meaningful for Rare gear. */
+  craftedSlots: CraftedSlots | null
   /**
    * Aggregate exchange price (poe2scout snapshot) for a currency-exchange item,
    * present only when the item trades on the exchange and the snapshot carries

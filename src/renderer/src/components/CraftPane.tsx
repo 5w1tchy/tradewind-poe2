@@ -24,7 +24,7 @@ export default function CraftPane({ payload }: { payload: ItemPayload }): React.
   const advice = useMemo(() => {
     const p = payload.prepared
     if (!p) return null
-    return essencesForItem(p.itemClass, p.rarity)
+    return essencesForItem(p.itemClass, p.rarity, payload.craftedSlots ?? undefined)
   }, [payload])
 
   return (
