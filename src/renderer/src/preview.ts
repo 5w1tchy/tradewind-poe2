@@ -461,7 +461,10 @@ const SAMPLE_ITEM_MODS: ItemMod[] = [
   { label: '14% increased Rarity of Items found', groups: ['ItemFoundRarityIncrease'] },
   // A jewel mod-group — blocks the matching Liquid Emotion outcome on the Liquids
   // sub-tab (visible via ?class=Jewels&base=Emerald&used=0) (issue #78).
-  { label: '15% increased Evasion Rating', groups: ['EvasionRatingPercent'] }
+  { label: '15% increased Evasion Rating', groups: ['EvasionRatingPercent'] },
+  // A flat max-Mana mod (group IncreasedMana) — blocks Celestial Alloy's wand mod
+  // on the Alloys sub-tab (visible via ?class=Wands&used=0) (issue #51).
+  { label: '+80 to maximum Mana', groups: ['IncreasedMana'] }
 ]
 
 import('./main').then(() => {

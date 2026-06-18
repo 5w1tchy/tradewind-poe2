@@ -13,14 +13,6 @@ Running list of known issues and follow-ups not yet scheduled into a milestone.
   logging of foreground-window / focus transitions around the first check to pin
   down. Clicking in-game resets it.
 
-## Features
-
-- **Runes that act like essences.** Some PoE2 runes/soul cores behave like
-  essences for crafting (guaranteed/targeted mod outcomes). Fold them into the
-  Craft tab's essence feature (`src/core/craft/essences.ts`,
-  `scripts/gen-essences.mjs`, the essence assets) so they show up alongside
-  essences in the crafting helper.
-
 ## Tech debt
 
 - _(none open)_
