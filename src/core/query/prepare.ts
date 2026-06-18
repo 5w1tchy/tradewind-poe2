@@ -748,6 +748,7 @@ export function prepareQuery(
     ilvl: null,
     quality: null,
     gemLevel: null,
+    gemSockets: null,
     mapTier: null,
     flags: [],
     buyout: { min: null, max: null, option: options.buyoutOption ?? null },
@@ -787,11 +788,16 @@ export function prepareQuery(
   }
 
   if (isGem) {
+    // Skill/Spirit gem view (issue #58): the price-defining knobs are gem level,
+    // quality, support-gem sockets, and corruption — all default-armed to the
+    // item's own values (min-only, "at least this") so the check finds gems at
+    // least as good. Corruption is pinned (a corrupted gem is a different item).
     prepared.type = item.baseType
     const levelProp = item.properties.find((p) => /^Level: \d+/.test(p.raw))
     const level = levelProp ? Number(levelProp.raw.match(/^Level: (\d+)/)![1]) : null
     if (level !== null) prepared.gemLevel = range(level, { enabled: true })
-    if (item.quality !== null) prepared.quality = range(item.quality)
+    if (item.quality !== null) prepared.quality = range(item.quality, { enabled: true })
+    if (item.sockets !== null) prepared.gemSockets = range(item.sockets, { enabled: true })
     // A corrupted gem is a different item at a different price — pin it.
     prepared.flags = [
       { key: 'corrupted', label: 'Corrupted', state: item.corrupted ? 'yes' : 'no' }

@@ -54,6 +54,7 @@ const SAMPLE_QUERY: PreparedQuery = {
   ilvl: { value: 81, min: null, max: null, enabled: false },
   quality: null,
   gemLevel: null,
+  gemSockets: null,
   mapTier: null,
   flags: [
     { key: 'corrupted', label: 'Corrupted', state: 'any' },

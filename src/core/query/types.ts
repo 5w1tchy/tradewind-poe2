@@ -45,6 +45,7 @@ export interface TradeQueryFilters {
       fractured_item?: OptionFilter
       desecrated?: OptionFilter
       gem_level?: MinMax
+      gem_sockets?: MinMax
     }
   }
   equipment_filters?: {
@@ -241,6 +242,9 @@ export interface PreparedQuery {
   ilvl: PreparedRange | null
   quality: PreparedRange | null
   gemLevel: PreparedRange | null
+  /** Support-gem socket count (Skill/Spirit gems, issue #58); maps to the
+   *  misc_filters `gem_sockets` minMax. Null for non-gems. */
+  gemSockets: PreparedRange | null
   mapTier: PreparedRange | null
   /** Tri-state item attributes (corrupted, mirrored, …); empty for currency. */
   flags: PreparedFlag[]

@@ -831,6 +831,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     }
     add('Waystone Tier', q.mapTier)
     add('Gem Level', q.gemLevel)
+    add('Gem Sockets', q.gemSockets)
     for (const row of q.equipment) {
       propertyRows.push({ label: row.label, model: row, range: row, cycle: row })
     }
