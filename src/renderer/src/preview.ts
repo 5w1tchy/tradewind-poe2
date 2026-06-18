@@ -384,7 +384,10 @@ const craftedSlots = {
 const SAMPLE_ITEM_MODS: ItemMod[] = [
   { label: '8% increased maximum Mana', groups: ['MaximumManaIncreasePercent'] },
   { label: '+38% to Cold Resistance', groups: ['ColdResistance'] },
-  { label: '16% increased Spell Damage', groups: ['SpellDamage'] }
+  { label: '16% increased Spell Damage', groups: ['SpellDamage'] },
+  // A *suffix* rarity mod — blocks the suffix-rarity Greater Essence of Opulence
+  // (visible via ?rarity=Magic) but not its prefix-rarity twin (issue #72).
+  { label: '14% increased Rarity of Items found', groups: ['ItemFoundRarityIncrease'] }
 ]
 
 import('./main').then(() => {
