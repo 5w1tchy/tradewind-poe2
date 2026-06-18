@@ -4,7 +4,7 @@
  * poe2db — re-run after game patches).
  */
 import data from './essences.json'
-import type { CraftedSlots } from './craftedSlots'
+import { craftedCapNote, type CraftedSlots } from './craftedSlots'
 
 export type EssenceTier = 'lesser' | 'normal' | 'greater' | 'perfect' | 'corrupted'
 
@@ -133,16 +133,6 @@ function modTextFor(e: (typeof ESSENCES)[number], itemClass: string): string | n
   return null
 }
 
-/** Reason line shown when a Rare's crafted slot(s) are full (issue #24). */
-function craftedCapNote(crafted: CraftedSlots): string {
-  const mods = crafted.used === 1 ? 'a crafted modifier' : `${crafted.used} crafted modifiers`
-  const reason =
-    crafted.cap > 1
-      ? `the crafted-mod cap (${crafted.cap}, raised by Astrid's Creativity) is full`
-      : 'an item holds only one crafted modifier'
-  return `This item already has ${mods} — Perfect & corrupted Essences can't be applied (${reason}).`
-}
-
 export function essencesForItem(
   itemClass: string,
   rarity: string,
@@ -169,7 +159,7 @@ export function essencesForItem(
       // its single crafted slot; if that slot is already full (cap reached) the
       // game blocks them, so drop them with a reason rather than list dead ends.
       if (crafted && crafted.used >= crafted.cap) {
-        return { applicable: [], note: craftedCapNote(crafted) }
+        return { applicable: [], note: craftedCapNote(crafted, 'Perfect & corrupted Essences') }
       }
       usable = onClass.filter((x) => x.essence.rareOnly)
       note = 'Rare item — only Perfect & corrupted essences apply (replace a random modifier)'

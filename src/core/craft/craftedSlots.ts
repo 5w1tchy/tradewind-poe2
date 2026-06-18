@@ -29,3 +29,18 @@ export function craftedSlots(item: ParsedItem): CraftedSlots {
   }
   return { used, cap }
 }
+
+/**
+ * Reason line shown when a Rare's crafted slot(s) are full (issue #24), so a
+ * guaranteed-crafted-mod currency can't apply. `blocked` names that currency
+ * ("Perfect & corrupted Essences", "Liquid Emotions") — both augment the single
+ * crafted slot and so are gated the same way.
+ */
+export function craftedCapNote(crafted: CraftedSlots, blocked: string): string {
+  const mods = crafted.used === 1 ? 'a crafted modifier' : `${crafted.used} crafted modifiers`
+  const reason =
+    crafted.cap > 1
+      ? `the crafted-mod cap (${crafted.cap}, raised by Astrid's Creativity) is full`
+      : 'an item holds only one crafted modifier'
+  return `This item already has ${mods} — ${blocked} can't be applied (${reason}).`
+}

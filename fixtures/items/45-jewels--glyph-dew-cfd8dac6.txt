@@ -1,0 +1,17 @@
+Item Class: Jewels
+Rarity: Rare
+Glyph Dew
+Diamond
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Triggered" (Tier: 1) — Damage, Caster }
+Triggered Spells deal 11(10-18)% increased Spell Damage
+{ Prefix Modifier "Venomous" (Tier: 1) — Damage, Ailment }
+10(5-15)% increased Magnitude of Poison you inflict
+{ Suffix Modifier "of Enduring" (Tier: 1) — Ailment }
+18(10-20)% increased Elemental Ailment Threshold
+{ Suffix Modifier "of Annihilating" (Tier: 1) — Caster, Critical }
+7(5-15)% increased Critical Hit Chance for Spells
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
