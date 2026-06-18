@@ -17,6 +17,7 @@ import type { TradeListing } from '../../../core/trade/types'
 import type { ItemPayload } from '../../../shared/ipc'
 import ListingTooltip, { type TooltipAnchor } from './ListingTooltip'
 import CurrencyView from './CurrencyView'
+import UniqueQuoteBanner from './UniqueQuoteBanner'
 import styles from './PriceCheck.module.css'
 
 const SALE_OPTIONS: Array<[ListingStatus, string]> = [
@@ -294,11 +295,17 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
       forceUpdate()
       return
     }
-    // Auto-search only when the query pins the item by name/type (uniques,
-    // gems, currency, white bases) — those defaults are reliable. A rare with
-    // every mod pre-checked rarely has market matches; arm Search instead.
+    // Auto-search only when the query pins the item by name/type (gems,
+    // currency, white bases) — those defaults are reliable. A rare with every
+    // mod pre-checked rarely has market matches; arm Search instead. Uniques
+    // are excluded too (#80): their instant poe2scout aggregate banner is the
+    // ballpark, and the rate-limited live search is now a deliberate click.
     if (prepared.current) {
-      if (prepared.current.name || prepared.current.type || prepared.current.exchangeId) {
+      const isUnique = prepared.current.rarity === 'Unique'
+      if (
+        !isUnique &&
+        (prepared.current.name || prepared.current.type || prepared.current.exchangeId)
+      ) {
         void runSearch()
       } else {
         setDirty(true)
@@ -883,6 +890,17 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
         />
       ) : q ? (
         <>
+          {/* Uniques lead with an instant poe2scout aggregate ballpark (#80);
+              the live search below is the precise, per-roll price. */}
+          {q.rarity === 'Unique' && q.name && q.type && (
+            <UniqueQuoteBanner
+              rarity={q.rarity}
+              name={q.name}
+              type={q.type}
+              league={league}
+              currencyIcons={payload.currencyIcons}
+            />
+          )}
           <div className={`${styles['filter-row']} ${styles['sale-row']}`}>
             <span className="tw-label">Listed</span>
             <div className={styles.picker} data-picker>

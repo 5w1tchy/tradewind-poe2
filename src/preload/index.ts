@@ -17,6 +17,9 @@ const api: TradewindApi = {
   getCurrencyHistory(league, apiId) {
     return ipcRenderer.invoke('tw:currency-history', league, apiId)
   },
+  getUniqueQuote(league, name, type) {
+    return ipcRenderer.invoke('tw:unique-quote', league, name, type)
+  },
   setLeague(league) {
     return ipcRenderer.invoke('tw:set-league', league)
   },

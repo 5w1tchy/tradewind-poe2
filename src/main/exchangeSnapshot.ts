@@ -1,4 +1,4 @@
-import type { CurrencyPoint, CurrencyQuote, ExchangeRates } from '../core/exchange'
+import type { CurrencyPoint, CurrencyQuote, ExchangeRates, UniqueQuote } from '../core/exchange'
 import { cachedFetchJson, USER_AGENT } from './dataCache'
 
 const REALM = 'poe2'
@@ -36,12 +36,21 @@ interface RawCurrencyDetail {
 
 interface SnapshotIndex {
   byApiId: Map<string, RawItem>
+  /** Uniques keyed by `name|type` (they carry no ApiId) — see uniqueKey. */
+  byNameType: Map<string, RawItem>
   rates: ExchangeRates
 }
 
 /** Per-league disk-cache file name, kept filesystem-safe. */
 function snapshotName(league: string): string {
   return `poe2scout-items-${league.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+}
+
+/** Join key for a unique row — case/space-insensitive so a parsed Name+Type
+ *  matches the snapshot regardless of incidental casing. */
+function uniqueKey(name: string, type: string): string {
+  const norm = (s: string): string => s.trim().toLowerCase().replace(/\s+/g, ' ')
+  return `${norm(name)}|${norm(type)}`
 }
 
 /**
@@ -79,6 +88,33 @@ export class ExchangeSnapshotProvider {
       category: row.CategoryApiId,
       iconUrl: row.IconUrl ?? null,
       priceExalted: row.CurrentPrice,
+      rates: snap.rates
+    }
+  }
+
+  /**
+   * Aggregate quote for a Unique item, joined on Name+Type (uniques carry no
+   * ApiId). The same snapshot that prices currency also lists every unique, so
+   * this is free at check time. null when the snapshot is unavailable or doesn't
+   * carry the unique — the renderer simply shows no banner and the live search
+   * stays the source of truth (#80).
+   */
+  async uniqueQuote(league: string, name: string, type: string): Promise<UniqueQuote | null> {
+    let snap: SnapshotIndex
+    try {
+      snap = await this.loadIndex(league)
+    } catch (err) {
+      console.warn('[exchange] snapshot unavailable:', err)
+      return null
+    }
+    const row = snap.byNameType.get(uniqueKey(name, type))
+    if (!row || typeof row.CurrentPrice !== 'number' || row.CurrentPrice <= 0) return null
+    return {
+      name: row.Name ?? name,
+      type: row.Type ?? type,
+      priceExalted: row.CurrentPrice,
+      iconUrl: row.IconUrl ?? null,
+      itemId: row.ItemId,
       rates: snap.rates
     }
   }
@@ -137,12 +173,20 @@ export class ExchangeSnapshotProvider {
     const url = `${API_BASE}/Leagues/${encodeURIComponent(league)}/Items`
     const items = await cachedFetchJson<RawItem[]>(snapshotName(league), url, SNAPSHOT_FRESH_MS)
     const byApiId = new Map<string, RawItem>()
+    const byNameType = new Map<string, RawItem>()
     for (const item of items) {
       if (item.ApiId && !byApiId.has(item.ApiId)) byApiId.set(item.ApiId, item)
+      // Uniques have no ApiId but carry Name+Type — index them for #80's banner.
+      if (item.Name && item.Type) {
+        const key = uniqueKey(item.Name, item.Type)
+        if (!byNameType.has(key)) byNameType.set(key, item)
+      }
     }
     const priceOf = (id: string): number => byApiId.get(id)?.CurrentPrice ?? 0
     const rates: ExchangeRates = { divine: priceOf('divine'), chaos: priceOf('chaos') }
-    console.log(`[exchange] snapshot ready for ${league} (${byApiId.size} items)`)
-    return { byApiId, rates }
+    console.log(
+      `[exchange] snapshot ready for ${league} (${byApiId.size} exchange, ${byNameType.size} uniques)`
+    )
+    return { byApiId, byNameType, rates }
   }
 }
