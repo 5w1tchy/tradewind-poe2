@@ -366,12 +366,20 @@ SAMPLE_QUERY.rarity = params.get('rarity') ?? SAMPLE_QUERY.rarity
 
 const isCurrency = params.get('view') === 'currency'
 
+// ?used=2&cap=2 exercises the essence crafted-mod cap (issue #24) on the Craft
+// tab; defaults to a full single slot (blocked) so the new state is visible.
+const craftedSlots = {
+  used: Number(params.get('used') ?? 1),
+  cap: Number(params.get('cap') ?? 1)
+}
+
 import('./main').then(() => {
   const item: ItemPayload = {
     x: 340,
     y: 120,
     text: 'Item Class: Rings\nRarity: Rare\nStorm Whorl\nSapphire Ring\n…',
     prepared: isCurrency ? CURRENCY_QUERY : SAMPLE_QUERY,
+    craftedSlots: isCurrency ? null : craftedSlots,
     currency: isCurrency ? SAMPLE_CURRENCY : null,
     leagues: ['Rise of the Abyssal', 'HC Rise of the Abyssal', 'Standard'],
     league: 'Rise of the Abyssal',

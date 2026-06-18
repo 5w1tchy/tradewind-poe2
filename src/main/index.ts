@@ -1,4 +1,5 @@
 import { app, globalShortcut, ipcMain, screen, shell } from 'electron'
+import { craftedSlots, type CraftedSlots } from '../core/craft/craftedSlots'
 import { parseItem } from '../core/parser/parse'
 import { buildSearchBody, prepareQuery } from '../core/query'
 import type { PreparedQuery } from '../core/query/types'
@@ -293,9 +294,12 @@ app.whenReady().then(() => {
       // silent failures ever become a debugging problem.
       if (!text) return
       let prepared: PreparedQuery | null = null
+      let craftedSlotsInfo: CraftedSlots | null = null
       if (statsDb) {
         try {
-          prepared = prepareQuery(parseItem(text), statsDb, {
+          const parsed = parseItem(text)
+          craftedSlotsInfo = craftedSlots(parsed)
+          prepared = prepareQuery(parsed, statsDb, {
             spread: config.spread,
             exchangeIds,
             baseTypes,
@@ -316,6 +320,7 @@ app.whenReady().then(() => {
       overlay.webContents.send('tw:item', {
         text,
         prepared,
+        craftedSlots: craftedSlotsInfo,
         currency,
         leagues,
         league,

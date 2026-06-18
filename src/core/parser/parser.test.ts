@@ -77,6 +77,29 @@ describe('targeted parsing', () => {
     expect(mod.name).toBe('Of the Underground')
   })
 
+  it('stacked Fractured Crafted header sets both flags (issue #24)', () => {
+    // A crafted mod later locked by a Fracturing Orb copies with both keywords
+    // stacked; it must parse as a real suffix and carry crafted + fractured, or
+    // the essence crafted-mod cap under-counts it.
+    const mod = parseModHeader('{ Fractured Crafted Suffix Modifier "of Archaeology" (Tier: 1) }')
+    expect(mod.generation).toBe('suffix')
+    expect(mod.crafted).toBe(true)
+    expect(mod.fractured).toBe(true)
+    expect(mod.name).toBe('of Archaeology')
+    expect(mod.tier).toBe(1)
+  })
+
+  it('Astrid boots: two crafted mods (one Fractured Crafted) and the cap rune (issue #24)', () => {
+    const item = parseItem(load('skull-goad'))
+    expect(item.rarity).toBe('Rare')
+    // Both crafted slots are filled; the fractured-crafted one must count.
+    const crafted = item.explicits.filter((m) => m.crafted)
+    expect(crafted.map((m) => m.name)).toEqual(['of Archaeology', 'of the Essence'])
+    expect(crafted.find((m) => m.name === 'of Archaeology')?.fractured).toBe(true)
+    // Astrid's Creativity surfaces as a rune line raising the crafted-mod cap.
+    expect(item.runeMods.some((l) => l.raw === 'Can have 1 additional Crafted Modifier')).toBe(true)
+  })
+
   it('Corruption Enhancement header parses as a corrupted enhancement (issue #54)', () => {
     // A corruption-added enhancement copies as `{ Corruption Enhancement }`,
     // parallel to a normal anoint's `{ Enhancement }` — both are enhancement

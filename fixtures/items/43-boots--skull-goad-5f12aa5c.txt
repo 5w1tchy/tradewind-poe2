@@ -1,0 +1,34 @@
+Item Class: Boots
+Rarity: Rare
+Skull Goad
+Dragonscale Boots
+--------
+Quality: +20% (augmented)
+Evasion Rating: 404 (augmented)
+--------
+Requires: Level 75, 101 Dex
+--------
+Sockets: S S 
+--------
+Item Level: 82
+--------
+Can have 1 additional Crafted Modifier (rune)
+8% increased Movement Speed (rune)
+--------
+{ Prefix Modifier "Athlete's" (Tier: 1) — Life }
++139(120-149) to maximum Life
+{ Prefix Modifier "Cheetah's" (Tier: 2) — Speed }
+30% increased Movement Speed
+{ Prefix Modifier "Dragonfly's" (Tier: 2) }
+38(33-38)% increased Evasion Rating
++75(64-94) to Stun Threshold
+{ Fractured Crafted Suffix Modifier "of Archaeology" (Tier: 1) }
+18(15-18)% increased Rarity of Items found
+{ Suffix Modifier "of Flexure" (Tier: 1) — Evasion }
+Gain Deflection Rating equal to 21(21-23)% of Evasion Rating
+{ Crafted Suffix Modifier "of the Essence" }
+60% increased effect of Socketed Augment Items — Unscalable Value
+--------
+Fractured Item
+--------
+Note: ~b/o 20 divine

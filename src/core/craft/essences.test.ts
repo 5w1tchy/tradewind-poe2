@@ -21,6 +21,28 @@ describe('essencesForItem', () => {
     expect(applicable.every((e) => e.tier === 'perfect' || e.tier === 'corrupted')).toBe(true)
   })
 
+  it('rare with an open crafted slot still offers Perfect & corrupted (issue #24)', () => {
+    const { applicable } = essencesForItem('Boots', 'Rare', { used: 0, cap: 1 })
+    expect(applicable.length).toBeGreaterThan(0)
+  })
+
+  it('rare at the crafted-mod cap hides Perfect & corrupted with a reason (issue #24)', () => {
+    const { applicable, note } = essencesForItem('Boots', 'Rare', { used: 1, cap: 1 })
+    expect(applicable).toEqual([])
+    expect(note).toMatch(/already has a crafted modifier/i)
+    expect(note).toMatch(/can't be applied/i)
+  })
+
+  it("Astrid's Creativity raises the cap to 2 before blocking (issue #24)", () => {
+    // One crafted mod, cap 2 → still room for an essence.
+    expect(essencesForItem('Boots', 'Rare', { used: 1, cap: 2 }).applicable.length).toBeGreaterThan(0)
+    // Two crafted mods, cap 2 → blocked, note names the raised cap and Astrid.
+    const full = essencesForItem('Boots', 'Rare', { used: 2, cap: 2 })
+    expect(full.applicable).toEqual([])
+    expect(full.note).toMatch(/2 crafted modifiers/i)
+    expect(full.note).toMatch(/Astrid/i)
+  })
+
   it('normal item: Greater essences with a transmute hint', () => {
     const { applicable, note } = essencesForItem('Rings', 'Normal')
     expect(applicable.length).toBeGreaterThan(0)

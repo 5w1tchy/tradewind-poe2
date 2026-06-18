@@ -1,8 +1,11 @@
 import type { ParsedMod } from './types'
 
 const HEADER_LINE = /^\{ (.+) \}$/
+// A header can stack variant keywords, e.g. `Fractured Crafted Suffix Modifier`
+// (a crafted mod later locked by a Fracturing Orb), so the variant prefix is a
+// space-separated run, not a single keyword.
 const DESCRIPTOR =
-  /^(?:(Desecrated|Crafted|Veiled|Fractured) )?(Prefix|Suffix|Implicit|Unique) Modifier(?: "(.*)")?(?: \(Tier: (\d+)\))?$/
+  /^((?:(?:Desecrated|Crafted|Veiled|Fractured) )*)(Prefix|Suffix|Implicit|Unique) Modifier(?: "(.*)")?(?: \(Tier: (\d+)\))?$/
 const QUALITY_BOOST = /^(\d+)% Increased$/
 
 export function isModHeader(line: string): boolean {
@@ -63,11 +66,11 @@ export function parseModHeader(line: string): ParsedMod {
     return mod
   }
 
-  const [, variant, generation, name, tier] = m
+  const [, variants, generation, name, tier] = m
   mod.generation = generation.toLowerCase() as ParsedMod['generation']
-  mod.crafted = variant === 'Crafted'
-  mod.desecrated = variant === 'Desecrated'
-  mod.fractured = variant === 'Fractured'
+  mod.crafted = variants.includes('Crafted')
+  mod.desecrated = variants.includes('Desecrated')
+  mod.fractured = variants.includes('Fractured')
   mod.name = name ?? null
   mod.tier = tier !== undefined ? Number(tier) : null
   return mod
