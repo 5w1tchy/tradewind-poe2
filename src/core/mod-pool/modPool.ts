@@ -187,18 +187,35 @@ export function reconstructAffix(
 
 /**
  * Every repoe mod-group a stat line could belong to on a base — for the
- * group-conflict gate (#72/#51), which needs only the *group*, not the tier or
- * affix. Unlike reconstruct*, this stays deliberately loose: a mod's group is
- * intrinsic to its stat (the same across tiers and affixes), so it returns all
- * candidate groups and a conflict is caught even when the exact tier/affix is
- * ambiguous. Base tags narrow the candidates when known; an unknown base falls
- * back to every entry with that text. Empty when the stat isn't in the pool.
+ * group-conflict gate (#72/#51), which needs only the *group*, not the tier.
+ * Unlike reconstruct*, this stays deliberately loose: a mod's group is intrinsic
+ * to its stat, so it returns all candidate groups and a conflict is caught even
+ * when the exact tier is ambiguous. Base tags narrow the candidates when known;
+ * an unknown base falls back to every entry with that text. Empty when the stat
+ * isn't in the pool.
+ *
+ * `affix` (from an advanced copy's prefix/suffix header) disambiguates the few
+ * stats that roll as *both* a prefix and a suffix under different groups — most
+ * notably Rarity of Items found (suffix `ItemFoundRarityIncrease` vs prefix
+ * `ItemFoundRarityIncreasePrefix`), so a suffix-rarity mod doesn't collide with
+ * a prefix-rarity essence and vice versa. Null/absent (a basic chat-link copy,
+ * which carries no affix) keeps both — the conservative "don't guess" default.
  */
-export function groupsForLine(baseType: string, line: ParsedStatLine): string[] {
+export function groupsForLine(
+  baseType: string,
+  line: ParsedStatLine,
+  affix?: 'prefix' | 'suffix' | null
+): string[] {
   const sameStat = byText.get(normalizeStatText(line.raw))
   if (!sameStat) return []
+  let pool = sameStat
+  const a = affix === 'prefix' ? 'p' : affix === 'suffix' ? 's' : null
+  if (a) {
+    const byAffix = sameStat.filter((e) => e.a === a)
+    if (byAffix.length) pool = byAffix
+  }
   const tags = BASE_TAGS[baseType]
-  const onBase = tags ? sameStat.filter((e) => spawnsOn(e, new Set(tags))) : []
-  const pool = onBase.length > 0 ? onBase : sameStat
+  const onBase = tags ? pool.filter((e) => spawnsOn(e, new Set(tags))) : []
+  pool = onBase.length > 0 ? onBase : pool
   return [...new Set(pool.map((e) => e.g))]
 }

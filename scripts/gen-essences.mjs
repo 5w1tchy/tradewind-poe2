@@ -91,24 +91,30 @@ function buildModIndex(mods) {
 const groupSet = (cands) => new Set(cands.map((c) => c.groups.join('+')))
 
 // Resolve a scraped mod's groups + affix. Single group-set wins outright;
-// otherwise prefer the *non-rollable* candidate (essence/alloy mods aren't
-// randomly rolled, so an empty spawn rule disambiguates the guaranteed mod
-// from a same-text normal roll), then a bracket match. When still split we
-// return the union of groups (genuine exclusivity pairs like the Rarity
-// prefix/suffix — blocking on either is correct) with a null affix.
+// otherwise the guaranteed mod's *exact roll range* pins the specific tier,
+// which usually resolves the prefix/suffix family on its own — e.g. a (15-18)%
+// Rarity essence is the suffix mod (group ItemFoundRarityIncrease); the prefix
+// family's neighbouring tier is (16-19), so the bracket is unique. We match the
+// bracket FIRST because the granted mod can be a normally rollable one (rarity),
+// for which the non-rollable preference below would discard the right candidate.
+// Only if the bracket is still split do we prefer the *non-rollable* candidate
+// (an essence/alloy-only mod has empty spawn weights, disambiguating it from a
+// same-text normal roll). When even that leaves it split we return the union of
+// groups (a genuine exclusivity pair — blocking on either is the safe default)
+// with a null affix.
 function resolveGroups(text) {
   if (!modIndex) return { groups: [], affix: null }
   const cands = modIndex.get(wordKey(text))
   if (!cands) return { groups: [], affix: null, miss: true }
   let pool = cands
   if (groupSet(pool).size > 1) {
-    const deliberate = pool.filter((c) => !c.roll)
-    if (deliberate.length) pool = deliberate
-  }
-  if (groupSet(pool).size > 1) {
     const mb = brackets(text)
     const bm = pool.filter((c) => c.br === mb)
     if (bm.length) pool = bm
+  }
+  if (groupSet(pool).size > 1) {
+    const deliberate = pool.filter((c) => !c.roll)
+    if (deliberate.length) pool = deliberate
   }
   if (groupSet(pool).size === 1) return { groups: pool[0].groups, affix: pool[0].affix }
   const union = [...new Set(pool.flatMap((c) => c.groups))]

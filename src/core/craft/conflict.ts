@@ -30,10 +30,17 @@ export interface ItemMod {
  * empty `groups` and so never blocks an essence.
  */
 export function itemMods(item: ParsedItem, baseType: string): ItemMod[] {
-  return item.explicits.map((mod) => ({
-    label: mod.lines.map((l) => l.raw).join(', '),
-    groups: [...new Set(mod.lines.flatMap((l) => groupsForLine(baseType, l)))]
-  }))
+  return item.explicits.map((mod) => {
+    // An advanced copy tags each mod prefix/suffix; pass it through so a stat
+    // that rolls as both under different groups (e.g. Rarity of Items found)
+    // resolves to the right family. A basic chat-link copy has no affix
+    // ('explicit'), so groups stay un-narrowed — the conservative default.
+    const affix = mod.generation === 'prefix' || mod.generation === 'suffix' ? mod.generation : null
+    return {
+      label: mod.lines.map((l) => l.raw).join(', '),
+      groups: [...new Set(mod.lines.flatMap((l) => groupsForLine(baseType, l, affix)))]
+    }
+  })
 }
 
 /**

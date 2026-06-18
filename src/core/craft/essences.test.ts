@@ -107,6 +107,17 @@ describe('essencesForItem', () => {
     expect(opulence?.blockedBy).toBe('14% increased Rarity of Items found')
   })
 
+  it('a prefix-rarity mod does NOT block the suffix-rarity Opulence (issue #72)', () => {
+    // The whole point of resolving affix-split groups: prefix rarity and suffix
+    // rarity are different groups, so a prefix-rarity item leaves Opulence usable.
+    const existing = [
+      { label: '14% increased Rarity of Items found', groups: ['ItemFoundRarityIncreasePrefix'] }
+    ]
+    const { applicable } = essencesForItem('Rings', 'Magic', undefined, existing)
+    const opulence = applicable.find((e) => e.name === 'Greater Essence of Opulence')
+    expect(opulence?.blockedBy).toBeNull()
+  })
+
   it('a mod in a different group never blocks (issue #72)', () => {
     const existing = [{ label: '+25 to Strength', groups: ['Strength'] }]
     const { applicable } = essencesForItem('Rings', 'Rare', { used: 0, cap: 1 }, existing)

@@ -51,4 +51,34 @@ describe('itemMods', () => {
     expect(mods[0].label).toBe('+125 to maximum Mana')
     expect(mods[0].groups).toContain('IncreasedMana')
   })
+
+  // A stat that rolls as both a prefix and a suffix under different groups must
+  // resolve by the copied affix, so suffix-rarity and prefix-rarity don't cross-
+  // block (issue #72 — the Greater Essence of Opulence case).
+  function ringWithRarity(slot: 'Prefix' | 'Suffix'): string {
+    return [
+      'Item Class: Rings',
+      'Rarity: Rare',
+      'Glyph Knuckle',
+      'Sapphire Ring',
+      '--------',
+      'Item Level: 81',
+      '--------',
+      `{ ${slot} Modifier "Shining" (Tier: 3) }`,
+      '16% increased Rarity of Items found',
+      '--------'
+    ].join('\n')
+  }
+
+  it('suffix rarity resolves to the suffix group only', () => {
+    const [m] = itemMods(parseItem(ringWithRarity('Suffix')), 'Sapphire Ring')
+    expect(m.groups).toContain('ItemFoundRarityIncrease')
+    expect(m.groups).not.toContain('ItemFoundRarityIncreasePrefix')
+  })
+
+  it('prefix rarity resolves to the prefix group only', () => {
+    const [m] = itemMods(parseItem(ringWithRarity('Prefix')), 'Sapphire Ring')
+    expect(m.groups).toContain('ItemFoundRarityIncreasePrefix')
+    expect(m.groups).not.toContain('ItemFoundRarityIncrease')
+  })
 })
