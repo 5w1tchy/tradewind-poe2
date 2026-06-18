@@ -80,6 +80,11 @@ describe('reconstruction accuracy vs. fixture ground truth', () => {
   for (const f of readdirSync(dir).filter((n) => n.endsWith('.txt'))) {
     const item = parseItem(readFileSync(join(dir, f), 'utf8'))
     if (item.rarity !== 'Rare' && item.rarity !== 'Magic') continue
+    // Jewels carry their own mod families (radius/passive bonuses) that aren't
+    // in the gear mod pool — reconstruction targets gear, so they'd all "miss"
+    // and skew this gear-coverage metric. Jewel crafting is the Liquids tab's
+    // job (issue #48), not affix/tier reconstruction.
+    if (item.itemClass === 'Jewels') continue
     const base =
       item.rarity === 'Rare'
         ? item.baseType

@@ -359,10 +359,13 @@ window.tradewind = mock
 document.body.style.background =
   'radial-gradient(80% 90% at 60% 30%, #3a3128 0%, #17130e 60%, #0a0806 100%)'
 
-// ?class=Boots&rarity=Magic overrides the sample item for quick UI checks.
+// ?class=Boots&rarity=Magic overrides the sample item for quick UI checks;
+// ?class=Jewels&base=Emerald exercises the Craft tab's Liquids section (#48).
 const params = new URLSearchParams(location.search)
 SAMPLE_QUERY.itemClass = params.get('class') ?? SAMPLE_QUERY.itemClass
 SAMPLE_QUERY.rarity = params.get('rarity') ?? SAMPLE_QUERY.rarity
+const baseParam = params.get('base')
+if (baseParam) SAMPLE_QUERY.baseTypeFilter = { value: baseParam, enabled: true }
 
 const isCurrency = params.get('view') === 'currency'
 

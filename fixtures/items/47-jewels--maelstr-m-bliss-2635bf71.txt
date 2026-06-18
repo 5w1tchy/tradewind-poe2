@@ -1,0 +1,17 @@
+Item Class: Jewels
+Rarity: Rare
+Maelström Bliss
+Time-Lost Ruby
+--------
+Radius: Small
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Shaman's" (Tier: 1) — Damage }
+Small Passive Skills in Radius also grant 2(2-3)% increased Totem Damage
+{ Suffix Modifier "of Regeneration" (Tier: 1) — Life }
+Notable Passive Skills in Radius also grant 5(3-5)% increased Life Regeneration rate
+{ Suffix Modifier "of Withstanding" (Tier: 1) }
+Small Passive Skills in Radius also grant 2(1-2)% increased Stun Threshold
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.

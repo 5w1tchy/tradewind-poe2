@@ -1,0 +1,19 @@
+Item Class: Jewels
+Rarity: Rare
+Kraken Glimmer
+Time-Lost Sapphire
+--------
+Radius: Small
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Shimmering" (Tier: 1) — Energy Shield }
+Small Passive Skills in Radius also grant 3(2-3)% increased maximum Energy Shield
+{ Prefix Modifier "Authoritative" (Tier: 1) — Damage, Minion }
+Small Passive Skills in Radius also grant Minions deal 2(1-2)% increased Damage
+{ Suffix Modifier "of Osmosis" (Tier: 1) — Mana }
+Notable Passive Skills in Radius also grant Recover 1% of maximum Mana on Kill
+{ Suffix Modifier "of Orchestration" (Tier: 1) — Attack, Caster, Speed, Minion }
+Notable Passive Skills in Radius also grant Minions have 1(1-2)% increased Attack and Cast Speed
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.

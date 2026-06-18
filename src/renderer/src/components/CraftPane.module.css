@@ -102,12 +102,38 @@
 .tier-perfect { color: var(--tw-gold); }
 .tier-corrupted { color: var(--tw-bad); }
 
+/* Liquid Emotions: base emotions read bronze, Potent (unique) ones gold. */
+.liquid { color: var(--tw-bronze-bright); }
+.potent { color: var(--tw-gold); }
+
 .mod {
   color: var(--tw-text);
   font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* "rolls one of" tag — a liquid that can land any of several mods (Diamond
+   wildcard jewel, or a Potent liquid's prefix/suffix choice). */
+.oneof {
+  margin-left: 6px;
+  color: var(--tw-text-faint);
+  font-size: 9px;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Prefix/Suffix marker on a liquid's guaranteed mod line. */
+.affix {
+  display: inline-block;
+  margin-right: 5px;
+  min-width: 11px;
+  text-align: center;
+  color: var(--tw-text-mute);
+  font-size: 10px;
+  font-weight: 600;
 }
 
 .empty {

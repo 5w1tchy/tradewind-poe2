@@ -1,0 +1,19 @@
+Item Class: Jewels
+Rarity: Rare
+Honour Bliss
+Sapphire
+--------
+Item Level: 78
+--------
+{ Prefix Modifier "Mystic" (Tier: 1) — Damage, Caster }
+5(5-15)% increased Spell Damage
+{ Prefix Modifier "Overgrown" (Tier: 1) — Damage }
+8(5-15)% increased Damage with Plant Skills
+{ Suffix Modifier "of Enchanting" (Tier: 1) — Caster, Speed }
+4(2-4)% increased Cast Speed
+{ Crafted Suffix Modifier "of Unmaking" (Tier: 1) — Damage, Caster, Critical }
+14(10-20)% increased Critical Spell Damage Bonus
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+--------
+Note: ~b/o 13 divine

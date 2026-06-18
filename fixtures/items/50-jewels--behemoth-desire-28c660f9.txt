@@ -1,0 +1,23 @@
+Item Class: Jewels
+Rarity: Rare
+Behemoth Desire
+Emerald
+--------
+Item Level: 82
+--------
+{ Prefix Modifier "Archer's" (Tier: 1) — Damage }
+9(5-15)% increased Projectile Damage
+{ Crafted Prefix Modifier "" }
++1 Suffix Modifier allowed
+{ Fractured Suffix Modifier "of Demolishing" (Tier: 1) — Damage, Attack, Critical }
+20(10-20)% increased Critical Damage Bonus for Attack Damage
+{ Suffix Modifier "of Alacrity" (Tier: 1) — Attack, Speed }
+3(2-4)% increased Attack Speed
+{ Desecrated Suffix Modifier "of Speed" (Tier: 1) — Speed }
+2(1-2)% increased Movement Speed
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+--------
+Fractured Item
+--------
+Note: ~b/o 287 divine

@@ -1297,3 +1297,142 @@ Gain Deflection Rating equal to 21(21-23)% of Evasion Rating
 Fractured Item
 --------
 Note: ~b/o 20 divine
+
+=====
+Item Class: Jewels
+Rarity: Rare
+Soul Curio
+Emerald
+--------
+Item Level: 81
+--------
+{ Prefix Modifier "Spearheaded" (Tier: 1) — Damage, Attack }
+8(6-16)% increased Damage with Spears
+{ Prefix Modifier "Archer's" (Tier: 1) — Damage }
+10(5-15)% increased Projectile Damage
+{ Suffix Modifier "of Hunting" (Tier: 1) — Attack, Critical }
+13(10-20)% increased Critical Damage Bonus with Spears
+{ Suffix Modifier "of Spearing" (Tier: 1) — Attack, Speed }
+3(2-4)% increased Attack Speed with Spears
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+=====
+Item Class: Jewels
+Rarity: Rare
+Glyph Dew
+Diamond
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Triggered" (Tier: 1) — Damage, Caster }
+Triggered Spells deal 11(10-18)% increased Spell Damage
+{ Prefix Modifier "Venomous" (Tier: 1) — Damage, Ailment }
+10(5-15)% increased Magnitude of Poison you inflict
+{ Suffix Modifier "of Enduring" (Tier: 1) — Ailment }
+18(10-20)% increased Elemental Ailment Threshold
+{ Suffix Modifier "of Annihilating" (Tier: 1) — Caster, Critical }
+7(5-15)% increased Critical Hit Chance for Spells
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+=====
+Item Class: Jewels
+Rarity: Rare
+Kraken Glimmer
+Time-Lost Sapphire
+--------
+Radius: Small
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Shimmering" (Tier: 1) — Energy Shield }
+Small Passive Skills in Radius also grant 3(2-3)% increased maximum Energy Shield
+{ Prefix Modifier "Authoritative" (Tier: 1) — Damage, Minion }
+Small Passive Skills in Radius also grant Minions deal 2(1-2)% increased Damage
+{ Suffix Modifier "of Osmosis" (Tier: 1) — Mana }
+Notable Passive Skills in Radius also grant Recover 1% of maximum Mana on Kill
+{ Suffix Modifier "of Orchestration" (Tier: 1) — Attack, Caster, Speed, Minion }
+Notable Passive Skills in Radius also grant Minions have 1(1-2)% increased Attack and Cast Speed
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+=====
+Item Class: Jewels
+Rarity: Rare
+Maelström Bliss
+Time-Lost Ruby
+--------
+Radius: Small
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Shaman's" (Tier: 1) — Damage }
+Small Passive Skills in Radius also grant 2(2-3)% increased Totem Damage
+{ Suffix Modifier "of Regeneration" (Tier: 1) — Life }
+Notable Passive Skills in Radius also grant 5(3-5)% increased Life Regeneration rate
+{ Suffix Modifier "of Withstanding" (Tier: 1) }
+Small Passive Skills in Radius also grant 2(1-2)% increased Stun Threshold
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+=====
+Item Class: Jewels
+Rarity: Rare
+Carrion Joy
+Time-Lost Diamond
+--------
+Radius: Small
+--------
+Item Level: 80
+--------
+{ Prefix Modifier "Shimmering" (Tier: 1) — Energy Shield }
+Small Passive Skills in Radius also grant 2(2-3)% increased maximum Energy Shield
+{ Prefix Modifier "Protecting" (Tier: 1) }
+Notable Passive Skills in Radius also grant 1(1-3)% increased Block chance
+{ Suffix Modifier "of Success" (Tier: 1) — Life }
+Notable Passive Skills in Radius also grant Recover 1% of maximum Life on Kill
+{ Suffix Modifier "of Targeting" (Tier: 1) — Speed }
+Small Passive Skills in Radius also grant Mark Skills have 2(2-3)% increased Use Speed
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+=====
+Item Class: Jewels
+Rarity: Rare
+Honour Bliss
+Sapphire
+--------
+Item Level: 78
+--------
+{ Prefix Modifier "Mystic" (Tier: 1) — Damage, Caster }
+5(5-15)% increased Spell Damage
+{ Prefix Modifier "Overgrown" (Tier: 1) — Damage }
+8(5-15)% increased Damage with Plant Skills
+{ Suffix Modifier "of Enchanting" (Tier: 1) — Caster, Speed }
+4(2-4)% increased Cast Speed
+{ Crafted Suffix Modifier "of Unmaking" (Tier: 1) — Damage, Caster, Critical }
+14(10-20)% increased Critical Spell Damage Bonus
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+--------
+Note: ~b/o 13 divine
+=====
+Item Class: Jewels
+Rarity: Rare
+Behemoth Desire
+Emerald
+--------
+Item Level: 82
+--------
+{ Prefix Modifier "Archer's" (Tier: 1) — Damage }
+9(5-15)% increased Projectile Damage
+{ Crafted Prefix Modifier "" }
++1 Suffix Modifier allowed
+{ Fractured Suffix Modifier "of Demolishing" (Tier: 1) — Damage, Attack, Critical }
+20(10-20)% increased Critical Damage Bonus for Attack Damage
+{ Suffix Modifier "of Alacrity" (Tier: 1) — Attack, Speed }
+3(2-4)% increased Attack Speed
+{ Desecrated Suffix Modifier "of Speed" (Tier: 1) — Speed }
+2(1-2)% increased Movement Speed
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+--------
+Fractured Item
+--------
+Note: ~b/o 287 divine
