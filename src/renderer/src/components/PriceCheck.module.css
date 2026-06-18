@@ -250,33 +250,72 @@
   opacity: 0.7;
 }
 
-/* ---- Collapsible "Filters" group -------------------------------------- */
+/* "Open modifier slots" count row: a label + min/max inputs, not a clickable
+   toggle, so it suppresses the filter-row pointer/hover affordances. */
+.mod-count-row {
+  cursor: default;
+}
 
-.flags-header {
+.mod-count-row:hover {
+  background: none;
+}
+
+.mod-count-row .property {
+  opacity: 1;
+}
+
+/* ---- Section legend: title set into the divider line (issue #57) ------- */
+
+/* The whole legend is the collapse toggle: a centered small-caps title with a
+   bronze rule fading out to each popup edge, so the title breaks the line. */
+.section-legend {
   appearance: none;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   width: 100%;
   background: none;
   border: none;
-  border-radius: 2px;
-  padding: 2px 2px;
-  color: var(--tw-bronze-bright);
-  font: inherit;
-  font-size: 12px;
-  letter-spacing: 0.04em;
+  padding: 0;
+  margin: 9px 0;
   cursor: pointer;
+  font: inherit;
+}
+
+/* Two mirrored rules so the line is strongest at the title and dies at the
+   edges, framing the centered label. */
+.legend-rule {
+  flex: 1;
+  height: 1px;
+  opacity: 0.6;
+  background: linear-gradient(90deg, transparent, var(--tw-bronze) 95%);
+}
+
+.legend-rule:last-child {
+  background: linear-gradient(90deg, var(--tw-bronze), transparent 95%);
+}
+
+.legend-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  font-family: var(--tw-font-display);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tw-bronze-bright);
   transition: color 100ms ease;
 }
 
-.flags-header:hover {
-  background: var(--tw-bg-raised);
+.section-legend:hover .legend-label {
   color: var(--tw-gold);
 }
 
-.flags-title {
-  text-transform: uppercase;
+.legend-chevron {
+  color: var(--tw-text-faint);
+  font-size: 9px;
 }
 
 .flags-count {
@@ -289,65 +328,87 @@
   min-width: 14px;
   text-align: center;
   padding: 0 3px;
+  letter-spacing: 0;
 }
 
-.chevron {
-  margin-left: auto;
-  color: var(--tw-text-faint);
-  font-size: 10px;
-}
+/* ---- Tri-state flag chips (issue #57) --------------------------------- */
 
-/* ---- Tri-state item flags (corrupted, mirrored, …) -------------------- */
-
-.flag-row {
-  cursor: default;
-}
-
-.flag-row:hover {
-  background: none;
-}
-
-.flag-row .property {
-  opacity: 1;
-}
-
-.tristate {
-  margin-left: auto;
+/* Flags read as a wrapping band of chips rather than one stacked row each.
+   One click cycles a chip any → yes → no; its glyph + color is the state. */
+.flag-chips {
   display: flex;
-  flex-shrink: 0;
-  border: 1px solid var(--tw-line-strong);
-  border-radius: 3px;
-  overflow: hidden;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 1px 2px 2px;
 }
 
-.tristate button {
+.chip {
   appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   background: var(--tw-bg-inset);
-  border: none;
-  border-left: 1px solid var(--tw-line);
+  border: 1px solid var(--tw-line);
+  border-radius: 3px;
   color: var(--tw-text-faint);
   font: inherit;
   font-size: 11px;
-  line-height: 16px;
-  padding: 0 9px;
+  line-height: 1;
+  padding: 4px 8px 4px 7px;
   cursor: pointer;
   transition:
-    background-color 100ms ease,
-    color 100ms ease;
+    color 110ms ease,
+    border-color 110ms ease,
+    background-color 110ms ease;
 }
 
-.tristate button:first-child {
-  border-left: none;
+.chip:hover {
+  border-color: var(--tw-bronze-dim);
+  color: var(--tw-text-mute);
 }
 
-.tristate button:hover {
-  color: var(--tw-text);
-  background: var(--tw-bg-raised);
+/* Leading state mark — fixed width so the labels don't shift as state flips. */
+.chip-mark {
+  width: 9px;
+  text-align: center;
+  font-size: 10px;
+  opacity: 0.65;
 }
 
-.tristate button.active {
-  background: var(--tw-bronze-faint);
+/* ANY — not filtering: dim, reads as "off" (base chip styles already neutral). */
+
+/* YES — must have: gold, the include signal. */
+.chip-yes {
   color: var(--tw-gold);
+  border-color: var(--tw-bronze);
+  background: var(--tw-bronze-faint);
+}
+
+.chip-yes:hover {
+  color: var(--tw-gold-bright);
+  border-color: var(--tw-bronze-bright);
+}
+
+.chip-yes .chip-mark {
+  color: var(--tw-gold);
+  opacity: 1;
+}
+
+/* NO — must not have: red, the exclude signal. */
+.chip-no {
+  color: var(--tw-bad);
+  border-color: rgba(208, 88, 88, 0.5);
+  background: rgba(208, 88, 88, 0.12);
+}
+
+.chip-no:hover {
+  color: #e07a7a;
+  border-color: var(--tw-bad);
+}
+
+.chip-no .chip-mark {
+  color: var(--tw-bad);
+  opacity: 1;
 }
 
 .unmatched {
