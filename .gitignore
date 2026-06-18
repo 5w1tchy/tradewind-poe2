@@ -9,3 +9,7 @@ native/keyhook/build/
 .playwright-mcp/
 scratch/
 *.tsbuildinfo
+
+# Local UI-preview screenshots / Playwright MCP output
+craft-*.png
+.playwright-mcp/
