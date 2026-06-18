@@ -33,6 +33,36 @@ export interface PrepareOptions {
 
 const DEFAULT_SPREAD = 0.1
 
+// Quality cap on ordinary equipment. An Exceptional item (issue #14) breaks it.
+const NORMAL_MAX_QUALITY = 20
+
+// Normal rune-socket cap per item class (issue #14). Body armour and two-handed
+// martial weapons take 2; one-handed martial weapons, helmet/gloves/boots and
+// off-hand armour take 1. Caster weapons, quivers, foci and jewellery take none
+// and are absent here (an absent class is never socket-flagged). An Exceptional
+// item carries one socket past its cap — the "additional Augment Socket".
+const NORMAL_MAX_SOCKETS: Record<string, number> = {
+  'Body Armours': 2,
+  'Two Hand Swords': 2,
+  'Two Hand Axes': 2,
+  'Two Hand Maces': 2,
+  Quarterstaves: 2,
+  Bows: 2,
+  Crossbows: 2,
+  Helmets: 1,
+  Gloves: 1,
+  Boots: 1,
+  Shields: 1,
+  Bucklers: 1,
+  Claws: 1,
+  Daggers: 1,
+  'One Hand Swords': 1,
+  'One Hand Axes': 1,
+  'One Hand Maces': 1,
+  Spears: 1,
+  Flails: 1
+}
+
 // Equipment props whose smart min keeps fractional precision (everything else
 // floors to a whole number). aps/crit are fine-grained weapon stats.
 const EQUIP_DECIMALS: Partial<Record<EquipmentFilterKey, number>> = { aps: 2, crit: 2 }
@@ -837,6 +867,22 @@ export function prepareQuery(
         enabled: false
       }
     })
+
+    // Exceptional items (issue #14) drop with a bonus past the normal cap: quality
+    // over the 20% maximum and/or an extra augment socket (one past the item
+    // class's normal socket cap). Detect each independently — one item can exceed
+    // both — and default-arm the matching filter so the check scopes to
+    // comparably-exceptional listings. Read off the numbers, not the name: only
+    // white items decorate the base with the literal "Exceptional" word; a
+    // Magic/Rare exceptional carries its normal magic/rare name.
+    if (prepared.quality && item.quality !== null && item.quality > NORMAL_MAX_QUALITY) {
+      prepared.quality.enabled = true
+    }
+    const maxSockets = NORMAL_MAX_SOCKETS[item.itemClass]
+    if (maxSockets !== undefined && item.sockets !== null && item.sockets > maxSockets) {
+      const sockets = prepared.equipment.find((e) => e.key === 'rune_sockets')
+      if (sockets) sockets.enabled = true
+    }
 
     // Affix/tier reconstruction needs the clean base name (the join key into the
     // mod pool's spawn tags). Resolve it against the pool's own base list so a

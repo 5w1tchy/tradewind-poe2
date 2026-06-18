@@ -301,9 +301,10 @@ describe('prepareQuery', () => {
     expect(body.equipment).toContainEqual(
       expect.objectContaining({ key: 'ev', label: 'Evasion', value: 550, min: 495 })
     )
-    // "Sockets: S S S" — exact count as min, no spread
+    // "Sockets: S S S" — exact count as min, no spread. 3 sockets exceeds a body
+    // armour's normal cap of 2, so this exceptional item arms it on (issue #14).
     expect(body.equipment).toContainEqual(
-      expect.objectContaining({ key: 'rune_sockets', value: 3, min: 3, enabled: false })
+      expect.objectContaining({ key: 'rune_sockets', value: 3, min: 3, enabled: true })
     )
   })
 
@@ -720,6 +721,78 @@ describe('prepareQuery', () => {
       const q = prepareFixture(file)
       expect(q.displayName.length).toBeGreaterThan(0)
     }
+  })
+})
+
+describe('exceptional items (issue #14)', () => {
+  // Detection is structural (quality over the 20% cap, or sockets past the item
+  // class's normal cap), not name-based — Magic/Rare exceptional items don't
+  // carry the "Exceptional" word the way white items do.
+  const item = (
+    itemClass: string,
+    rarity: string,
+    nameLines: string,
+    props: string[],
+    sockets?: number
+  ): string =>
+    [
+      `Item Class: ${itemClass}`,
+      `Rarity: ${rarity}`,
+      nameLines,
+      '--------',
+      ...props,
+      '--------',
+      ...(sockets ? ['Sockets: ' + 'S '.repeat(sockets).trim(), '--------'] : []),
+      'Item Level: 82'
+    ].join('\n')
+
+  const socketRow = (q: PreparedQuery) => q.equipment.find((e) => e.key === 'rune_sockets')
+
+  it('Magic helm with an extra socket arms the Sockets filter', () => {
+    // A helmet caps at 1 rune socket; 2 is the additional augment socket. The
+    // Magic name ("Teal Cryptic Helm") carries no "Exceptional" word.
+    const q = prepareQuery(
+      parseItem(
+        item('Helmets', 'Magic', 'Teal Cryptic Helm', ['Armour: 188', 'Evasion Rating: 171'], 2)
+      ),
+      db
+    )
+    expect(socketRow(q)).toMatchObject({ value: 2, min: 2, enabled: true })
+    expect(q.quality?.enabled ?? false).toBe(false)
+  })
+
+  it('over-cap quality arms the Quality filter (fixture)', () => {
+    // The white Exceptional Corsair Coat exceeds both caps: +22% quality (>20)
+    // and 3 sockets on a body armour (>2) — both filters arm independently.
+    const q = prepareFixture('13-body-armours--exceptional-corsair-coat-2590bdef.txt')
+    expect(q.quality).toMatchObject({ value: 22, min: 22, enabled: true })
+    expect(socketRow(q)).toMatchObject({ value: 3, enabled: true })
+  })
+
+  it('exceptional uniques are gated the same way', () => {
+    const q = prepareQuery(
+      parseItem(
+        item('Body Armours', 'Unique', 'Soul Mantle\nCorsair Coat', [
+          'Quality: +25% (augmented)',
+          'Evasion Rating: 600'
+        ])
+      ),
+      db
+    )
+    expect(q.rarityOption).toBe('unique')
+    expect(q.quality).toMatchObject({ value: 25, enabled: true })
+  })
+
+  it('an at-cap item leaves both filters opt-in', () => {
+    // 20% quality is the cap (not over it) and 1 socket is a helmet's cap.
+    const q = prepareQuery(
+      parseItem(
+        item('Helmets', 'Magic', 'Teal Cryptic Helm', ['Quality: +20% (augmented)', 'Armour: 188'], 1)
+      ),
+      db
+    )
+    expect(q.quality?.enabled ?? false).toBe(false)
+    expect(socketRow(q)?.enabled).toBe(false)
   })
 })
 
