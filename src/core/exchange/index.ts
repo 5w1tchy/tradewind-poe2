@@ -6,6 +6,7 @@ export type {
   Denominations,
   ExchangeRates,
   Liquidity,
+  UncutQuote,
   UniqueQuote
 } from './types'
 

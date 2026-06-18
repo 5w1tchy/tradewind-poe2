@@ -45,6 +45,11 @@ const T1_ILVL_CEILING = 82
 // Quality cap on ordinary equipment. An Exceptional item (issue #14) breaks it.
 const NORMAL_MAX_QUALITY = 20
 
+// Uncut Support Gem comes in levels 1–5 (poe2scout `uncut-support-gem-{N}`). With
+// no per-support required-tier data we offer the whole ladder for a cuttable
+// support; once tier data exists this would start at the required level (#58).
+const UNCUT_SUPPORT_LEVELS = [1, 2, 3, 4, 5]
+
 // Normal rune-socket cap per item class (issue #14). Body armour and two-handed
 // martial weapons take 2; one-handed martial weapons, helmet/gloves/boots and
 // off-hand armour take 1. Caster weapons, quivers, foci and jewellery take none
@@ -748,6 +753,8 @@ export function prepareQuery(
     ilvl: null,
     quality: null,
     gemLevel: null,
+    gemSockets: null,
+    uncutSupportLevels: null,
     mapTier: null,
     flags: [],
     buyout: { min: null, max: null, option: options.buyoutOption ?? null },
@@ -787,15 +794,29 @@ export function prepareQuery(
   }
 
   if (isGem) {
+    // Skill/Spirit gem view (issue #58): the price-defining knobs are gem level,
+    // quality, support-gem sockets, and corruption — all default-armed to the
+    // item's own values (min-only, "at least this") so the check finds gems at
+    // least as good. Corruption is pinned (a corrupted gem is a different item).
     prepared.type = item.baseType
     const levelProp = item.properties.find((p) => /^Level: \d+/.test(p.raw))
     const level = levelProp ? Number(levelProp.raw.match(/^Level: (\d+)/)![1]) : null
     if (level !== null) prepared.gemLevel = range(level, { enabled: true })
-    if (item.quality !== null) prepared.quality = range(item.quality)
+    if (item.quality !== null) prepared.quality = range(item.quality, { enabled: true })
+    if (item.sockets !== null) prepared.gemSockets = range(item.sockets, { enabled: true })
     // A corrupted gem is a different item at a different price — pin it.
     prepared.flags = [
       { key: 'corrupted', label: 'Corrupted', state: item.corrupted ? 'yes' : 'no' }
     ]
+    // A *cuttable* support gem (issue #58): the lineage supports trade on the
+    // currency exchange and already returned above via their exchangeId, so any
+    // support reaching here is one you'd obtain by cutting an uncut. Surface the
+    // Uncut Support Gem prices (levels 1–5; we have no per-support required-tier
+    // data, so show them all) as a banner. The renderer arms — does not auto-fire
+    // — the live finished-gem search for these.
+    if (item.itemClass === 'Support Gems') {
+      prepared.uncutSupportLevels = UNCUT_SUPPORT_LEVELS
+    }
     return prepared
   }
 

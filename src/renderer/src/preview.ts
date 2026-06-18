@@ -6,7 +6,7 @@
  *   npx vite --config vite.preview.config.ts
  *   open http://localhost:5173/preview.html
  */
-import type { CurrencyPoint, CurrencyQuote, UniqueQuote } from '../../core/exchange'
+import type { CurrencyPoint, CurrencyQuote, UncutQuote, UniqueQuote } from '../../core/exchange'
 import type { PreparedQuery } from '../../core/query/types'
 import type { ListingItem, ListingMod, SearchOutcome } from '../../core/trade/types'
 import type { ItemMod } from '../../core/craft/conflict'
@@ -54,6 +54,8 @@ const SAMPLE_QUERY: PreparedQuery = {
   ilvl: { value: 81, min: null, max: null, enabled: false },
   quality: null,
   gemLevel: null,
+  gemSockets: null,
+  uncutSupportLevels: null,
   mapTier: null,
   flags: [
     { key: 'corrupted', label: 'Corrupted', state: 'any' },
@@ -308,6 +310,17 @@ const SAMPLE_UNIQUE: UniqueQuote = {
   rates: { divine: 320, chaos: 19.56 }
 }
 
+// Canned Uncut Support Gem ladder for ?class=Support%20Gems — real-shaped prices
+// across all five levels. rates mirror SAMPLE_UNIQUE so the denominations read
+// sanely.
+const SAMPLE_UNCUT: UncutQuote[] = [1, 2, 3, 4, 5].map((level) => ({
+  level,
+  apiId: `uncut-support-gem-${level}`,
+  priceExalted: { 1: 0.97, 2: 1.36, 3: 10.42, 4: 6.72, 5: 1.82 }[level] ?? 1,
+  iconUrl: null,
+  rates: { divine: 320, chaos: 19.56 }
+}))
+
 const CURRENCY_QUERY: PreparedQuery = {
   ...SAMPLE_QUERY,
   itemClass: 'Lineage Support Gems',
@@ -354,6 +367,10 @@ const mock: TradewindApi = {
     await new Promise((r) => setTimeout(r, 150))
     return SAMPLE_UNIQUE
   },
+  async getUncutSupportQuotes(_league, levels) {
+    await new Promise((r) => setTimeout(r, 150))
+    return SAMPLE_UNCUT.filter((q) => levels.includes(q.level))
+  },
   async setLeague() {},
   setBuyoutCurrency() {},
   setPopupRect() {},
@@ -391,6 +408,12 @@ if (SAMPLE_QUERY.rarity === 'Unique') {
   SAMPLE_QUERY.name = SAMPLE_UNIQUE.name
   SAMPLE_QUERY.type = SAMPLE_UNIQUE.type
   SAMPLE_QUERY.rarityOption = 'unique'
+}
+// ?class=Support%20Gems exercises the cuttable-support Uncut banner (#58): the
+// uncut ladder shows on top and the finished-gem search is armed, not auto-run.
+if (SAMPLE_QUERY.itemClass === 'Support Gems') {
+  SAMPLE_QUERY.rarity = 'Gem'
+  SAMPLE_QUERY.uncutSupportLevels = [1, 2, 3, 4, 5]
 }
 
 // ?exceptional=quality|sockets previews the issue-#14 defaults: an Exceptional

@@ -79,6 +79,8 @@ export function buildSearchBody(q: PreparedQuery): TradeSearchRequest {
   }
   const gemLevel = enabledRange(q.gemLevel)
   if (gemLevel) miscFilters.gem_level = gemLevel
+  const gemSockets = enabledRange(q.gemSockets)
+  if (gemSockets) miscFilters.gem_sockets = gemSockets
   if (Object.keys(miscFilters).length > 0) filters.misc_filters = { filters: miscFilters }
 
   const equipmentFilters: NonNullable<TradeQueryFilters['equipment_filters']>['filters'] = {}

@@ -1,6 +1,6 @@
 import type { CraftedSlots } from '../core/craft/craftedSlots'
 import type { ItemMod } from '../core/craft/conflict'
-import type { CurrencyPoint, CurrencyQuote, UniqueQuote } from '../core/exchange'
+import type { CurrencyPoint, CurrencyQuote, UncutQuote, UniqueQuote } from '../core/exchange'
 import type { PreparedQuery } from '../core/query/types'
 import type { SearchOutcome } from '../core/trade/types'
 
@@ -73,6 +73,14 @@ export interface TradewindApi {
    * doesn't carry the unique (no banner — the live search remains the truth).
    */
   getUniqueQuote(league: string, name: string, type: string): Promise<UniqueQuote | null>
+  /**
+   * Resolve aggregate poe2scout prices for the given Uncut Support Gem levels,
+   * for the "cut it yourself" banner above a cuttable support gem (#58). Requested
+   * by the renderer on mount (the main hot path stays untouched); [] when the
+   * snapshot is unavailable or carries none of the levels (no banner — the live
+   * search remains the truth). Levels absent from the snapshot are omitted.
+   */
+  getUncutSupportQuotes(league: string, levels: number[]): Promise<UncutQuote[]>
   setLeague(league: string): Promise<void>
   /**
    * Persist the last-chosen buyout-price currency (issue #20) so the picker

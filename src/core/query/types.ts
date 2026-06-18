@@ -45,6 +45,7 @@ export interface TradeQueryFilters {
       fractured_item?: OptionFilter
       desecrated?: OptionFilter
       gem_level?: MinMax
+      gem_sockets?: MinMax
     }
   }
   equipment_filters?: {
@@ -241,6 +242,18 @@ export interface PreparedQuery {
   ilvl: PreparedRange | null
   quality: PreparedRange | null
   gemLevel: PreparedRange | null
+  /** Support-gem socket count (Skill/Spirit gems, issue #58); maps to the
+   *  misc_filters `gem_sockets` minMax. Null for non-gems. */
+  gemSockets: PreparedRange | null
+  /**
+   * Uncut Support Gem levels to price as an aggregate banner (issue #58), for a
+   * *cuttable* support gem — one not traded on the currency exchange (the lineage
+   * supports take the exchange path before this). The realistic way to obtain it
+   * is to buy an uncut and engrave it. Levels run from the required tier up to 5;
+   * with no tier data we show all five [1,2,3,4,5]. Null for everything else, and
+   * the renderer arms (does not auto-fire) the live finished-gem search when set.
+   */
+  uncutSupportLevels: number[] | null
   mapTier: PreparedRange | null
   /** Tri-state item attributes (corrupted, mirrored, …); empty for currency. */
   flags: PreparedFlag[]
