@@ -16,9 +16,10 @@ export interface ItemPayload {
   /** Crafted-mod count + cap for the Craft tab's essence advice (issue #24).
    *  Null when parsing failed/DB not ready; only meaningful for Rare gear. */
   craftedSlots: CraftedSlots | null
-  /** Existing explicit mods + their groups, for the essence group-conflict gate
-   *  (issue #72): an essence whose guaranteed mod shares a group with one of
-   *  these is blocked by the game. Null when parsing failed/DB not ready. */
+  /** Existing explicit mods + their groups, for the group-conflict gates: an
+   *  essence (#72) or liquid (#78) whose guaranteed mod shares a group with one
+   *  of these is blocked by the game. Resolved against the gear or jewel mod
+   *  table per item class. Null when parsing failed/DB not ready. */
   itemMods: ItemMod[] | null
   /**
    * Aggregate exchange price (poe2scout snapshot) for a currency-exchange item,

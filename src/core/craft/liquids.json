@@ -10,17 +10,26 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "(10–20)% increased Armour"
+     "text": "(10–20)% increased Armour",
+     "groups": [
+      "IncreasedPhysicalDamageReductionRatingPercent"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "(10–20)% increased maximum Energy Shield"
+     "text": "(10–20)% increased maximum Energy Shield",
+     "groups": [
+      "EnergyShieldPercent"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "prefix",
-     "text": "(10–20)% increased Evasion Rating"
+     "text": "(10–20)% increased Evasion Rating",
+     "groups": [
+      "EvasionRatingPercent"
+     ]
     }
    ],
    "icon": "diluted-liquid-ire.webp"
@@ -34,17 +43,26 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "(5–15)% increased Fire Damage"
+     "text": "(5–15)% increased Fire Damage",
+     "groups": [
+      "FireDamagePercentage"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "(5–15)% increased Cold Damage"
+     "text": "(5–15)% increased Cold Damage",
+     "groups": [
+      "ColdDamagePercentage"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "prefix",
-     "text": "(5–15)% increased Lightning Damage"
+     "text": "(5–15)% increased Lightning Damage",
+     "groups": [
+      "LightningDamagePercentage"
+     ]
     }
    ],
    "icon": "diluted-liquid-guilt.webp"
@@ -58,17 +76,26 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "(5–15)% increased Global Physical Damage"
+     "text": "(5–15)% increased Global Physical Damage",
+     "groups": [
+      "PhysicalDamagePercent"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "(7–13)% increased Chaos Damage"
+     "text": "(7–13)% increased Chaos Damage",
+     "groups": [
+      "IncreasedChaosDamage"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "prefix",
-     "text": "(5–15)% increased Elemental Damage"
+     "text": "(5–15)% increased Elemental Damage",
+     "groups": [
+      "ElementalDamagePercent"
+     ]
     }
    ],
    "icon": "diluted-liquid-greed.webp"
@@ -82,17 +109,26 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "(5–15)% increased Attack Damage"
+     "text": "(5–15)% increased Attack Damage",
+     "groups": [
+      "AttackDamage"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "(2–4)% increased Cast Speed"
+     "text": "(2–4)% increased Cast Speed",
+     "groups": [
+      "IncreasedCastSpeed"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "(2–4)% increased Attack Speed"
+     "text": "(2–4)% increased Attack Speed",
+     "groups": [
+      "IncreasedAttackSpeed"
+     ]
     }
    ],
    "icon": "liquid-paranoia.webp"
@@ -106,17 +142,26 @@
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "(4–6)% of Skill Mana Costs Converted to Life Costs"
+     "text": "(4–6)% of Skill Mana Costs Converted to Life Costs",
+     "groups": [
+      "LifeCost"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "(5–15)% increased Spell Damage"
+     "text": "(5–15)% increased Spell Damage",
+     "groups": [
+      "WeaponCasterDamagePrefix"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "(3–5)% increased Cooldown Recovery Rate"
+     "text": "(3–5)% increased Cooldown Recovery Rate",
+     "groups": [
+      "CooldownRecovery"
+     ]
     }
    ],
    "icon": "liquid-envy.webp"
@@ -130,17 +175,26 @@
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "(5–10)% increased Life Regeneration rate"
+     "text": "(5–10)% increased Life Regeneration rate",
+     "groups": [
+      "LifeRegenerationRate"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "Recover (1–2)% of maximum Mana on Kill"
+     "text": "Recover (1–2)% of maximum Mana on Kill",
+     "groups": [
+      "ManaGainedOnKillPercentage"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "Recover (1–2)% of maximum Life on Kill"
+     "text": "Recover (1–2)% of maximum Life on Kill",
+     "groups": [
+      "MaximumLifeOnKillPercent"
+     ]
     }
    ],
    "icon": "liquid-disgust.webp"
@@ -154,17 +208,26 @@
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "Gain 1 Rage on Melee Hit"
+     "text": "Gain 1 Rage on Melee Hit",
+     "groups": [
+      "RageOnHit"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "(5–15)% increased Critical Hit Chance for Spells"
+     "text": "(5–15)% increased Critical Hit Chance for Spells",
+     "groups": [
+      "SpellCriticalStrikeChanceIncrease"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "(6–16)% increased Critical Hit Chance for Attacks"
+     "text": "(6–16)% increased Critical Hit Chance for Attacks",
+     "groups": [
+      "CriticalStrikeChanceIncrease"
+     ]
     }
    ],
    "icon": "liquid-despair.webp"
@@ -178,17 +241,26 @@
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "(10–20)% increased Warcry Speed"
+     "text": "(10–20)% increased Warcry Speed",
+     "groups": [
+      "WarcrySpeed"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "(10–20)% increased Critical Spell Damage Bonus"
+     "text": "(10–20)% increased Critical Spell Damage Bonus",
+     "groups": [
+      "FormCritMultiplier"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "(10–20)% increased Critical Damage Bonus for Attack Damage"
+     "text": "(10–20)% increased Critical Damage Bonus for Attack Damage",
+     "groups": [
+      "CriticalStrikeMultiplier"
+     ]
     }
    ],
    "icon": "concentrated-liquid-fear.webp"
@@ -202,17 +274,26 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "+(1–2) to Maximum Rage"
+     "text": "+(1–2) to Maximum Rage",
+     "groups": [
+      "MaximumRage"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "(4–6)% increased Area of Effect"
+     "text": "(4–6)% increased Area of Effect",
+     "groups": [
+      "AreaOfEffect"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "(1–2)% increased Movement Speed"
+     "text": "(1–2)% increased Movement Speed",
+     "groups": [
+      "MovementVelocity"
+     ]
     }
    ],
    "icon": "concentrated-liquid-suffering.webp"
@@ -226,22 +307,34 @@
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "+1% to Maximum Fire Resistance"
+     "text": "+1% to Maximum Fire Resistance",
+     "groups": [
+      "MaximumFireResist"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "+1% to Maximum Cold Resistance"
+     "text": "+1% to Maximum Cold Resistance",
+     "groups": [
+      "MaximumColdResist"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "+1% to Maximum Lightning Resistance"
+     "text": "+1% to Maximum Lightning Resistance",
+     "groups": [
+      "MaximumLightningResistance"
+     ]
     },
     {
      "gem": "Diamond",
      "affix": "suffix",
-     "text": "+1% to Maximum Chaos Resistance"
+     "text": "+1% to Maximum Chaos Resistance",
+     "groups": [
+      "MaximumChaosResistance"
+     ]
     }
    ],
    "icon": "concentrated-liquid-isolation.webp"
@@ -255,17 +348,20 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "Small Passive Skills in Radius also grant (2–3)% increased Armour"
+     "text": "Small Passive Skills in Radius also grant (2–3)% increased Armour",
+     "groups": []
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "Small Passive Skills in Radius also grant (2–3)% increased maximum Energy Shield"
+     "text": "Small Passive Skills in Radius also grant (2–3)% increased maximum Energy Shield",
+     "groups": []
     },
     {
      "gem": "Emerald",
      "affix": "prefix",
-     "text": "Small Passive Skills in Radius also grant (2–3)% increased Evasion Rating"
+     "text": "Small Passive Skills in Radius also grant (2–3)% increased Evasion Rating",
+     "groups": []
     }
    ],
    "icon": "ancient-diluted-liquid-ire.webp"
@@ -279,17 +375,20 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "Small Passive Skills in Radius also grant (1–2)% increased Fire Damage"
+     "text": "Small Passive Skills in Radius also grant (1–2)% increased Fire Damage",
+     "groups": []
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "Small Passive Skills in Radius also grant (1–2)% increased Cold Damage"
+     "text": "Small Passive Skills in Radius also grant (1–2)% increased Cold Damage",
+     "groups": []
     },
     {
      "gem": "Emerald",
      "affix": "prefix",
-     "text": "Small Passive Skills in Radius also grant (1–2)% increased Lightning Damage"
+     "text": "Small Passive Skills in Radius also grant (1–2)% increased Lightning Damage",
+     "groups": []
     }
    ],
    "icon": "ancient-diluted-liquid-guilt.webp"
@@ -303,17 +402,20 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "Small Passive Skills in Radius also grant (1–2)% increased Global Physical Damage"
+     "text": "Small Passive Skills in Radius also grant (1–2)% increased Global Physical Damage",
+     "groups": []
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "Small Passive Skills in Radius also grant (1–2)% increased Chaos Damage"
+     "text": "Small Passive Skills in Radius also grant (1–2)% increased Chaos Damage",
+     "groups": []
     },
     {
      "gem": "Emerald",
      "affix": "prefix",
-     "text": "Small Passive Skills in Radius also grant (1–2)% increased Elemental Damage"
+     "text": "Small Passive Skills in Radius also grant (1–2)% increased Elemental Damage",
+     "groups": []
     }
    ],
    "icon": "ancient-diluted-liquid-greed.webp"
@@ -327,17 +429,20 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "Small Passive Skills in Radius also grant (1–2)% increased Attack Damage"
+     "text": "Small Passive Skills in Radius also grant (1–2)% increased Attack Damage",
+     "groups": []
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant (1–2)% increased Cast Speed"
+     "text": "Notable Passive Skills in Radius also grant (1–2)% increased Cast Speed",
+     "groups": []
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant (1–2)% increased Attack Speed"
+     "text": "Notable Passive Skills in Radius also grant (1–2)% increased Attack Speed",
+     "groups": []
     }
    ],
    "icon": "ancient-liquid-paranoia.webp"
@@ -351,17 +456,20 @@
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant (2–3)% of Skill Mana Costs Converted to Life Costs"
+     "text": "Notable Passive Skills in Radius also grant (2–3)% of Skill Mana Costs Converted to Life Costs",
+     "groups": []
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "Small Passive Skills in Radius also grant (1–2)% increased Spell Damage"
+     "text": "Small Passive Skills in Radius also grant (1–2)% increased Spell Damage",
+     "groups": []
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant (1–3)% increased Cooldown Recovery Rate"
+     "text": "Notable Passive Skills in Radius also grant (1–3)% increased Cooldown Recovery Rate",
+     "groups": []
     }
    ],
    "icon": "ancient-liquid-envy.webp"
@@ -375,17 +483,20 @@
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant (3–5)% increased Life Regeneration rate"
+     "text": "Notable Passive Skills in Radius also grant (3–5)% increased Life Regeneration rate",
+     "groups": []
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant Recover 1% of maximum Mana on Kill"
+     "text": "Notable Passive Skills in Radius also grant Recover 1% of maximum Mana on Kill",
+     "groups": []
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant Recover 1% of maximum Life on Kill"
+     "text": "Notable Passive Skills in Radius also grant Recover 1% of maximum Life on Kill",
+     "groups": []
     }
    ],
    "icon": "ancient-liquid-disgust.webp"
@@ -399,17 +510,20 @@
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant Gain 1 Rage on Melee Hit"
+     "text": "Notable Passive Skills in Radius also grant Gain 1 Rage on Melee Hit",
+     "groups": []
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant (3–7)% increased Critical Hit Chance for Spells"
+     "text": "Notable Passive Skills in Radius also grant (3–7)% increased Critical Hit Chance for Spells",
+     "groups": []
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant (3–7)% increased Critical Hit Chance for Attacks"
+     "text": "Notable Passive Skills in Radius also grant (3–7)% increased Critical Hit Chance for Attacks",
+     "groups": []
     }
    ],
    "icon": "ancient-liquid-despair.webp"
@@ -423,17 +537,20 @@
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "Small Passive Skills in Radius also grant (2–3)% increased Warcry Speed"
+     "text": "Small Passive Skills in Radius also grant (2–3)% increased Warcry Speed",
+     "groups": []
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant (5–10)% increased Critical Spell Damage Bonus"
+     "text": "Notable Passive Skills in Radius also grant (5–10)% increased Critical Spell Damage Bonus",
+     "groups": []
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant (5–10)% increased Critical Damage Bonus for Attack Damage"
+     "text": "Notable Passive Skills in Radius also grant (5–10)% increased Critical Damage Bonus for Attack Damage",
+     "groups": []
     }
    ],
    "icon": "ancient-concentrated-liquid-fear.webp"
@@ -447,17 +564,20 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "Notable Passive Skills in Radius also grant +1 to Maximum Rage"
+     "text": "Notable Passive Skills in Radius also grant +1 to Maximum Rage",
+     "groups": []
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "Notable Passive Skills in Radius also grant (2–3)% increased Area of Effect"
+     "text": "Notable Passive Skills in Radius also grant (2–3)% increased Area of Effect",
+     "groups": []
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant 1% increased Movement Speed"
+     "text": "Notable Passive Skills in Radius also grant 1% increased Movement Speed",
+     "groups": []
     }
    ],
    "icon": "ancient-concentrated-liquid-suffering.webp"
@@ -471,17 +591,26 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "Increases and Reductions to Cold and Lightning Damage in Radius are transformed to apply to Fire Damage"
+     "text": "Increases and Reductions to Cold and Lightning Damage in Radius are transformed to apply to Fire Damage",
+     "groups": [
+      "TransformIncreasedDamageInRadius"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "Increases and Reductions to Fire and Lightning Damage in Radius are transformed to apply to Cold Damage"
+     "text": "Increases and Reductions to Fire and Lightning Damage in Radius are transformed to apply to Cold Damage",
+     "groups": [
+      "TransformIncreasedDamageInRadius"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "prefix",
-     "text": "Increases and Reductions to Cold and Fire Damage in Radius are transformed to apply to Lightning Damage"
+     "text": "Increases and Reductions to Cold and Fire Damage in Radius are transformed to apply to Lightning Damage",
+     "groups": [
+      "TransformIncreasedDamageInRadius"
+     ]
     }
    ],
    "icon": "ancient-concentrated-liquid-isolation.webp"
@@ -495,17 +624,27 @@
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "Debilitate Enemies on Hit while you have an Emerald and a Sapphire socketed in your tree"
+     "text": "Debilitate Enemies on Hit while you have an Emerald and a Sapphire socketed in your tree",
+     "groups": [
+      "JewelStatusOnHitWhileSocketed"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "Inflict Elemental Exposure on Hit while you have a Ruby and an Emerald socketed in your tree"
+     "text": "Inflict Elemental Exposure on Hit while you have a Ruby and an Emerald socketed in your tree",
+     "groups": [
+      "JewelStatusOnHitWhileSocketed"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "Blind Enemies on Hit while you have a Ruby and a Sapphire socketed in your tree"
+     "text": "Blind Enemies on Hit while you have a Ruby and a Sapphire socketed in your tree",
+     "groups": [
+      "JewelStatusOnHitWhileSocketed",
+      "BlindOnHit"
+     ]
     }
    ],
    "icon": "potent-liquid-melancholy.webp"
@@ -519,42 +658,66 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "(40–60)% increased Effect of Suffixes"
+     "text": "(40–60)% increased Effect of Suffixes",
+     "groups": [
+      "LocalPrefixSuffixEffect"
+     ]
     },
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "(40–60)% increased Effect of Prefixes"
+     "text": "(40–60)% increased Effect of Prefixes",
+     "groups": [
+      "LocalPrefixSuffixEffect"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "(40–60)% increased Effect of Suffixes"
+     "text": "(40–60)% increased Effect of Suffixes",
+     "groups": [
+      "LocalPrefixSuffixEffect"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "(40–60)% increased Effect of Prefixes"
+     "text": "(40–60)% increased Effect of Prefixes",
+     "groups": [
+      "LocalPrefixSuffixEffect"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "prefix",
-     "text": "(40–60)% increased Effect of Suffixes"
+     "text": "(40–60)% increased Effect of Suffixes",
+     "groups": [
+      "LocalPrefixSuffixEffect"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "(40–60)% increased Effect of Prefixes"
+     "text": "(40–60)% increased Effect of Prefixes",
+     "groups": [
+      "LocalPrefixSuffixEffect"
+     ]
     },
     {
      "gem": "Diamond",
      "affix": "prefix",
-     "text": "(40–60)% increased Effect of Suffixes"
+     "text": "(40–60)% increased Effect of Suffixes",
+     "groups": [
+      "LocalPrefixSuffixEffect"
+     ]
     },
     {
      "gem": "Diamond",
      "affix": "suffix",
-     "text": "(40–60)% increased Effect of Prefixes"
+     "text": "(40–60)% increased Effect of Prefixes",
+     "groups": [
+      "LocalPrefixSuffixEffect"
+     ]
     }
    ],
    "icon": "potent-liquid-ferocity.webp"
@@ -568,42 +731,66 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "+1 Suffix Modifier allowed"
+     "text": "+1 Suffix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "+1 Prefix Modifier allowed"
+     "text": "+1 Prefix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "+1 Suffix Modifier allowed"
+     "text": "+1 Suffix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "+1 Prefix Modifier allowed"
+     "text": "+1 Prefix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "prefix",
-     "text": "+1 Suffix Modifier allowed"
+     "text": "+1 Suffix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "+1 Prefix Modifier allowed"
+     "text": "+1 Prefix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Diamond",
      "affix": "prefix",
-     "text": "+1 Suffix Modifier allowed"
+     "text": "+1 Suffix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Diamond",
      "affix": "suffix",
-     "text": "+1 Prefix Modifier allowed"
+     "text": "+1 Prefix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     }
    ],
    "icon": "potent-liquid-contempt.webp"
@@ -617,22 +804,34 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "Upgrades Radius to Very Large"
+     "text": "Upgrades Radius to Very Large",
+     "groups": [
+      "JewelRadiusLargerRadius"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "Upgrades Radius to Very Large"
+     "text": "Upgrades Radius to Very Large",
+     "groups": [
+      "JewelRadiusLargerRadius"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "prefix",
-     "text": "Upgrades Radius to Very Large"
+     "text": "Upgrades Radius to Very Large",
+     "groups": [
+      "JewelRadiusLargerRadius"
+     ]
     },
     {
      "gem": "Diamond",
      "affix": "prefix",
-     "text": "Upgrades Radius to Very Large"
+     "text": "Upgrades Radius to Very Large",
+     "groups": [
+      "JewelRadiusLargerRadius"
+     ]
     }
    ],
    "icon": "ancient-potent-liquid-melancholy.webp"
@@ -646,22 +845,26 @@
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant +(5–7)% to Fire Resistance"
+     "text": "Notable Passive Skills in Radius also grant +(5–7)% to Fire Resistance",
+     "groups": []
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant +(5–7)% to Cold Resistance"
+     "text": "Notable Passive Skills in Radius also grant +(5–7)% to Cold Resistance",
+     "groups": []
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant +(5–7)% to Lightning Resistance"
+     "text": "Notable Passive Skills in Radius also grant +(5–7)% to Lightning Resistance",
+     "groups": []
     },
     {
      "gem": "Diamond",
      "affix": "suffix",
-     "text": "Notable Passive Skills in Radius also grant +(4–5)% to Chaos Resistance"
+     "text": "Notable Passive Skills in Radius also grant +(4–5)% to Chaos Resistance",
+     "groups": []
     }
    ],
    "icon": "ancient-potent-liquid-ferocity.webp"
@@ -675,42 +878,66 @@
     {
      "gem": "Ruby",
      "affix": "prefix",
-     "text": "+1 Suffix Modifier allowed"
+     "text": "+1 Suffix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Ruby",
      "affix": "suffix",
-     "text": "+1 Prefix Modifier allowed"
+     "text": "+1 Prefix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "prefix",
-     "text": "+1 Suffix Modifier allowed"
+     "text": "+1 Suffix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Sapphire",
      "affix": "suffix",
-     "text": "+1 Prefix Modifier allowed"
+     "text": "+1 Prefix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "prefix",
-     "text": "+1 Suffix Modifier allowed"
+     "text": "+1 Suffix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Emerald",
      "affix": "suffix",
-     "text": "+1 Prefix Modifier allowed"
+     "text": "+1 Prefix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Diamond",
      "affix": "prefix",
-     "text": "+1 Suffix Modifier allowed"
+     "text": "+1 Suffix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     },
     {
      "gem": "Diamond",
      "affix": "suffix",
-     "text": "+1 Prefix Modifier allowed"
+     "text": "+1 Prefix Modifier allowed",
+     "groups": [
+      "MaxPrefixMaxSuffix"
+     ]
     }
    ],
    "icon": "ancient-potent-liquid-contempt.webp"

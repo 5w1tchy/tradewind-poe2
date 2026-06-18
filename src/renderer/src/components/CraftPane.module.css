@@ -163,6 +163,21 @@
   white-space: nowrap;
 }
 
+/* A blocked liquid outcome (issue #78): the jewel already has a mod in this
+   guaranteed mod's group. Per-line (a liquid can roll one of several), so it's
+   marked inline rather than on the row — and allowed to wrap so the reason
+   shows in full. */
+.mod.modBlocked {
+  color: var(--tw-text-mute);
+  white-space: normal;
+}
+
+.reason {
+  color: var(--tw-bad);
+  font-style: italic;
+  opacity: 0.9;
+}
+
 .empty {
   color: var(--tw-text-faint);
   font-style: italic;

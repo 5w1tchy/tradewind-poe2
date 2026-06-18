@@ -387,7 +387,10 @@ const SAMPLE_ITEM_MODS: ItemMod[] = [
   { label: '16% increased Spell Damage', groups: ['SpellDamage'] },
   // A *suffix* rarity mod — blocks the suffix-rarity Greater Essence of Opulence
   // (visible via ?rarity=Magic) but not its prefix-rarity twin (issue #72).
-  { label: '14% increased Rarity of Items found', groups: ['ItemFoundRarityIncrease'] }
+  { label: '14% increased Rarity of Items found', groups: ['ItemFoundRarityIncrease'] },
+  // A jewel mod-group — blocks the matching Liquid Emotion outcome on the Liquids
+  // sub-tab (visible via ?class=Jewels&base=Emerald&used=0) (issue #78).
+  { label: '15% increased Evasion Rating', groups: ['EvasionRatingPercent'] }
 ]
 
 import('./main').then(() => {

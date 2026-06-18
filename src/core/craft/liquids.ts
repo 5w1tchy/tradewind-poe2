@@ -12,6 +12,7 @@
  */
 import data from './liquids.json'
 import { craftedCapNote, type CraftedSlots } from './craftedSlots'
+import { conflictingMod, type ItemMod } from './conflict'
 
 /** The four jewel gem bases; a base type is the gem, optionally `Time-Lost `. */
 const GEMS = ['Ruby', 'Sapphire', 'Emerald', 'Diamond']
@@ -25,6 +26,14 @@ export interface LiquidMod {
   affix: 'prefix' | 'suffix'
   /** The guaranteed mod text for the hovered jewel's gem. */
   text: string
+  /**
+   * Display text of the jewel mod that blocks this outcome by sharing its group
+   * (issue #78), or null when nothing conflicts. A liquid removes-and-augments,
+   * so the game refuses it when the jewel already holds the guaranteed mod's
+   * group. Per-outcome: a "rolls one of" liquid (Diamond wildcard, Potent
+   * prefix/suffix) can have some outcomes blocked and others not.
+   */
+  blockedBy: string | null
 }
 
 export interface LiquidForItem {
@@ -57,6 +66,10 @@ interface RawLiquidMod {
   gem: string
   affix: string
   text: string
+  /** Mod-group(s) of this guaranteed mod (joined from the 'misc'-domain jewel
+   *  mods by gen-liquids.mjs). Empty for Time-Lost passive-grant mods, which
+   *  aren't in the upstream dump — those never block. */
+  groups: string[]
 }
 interface RawLiquid {
   id: string
@@ -82,7 +95,10 @@ export function liquidsForItem(
   itemClass: string,
   baseType: string,
   rarity: string,
-  crafted?: CraftedSlots
+  crafted?: CraftedSlots,
+  /** The jewel's existing mods + groups, for the group-conflict gate (#78).
+   *  Omitted (or empty) disables it — every outcome lists unblocked. */
+  existing?: ItemMod[]
 ): LiquidAdvice {
   if (itemClass !== 'Jewels') return { applicable: [], note: null }
   const kind = jewelKind(baseType)
@@ -126,7 +142,12 @@ export function liquidsForItem(
       const key = `${m.affix}|${m.text}`
       if (seen.has(key)) continue
       seen.add(key)
-      mods.push({ affix: m.affix as 'prefix' | 'suffix', text: m.text })
+      const blocker = existing ? conflictingMod(m.groups, existing) : null
+      mods.push({
+        affix: m.affix as 'prefix' | 'suffix',
+        text: m.text,
+        blockedBy: blocker?.label ?? null
+      })
     }
     if (mods.length === 0) return []
     return [{ id: l.id, name: l.name, potent: l.potent, mods, icon: l.icon ?? null }]

@@ -119,6 +119,26 @@ if (entries.length < 1000) {
   process.exit(1)
 }
 
+// Jewel mods live in the 'misc' domain (gear is 'item'); extract them as a
+// separate group lookup for the liquid mod-group-conflict gate (#78). Only
+// text -> group(s) + affix is needed (a conflict is by group, with no tier), so
+// this is far leaner than the gear ladder and is kept apart from `entries` so it
+// can never pollute gear tier reconstruction (the same stat text — e.g.
+// "increased Area of Effect" — exists in both domains under different groups).
+const jewelEntries = []
+for (const key in mods) {
+  const mod = mods[key]
+  if (mod.domain !== 'misc') continue
+  const gen = mod.generation_type
+  if (gen !== 'prefix' && gen !== 'suffix') continue
+  if (!mod.text || !mod.groups?.length) continue
+  jewelEntries.push({
+    t: normalize(mod.text),
+    g: mod.groups, // full group list — jewel mods occasionally carry two
+    a: gen === 'prefix' ? 'p' : 's'
+  })
+}
+
 // Base name -> spawn tags. Names collide rarely; later wins (good enough — the
 // tag sets for a duplicated base name are equivalent for spawn matching).
 const baseTags = {}
@@ -130,11 +150,14 @@ for (const id in bases) {
 mkdirSync(OUT_DIR, { recursive: true })
 writeFileSync(
   new URL('pool.json', OUT_DIR),
-  JSON.stringify({ generatedFrom: BASE_URL, entries }, null, 0)
+  JSON.stringify({ generatedFrom: BASE_URL, entries, jewelEntries }, null, 0)
 )
 writeFileSync(
   new URL('bases.json', OUT_DIR),
   JSON.stringify({ generatedFrom: BASE_URL, baseTags }, null, 0)
 )
 
-console.log(`Wrote ${entries.length} pool entries, ${Object.keys(baseTags).length} bases.`)
+console.log(
+  `Wrote ${entries.length} pool entries, ${jewelEntries.length} jewel entries, ` +
+    `${Object.keys(baseTags).length} bases.`
+)

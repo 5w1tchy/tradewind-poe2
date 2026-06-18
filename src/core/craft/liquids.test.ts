@@ -8,7 +8,9 @@ describe('liquidsForItem', () => {
     expect(note).toMatch(/Rare jewel/i)
     // Emerald reads the Emerald line off each liquid (Ire → Evasion).
     const ire = applicable.find((l) => l.name === 'Diluted Liquid Ire')
-    expect(ire?.mods).toEqual([{ affix: 'prefix', text: '(10–20)% increased Evasion Rating' }])
+    expect(ire?.mods).toEqual([
+      { affix: 'prefix', text: '(10–20)% increased Evasion Rating', blockedBy: null }
+    ])
     // Ancient (Time-Lost) liquids never apply to a basic jewel.
     expect(applicable.some((l) => l.name.startsWith('Ancient'))).toBe(false)
   })
@@ -25,7 +27,9 @@ describe('liquidsForItem', () => {
   it('an attribute gem (Emerald) gets only its own deterministic mod', () => {
     const { applicable } = liquidsForItem('Jewels', 'Emerald', 'Rare')
     const ire = applicable.find((l) => l.name === 'Diluted Liquid Ire')
-    expect(ire?.mods).toEqual([{ affix: 'prefix', text: '(10–20)% increased Evasion Rating' }])
+    expect(ire?.mods).toEqual([
+      { affix: 'prefix', text: '(10–20)% increased Evasion Rating', blockedBy: null }
+    ])
   })
 
   it('Diamond rolls any attribute variant when the liquid has no Diamond column', () => {
@@ -43,7 +47,9 @@ describe('liquidsForItem', () => {
     const { applicable } = liquidsForItem('Jewels', 'Diamond', 'Rare')
     // Isolation has a dedicated Diamond line, so a Diamond gets ONLY chaos res.
     const iso = applicable.find((l) => l.name === 'Concentrated Liquid Isolation')
-    expect(iso?.mods).toEqual([{ affix: 'suffix', text: '+1% to Maximum Chaos Resistance' }])
+    expect(iso?.mods).toEqual([
+      { affix: 'suffix', text: '+1% to Maximum Chaos Resistance', blockedBy: null }
+    ])
   })
 
   it('Potent Ferocity on Diamond dedupes to a single prefix/suffix pair', () => {
@@ -106,5 +112,46 @@ describe('liquidsForItem', () => {
   it('every offered liquid carries its bundled icon', () => {
     const { applicable } = liquidsForItem('Jewels', 'Emerald', 'Rare')
     expect(applicable.every((l) => l.icon !== null && l.icon.endsWith('.webp'))).toBe(true)
+  })
+
+  it('without item mods, no liquid outcome is flagged blocked (issue #78)', () => {
+    const { applicable } = liquidsForItem('Jewels', 'Emerald', 'Rare', { used: 0, cap: 1 })
+    expect(applicable.every((l) => l.mods.every((m) => m.blockedBy === null))).toBe(true)
+  })
+
+  it('a same-group jewel mod blocks the matching liquid outcome (issue #78)', () => {
+    // Diluted Liquid Ire on Emerald grants increased Evasion Rating
+    // (group EvasionRatingPercent); a jewel already carrying that group blocks it.
+    const existing = [{ label: '15% increased Evasion Rating', groups: ['EvasionRatingPercent'] }]
+    const { applicable } = liquidsForItem('Jewels', 'Emerald', 'Rare', { used: 0, cap: 1 }, existing)
+    const ire = applicable.find((l) => l.name === 'Diluted Liquid Ire')
+    expect(ire?.mods[0].blockedBy).toBe('15% increased Evasion Rating')
+    // A liquid in an unrelated group stays usable.
+    const guilt = applicable.find((l) => l.name === 'Diluted Liquid Guilt')
+    expect(guilt?.mods.every((m) => m.blockedBy === null)).toBe(true)
+  })
+
+  it('only the conflicting outcome of a "rolls one of" liquid is blocked (issue #78)', () => {
+    // Diamond Ire rolls one of armour / ES / evasion; an existing Evasion mod
+    // blocks only the evasion outcome, leaving the others usable.
+    const existing = [{ label: '15% increased Evasion Rating', groups: ['EvasionRatingPercent'] }]
+    const { applicable } = liquidsForItem('Jewels', 'Diamond', 'Rare', { used: 0, cap: 1 }, existing)
+    const ire = applicable.find((l) => l.name === 'Diluted Liquid Ire')
+    const blocked = ire?.mods.filter((m) => m.blockedBy !== null) ?? []
+    expect(blocked).toHaveLength(1)
+    expect(blocked[0].text).toMatch(/Evasion Rating/)
+  })
+
+  it('Time-Lost liquids never block (their mods are absent from the dump) (issue #78)', () => {
+    // Even with item mods present, Ancient (Time-Lost) outcomes carry no groups.
+    const existing = [{ label: 'anything', groups: ['EvasionRatingPercent', 'AreaOfEffect'] }]
+    const { applicable } = liquidsForItem(
+      'Jewels',
+      'Time-Lost Emerald',
+      'Rare',
+      { used: 0, cap: 1 },
+      existing
+    )
+    expect(applicable.every((l) => l.mods.every((m) => m.blockedBy === null))).toBe(true)
   })
 })

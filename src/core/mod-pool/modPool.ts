@@ -42,6 +42,16 @@ interface PoolEntry {
 const ENTRIES = (poolData as unknown as { entries: PoolEntry[] }).entries
 const BASE_TAGS = (basesData as { baseTags: Record<string, string[]> }).baseTags
 
+/** Jewel mod-group table ('misc'-domain mods, kept apart from the gear ladder),
+ *  for the liquid-conflict gate (#78). Text -> group(s) + affix; no tier. */
+interface JewelEntry {
+  t: string
+  g: string[]
+  a: 'p' | 's'
+}
+const JEWEL_ENTRIES =
+  (poolData as unknown as { jewelEntries?: JewelEntry[] }).jewelEntries ?? []
+
 /** Every known base name — callers resolve a decorated item name against this
  *  (weapon/armour bases carry "Advanced"/"Expert" tier words the data omits). */
 export const KNOWN_BASES = Object.keys(BASE_TAGS)
@@ -52,6 +62,13 @@ for (const entry of ENTRIES) {
   const existing = byText.get(entry.t)
   if (existing) existing.push(entry)
   else byText.set(entry.t, [entry])
+}
+
+const jewelByText = new Map<string, JewelEntry[]>()
+for (const entry of JEWEL_ENTRIES) {
+  const existing = jewelByText.get(entry.t)
+  if (existing) existing.push(entry)
+  else jewelByText.set(entry.t, [entry])
 }
 
 /**
@@ -218,4 +235,30 @@ export function groupsForLine(
   const onBase = tags ? pool.filter((e) => spawnsOn(e, new Set(tags))) : []
   pool = onBase.length > 0 ? onBase : pool
   return [...new Set(pool.map((e) => e.g))]
+}
+
+/**
+ * Mod-group(s) a *jewel* stat line could belong to, for the liquid-conflict gate
+ * (#78). Jewel mods are the separate 'misc'-domain table (kept apart from the
+ * gear pool so the two domains' same-text mods never cross-resolve); a conflict
+ * is by group only, with no tier, so this is a plain text -> groups lookup.
+ * `affix` (from an advanced copy) narrows the few stats that roll as both a
+ * prefix and a suffix under different groups (e.g. Effect of Prefixes vs
+ * Suffixes). Empty when the stat isn't a known jewel mod — notably a Time-Lost
+ * "Passive Skills in Radius also grant …" mod, which is absent from the upstream
+ * dump, so it never blocks (the conservative "don't guess" default).
+ */
+export function jewelGroupsForLine(
+  line: ParsedStatLine,
+  affix?: 'prefix' | 'suffix' | null
+): string[] {
+  const cands = jewelByText.get(normalizeStatText(line.raw))
+  if (!cands) return []
+  let pool = cands
+  const a = affix === 'prefix' ? 'p' : affix === 'suffix' ? 's' : null
+  if (a) {
+    const byAffix = cands.filter((e) => e.a === a)
+    if (byAffix.length) pool = byAffix
+  }
+  return [...new Set(pool.flatMap((e) => e.g))]
 }
