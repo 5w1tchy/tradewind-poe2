@@ -5,6 +5,7 @@
  */
 import data from './essences.json'
 import { craftedCapNote, type CraftedSlots } from './craftedSlots'
+import { conflictingMod, type ItemMod } from './conflict'
 
 export type EssenceTier = 'lesser' | 'normal' | 'greater' | 'perfect' | 'corrupted'
 
@@ -17,6 +18,16 @@ export interface EssenceForItem {
   family: string
   /** The guaranteed mod this essence gives on the asked-about item class. */
   modText: string
+  /**
+   * Display text of the existing item mod that blocks this essence by sharing
+   * the guaranteed mod's group (issue #72), or null when nothing conflicts.
+   * Set for both paths — a Perfect/corrupted essence that augments a Rare and a
+   * Greater essence that upgrades a Magic item both stamp a guaranteed mod the
+   * game refuses when an existing mod already holds that group (e.g. Greater
+   * Essence of Opulence on a Magic item that already has a Rarity suffix). The
+   * essence stays listed (not hidden) so the UI can show it greyed with reason.
+   */
+  blockedBy: string | null
   /** Bundled art filename (renderer asset under assets/essences/), if any. */
   icon: string | null
 }
@@ -137,10 +148,13 @@ const ESSENCES = (data.essences as RawEssence[])
   }))
   .filter((e) => e.tier === 'greater' || e.tier === 'perfect' || e.tier === 'corrupted')
 
-function modTextFor(e: (typeof ESSENCES)[number], itemClass: string): string | null {
+type EssenceMod = RawEssence['mods'][number]
+
+/** The guaranteed mod this essence gives on an item class, or null if none. */
+function modFor(e: (typeof ESSENCES)[number], itemClass: string): EssenceMod | null {
   for (const mod of e.mods) {
     for (const target of mod.targets) {
-      if (CLASSES_BY_TARGET[target]?.includes(itemClass)) return mod.text
+      if (CLASSES_BY_TARGET[target]?.includes(itemClass)) return mod
     }
   }
   return null
@@ -149,11 +163,14 @@ function modTextFor(e: (typeof ESSENCES)[number], itemClass: string): string | n
 export function essencesForItem(
   itemClass: string,
   rarity: string,
-  crafted?: CraftedSlots
+  crafted?: CraftedSlots,
+  /** The item's existing explicit mods + groups, for the group-conflict gate
+   *  (#72). Omitted (or empty) disables the gate — every essence lists unblocked. */
+  existing?: ItemMod[]
 ): EssenceAdvice {
   const onClass = ESSENCES.flatMap((e) => {
-    const modText = modTextFor(e, itemClass)
-    return modText === null ? [] : [{ essence: e, modText }]
+    const mod = modFor(e, itemClass)
+    return mod === null ? [] : [{ essence: e, mod }]
   })
 
   if (onClass.length === 0) {
@@ -187,12 +204,15 @@ export function essencesForItem(
   }
 
   const applicable = usable
-    .map(({ essence, modText }) => ({
+    .map(({ essence, mod }) => ({
       id: essence.id,
       name: essence.name,
       tier: essence.tier,
       family: essence.family,
-      modText,
+      modText: mod.text,
+      // The guaranteed mod is refused when an existing mod already holds its
+      // group (#72). Applies to both the Magic→Rare and augment-a-Rare paths.
+      blockedBy: existing ? (conflictingMod(mod.groups, existing)?.label ?? null) : null,
       icon: essence.icon ?? null
     }))
     .sort(

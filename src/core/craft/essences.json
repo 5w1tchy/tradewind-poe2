@@ -269,7 +269,6 @@
      ],
      "text": "(11–13)% increased Attack Speed",
      "groups": [
-      "IncreasedCastSpeed",
       "IncreasedAttackSpeed"
      ],
      "affix": "suffix"
@@ -281,7 +280,6 @@
      ],
      "text": "(8–10)% increased Attack Speed",
      "groups": [
-      "IncreasedCastSpeed",
       "IncreasedAttackSpeed"
      ],
      "affix": "suffix"
@@ -586,7 +584,6 @@
      ],
      "text": "(17–19)% increased Attack Speed",
      "groups": [
-      "IncreasedCastSpeed",
       "IncreasedAttackSpeed"
      ],
      "affix": "suffix"
@@ -598,7 +595,6 @@
      ],
      "text": "(11–13)% increased Attack Speed",
      "groups": [
-      "IncreasedCastSpeed",
       "IncreasedAttackSpeed"
      ],
      "affix": "suffix"
@@ -904,7 +900,6 @@
      ],
      "text": "(23–25)% increased Attack Speed",
      "groups": [
-      "IncreasedCastSpeed",
       "IncreasedAttackSpeed"
      ],
      "affix": "suffix"
@@ -916,7 +911,6 @@
      ],
      "text": "(14–16)% increased Attack Speed",
      "groups": [
-      "IncreasedCastSpeed",
       "IncreasedAttackSpeed"
      ],
      "affix": "suffix"
@@ -1235,7 +1229,7 @@
      ],
      "text": "+(1.51–2.1)% to Critical Hit Chance",
      "groups": [
-      "BaseCriticalHitChance"
+      "CriticalStrikeChanceIncrease"
      ],
      "affix": "suffix"
     },
@@ -1274,7 +1268,7 @@
      ],
      "text": "+(2.11–2.7)% to Critical Hit Chance",
      "groups": [
-      "BaseCriticalHitChance"
+      "CriticalStrikeChanceIncrease"
      ],
      "affix": "suffix"
     },
@@ -1313,7 +1307,7 @@
      ],
      "text": "+(3.11–3.8)% to Critical Hit Chance",
      "groups": [
-      "BaseCriticalHitChance"
+      "CriticalStrikeChanceIncrease"
      ],
      "affix": "suffix"
     },
@@ -1800,8 +1794,7 @@
      ],
      "text": "(13–16)% increased Cast Speed",
      "groups": [
-      "IncreasedCastSpeed",
-      "IncreasedAttackSpeed"
+      "IncreasedCastSpeed"
      ],
      "affix": "suffix"
     },
@@ -1811,8 +1804,7 @@
      ],
      "text": "(20–25)% increased Cast Speed",
      "groups": [
-      "IncreasedCastSpeed",
-      "IncreasedAttackSpeed"
+      "IncreasedCastSpeed"
      ],
      "affix": "suffix"
     }
@@ -1831,8 +1823,7 @@
      ],
      "text": "(17–20)% increased Cast Speed",
      "groups": [
-      "IncreasedCastSpeed",
-      "IncreasedAttackSpeed"
+      "IncreasedCastSpeed"
      ],
      "affix": "suffix"
     },
@@ -1842,8 +1833,7 @@
      ],
      "text": "(26–31)% increased Cast Speed",
      "groups": [
-      "IncreasedCastSpeed",
-      "IncreasedAttackSpeed"
+      "IncreasedCastSpeed"
      ],
      "affix": "suffix"
     }
@@ -1862,8 +1852,7 @@
      ],
      "text": "(25–28)% increased Cast Speed",
      "groups": [
-      "IncreasedCastSpeed",
-      "IncreasedAttackSpeed"
+      "IncreasedCastSpeed"
      ],
      "affix": "suffix"
     },
@@ -1873,8 +1862,7 @@
      ],
      "text": "(38–43)% increased Cast Speed",
      "groups": [
-      "IncreasedCastSpeed",
-      "IncreasedAttackSpeed"
+      "IncreasedCastSpeed"
      ],
      "affix": "suffix"
     }
@@ -1924,10 +1912,9 @@
      ],
      "text": "(6–10)% increased Rarity of Items found",
      "groups": [
-      "ItemFoundRarityIncrease",
-      "ItemFoundRarityIncreasePrefix"
+      "ItemFoundRarityIncrease"
      ],
-     "affix": null
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyLesserEssenceRarity.webp"
@@ -1946,10 +1933,9 @@
      ],
      "text": "(11–14)% increased Rarity of Items found",
      "groups": [
-      "ItemFoundRarityIncrease",
-      "ItemFoundRarityIncreasePrefix"
+      "ItemFoundRarityIncrease"
      ],
-     "affix": null
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyEssenceRarity.webp"
@@ -1968,10 +1954,9 @@
      ],
      "text": "(15–18)% increased Rarity of Items found",
      "groups": [
-      "ItemFoundRarityIncrease",
-      "ItemFoundRarityIncreasePrefix"
+      "ItemFoundRarityIncrease"
      ],
-     "affix": null
+     "affix": "suffix"
     }
    ],
    "icon": "CurrencyGreaterEssenceRarity.webp"

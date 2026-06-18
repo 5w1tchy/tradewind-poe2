@@ -136,6 +136,33 @@
   font-weight: 600;
 }
 
+/* Group-conflict block (issue #72): the item already has a mod sharing this
+   essence's guaranteed-mod group, so the game refuses the craft. Greyed + red
+   so it reads as "still relevant, but not usable here". */
+.blocked .name,
+.blocked .mod {
+  color: var(--tw-text-mute);
+}
+
+.blocked .art img {
+  filter: grayscale(0.7) brightness(0.8);
+  opacity: 0.6;
+}
+
+.blockedBy {
+  margin-left: auto;
+  flex-shrink: 0;
+  max-width: 48%;
+  color: var(--tw-bad);
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .empty {
   color: var(--tw-text-faint);
   font-style: italic;

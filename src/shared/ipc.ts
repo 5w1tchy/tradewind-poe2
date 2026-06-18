@@ -1,4 +1,5 @@
 import type { CraftedSlots } from '../core/craft/craftedSlots'
+import type { ItemMod } from '../core/craft/conflict'
 import type { CurrencyPoint, CurrencyQuote } from '../core/exchange'
 import type { PreparedQuery } from '../core/query/types'
 import type { SearchOutcome } from '../core/trade/types'
@@ -15,6 +16,10 @@ export interface ItemPayload {
   /** Crafted-mod count + cap for the Craft tab's essence advice (issue #24).
    *  Null when parsing failed/DB not ready; only meaningful for Rare gear. */
   craftedSlots: CraftedSlots | null
+  /** Existing explicit mods + their groups, for the essence group-conflict gate
+   *  (issue #72): an essence whose guaranteed mod shares a group with one of
+   *  these is blocked by the game. Null when parsing failed/DB not ready. */
+  itemMods: ItemMod[] | null
   /**
    * Aggregate exchange price (poe2scout snapshot) for a currency-exchange item,
    * present only when the item trades on the exchange and the snapshot carries
