@@ -3,6 +3,43 @@
 All notable user-facing changes to Tradewind. Newest first. The top entry of
 each release is reused verbatim as that release's GitHub Release notes.
 
+## v0.1.17
+
+### 💎 Instant price banner for uniques
+Hovering a **unique** now shows an **aggregate market price** (from poe2scout) the
+moment the popup opens — a quick ballpark in Exalted, Divine, and Chaos, styled
+as a sliver of the item's own tooltip. The live trade search no longer runs
+automatically for uniques; it **arms the Search button** instead (like rares),
+so you get the price at a glance and only hit the trade site when you want the
+per-roll listings. (#80)
+
+### 💧 Liquid Emotion advisor for jewel crafting
+The **Craft** tab has a new **Liquids** section for **Liquid Emotions** — the
+jewel-crafting counterpart to essences. Hover a Rare jewel and Tradewind shows
+which liquids apply and the exact modifier each one would add, keyed to the
+jewel's base (Time-Lost vs basic, and the right attribute for Ruby / Sapphire /
+Emerald / Diamond). Wildcard and **Potent** liquids that can land one of several
+mods are tagged "rolls one of". (#48)
+
+### 🚫 Craft advice flags conflicting modifiers
+On the **Craft** tab, an essence or liquid whose guaranteed modifier would clash
+with one already on the item is now shown **greyed out with the reason** — e.g.
+*blocked by "+38% to Cold Resistance"* — instead of being listed as if it would
+work. The game refuses these crafts because two modifiers can't share a group,
+and Tradewind now matches that for Perfect/corrupted essences on Rares, Greater
+essences upgrading a Magic item, and Liquid Emotions on Rare jewels. It even
+tells prefix and suffix versions of the same stat apart (a suffix Rarity mod
+blocks Greater Essence of Opulence, a prefix one doesn't). (#72, #78)
+
+### 🔄 Startup updates explain themselves
+When Tradewind installs an update at startup it used to just vanish and reappear
+on a new version — a mystery restart. Now the **splash screen narrates it**
+(*Updating to vX.Y.Z… → Downloading N% → Restarting…*), so you can see what's
+happening before you're in-game. (#65)
+
+---
+**Full changelog:** https://github.com/5w1tchy/tradewind-poe2/compare/v0.1.16...v0.1.17
+
 ## v0.1.16
 
 ### 🔍 Find craftable bases by their open modifier slots
