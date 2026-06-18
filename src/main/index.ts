@@ -6,7 +6,7 @@ import { buildSearchBody, prepareQuery } from '../core/query'
 import type { PreparedQuery } from '../core/query/types'
 import { StatsDb } from '../core/stats-db/statsDb'
 import type { StatsPayload } from '../core/stats-db/types'
-import type { ItemPayload } from '../shared/ipc'
+import type { ItemPayload, UpdateStatus } from '../shared/ipc'
 import { loadConfig, saveConfig } from './config'
 import { parseHotkey } from './hotkey'
 import { NativeKeyHook } from './keyhook'
@@ -83,8 +83,79 @@ app.whenReady().then(() => {
           if (!overlay.isDestroyed()) overlay.webContents.send('tw:update-status', status)
         }
   })
+  // A startup update used to download + relaunch in total silence — from the
+  // user's side, a mystery restart (issue #65). The toast can't help here (its
+  // overlay is hidden until PoE2 is focused, and at startup the user isn't
+  // in-game yet), so we keep the splash up and narrate the update on it. The
+  // splash's normal dismissal waits on `updateResolved` so a check that lands
+  // after the data fetches can't close the card before we get to pin it; once
+  // an update is downloading the pin holds the card through the relaunch.
+  let dataSettled = false
+  // In dev the updater is a no-op and never reports, so nothing would ever flip
+  // this — treat the check as resolved up front so the splash dismisses normally.
+  let updateResolved = !app.isPackaged
+  let splashPinnedForUpdate = false
+  let splashClosed = false
+  let pendingUpdateVersion = ''
+  const maybeCloseSplash = (): void => {
+    if (splashClosed || splashPinnedForUpdate) return
+    if (!dataSettled || !updateResolved) return
+    splashClosed = true
+    splash.close()
+  }
+  const onStartupUpdate = (status: UpdateStatus): void => {
+    switch (status.state) {
+      case 'available':
+        pendingUpdateVersion = status.version
+        splashPinnedForUpdate = true
+        splash.setStatus(`Updating to v${status.version}…`)
+        break
+      case 'downloading':
+        splashPinnedForUpdate = true
+        splash.setStatus(`Downloading v${pendingUpdateVersion}… ${status.percent}%`)
+        break
+      case 'downloaded':
+        splash.setStatus(`Restarting into v${status.version}…`)
+        break
+      case 'not-available':
+        updateResolved = true
+        maybeCloseSplash()
+        break
+      case 'error':
+        // The download/check failed — release the pin so the card dismisses and
+        // the app keeps running on the current version.
+        splashPinnedForUpdate = false
+        updateResolved = true
+        maybeCloseSplash()
+        break
+    }
+  }
   // Background auto-update (no-op in dev); never blocks startup.
-  initAutoUpdater(overlay, config)
+  initAutoUpdater(overlay, config, onStartupUpdate)
+  // Dev-only: `TRADEWIND_FAKE_UPDATE=1 npm run dev` walks the splash through the
+  // startup-update narration (available → downloading → restarting) without a
+  // real feed, so the look can be eyeballed. It stops short of relaunching and
+  // just dismisses the card at the end.
+  if (!app.isPackaged && process.env['TRADEWIND_FAKE_UPDATE'] === '1') {
+    const fakeVersion = '9.9.9'
+    // Let the splash fade in first, then dwell on each state long enough to read.
+    setTimeout(() => onStartupUpdate({ state: 'available', version: fakeVersion }), 1500)
+    setTimeout(() => {
+      let percent = 0
+      const tick = setInterval(() => {
+        percent += 6
+        onStartupUpdate({ state: 'downloading', percent: Math.min(percent, 100) })
+        if (percent >= 100) {
+          clearInterval(tick)
+          onStartupUpdate({ state: 'downloaded', version: fakeVersion })
+          setTimeout(() => {
+            splashPinnedForUpdate = false
+            splash.close()
+          }, 3000)
+        }
+      }, 600)
+    }, 3500)
+  }
   const input = new InputManager()
   const tracker = new GameWindowTracker(config.gameWindowTitle, devAnyWindow)
   const tradeClient = new TradeApiClient()
@@ -165,17 +236,25 @@ app.whenReady().then(() => {
   // and cap the wait so a hung network can't trap it on screen forever.
   // splash.close() fades out and is idempotent, so both paths can call it.
   const SPLASH_MIN_MS = 2500
-  const SPLASH_MAX_MS = 10_000
+  const SPLASH_MAX_MS = 15_000
   void Promise.allSettled([statsReady, exchangeReady, baseTypesReady, leaguesReady]).then(
     async () => {
       const elapsed = Date.now() - splashStart
       if (elapsed < SPLASH_MIN_MS) {
         await new Promise((resolve) => setTimeout(resolve, SPLASH_MIN_MS - elapsed))
       }
-      splash.close()
+      dataSettled = true
+      maybeCloseSplash()
     }
   )
-  setTimeout(() => splash.close(), SPLASH_MAX_MS)
+  // Safety net for a hung data fetch or update check. Skipped while an update is
+  // downloading — the pin must hold the card through the relaunch.
+  setTimeout(() => {
+    if (!splashPinnedForUpdate) {
+      splashClosed = true
+      splash.close()
+    }
+  }, SPLASH_MAX_MS)
 
   let overlayBounds = { x: 0, y: 0, width: 0, height: 0 }
   // The popup's on-screen rect (overlay-local CSS px) reported by the renderer;

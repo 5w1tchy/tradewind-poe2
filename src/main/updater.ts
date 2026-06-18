@@ -29,6 +29,12 @@ let source: CheckSource = "startup";
 // events to the dialog instead of the toast.
 let manualDialog: DialogController | null = null;
 
+// Reports the startup update's progress so the caller can keep the splash up
+// ("Updating to vX.Y.Z…") instead of a mystery silent restart (issue #65). The
+// toast can't carry this — its overlay window is hidden until PoE2 is focused,
+// and at startup the user isn't in-game yet, so the splash is the only surface.
+let onStartupStatus: ((status: UpdateStatus) => void) | null = null;
+
 /**
  * Wire electron-updater against the GitHub releases feed. Discovery (startup +
  * poll) is automatic and cheap; the binary download is not — it only runs at
@@ -36,10 +42,16 @@ let manualDialog: DialogController | null = null;
  * blocked, and every failure path (offline, no release yet, rate limit) is
  * swallowed — the overlay must keep working regardless.
  */
-export function initAutoUpdater(overlay: BrowserWindow, config: Config): void {
+export function initAutoUpdater(
+  overlay: BrowserWindow,
+  config: Config,
+  onStartup?: (status: UpdateStatus) => void,
+): void {
   // Only an installed build can replace itself; in dev there is no feed and
   // checkForUpdates would throw. `npm run dev` stays untouched.
   if (!app.isPackaged) return;
+
+  onStartupStatus = onStartup ?? null;
 
   // Channel selection, the GitHub way: leave autoUpdater.channel at its default
   // and toggle allowPrerelease. Stable users see only full releases; demo users
@@ -55,7 +67,9 @@ export function initAutoUpdater(overlay: BrowserWindow, config: Config): void {
 
   autoUpdater.on("update-available", (info) => {
     if (source === "startup") {
-      // Pre-match: fetch it now; update-downloaded relaunches into it.
+      // Pre-match: tell the splash, then fetch it now; update-downloaded
+      // relaunches into it.
+      onStartupStatus?.({ state: "available", version: info.version });
       downloadUpdate();
     } else if (manualDialog) {
       manualDialog.setContent(availableContent(info.version));
@@ -66,19 +80,23 @@ export function initAutoUpdater(overlay: BrowserWindow, config: Config): void {
   });
 
   autoUpdater.on("update-not-available", () => {
+    // Tell the splash the startup check is done so it can dismiss on schedule.
+    if (source === "startup") onStartupStatus?.({ state: "not-available" });
     if (manualDialog) manualDialog.setContent(upToDateContent());
   });
 
   autoUpdater.on("download-progress", (p) => {
     const percent = Math.round(p.percent);
-    if (manualDialog) manualDialog.setContent(downloadingContent(percent));
+    if (source === "startup") onStartupStatus?.({ state: "downloading", percent });
+    else if (manualDialog) manualDialog.setContent(downloadingContent(percent));
     else send({ state: "downloading", percent });
   });
 
   autoUpdater.on("update-downloaded", (info) => {
     // Every download was consented (startup or an explicit click), so install
     // and relaunch straight away — the click was the permission to restart.
-    if (manualDialog) manualDialog.setContent(installingContent());
+    if (source === "startup") onStartupStatus?.({ state: "downloaded", version: info.version });
+    else if (manualDialog) manualDialog.setContent(installingContent());
     else send({ state: "downloaded", version: info.version });
     console.log(`[updater] installing ${info.version}`);
     quitAndInstall();
@@ -87,6 +105,9 @@ export function initAutoUpdater(overlay: BrowserWindow, config: Config): void {
   autoUpdater.on("error", (err) => {
     const message = err instanceof Error ? err.message : String(err);
     console.error("[updater]", message);
+    // Let the splash give up its pin so a failed startup download doesn't trap
+    // the card on screen — the app keeps running on the current version.
+    if (source === "startup") onStartupStatus?.({ state: "error", message });
     if (manualDialog) manualDialog.setContent(errorContent(message));
   });
 
@@ -95,6 +116,8 @@ export function initAutoUpdater(overlay: BrowserWindow, config: Config): void {
     autoUpdater.checkForUpdates().catch((err) => {
       const message = err instanceof Error ? err.message : String(err);
       console.error("[updater] check failed:", message);
+      // Release the splash even if no `error` event fires (e.g. offline).
+      if (src === "startup") onStartupStatus?.({ state: "error", message });
       if (manualDialog) manualDialog.setContent(errorContent(message));
     });
   };
