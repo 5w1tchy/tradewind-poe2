@@ -6,6 +6,7 @@
 import data from './essences.json'
 import { craftedCapNote, type CraftedSlots } from './craftedSlots'
 import { conflictingMod, type ItemMod } from './conflict'
+import { modForClass, type RawCraftCurrency, type RawCraftMod } from './targets'
 
 export type EssenceTier = 'lesser' | 'normal' | 'greater' | 'perfect' | 'corrupted'
 
@@ -42,74 +43,7 @@ export interface EssenceAdvice {
   note: string | null
 }
 
-/**
- * poe2db target keyword -> clipboard "Item Class:" values (the vocabulary of
- * PreparedQuery.itemClass). Keep in sync with the "Target tokens" output of
- * gen-essences.mjs. Classes not in PoE2 yet (claws, daggers…) are omitted.
- */
-const MELEE_ONE_HAND = ['One Hand Maces', 'Spears', 'Flails']
-const MELEE_TWO_HAND = ['Two Hand Maces', 'Quarterstaves']
-const MELEE = [...MELEE_ONE_HAND, ...MELEE_TWO_HAND]
-const RANGED = ['Bows', 'Crossbows']
-const CASTER = ['Wands', 'Staves', 'Sceptres']
-const MARTIAL = [...MELEE, ...RANGED]
-const WEAPONS = [...MARTIAL, ...CASTER]
-const ARMOUR = ['Body Armours', 'Helmets', 'Gloves', 'Boots', 'Shields', 'Bucklers', 'Foci']
-const JEWELLERY = ['Rings', 'Amulets']
-const EQUIPMENT = [...WEAPONS, ...ARMOUR, ...JEWELLERY, 'Belts', 'Quivers']
-
-const CLASSES_BY_TARGET: Record<string, string[]> = {
-  Equipment: EQUIPMENT,
-  Any: EQUIPMENT,
-  Weapons: WEAPONS,
-  'Martial Weapon': MARTIAL,
-  'Melee Weapon': MELEE,
-  'One Handed Melee Weapon': MELEE_ONE_HAND,
-  'Two Handed Melee Weapon': MELEE_TWO_HAND,
-  'Caster Weapon': CASTER,
-  Mace: ['One Hand Maces', 'Two Hand Maces'],
-  Bow: ['Bows'],
-  Crossbow: ['Crossbows'],
-  Quarterstaff: ['Quarterstaves'],
-  Spear: ['Spears'],
-  Wand: ['Wands'],
-  Staff: ['Staves'],
-  Sceptre: ['Sceptres'],
-  Armour: ARMOUR,
-  'Body Armour': ['Body Armours'],
-  Helmet: ['Helmets'],
-  Gloves: ['Gloves'],
-  Boots: ['Boots'],
-  Shield: ['Shields', 'Bucklers'],
-  Focus: ['Foci'],
-  Quiver: ['Quivers'],
-  Jewellery: JEWELLERY,
-  Ring: ['Rings'],
-  Amulet: ['Amulets'],
-  Belt: ['Belts'],
-  Talisman: ['Talismans']
-}
-
-interface RawEssence {
-  id: string
-  name: string
-  behavior: string
-  mods: Array<{
-    targets: string[]
-    text: string
-    /**
-     * Mod-group(s) of this guaranteed mod (joined from repoe-fork by
-     * gen-essences.mjs). Two mods can't share a group, so an "augment a Rare"
-     * essence/alloy is blocked when the item already has a mod in any of these
-     * — the basis for the planned crafting-conflict gate. Empty when the mod
-     * has no normal group (e.g. "Mark of the Abyssal Lord") or didn't match.
-     */
-    groups: string[]
-    /** Affix slot the mod occupies; null when ambiguous/unmatched. */
-    affix: 'prefix' | 'suffix' | null
-  }>
-  icon?: string
-}
+type RawEssence = RawCraftCurrency
 
 function tierOf(e: RawEssence): EssenceTier {
   if (e.id.includes('CorruptedEssence')) return 'corrupted'
@@ -134,7 +68,7 @@ const TIER_ORDER: Record<EssenceTier, number> = {
 }
 
 // The source page also lists Verisium Alloys (essence-like rare-item
-// currencies) — kept in the JSON for a future tab, out of scope here.
+// currencies) — they're filtered out here and handled by alloys.ts (#51).
 // Lesser/regular tiers are dropped too: by the time someone price-checks
 // with a crafting eye, only Greater/Perfect (and corrupted) are worth using.
 const ESSENCES = (data.essences as RawEssence[])
@@ -148,16 +82,9 @@ const ESSENCES = (data.essences as RawEssence[])
   }))
   .filter((e) => e.tier === 'greater' || e.tier === 'perfect' || e.tier === 'corrupted')
 
-type EssenceMod = RawEssence['mods'][number]
-
 /** The guaranteed mod this essence gives on an item class, or null if none. */
-function modFor(e: (typeof ESSENCES)[number], itemClass: string): EssenceMod | null {
-  for (const mod of e.mods) {
-    for (const target of mod.targets) {
-      if (CLASSES_BY_TARGET[target]?.includes(itemClass)) return mod
-    }
-  }
-  return null
+function modFor(e: (typeof ESSENCES)[number], itemClass: string): RawCraftMod | null {
+  return modForClass(e.mods, itemClass)
 }
 
 export function essencesForItem(
