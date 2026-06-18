@@ -47,7 +47,13 @@ export default function CraftPane({ payload }: { payload: ItemPayload }): React.
     // Liquids key off the jewel's gem base type (every jewel is `Item Class:
     // Jewels`); rares carry it on baseTypeFilter, uniques on type.
     const baseType = p.baseTypeFilter?.value ?? p.type ?? ''
-    return liquidsForItem(p.itemClass, baseType, p.rarity, payload.craftedSlots ?? undefined)
+    return liquidsForItem(
+      p.itemClass,
+      baseType,
+      p.rarity,
+      payload.craftedSlots ?? undefined,
+      payload.itemMods ?? undefined
+    )
   }, [payload])
 
   return (
@@ -134,9 +140,20 @@ export default function CraftPane({ payload }: { payload: ItemPayload }): React.
                           {l.mods.length > 1 && <span className={styles.oneof}>rolls one of</span>}
                         </span>
                         {l.mods.map((m, i) => (
-                          <span key={i} className={styles.mod} title={m.text}>
+                          <span
+                            key={i}
+                            className={`${styles.mod} ${m.blockedBy ? styles.modBlocked : ''}`}
+                            title={
+                              m.blockedBy
+                                ? `Blocked: the jewel already has "${m.blockedBy}", which shares this mod's group`
+                                : m.text
+                            }
+                          >
                             <span className={styles.affix}>{m.affix === 'prefix' ? 'P' : 'S'}</span>
                             {m.text}
+                            {m.blockedBy && (
+                              <em className={styles.reason}> — blocked by “{m.blockedBy}”</em>
+                            )}
                           </span>
                         ))}
                       </span>

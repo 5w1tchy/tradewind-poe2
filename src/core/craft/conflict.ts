@@ -11,7 +11,7 @@
  * scripts/gen-essences.mjs; the item's groups come from the mod pool below.
  */
 import type { ParsedItem } from '../parser/types'
-import { groupsForLine } from '../mod-pool/modPool'
+import { groupsForLine, jewelGroupsForLine } from '../mod-pool/modPool'
 
 /** An existing explicit mod of an item paired with its mod-group(s). */
 export interface ItemMod {
@@ -23,23 +23,27 @@ export interface ItemMod {
 }
 
 /**
- * The item's explicit mods paired with their groups, for the conflict gate.
+ * The item's explicit mods paired with their groups, for the conflict gate —
+ * gear mods for the essence gate (#72), jewel mods for the liquid gate (#78).
  * Only explicit prefix/suffix mods can collide with a guaranteed augment, so
  * implicits, runes and enchants are skipped. A mod whose group can't be resolved
- * (text absent from the pool — e.g. a unique-only or freshly added stat) carries
- * empty `groups` and so never blocks an essence.
+ * (text absent from the pool — a unique-only/freshly added stat, or a Time-Lost
+ * passive-grant mod) carries empty `groups` and so never blocks anything.
  */
 export function itemMods(item: ParsedItem, baseType: string): ItemMod[] {
+  // Jewel mods live in a different mod domain than gear, with their own group
+  // table — resolve against the right one so the two never cross-match.
+  const jewel = item.itemClass === 'Jewels'
   return item.explicits.map((mod) => {
     // An advanced copy tags each mod prefix/suffix; pass it through so a stat
-    // that rolls as both under different groups (e.g. Rarity of Items found)
-    // resolves to the right family. A basic chat-link copy has no affix
-    // ('explicit'), so groups stay un-narrowed — the conservative default.
+    // that rolls as both under different groups (e.g. Rarity of Items found,
+    // Effect of Prefixes/Suffixes) resolves to the right family. A basic
+    // chat-link copy has no affix ('explicit'), so groups stay un-narrowed.
     const affix = mod.generation === 'prefix' || mod.generation === 'suffix' ? mod.generation : null
-    return {
-      label: mod.lines.map((l) => l.raw).join(', '),
-      groups: [...new Set(mod.lines.flatMap((l) => groupsForLine(baseType, l, affix)))]
-    }
+    const groups = jewel
+      ? mod.lines.flatMap((l) => jewelGroupsForLine(l, affix))
+      : mod.lines.flatMap((l) => groupsForLine(baseType, l, affix))
+    return { label: mod.lines.map((l) => l.raw).join(', '), groups: [...new Set(groups)] }
   })
 }
 

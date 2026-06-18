@@ -81,4 +81,25 @@ describe('itemMods', () => {
     expect(m.groups).toContain('ItemFoundRarityIncreasePrefix')
     expect(m.groups).not.toContain('ItemFoundRarityIncrease')
   })
+
+  // A jewel's mods live in a different mod domain than gear; itemMods resolves
+  // them against the jewel group table (issue #78).
+  it('a jewel mod resolves against the jewel group table', () => {
+    const text = [
+      'Item Class: Jewels',
+      'Rarity: Rare',
+      'Glittering Rapture',
+      'Emerald',
+      '--------',
+      'Item Level: 80',
+      '--------',
+      '{ Prefix Modifier "Sturdy" (Tier: 2) }',
+      '15% increased Evasion Rating',
+      '--------'
+    ].join('\n')
+    const item = parseItem(text)
+    const [m] = itemMods(item, 'Emerald')
+    expect(m.label).toBe('15% increased Evasion Rating')
+    expect(m.groups).toContain('EvasionRatingPercent')
+  })
 })
