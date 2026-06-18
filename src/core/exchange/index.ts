@@ -5,7 +5,8 @@ export type {
   CurrencyQuote,
   Denominations,
   ExchangeRates,
-  Liquidity
+  Liquidity,
+  UniqueQuote
 } from './types'
 
 /** Express an exalted price in all three denominations (0 when a rate is unset). */

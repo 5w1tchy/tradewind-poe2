@@ -1,6 +1,6 @@
 import type { CraftedSlots } from '../core/craft/craftedSlots'
 import type { ItemMod } from '../core/craft/conflict'
-import type { CurrencyPoint, CurrencyQuote } from '../core/exchange'
+import type { CurrencyPoint, CurrencyQuote, UniqueQuote } from '../core/exchange'
 import type { PreparedQuery } from '../core/query/types'
 import type { SearchOutcome } from '../core/trade/types'
 
@@ -66,6 +66,13 @@ export interface TradewindApi {
    * item from the poe2scout snapshot, for the chart. Resolves to [] on failure.
    */
   getCurrencyHistory(league: string, apiId: string): Promise<CurrencyPoint[]>
+  /**
+   * Resolve a Unique item's aggregate poe2scout quote, joined on Name+Type, for
+   * the instant ballpark banner (#80). Requested by the renderer on mount so the
+   * main hot path stays untouched; null when the snapshot is unavailable or
+   * doesn't carry the unique (no banner — the live search remains the truth).
+   */
+  getUniqueQuote(league: string, name: string, type: string): Promise<UniqueQuote | null>
   setLeague(league: string): Promise<void>
   /**
    * Persist the last-chosen buyout-price currency (issue #20) so the picker

@@ -6,7 +6,7 @@
  *   npx vite --config vite.preview.config.ts
  *   open http://localhost:5173/preview.html
  */
-import type { CurrencyPoint, CurrencyQuote } from '../../core/exchange'
+import type { CurrencyPoint, CurrencyQuote, UniqueQuote } from '../../core/exchange'
 import type { PreparedQuery } from '../../core/query/types'
 import type { ListingItem, ListingMod, SearchOutcome } from '../../core/trade/types'
 import type { ItemMod } from '../../core/craft/conflict'
@@ -294,6 +294,20 @@ const SAMPLE_HISTORY: CurrencyPoint[] = [
   quantity
 }))
 
+// Canned unique aggregate (Bluetongue Shortsword) for ?rarity=Unique — a noisy,
+// thinly-traded leveling unique, the exact case the banner must read as a rough
+// ballpark rather than authoritative (#80).
+const SAMPLE_UNIQUE: UniqueQuote = {
+  name: 'Bluetongue',
+  type: 'Shortsword',
+  priceExalted: 96850,
+  // Bluetongue's real GGG-CDN art (the same row the #80 research verified).
+  iconUrl:
+    'https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9PbmVIYW5kV2VhcG9ucy9PbmVIYW5kU3dvcmRzL1VuaXF1ZXMvQmx1ZXRvbmd1ZSIsInciOjIsImgiOjMsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/3fdac0787b/Bluetongue.png',
+  itemId: 1234,
+  rates: { divine: 320, chaos: 19.56 }
+}
+
 const CURRENCY_QUERY: PreparedQuery = {
   ...SAMPLE_QUERY,
   itemClass: 'Lineage Support Gems',
@@ -336,6 +350,10 @@ const mock: TradewindApi = {
     await new Promise((r) => setTimeout(r, 200))
     return SAMPLE_HISTORY
   },
+  async getUniqueQuote() {
+    await new Promise((r) => setTimeout(r, 150))
+    return SAMPLE_UNIQUE
+  },
   async setLeague() {},
   setBuyoutCurrency() {},
   setPopupRect() {},
@@ -367,6 +385,13 @@ SAMPLE_QUERY.itemClass = params.get('class') ?? SAMPLE_QUERY.itemClass
 SAMPLE_QUERY.rarity = params.get('rarity') ?? SAMPLE_QUERY.rarity
 const baseParam = params.get('base')
 if (baseParam) SAMPLE_QUERY.baseTypeFilter = { value: baseParam, enabled: true }
+// ?rarity=Unique exercises the instant aggregate banner (#80): a unique pins
+// name+type, so seed them to match SAMPLE_UNIQUE and arm Search (no auto-run).
+if (SAMPLE_QUERY.rarity === 'Unique') {
+  SAMPLE_QUERY.name = SAMPLE_UNIQUE.name
+  SAMPLE_QUERY.type = SAMPLE_UNIQUE.type
+  SAMPLE_QUERY.rarityOption = 'unique'
+}
 
 const isCurrency = params.get('view') === 'currency'
 

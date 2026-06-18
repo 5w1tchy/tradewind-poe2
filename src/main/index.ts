@@ -629,6 +629,10 @@ app.whenReady().then(() => {
     exchange.getHistory(leagueArg || league, apiId)
   )
 
+  ipcMain.handle('tw:unique-quote', (_event, leagueArg: string, name: string, type: string) =>
+    exchange.uniqueQuote(leagueArg || league, name, type)
+  )
+
   ipcMain.handle('tw:set-league', (_event, id: string) => {
     league = id
     config.league = id
