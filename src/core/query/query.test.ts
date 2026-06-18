@@ -173,7 +173,9 @@ describe('prepareQuery', () => {
       'identified'
     ])
     expect(q.flags.every((f) => f.state === 'any')).toBe(true)
-    expect(q.ilvl).toMatchObject({ value: 83, enabled: false })
+    // Rare at ilvl 83: opt-in (off), and the search floor is capped at the T1
+    // ceiling of 82 (real ilvl kept as `value`).
+    expect(q.ilvl).toMatchObject({ value: 83, min: 82, enabled: false })
     expect(q.unmatched).toEqual([])
 
     // six explicit lines, but the two resists fold into one pseudo total
@@ -769,6 +771,43 @@ describe('exceptional items (issue #14)', () => {
     expect(socketRow(q)).toMatchObject({ value: 3, enabled: true })
   })
 
+  it('Normal base defaults the ilvl filter on, capped at the T1 ceiling', () => {
+    // The white Corsair Coat is ilvl 82 — a white base's value IS its ilvl, so
+    // the filter arms by default; 82 is already the cap (no change to min).
+    const q = prepareFixture('13-body-armours--exceptional-corsair-coat-2590bdef.txt')
+    expect(q.ilvl).toMatchObject({ value: 82, min: 82, enabled: true })
+  })
+
+  it('an above-82 ilvl caps the search floor at 82 (real ilvl kept as value)', () => {
+    const white = [
+      'Item Class: Body Armours',
+      'Rarity: Normal',
+      'Vaal Regalia',
+      '--------',
+      'Item Level: 86',
+      '--------',
+      'Sockets: S S '
+    ].join('\n')
+    const q = prepareQuery(parseItem(white), db)
+    // 86 unlocks no better tiers than 82, so search 82+; value stays 86.
+    expect(q.ilvl).toMatchObject({ value: 86, min: 82, enabled: true })
+  })
+
+  it('Magic/Rare leave the ilvl filter opt-in; a sub-82 floor is the real ilvl', () => {
+    const magic = [
+      'Item Class: Gloves',
+      'Rarity: Magic',
+      'Sharp Riveted Gloves',
+      '--------',
+      'Item Level: 79',
+      '--------',
+      '{ Prefix Modifier "Sharp" (Tier: 7) — Attack }',
+      '+66(61-84) to Accuracy Rating'
+    ].join('\n')
+    const q = prepareQuery(parseItem(magic), db)
+    expect(q.ilvl).toMatchObject({ value: 79, min: 79, enabled: false })
+  })
+
   it('exceptional uniques are gated the same way', () => {
     const q = prepareQuery(
       parseItem(
@@ -865,7 +904,8 @@ describe('buildSearchBody', () => {
     const q = prepareFixture('01-gloves--rapture-caress-8cdf3ae5.txt')
     q.ilvl!.enabled = true
     const body = buildSearchBody(q)
-    expect(body.query.filters?.type_filters?.filters.ilvl).toEqual({ min: 83 })
+    // min is capped at the T1 ceiling (82), not the item's ilvl 83.
+    expect(body.query.filters?.type_filters?.filters.ilvl).toEqual({ min: 82 })
   })
 
   it('open-slot mod counts: seeded on rares, emitted into the stat group when bounded', () => {
