@@ -162,6 +162,30 @@ interface RawExchangeResponse {
   >
 }
 
+/**
+ * A rolled mod as /fetch now returns it (2026-06-19 patch): an object whose
+ * `description` is the display text and whose inline `mods[0].tier` ("P6"/"S1")
+ * carries the affix+tier that used to live in `extended.mods[source]`. The
+ * endpoint historically returned bare strings here (and still does for
+ * implicit/enchant/rune lines), so every reader tolerates both forms.
+ */
+interface RawMod {
+  description?: string
+  hash?: string
+  mods?: Array<{ name?: string; tier?: string; level?: number; magnitudes?: unknown }>
+}
+type RawModEntry = string | RawMod
+
+/** Display text of a mod entry, whichever form GGG sent. */
+function modText(m: RawModEntry): string {
+  return typeof m === 'string' ? m : m.description ?? ''
+}
+
+/** Inline tier code ("P6"/"S1") of a mod entry, or undefined (legacy string form). */
+function modTier(m: RawModEntry): string | undefined {
+  return typeof m === 'string' ? undefined : m.mods?.[0]?.tier || undefined
+}
+
 /** The item shape returned by /fetch — the full game item JSON (we read a subset). */
 interface RawItem {
   name?: string
@@ -172,13 +196,13 @@ interface RawItem {
   corrupted?: boolean
   properties?: ItemProperty[]
   requirements?: ItemProperty[]
-  enchantMods?: string[]
-  implicitMods?: string[]
-  fracturedMods?: string[]
-  explicitMods?: string[]
-  craftedMods?: string[]
-  desecratedMods?: string[]
-  runeMods?: string[]
+  enchantMods?: RawModEntry[]
+  implicitMods?: RawModEntry[]
+  fracturedMods?: RawModEntry[]
+  explicitMods?: RawModEntry[]
+  craftedMods?: RawModEntry[]
+  desecratedMods?: RawModEntry[]
+  runeMods?: RawModEntry[]
   /** Per-mod metadata: mods[cat][i].tier ("P1"), hashes[cat] parallel to the text lines. */
   extended?: {
     mods?: Record<string, Array<{ tier?: string }>>
@@ -217,8 +241,8 @@ function rarityOf(frameType?: number): string {
 }
 
 /** Strip markup and drop empty arrays so the IPC payload is lean and render-ready. */
-function trim(mods?: string[]): string[] | undefined {
-  return mods && mods.length > 0 ? mods.map(stripMarkup) : undefined
+function trim(mods?: RawModEntry[]): string[] | undefined {
+  return mods && mods.length > 0 ? mods.map((m) => stripMarkup(modText(m))) : undefined
 }
 
 /** Clean markup out of property/requirement names and value texts. */
@@ -238,30 +262,42 @@ const AFFIX_SOURCES: Array<[string, keyof RawItem]> = [
   ['desecrated', 'desecratedMods']
 ]
 
-/** Tag each rolled mod line with its affix (P/S) + tier from item.extended. */
-function affixLines(source: string, lines: string[] | undefined, ext: RawItem['extended']): ListingMod[] {
+/**
+ * Tag each rolled mod line with its affix (P/S) + tier. The current /fetch
+ * shape carries the tier inline on the mod object (`mods[0].tier`); the older
+ * shape kept it in `extended.mods[source]` indexed by `extended.hashes` — we
+ * read the inline form first and fall back to the legacy lookup.
+ */
+function affixLines(
+  source: string,
+  lines: RawModEntry[] | undefined,
+  ext: RawItem['extended']
+): ListingMod[] {
   if (!lines || lines.length === 0) return []
   const defs = ext?.mods?.[source]
   const hashes = ext?.hashes?.[source]
-  return lines.map((text, i) => {
+  return lines.map((entry, i) => {
     let affix: 'P' | 'S' | null = null
     let tier: number | null = null
-    // hashes[source] is parallel to the text lines; its [1] points into mods[source].
-    const idx = hashes?.[i]?.[1]?.[0]
-    const t = idx != null ? defs?.[idx]?.tier : undefined
+    let t = modTier(entry)
+    if (!t) {
+      // Legacy: hashes[source] is parallel to the lines; its [1] points into mods[source].
+      const idx = hashes?.[i]?.[1]?.[0]
+      t = idx != null ? defs?.[idx]?.tier : undefined
+    }
     if (t) {
       affix = t[0] === 'P' ? 'P' : t[0] === 'S' ? 'S' : null
       const n = Number(t.slice(1))
       tier = Number.isFinite(n) ? n : null
     }
-    return { text: stripMarkup(text), affix, tier, source }
+    return { text: stripMarkup(modText(entry)), affix, tier, source }
   })
 }
 
 /** Project the fetched item down to the IPC-safe detail the tooltip renders. */
 function toListingItem(item: RawItem): ListingItem {
   const affixMods = AFFIX_SOURCES.flatMap(([source, key]) =>
-    affixLines(source, item[key] as string[] | undefined, item.extended)
+    affixLines(source, item[key] as RawModEntry[] | undefined, item.extended)
   )
   return {
     rarity: rarityOf(item.frameType),
