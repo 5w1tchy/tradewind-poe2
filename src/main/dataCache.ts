@@ -2,7 +2,7 @@ import { app } from 'electron'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
-export const USER_AGENT = 'tradewind/0.0.1 (contact: chaideb123@gmail.com)'
+export const USER_AGENT = 'tradewind/0.0.1 (contact: nishnianidze.n@yahoo.com)'
 
 /** Default: don't re-validate against GGG more often than this. */
 const DEFAULT_FRESH_MS = 12 * 60 * 60 * 1000
