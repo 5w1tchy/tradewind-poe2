@@ -18,6 +18,7 @@ import type { ItemPayload } from '../../../shared/ipc'
 import ListingTooltip, { type TooltipAnchor } from './ListingTooltip'
 import CurrencyView from './CurrencyView'
 import UniqueQuoteBanner from './UniqueQuoteBanner'
+import UniqueCandidatesBanner from './UniqueCandidatesBanner'
 import UncutSupportBanner from './UncutSupportBanner'
 import styles from './PriceCheck.module.css'
 
@@ -932,6 +933,17 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
             <UniqueQuoteBanner
               rarity={q.rarity}
               name={q.name}
+              type={q.type}
+              league={league}
+              currencyIcons={payload.currencyIcons}
+            />
+          )}
+          {/* An *unidentified* unique copies with no name — only its base — so
+              instead of one quote we list every unique that drops on that base
+              with its aggregate price for the user to pick from (#88). */}
+          {q.rarity === 'Unique' && !q.name && q.type && (
+            <UniqueCandidatesBanner
+              rarity={q.rarity}
               type={q.type}
               league={league}
               currencyIcons={payload.currencyIcons}

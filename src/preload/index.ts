@@ -20,6 +20,9 @@ const api: TradewindApi = {
   getUniqueQuote(league, name, type) {
     return ipcRenderer.invoke('tw:unique-quote', league, name, type)
   },
+  getUniqueCandidates(league, type) {
+    return ipcRenderer.invoke('tw:unique-candidates', league, type)
+  },
   getUncutSupportQuotes(league, levels) {
     return ipcRenderer.invoke('tw:uncut-quote', league, levels)
   },

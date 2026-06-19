@@ -310,6 +310,18 @@ const SAMPLE_UNIQUE: UniqueQuote = {
   rates: { divine: 320, chaos: 19.56 }
 }
 
+// Canned candidate list for ?rarity=Unique&unid — the uniques that drop on one
+// base (a Fierce Greathelm), the exact spread the #88 ledger must rank: a couple
+// of chase prices down to cheap leveling uniques.
+const SAMPLE_CANDIDATES: UniqueQuote[] = [
+  { name: "Voll's Vision", type: 'Fierce Greathelm', priceExalted: 42100, iconUrl: null, itemId: 9001, rates: { divine: 320, chaos: 19.56 } },
+  { name: 'Crown of the Pale King', type: 'Fierce Greathelm', priceExalted: 8650, iconUrl: null, itemId: 9002, rates: { divine: 320, chaos: 19.56 } },
+  { name: 'Wreath of Phrecia', type: 'Fierce Greathelm', priceExalted: 640, iconUrl: null, itemId: 9003, rates: { divine: 320, chaos: 19.56 } },
+  { name: 'Heatshiver', type: 'Fierce Greathelm', priceExalted: 95, iconUrl: null, itemId: 9004, rates: { divine: 320, chaos: 19.56 } },
+  { name: 'The Pariah', type: 'Fierce Greathelm', priceExalted: 12, iconUrl: null, itemId: 9005, rates: { divine: 320, chaos: 19.56 } },
+  { name: "Geofri's Crest", type: 'Fierce Greathelm', priceExalted: 2, iconUrl: null, itemId: 9006, rates: { divine: 320, chaos: 19.56 } }
+]
+
 // Canned Uncut Support Gem ladder for ?class=Support%20Gems — real-shaped prices
 // across all five levels. rates mirror SAMPLE_UNIQUE so the denominations read
 // sanely.
@@ -367,6 +379,10 @@ const mock: TradewindApi = {
     await new Promise((r) => setTimeout(r, 150))
     return SAMPLE_UNIQUE
   },
+  async getUniqueCandidates() {
+    await new Promise((r) => setTimeout(r, 150))
+    return SAMPLE_CANDIDATES
+  },
   async getUncutSupportQuotes(_league, levels) {
     await new Promise((r) => setTimeout(r, 150))
     return SAMPLE_UNCUT.filter((q) => levels.includes(q.level))
@@ -404,9 +420,13 @@ const baseParam = params.get('base')
 if (baseParam) SAMPLE_QUERY.baseTypeFilter = { value: baseParam, enabled: true }
 // ?rarity=Unique exercises the instant aggregate banner (#80): a unique pins
 // name+type, so seed them to match SAMPLE_UNIQUE and arm Search (no auto-run).
+// Add ?unid to exercise the #88 unidentified-unique candidate ledger instead: an
+// unidentified unique carries no name — only its base — so clear the name and
+// the by-base candidate list renders in place of the single quote.
 if (SAMPLE_QUERY.rarity === 'Unique') {
-  SAMPLE_QUERY.name = SAMPLE_UNIQUE.name
-  SAMPLE_QUERY.type = SAMPLE_UNIQUE.type
+  const unidentified = params.has('unid')
+  SAMPLE_QUERY.name = unidentified ? null : SAMPLE_UNIQUE.name
+  SAMPLE_QUERY.type = unidentified ? SAMPLE_CANDIDATES[0].type : SAMPLE_UNIQUE.type
   SAMPLE_QUERY.rarityOption = 'unique'
 }
 // ?class=Support%20Gems exercises the cuttable-support Uncut banner (#58): the
