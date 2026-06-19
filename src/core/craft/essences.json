@@ -2515,6 +2515,17 @@
     },
     {
      "targets": [
+      "Focus",
+      "Wand"
+     ],
+     "text": "(26–31)% increased Cast SpeedGain (7–11)% of Elemental Damage as Extra Cold Damage",
+     "groups": [
+      "IncreasedCastSpeed"
+     ],
+     "affix": "suffix"
+    },
+    {
+     "targets": [
       "Martial Weapon"
      ],
      "text": "(15–20)% increased Physical Damage+(7–10) to all Attributes",
