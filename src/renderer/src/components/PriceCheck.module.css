@@ -250,18 +250,91 @@
   opacity: 0.7;
 }
 
-/* "Open modifier slots" count row: a label + min/max inputs, not a clickable
-   toggle, so it suppresses the filter-row pointer/hover affordances. */
-.mod-count-row {
-  cursor: default;
+/* ---- Open Modifier Slots band (issues #22, #90) ----------------------- */
+
+/* Three compact labelled cells (Prefix · Suffix · Total) on a shared wrapping
+   line — the vertical-space sibling of the #57 flag-chips band — replacing the
+   old three stacked min/max rows. The section legend carries the "Open Modifier
+   Slots" context, so the cells stay terse. */
+.mod-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 1px 2px 2px;
 }
 
-.mod-count-row:hover {
-  background: none;
+.count-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--tw-bg-inset);
+  border: 1px solid var(--tw-line);
+  border-radius: 3px;
+  padding: 3px 8px 3px 9px;
+  transition:
+    border-color 110ms ease,
+    background-color 110ms ease;
 }
 
-.mod-count-row .property {
-  opacity: 1;
+.count-label {
+  font-family: var(--tw-font-display);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tw-text-faint);
+  transition: color 110ms ease;
+}
+
+/* Active (a bound typed) lights gold, mirroring the chip-yes "include" signal. */
+.count-on {
+  border-color: var(--tw-bronze);
+  background: var(--tw-bronze-faint);
+}
+
+.count-on .count-label {
+  color: var(--tw-gold);
+}
+
+.count-bounds {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.count-num {
+  width: 34px;
+  background: var(--tw-bg);
+  border: 1px solid var(--tw-line);
+  border-radius: 2px;
+  color: var(--tw-text);
+  font: inherit;
+  font-size: 12px;
+  text-align: center;
+  padding: 1px 3px;
+  appearance: textfield;
+  -moz-appearance: textfield;
+  transition: border-color 120ms ease;
+}
+
+.count-num::-webkit-outer-spin-button,
+.count-num::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.count-num:focus {
+  outline: none;
+  border-color: var(--tw-bronze);
+}
+
+.count-num::placeholder {
+  color: var(--tw-text-faint);
+}
+
+.count-dash {
+  color: var(--tw-text-faint);
+  font-size: 11px;
 }
 
 /* ---- Section legend: title set into the divider line (issue #57) ------- */

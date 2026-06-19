@@ -49,6 +49,16 @@ const FLAG_STATE_TITLE: Record<TriState, string> = {
   no: 'Must not have'
 }
 
+// Short cell labels for the Open Modifier Slots band (issue #90). The section
+// legend ("Open Modifier Slots") carries the context, so each compact cell just
+// needs Prefix / Suffix / Total. Keyed by pseudo stat id; falls back to the full
+// label if an id ever changes upstream.
+const MOD_COUNT_SHORT: Record<string, string> = {
+  'pseudo.pseudo_number_of_empty_prefix_mods': 'Prefix',
+  'pseudo.pseudo_number_of_empty_suffix_mods': 'Suffix',
+  'pseudo.pseudo_number_of_empty_affix_mods': 'Total'
+}
+
 // Buyout-price currency: [trade option id (null = exalted equivalent), menu label].
 const BUYOUT_OPTIONS: Array<[string | null, string]> = [
   [null, 'Exalted Orb Equivalent'],
@@ -641,16 +651,23 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     )
   }
 
-  /** One "open modifier slots" count row (issue #22): a label plus min/max. No
-   *  roll value, so no quick-set "=" button — just the bounds (setBound enables
-   *  the row when a bound is typed, disables when both clear). */
-  function renderModCountRow(m: PreparedModCount): React.JSX.Element {
+  /** One compact "open modifier slots" cell (issues #22, #90): a short label
+   *  (Prefix/Suffix/Total — the legend carries the rest) paired with a tight
+   *  min–max input pair, laid out as a horizontal band instead of three stacked
+   *  rows. No roll value, so no quick-set "=" button. The cell lights gold when
+   *  a bound is set (setBound enables it when a bound is typed, disables when
+   *  both clear), echoing the active flag-chip from #57. */
+  function renderModCountCell(m: PreparedModCount): React.JSX.Element {
     return (
-      <div key={m.statId} className={`${styles['filter-row']} ${styles['mod-count-row']}`}>
-        <span className={styles.property}>{m.label}</span>
-        <span className={styles.bounds}>
+      <div
+        key={m.statId}
+        className={`${styles['count-cell']} ${m.enabled ? styles['count-on'] : ''}`}
+        title={m.label}
+      >
+        <span className={styles['count-label']}>{MOD_COUNT_SHORT[m.statId] ?? m.label}</span>
+        <span className={styles['count-bounds']}>
           <input
-            className={styles.num}
+            className={styles['count-num']}
             type="number"
             placeholder="min"
             value={m.min ?? ''}
@@ -661,8 +678,11 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
               if (e.key === 'Enter') void runSearch()
             }}
           />
+          <span className={styles['count-dash']} aria-hidden="true">
+            –
+          </span>
           <input
-            className={styles.num}
+            className={styles['count-num']}
             type="number"
             placeholder="max"
             value={m.max ?? ''}
@@ -1054,7 +1074,9 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
                   () => setModsOpen((o) => !o),
                   activeModCounts
                 )}
-                {modsOpen && q.modCounts.map(renderModCountRow)}
+                {modsOpen && (
+                  <div className={styles['mod-counts']}>{q.modCounts.map(renderModCountCell)}</div>
+                )}
                 {(q.stats.length > 0 || q.unmatched.length > 0) && (
                   <div className={styles.divider} />
                 )}
