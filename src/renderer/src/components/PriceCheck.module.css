@@ -250,33 +250,34 @@
   opacity: 0.7;
 }
 
-/* ---- Open Modifier Slots band (issues #22, #90) ----------------------- */
+/* ---- Open Modifier Slots filter (issues #22, #90) --------------------- */
 
-/* Three compact labelled cells (Prefix · Suffix · Total) on a shared wrapping
-   line — the vertical-space sibling of the #57 flag-chips band — replacing the
-   old three stacked min/max rows. The section legend carries the "Open Modifier
-   Slots" context, so the cells stay terse. */
-.mod-counts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 1px 2px 2px;
-}
-
-.count-cell {
+/* A rarely-used filter, so it lives behind an "Open slots" toggle in the action
+   row (rares/magic only) rather than a top-level section — same floating-popover
+   pattern as the buyout control, so opening it never reflows the popup. */
+.mods-filter {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  background: var(--tw-bg-inset);
-  border: 1px solid var(--tw-line);
-  border-radius: 3px;
-  padding: 3px 8px 3px 9px;
-  transition:
-    border-color 110ms ease,
-    background-color 110ms ease;
+}
+
+/* Reuses .buyout-pop for the float/shadow; this just lays the three count cells
+   out as a left-aligned stacked form (label column + min–max). */
+.mods-pop {
+  align-items: stretch;
+  gap: 5px;
+}
+
+/* One Prefix/Suffix/Total row inside the popover: a fixed-width label so the
+   inputs line up in a column, paired with a tight min–max input pair. */
+.count-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .count-label {
+  min-width: 3.4em;
   font-family: var(--tw-font-display);
   font-size: 10px;
   font-weight: 600;
@@ -286,12 +287,7 @@
   transition: color 110ms ease;
 }
 
-/* Active (a bound typed) lights gold, mirroring the chip-yes "include" signal. */
-.count-on {
-  border-color: var(--tw-bronze);
-  background: var(--tw-bronze-faint);
-}
-
+/* Active (a bound typed) lights the label gold, mirroring the chip-yes signal. */
 .count-on .count-label {
   color: var(--tw-gold);
 }
@@ -300,10 +296,11 @@
   display: inline-flex;
   align-items: center;
   gap: 3px;
+  margin-left: auto;
 }
 
 .count-num {
-  width: 34px;
+  width: 38px;
   background: var(--tw-bg);
   border: 1px solid var(--tw-line);
   border-radius: 2px;
