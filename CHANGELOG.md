@@ -3,6 +3,52 @@
 All notable user-facing changes to Tradewind. Newest first. The top entry of
 each release is reused verbatim as that release's GitHub Release notes.
 
+## v0.2.0
+
+### 🛠️ Search works again after the June league patch
+The **Runes of Aldur** patch changed the trade site's item format, which made
+every price check fail with an error the moment results came back. This release
+fixes that — searches parse and display listings again, and mod **tiers** are
+read straight from the new format. If your price check stopped working today,
+this is the fix. (#93)
+
+### 🔮 Unidentified uniques show what they might be
+Hover an **unidentified unique** and Tradewind now lists **every unique that
+drops on that base**, ranked by market price (from poe2scout) — so you get a
+read on whether it's worth identifying before you spend the Scroll. Identified
+uniques keep their single instant price banner. (#88)
+
+### 💠 Gem price checks + Uncut Support Gem prices
+Skill and Spirit gems get a **dedicated filter view** — it arms Gem Level,
+Quality, Gem Sockets, and Corruption to the gem's own values so you find ones at
+least as good. And because regular support gems aren't traded directly, hovering
+a **cuttable support gem** now shows a banner of **Uncut Support Gem** prices
+(levels 1–5) so you can see the realistic cost to make one. (#58)
+
+### ⚗️ Runic Alloy craft advisor
+The **Craft** tab has a new **Alloys** section for **Verisium (Runic) Alloys**.
+Hover a Rare item and Tradewind shows which alloys apply and the exact modifier
+each one guarantees for that item class — greying out any that the game would
+refuse because the item already has a conflicting modifier, the same way it
+already does for essences. (#51)
+
+### 🎚️ Smarter filters by default
+- The **item-level filter** is now capped at **82** (the level where every
+  rollable mod reaches its top tier), so a high-ilvl search still matches every
+  equivalent listing instead of needlessly narrowing. It defaults **on** for
+  white/Normal bases (where ilvl is the thing you're buying) and stays opt-in
+  for Magic/Rare. (#84)
+- **Quality** and **Gem Sockets** now default **on** for exceptional items, so
+  the things that define their price are checked from the start. (#14)
+
+### ✨ Cleaner Miscellaneous section
+The Miscellaneous filters were reworked with a **centered legend** and
+**tri-state chips**, making it clearer at a glance which toggles are required,
+excluded, or ignored. (#57)
+
+---
+**Full changelog:** https://github.com/5w1tchy/tradewind-poe2/compare/v0.1.17...v0.2.0
+
 ## v0.1.17
 
 ### 💎 Instant price banner for uniques
