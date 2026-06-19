@@ -5164,7 +5164,7 @@ exports[`parseItem on every fixture > 36-quarterstaves--behemoth-weaver-e7ed255a
 exports[`parseItem on every fixture > 37-helmets--constricting-command-b2a788b0.txt 1`] = `
 {
   "baseType": "Viper Cap",
-  "corrupted": false,
+  "corrupted": true,
   "enchantMods": [],
   "enhancements": [
     {
@@ -5353,9 +5353,6 @@ exports[`parseItem on every fixture > 37-helmets--constricting-command-b2a788b0.
       "No... It waits. Then it bites the first hand it finds.",
       "The danger of numbers is all in your mind!"",
       "- Viper Napuatzi, instructing Royal Commander Nezahul",
-    ],
-    [
-      "Twice Corrupted",
     ],
   ],
   "waystoneTier": null,

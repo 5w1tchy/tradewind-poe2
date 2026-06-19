@@ -176,7 +176,7 @@ export function parseItem(text: string): ParsedItem {
   for (const section of sections.slice(1)) {
     const first = section[0]
 
-    if (section.length === 1 && first === 'Corrupted') {
+    if (section.length === 1 && /^(Twice )?Corrupted$/.test(first)) {
       item.corrupted = true
     } else if (section.length === 1 && first === 'Unidentified') {
       item.unidentified = true
