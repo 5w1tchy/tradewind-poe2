@@ -148,6 +148,18 @@ describe('targeted parsing', () => {
     expect(item.properties.some((p) => p.raw.startsWith('Level: 26'))).toBe(true)
   })
 
+  it('twice-corrupted gem flags corrupted (issue #68)', () => {
+    // A double-corrupted item copies its corruption section as "Twice
+    // Corrupted" instead of "Corrupted". For gems this matters: prepareQuery
+    // pins corrupted yes/no, so the flag must be set or it searches as
+    // non-corrupted and mis-prices.
+    const twice = load('permafrost-bolts').replace(/\bCorrupted$/, 'Twice Corrupted')
+    const item = parseItem(twice)
+    expect(item.rarity).toBe('Gem')
+    expect(item.corrupted).toBe(true)
+    expect(item.unknownSections).not.toContainEqual(['Twice Corrupted'])
+  })
+
   it('waystone tier from name, charm with comma decimal', () => {
     const waystone = parseItem(load('painful-waystone'))
     expect(waystone.waystoneTier).toBe(15)
