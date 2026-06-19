@@ -74,6 +74,14 @@ export interface TradewindApi {
    */
   getUniqueQuote(league: string, name: string, type: string): Promise<UniqueQuote | null>
   /**
+   * Resolve every Unique on a base `type`, each with its poe2scout aggregate
+   * price (price-descending), for the *unidentified*-unique candidate list (#88):
+   * with no name we can't join a single quote, but the item must be one of the
+   * few uniques on that base. Same soft-dependency posture as getUniqueQuote —
+   * [] when the snapshot is unavailable or carries no unique on the base.
+   */
+  getUniqueCandidates(league: string, type: string): Promise<UniqueQuote[]>
+  /**
    * Resolve aggregate poe2scout prices for the given Uncut Support Gem levels,
    * for the "cut it yourself" banner above a cuttable support gem (#58). Requested
    * by the renderer on mount (the main hot path stays untouched); [] when the

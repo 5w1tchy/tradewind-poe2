@@ -633,6 +633,10 @@ app.whenReady().then(() => {
     exchange.uniqueQuote(leagueArg || league, name, type)
   )
 
+  ipcMain.handle('tw:unique-candidates', (_event, leagueArg: string, type: string) =>
+    exchange.uniqueCandidates(leagueArg || league, type)
+  )
+
   ipcMain.handle('tw:uncut-quote', (_event, leagueArg: string, levels: number[]) =>
     exchange.uncutSupportQuotes(leagueArg || league, levels)
   )

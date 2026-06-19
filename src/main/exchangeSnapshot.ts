@@ -44,6 +44,9 @@ interface SnapshotIndex {
   byApiId: Map<string, RawItem>
   /** Uniques keyed by `name|type` (they carry no ApiId) — see uniqueKey. */
   byNameType: Map<string, RawItem>
+  /** Uniques bucketed by base `type` — for an *unidentified* unique we know only
+   *  the base, so we list every unique that drops on it (#88). See typeKey. */
+  byType: Map<string, RawItem[]>
   rates: ExchangeRates
 }
 
@@ -52,11 +55,21 @@ function snapshotName(league: string): string {
   return `poe2scout-items-${league.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
 }
 
+/** Normalize a name/type fragment — case/space-insensitive so a parsed value
+ *  matches the snapshot regardless of incidental casing. */
+function norm(s: string): string {
+  return s.trim().toLowerCase().replace(/\s+/g, ' ')
+}
+
 /** Join key for a unique row — case/space-insensitive so a parsed Name+Type
  *  matches the snapshot regardless of incidental casing. */
 function uniqueKey(name: string, type: string): string {
-  const norm = (s: string): string => s.trim().toLowerCase().replace(/\s+/g, ' ')
   return `${norm(name)}|${norm(type)}`
+}
+
+/** Bucket key for a unique's base type — for the by-base candidate list (#88). */
+function typeKey(type: string): string {
+  return norm(type)
 }
 
 /**
@@ -123,6 +136,37 @@ export class ExchangeSnapshotProvider {
       itemId: row.ItemId,
       rates: snap.rates
     }
+  }
+
+  /**
+   * Every Unique that drops on a given base `type`, each with its poe2scout
+   * aggregate price, sorted price-descending (#88). An *unidentified* unique
+   * copies with no name — only its base — so a single quote can't be joined; the
+   * realistic shortlist is "which unique on this base is it?", usually a handful.
+   * Same soft-dependency posture as uniqueQuote: [] when the snapshot is
+   * unavailable or carries no unique on the base, so nothing renders and the live
+   * search stays the source of truth.
+   */
+  async uniqueCandidates(league: string, type: string): Promise<UniqueQuote[]> {
+    let snap: SnapshotIndex
+    try {
+      snap = await this.loadIndex(league)
+    } catch (err) {
+      console.warn('[exchange] snapshot unavailable:', err)
+      return []
+    }
+    const rows = snap.byType.get(typeKey(type)) ?? []
+    return rows
+      .filter((row) => typeof row.CurrentPrice === 'number' && row.CurrentPrice > 0)
+      .map((row) => ({
+        name: row.Name ?? '',
+        type: row.Type ?? type,
+        priceExalted: row.CurrentPrice,
+        iconUrl: row.IconUrl ?? null,
+        itemId: row.ItemId,
+        rates: snap.rates
+      }))
+      .sort((a, b) => b.priceExalted - a.priceExalted)
   }
 
   /**
@@ -212,12 +256,18 @@ export class ExchangeSnapshotProvider {
     const items = await cachedFetchJson<RawItem[]>(snapshotName(league), url, SNAPSHOT_FRESH_MS)
     const byApiId = new Map<string, RawItem>()
     const byNameType = new Map<string, RawItem>()
+    const byType = new Map<string, RawItem[]>()
     for (const item of items) {
       if (item.ApiId && !byApiId.has(item.ApiId)) byApiId.set(item.ApiId, item)
       // Uniques have no ApiId but carry Name+Type — index them for #80's banner.
       if (item.Name && item.Type) {
         const key = uniqueKey(item.Name, item.Type)
-        if (!byNameType.has(key)) byNameType.set(key, item)
+        if (byNameType.has(key)) continue
+        byNameType.set(key, item)
+        // …and bucket by base type for the unidentified-unique candidate list (#88).
+        const bucket = byType.get(typeKey(item.Type))
+        if (bucket) bucket.push(item)
+        else byType.set(typeKey(item.Type), [item])
       }
     }
     const priceOf = (id: string): number => byApiId.get(id)?.CurrentPrice ?? 0
@@ -225,6 +275,6 @@ export class ExchangeSnapshotProvider {
     console.log(
       `[exchange] snapshot ready for ${league} (${byApiId.size} exchange, ${byNameType.size} uniques)`
     )
-    return { byApiId, byNameType, rates }
+    return { byApiId, byNameType, byType, rates }
   }
 }
