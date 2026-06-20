@@ -39,7 +39,9 @@ export function buildSearchBody(q: PreparedQuery): TradeSearchRequest {
   // One filter per stat id (insertion order); repeats merge their bounds.
   const boundsById = new Map<string, MinMax | undefined>()
   for (const s of q.stats) {
-    if (!s.enabled) continue
+    // A hybrid node's lines are display-only (no trade stat id for the pairing);
+    // they're already enabled === false, but never let one reach the request.
+    if (s.display || !s.enabled) continue
     const value = minMax(s.min, s.max)
     boundsById.set(
       s.statId,

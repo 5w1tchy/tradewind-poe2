@@ -530,7 +530,7 @@ function buildStatRows(
 
   foldResistancePseudos(stats, templates, statsEnabled, spread)
   addHybridSingles(stats, statsEnabled)
-  disableHybridGroups(stats)
+  markHybridDisplay(stats)
   return { stats, unmatched }
 }
 
@@ -538,9 +538,9 @@ function buildStatRows(
  * A hybrid mod's single checkbox can't search just one of its stats — so each
  * component that isn't already independently searchable (no summed "(total)"
  * and not already a pseudo) is surfaced as its own row in the pseudo area. These
- * pseudo rows are the default search target (the hybrid node itself is off — see
- * disableHybridGroups), so they default on like a normal explicit. The builder
- * dedupes if both a pseudo row and its node end up enabled.
+ * pseudo rows are the only search target — the in-place hybrid node is
+ * display-only (see markHybridDisplay) — so they default on like a normal
+ * explicit.
  */
 function addHybridSingles(stats: PreparedStatFilter[], statsEnabled: boolean): void {
   const groupSize = new Map<number, number>()
@@ -578,18 +578,24 @@ function addHybridSingles(stats: PreparedStatFilter[], statsEnabled: boolean): v
 }
 
 /**
- * A hybrid mod renders as one node with a single checkbox; its stats are also
- * surfaced individually in the pseudo area (see addHybridSingles), which is the
- * default search target. So the in-place node is off by default — both its lines
- * share that off state, keeping the single checkbox honest.
+ * A hybrid mod renders as one **display-only** node — the trade2 API has no stat
+ * id for the pairing, so a checkbox there would search two independent generic
+ * stats while pretending to search the hybrid. Each half is instead searchable on
+ * its own in the pseudo area (see addHybridSingles for lone halves; the dedup
+ * fold in buildStatRows for halves that sum with a standalone twin). So the
+ * in-place node is marked `display` (rendered without controls, never emitted)
+ * and forced off.
  */
-function disableHybridGroups(stats: PreparedStatFilter[]): void {
+function markHybridDisplay(stats: PreparedStatFilter[]): void {
   const groupSize = new Map<number, number>()
   for (const s of stats) {
     if (s.group !== undefined) groupSize.set(s.group, (groupSize.get(s.group) ?? 0) + 1)
   }
   for (const s of stats) {
-    if (s.group !== undefined && (groupSize.get(s.group) ?? 0) >= 2) s.enabled = false
+    if (s.group !== undefined && (groupSize.get(s.group) ?? 0) >= 2) {
+      s.enabled = false
+      s.display = true
+    }
   }
 }
 

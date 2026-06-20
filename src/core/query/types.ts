@@ -127,9 +127,14 @@ export interface PreparedStatFilter {
    *  rows; the builder dedupes so enabling both can't double-filter the id. */
   summed?: boolean
   /** Index of the source modifier. Rows sharing a group come from one hybrid mod
-   *  (e.g. "Spell Damage + Mana") and render as a single node with one checkbox.
-   *  Undefined on synthetic rows (totals, pseudos). */
+   *  (e.g. "Spell Damage + Mana") and render as a single node. Undefined on
+   *  synthetic rows (totals, pseudos). */
   group?: number
+  /** Informational-only row: the trade2 API has no stat id for a hybrid mod's
+   *  pairing, so a grouped hybrid line is rendered without controls (no checkbox,
+   *  no bounds) and is never emitted to the search body. Its halves stay
+   *  searchable as their own pseudo singles/totals instead. */
+  display?: boolean
   /** Mod tier from advanced copy (PoE2: T1 is best). Null for pseudo/rune/enchant rows. */
   tier: number | null
   /** Representative roll — average when the line has several numbers. */

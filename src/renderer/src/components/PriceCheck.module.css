@@ -108,9 +108,22 @@
     var(--tw-bg-inset);
 }
 
-/* Hybrid mod: a normal filter-row whose single checkbox + badge sit centered
-   (via the row's align-items) against a stacked column of its stat lines. The
-   lines reuse the same .stat / .bounds columns, so prefixes stay aligned. */
+/* Hybrid mod: display-only (no trade stat id for the pairing). The badge sits
+   centered (via the row's align-items) against a stacked column of its stat
+   lines; a spacer holds the checkbox column so the badge stays aligned with
+   real rows. The lines reuse the same .stat column, so prefixes stay aligned. */
+.hybrid-node {
+  cursor: default;
+  align-items: flex-start;
+}
+.hybrid-node:hover {
+  background: transparent;
+}
+/* Holds the 11px checkbox column so a checkbox-less node still lines up. */
+.hybrid-spacer {
+  width: 11px;
+  flex-shrink: 0;
+}
 .hybrid-lines {
   flex: 1;
   min-width: 0;
@@ -122,6 +135,15 @@
   display: flex;
   align-items: center;
   gap: 7px;
+}
+/* The whole node reads as informational, not a missed filter. */
+.hybrid-node .stat {
+  opacity: 0.7;
+}
+.hybrid-hint {
+  font-size: 10px;
+  color: var(--tw-text-mute);
+  opacity: 0.8;
 }
 
 .property { color: var(--tw-text-mute); }

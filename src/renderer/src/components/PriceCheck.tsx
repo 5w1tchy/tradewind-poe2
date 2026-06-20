@@ -762,22 +762,18 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     )
   }
 
-  /** A hybrid mod (Spell Damage + Mana, …) — one badge and one checkbox toggling
-   *  every line, each line keeping its own min/max (searched on its own id). */
+  /** A hybrid mod (Spell Damage + Mana, …) — display-only. The trade2 API has no
+   *  stat id for the pairing, so the node carries no checkbox or bounds; each half
+   *  is searchable on its own below in the pseudo area (a summed total when it has
+   *  a standalone twin, otherwise its own single). */
   function renderHybridNode(lines: PreparedStatFilter[]): React.JSX.Element {
     const badge = statBadge(lines[0])
-    const allOn = lines.every((l) => l.enabled)
     return (
-      <label key={'hybrid-' + lines[0].group} className={styles['filter-row']}>
-        <input
-          type="checkbox"
-          checked={allOn}
-          onChange={(e) => {
-            for (const l of lines) l.enabled = e.target.checked
-            markDirty()
-            forceUpdate()
-          }}
-        />
+      <div
+        key={'hybrid-' + lines[0].group}
+        className={`${styles['filter-row']} ${styles['hybrid-node']}`}
+      >
+        <span className={styles['hybrid-spacer']} aria-hidden="true" />
         {badge && <span className={`${styles.tier} ${badge.cls}`}>{badge.text}</span>}
         {originTag(lines[0])}
         <div className={styles['hybrid-lines']}>
@@ -786,11 +782,11 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
               <span className={`${styles.stat} ${styles['source-' + line.source] ?? ''}`}>
                 {line.label}
               </span>
-              {renderBounds(line)}
             </div>
           ))}
+          <div className={styles['hybrid-hint']}>⤷ searchable below as pseudo totals</div>
         </div>
-      </label>
+      </div>
     )
   }
 
