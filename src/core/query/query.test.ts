@@ -434,7 +434,9 @@ describe('prepareQuery', () => {
     const groupLines = q.stats.filter((s) => s.group === mana.group)
     expect(groupLines).toHaveLength(2)
     expect(groupLines.some((s) => s.label.includes('Energy Shield'))).toBe(true)
-    // The in-place hybrid node is off by default (its stats default on in pseudo).
+    // The in-place hybrid node is display-only: no trade stat id for the pairing,
+    // so it carries no searchable state (its halves search via pseudo below).
+    expect(groupLines.every((s) => s.display === true)).toBe(true)
     expect(groupLines.every((s) => !s.enabled)).toBe(true)
 
     // Mana isn't summed elsewhere, so it's surfaced as a standalone pseudo row
@@ -449,6 +451,54 @@ describe('prepareQuery', () => {
       (s) => s.label.includes('Energy Shield') && s.affix === null && !s.summed
     )
     expect(esPseudo).toHaveLength(0)
+  })
+
+  it('sums a hybrid half with its standalone twin into a searchable pseudo total', () => {
+    // A wand with a standalone "+2 all Spell Skills" suffix plus a hybrid prefix
+    // granting "+1 all Spell Skills" and "+20 Mana". The two spell-skill lines
+    // share a trade stat id, so they fold into one searchable "+3" pseudo total;
+    // the lone mana half surfaces as its own searchable pseudo single; and the
+    // in-place hybrid node is display-only.
+    const item = [
+      'Item Class: Wands',
+      'Rarity: Rare',
+      'Test Wand',
+      'Siphoning Wand',
+      '--------',
+      'Item Level: 82',
+      '--------',
+      '{ Prefix Modifier "Test" (Tier: 1) — Caster, Mana }',
+      '+1 to Level of all Spell Skills',
+      '+20(15-25) to maximum Mana',
+      '{ Suffix Modifier "Other" (Tier: 1) — Caster }',
+      '+2 to Level of all Spell Skills'
+    ].join('\n')
+    const q = prepareQuery(parseItem(item), db)
+
+    // The hybrid node's two lines are display-only and never searchable.
+    const hybridLines = q.stats.filter((s) => s.display)
+    expect(hybridLines).toHaveLength(2)
+    expect(hybridLines.every((s) => !s.enabled)).toBe(true)
+
+    // The spell-skill halves fold into one summed, searchable pseudo total (+3).
+    const total = q.stats.find(
+      (s) => s.summed && s.label.includes('Level of all Spell Skills')
+    )!
+    expect(total).toMatchObject({ affix: null, value: 3, enabled: true })
+
+    // The lone mana half is its own searchable pseudo single.
+    const manaSingle = q.stats.find(
+      (s) => s.label.includes('maximum Mana') && s.affix === null && s.group === undefined
+    )!
+    expect(manaSingle.enabled).toBe(true)
+
+    // The search body emits each stat id exactly once — the display lines are
+    // excluded, so the summed total is the only spell-skill filter.
+    const filters = buildSearchBody(q).query.stats[0].filters
+    const ids = filters.map((f) => f.id)
+    expect(new Set(ids).size).toBe(ids.length)
+    expect(ids).toContain(total.statId)
+    expect(ids).toContain(manaSingle.statId)
   })
 
   it('enabled equipment rows land in equipment_filters', () => {
