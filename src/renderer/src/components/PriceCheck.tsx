@@ -49,6 +49,16 @@ const FLAG_STATE_TITLE: Record<TriState, string> = {
   no: 'Must not have'
 }
 
+// Short cell labels for the Open Modifier Slots band (issue #90). The section
+// legend ("Open Modifier Slots") carries the context, so each compact cell just
+// needs Prefix / Suffix / Total. Keyed by pseudo stat id; falls back to the full
+// label if an id ever changes upstream.
+const MOD_COUNT_SHORT: Record<string, string> = {
+  'pseudo.pseudo_number_of_empty_prefix_mods': 'Prefix',
+  'pseudo.pseudo_number_of_empty_suffix_mods': 'Suffix',
+  'pseudo.pseudo_number_of_empty_affix_mods': 'Total'
+}
+
 // Buyout-price currency: [trade option id (null = exalted equivalent), menu label].
 const BUYOUT_OPTIONS: Array<[string | null, string]> = [
   [null, 'Exalted Orb Equivalent'],
@@ -203,8 +213,9 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
   /** The tri-state flag group (corrupted, mirrored, …). Open by default now that
    *  it's a compact chip row (issue #57). */
   const [flagsOpen, setFlagsOpen] = useState(true)
-  /** The collapsible "open modifier slots" count group (issue #22). */
-  const [modsOpen, setModsOpen] = useState(false)
+  /** The "open modifier slots" popover (issues #22, #90) — a rarely-used filter,
+   *  tucked behind a toggle in the action row instead of a top-level section. */
+  const [modsShown, setModsShown] = useState(false)
   /** The listing whose item tooltip is showing (null when nothing hovered). */
   const [hover, setHover] = useState<TooltipAnchor | null>(null)
   /** Grace timer so the cursor can travel from a row onto its tooltip. */
@@ -282,7 +293,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setError(null)
     setDirty(false)
     setFlagsOpen(true)
-    setModsOpen(false)
+    setModsShown(false)
     cancelHide()
     setHover(null)
     setLeagueOpen(false)
@@ -324,6 +335,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setSaleOpen(false)
     setRarityOpen(false)
     setBuyoutShown(false)
+    setModsShown(false)
     setLeagueOpen((o) => !o)
   }
 
@@ -331,6 +343,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setLeagueOpen(false)
     setRarityOpen(false)
     setBuyoutShown(false)
+    setModsShown(false)
     setSaleOpen((o) => !o)
   }
 
@@ -338,6 +351,7 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setLeagueOpen(false)
     setSaleOpen(false)
     setBuyoutShown(false)
+    setModsShown(false)
     setRarityOpen((o) => !o)
   }
 
@@ -346,22 +360,33 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     setLeagueOpen(false)
     setSaleOpen(false)
     setRarityOpen(false)
+    setModsShown(false)
     setBuyoutShown((s) => !s)
+  }
+
+  /** "Open slots" toggle: reveal/hide the open-modifier-slots popover (#90). */
+  function toggleMods(): void {
+    setLeagueOpen(false)
+    setSaleOpen(false)
+    setRarityOpen(false)
+    setBuyoutShown(false)
+    setModsShown((s) => !s)
   }
 
   // Click anywhere outside an open dropdown dismisses it.
   useEffect(() => {
-    if (!leagueOpen && !saleOpen && !rarityOpen && !buyoutShown) return
+    if (!leagueOpen && !saleOpen && !rarityOpen && !buyoutShown && !modsShown) return
     function onDown(e: MouseEvent): void {
       if ((e.target as HTMLElement).closest('[data-picker]')) return
       setLeagueOpen(false)
       setSaleOpen(false)
       setRarityOpen(false)
       setBuyoutShown(false)
+      setModsShown(false)
     }
     document.addEventListener('mousedown', onDown)
     return () => document.removeEventListener('mousedown', onDown)
-  }, [leagueOpen, saleOpen, rarityOpen, buyoutShown])
+  }, [leagueOpen, saleOpen, rarityOpen, buyoutShown, modsShown])
 
   function pickSale(id: ListingStatus): void {
     setSaleOpen(false)
@@ -641,16 +666,23 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
     )
   }
 
-  /** One "open modifier slots" count row (issue #22): a label plus min/max. No
-   *  roll value, so no quick-set "=" button — just the bounds (setBound enables
-   *  the row when a bound is typed, disables when both clear). */
-  function renderModCountRow(m: PreparedModCount): React.JSX.Element {
+  /** One compact "open modifier slots" cell (issues #22, #90): a short label
+   *  (Prefix/Suffix/Total — the legend carries the rest) paired with a tight
+   *  min–max input pair, laid out as a horizontal band instead of three stacked
+   *  rows. No roll value, so no quick-set "=" button. The cell lights gold when
+   *  a bound is set (setBound enables it when a bound is typed, disables when
+   *  both clear), echoing the active flag-chip from #57. */
+  function renderModCountCell(m: PreparedModCount): React.JSX.Element {
     return (
-      <div key={m.statId} className={`${styles['filter-row']} ${styles['mod-count-row']}`}>
-        <span className={styles.property}>{m.label}</span>
-        <span className={styles.bounds}>
+      <div
+        key={m.statId}
+        className={`${styles['count-cell']} ${m.enabled ? styles['count-on'] : ''}`}
+        title={m.label}
+      >
+        <span className={styles['count-label']}>{MOD_COUNT_SHORT[m.statId] ?? m.label}</span>
+        <span className={styles['count-bounds']}>
           <input
-            className={styles.num}
+            className={styles['count-num']}
             type="number"
             placeholder="min"
             value={m.min ?? ''}
@@ -661,8 +693,11 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
               if (e.key === 'Enter') void runSearch()
             }}
           />
+          <span className={styles['count-dash']} aria-hidden="true">
+            –
+          </span>
           <input
-            className={styles.num}
+            className={styles['count-num']}
             type="number"
             placeholder="max"
             value={m.max ?? ''}
@@ -1034,28 +1069,15 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
                     ))}
                   </div>
                 )}
-                {q.modCounts.length === 0 && (q.stats.length > 0 || q.unmatched.length > 0) && (
-                  <div className={styles.divider} />
-                )}
-              </>
-            )}
-            {/* Open-affix-slot counts (issue #22): rares/magic only. Shares the
-                centered-divider legend; its own rule separates it from the flags
-                chips above, and it owns the divider before the stats below. */}
-            {q.modCounts.length > 0 && (
-              <>
-                {sectionLegend(
-                  'Open Modifier Slots',
-                  modsOpen,
-                  () => setModsOpen((o) => !o),
-                  activeModCounts
-                )}
-                {modsOpen && q.modCounts.map(renderModCountRow)}
                 {(q.stats.length > 0 || q.unmatched.length > 0) && (
                   <div className={styles.divider} />
                 )}
               </>
             )}
+            {/* Open-affix-slot counts (issue #22) used to live here as their own
+                section; they're a rarely-used filter, so #90 moved them behind the
+                "Open slots" toggle in the action row (see the buyout-style popover
+                below) to reclaim the vertical space. */}
             {/* Grouped by affix: prefixes then suffixes (one contiguous block),
                 then a divider before the tier-less rows (implicits/runes/
                 enchants/pseudo totals). */}
@@ -1142,6 +1164,31 @@ export default function PriceCheck({ payload }: { payload: ItemPayload }): React
               )
             ) : null}
             <span className={styles.actions}>
+              {/* Open-modifier-slots filter (#22, #90): a rarely-used pick, tucked
+                  behind this toggle (rares/magic only) instead of a top-level
+                  section. Same floating-popover pattern as the buyout control. */}
+              {q.modCounts.length > 0 && (
+                <span className={styles['mods-filter']} data-picker>
+                  <button
+                    type="button"
+                    className={`${styles['trade-btn']} ${activeModCounts > 0 ? styles.active : ''}`}
+                    onClick={toggleMods}
+                    title={modsShown ? 'Hide open modifier slots' : 'Open modifier slots filter'}
+                    aria-expanded={modsShown}
+                  >
+                    <span className={styles['trade-label']}>Open slots</span>
+                    {activeModCounts > 0 && (
+                      <span className={styles['flags-count']}>{activeModCounts}</span>
+                    )}
+                  </button>
+                  {modsShown && (
+                    <div className={`${styles['buyout-pop']} ${styles['mods-pop']}`} data-overlay>
+                      <div className={styles['buyout-head']}>Open modifier slots</div>
+                      {q.modCounts.map(renderModCountCell)}
+                    </div>
+                  )}
+                </span>
+              )}
               <span className={styles.buyout} data-picker>
                 <button
                   type="button"
